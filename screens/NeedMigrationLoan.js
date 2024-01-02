@@ -3,12 +3,18 @@ import React from 'react'
 
 const NeedMigrationLoan = () => {
   return (
-    <View>
-      <Text>NeedMigrationLoan</Text>
-    </View>
+    <View style={styles.main}>
+    <Text>Work in progress</Text>
+  </View>
   )
 }
 
 export default NeedMigrationLoan
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  main:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center"
+}
+})

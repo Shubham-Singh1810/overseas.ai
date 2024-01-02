@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   hraBox: {
     flex: 1,
-    marginHorizontal: 12,
+    marginHorizontal: 15,
     marginVertical: 8,
   },
   experience: {

@@ -18,12 +18,13 @@ import BuildProfile from '../screens/BuildProfile';
 import YourHra from '../screens/YourHra';
 import GetCertificate from '../screens/GetCertificate';
 import NeedMigrationLoan from '../screens/NeedMigrationLoan';
-import Refer from '../screens/Refer';
 import {useEffect, useState} from 'react';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import FavrouiteJob from '../screens/FavrouiteJob';
 
 import SavedJobs from '../screens/SavedJobs';
+import MedicalTest from '../screens/MedicalTest';
+import ApplyPcc from '../screens/ApplyPcc';
 const CustomDrawerContent = ({navigation}) => {
   const {globalState, setGlobalState} = useGlobalState();
   const [navItem, setNavItem] = useState([
@@ -82,20 +83,20 @@ const CustomDrawerContent = ({navigation}) => {
 
     {
       title: 'Apply Medical Test',
-      component: JobApplied,
-      name: 'Medical',
+      component: MedicalTest,
+      name: 'Apply Medical Test',
       subMenu: [],
     },
     {
       title: 'Apply PCC',
-      component: JobApplied,
-      name: 'cnn',
+      component: ApplyPcc,
+      name: 'Apply PCC',
       subMenu: [],
     },
     {
-      title: 'Get Certified',
+      title: 'Get Certificate',
       component: GetCertificate,
-      name: 'Get Certified',
+      name: 'Get Certificate',
       subMenu: [],
     },
     {
@@ -109,9 +110,6 @@ const CustomDrawerContent = ({navigation}) => {
     },
     {
       title: 'Share with friends',
-      component: Refer,
-      name: 'Share with friends',
-      subMenu: [],
     },
     {
       title: 'Contact Us',
@@ -138,8 +136,12 @@ const CustomDrawerContent = ({navigation}) => {
               style={{height: 40, width: 40, borderRadius: 20, marginRight: 10}}
             />
             <View>
-              <Text style={styles.userName}>{JSON.parse(globalState?.user)?.user.name}</Text>
-              <Text style={{color:"#00111F",fontSize:11}}>Profile strength (53%)</Text>
+              <Text style={styles.userName}>
+                {JSON.parse(globalState?.user)?.user.name}
+              </Text>
+              <Text style={{color: '#00111F', fontSize: 11}}>
+                Profile strength (53%)
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -153,9 +155,17 @@ const CustomDrawerContent = ({navigation}) => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       marginHorizontal: 18,
-                      alignItems:"center",
+                      alignItems: 'center',
                     }}>
-                    <Text style={{ color: '#334B5E', fontSize: 16, fontWeight: '500', marginVertical:10 }}>{v.title}</Text>
+                    <Text
+                      style={{
+                        color: '#334B5E',
+                        fontSize: 16,
+                        fontWeight: '500',
+                        marginVertical: 10,
+                      }}>
+                      {v.title}
+                    </Text>
                     {showSubMnu ? (
                       <Image source={require('../images/upArrow.png')} />
                     ) : (
@@ -195,10 +205,49 @@ const CustomDrawerContent = ({navigation}) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     marginHorizontal: 18,
-                    alignItems:"center",
+                    alignItems: 'center',
                   }}>
-                  <Text style={{ color: '#334B5E', fontSize: 16, fontWeight: '500',marginVertical:10 }}>{v.title}</Text>
-                    <Image source={require('../images/downArrow.png')} />
+                  <Text
+                    style={{
+                      color: '#334B5E',
+                      fontSize: 16,
+                      fontWeight: '500',
+                      marginVertical: 10,
+                    }}>
+                    {v.title}
+                  </Text>
+                  <Image
+                    source={require('../images/language.jpeg')}
+                    style={{height: 30, marginTop: 5, width: 30}}
+                  />
+                </View>
+              </TouchableOpacity>
+            );
+          } else if (v.title == 'Share with friends') {
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  console.warn(
+                    'This action will show popup for sharing the application on different social application',
+                  )
+                }>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginHorizontal: 18,
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#334B5E',
+                      fontSize: 16,
+                      fontWeight: '500',
+                      marginVertical: 10,
+                    }}>
+                    {v.title}
+                  </Text>
+                  <Image source={require('../images/shareIcon.png')} />
                 </View>
               </TouchableOpacity>
             );
@@ -209,7 +258,11 @@ const CustomDrawerContent = ({navigation}) => {
                 <DrawerItem
                   key={i}
                   label={v.title}
-                  labelStyle={{ color: '#334B5E', fontSize: 16, fontWeight: '500' }}
+                  labelStyle={{
+                    color: '#334B5E',
+                    fontSize: 16,
+                    fontWeight: '500',
+                  }}
                   onPress={() => {
                     // Handle navigation to the screen
                     navigation.navigate(v.name);
@@ -224,7 +277,13 @@ const CustomDrawerContent = ({navigation}) => {
         <Text style={styles.version}>App Version:v1.4.8</Text>
       </DrawerContentScrollView>
       <Modal transparent={false} visible={showModal} animationType="slide">
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:"rgba(0,0,0,0.5)"}}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
           <View style={styles.main}>
             <View>
               <Text style={styles.languagetext}>
@@ -340,10 +399,10 @@ const styles = StyleSheet.create({
   topNav: {
     paddingHorizontal: 10,
   },
-  userName:{
+  userName: {
     color: '#000',
-    fontWeight:"700",
+    fontWeight: '700',
     fontFamily: 'Noto Sans',
-    fontSize:13
-  }
+    fontSize: 13,
+  },
 });

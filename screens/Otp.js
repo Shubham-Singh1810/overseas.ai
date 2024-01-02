@@ -1,7 +1,21 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ActivityIndicator,
+  Pressable,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import {verifyOtpForLogin, loginUsingOtp} from '../services/user.service';
+import {useGlobalState} from '../GlobalProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 const Otp = props => {
+  const {translation, globalState, setGlobalState} = useGlobalState();
+  const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(30);
   const startTimer = () => {
     if (timer == 0) {
@@ -11,10 +25,57 @@ const Otp = props => {
       setTimer(timer - 1);
     }, 1000);
   };
-  const handleOtpSubmit = text => {
-    if (text.length == 4) {
-      props.navigation.navigate('Candidate Details');
+  const setUserData = async () => {
+    try {
+      let user = await AsyncStorage.getItem('user');
+      setGlobalState({...globalState, user: user});
+    } catch (error) {
+      console.warn('error from global provider');
     }
+  };
+  const verifyOtp = async otp => {
+    setLoading(true);
+    try {
+      let response = await verifyOtpForLogin({
+        empPhone: await AsyncStorage.getItem('tempPhone'),
+        otp: otp,
+      });
+      if (response.data.access_token) {
+        await AsyncStorage.setItem('user', JSON.stringify(response.data));
+        setUserData();
+      } else {
+        setLoading(false);
+        Toast.show({
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: 'Wrong OTP',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+    } catch (error) {
+      setLoading(false);
+      Toast.show({
+        type: 'error', 
+        // position: 'top',
+        text1: 'Something went wrong56',
+        visibilityTime: 3000, 
+      });
+    }
+  };
+  const resendOtp = async () => {
+    try {
+      let response = await loginUsingOtp({empPhone: await AsyncStorage.getItem('tempPhone')});
+      if(response.data.msg =="Otp Sent Succefully."){
+        Toast.show({
+          type: 'success', 
+          // position: 'top',
+          text1: 'OTP resend successfully',
+          visibilityTime: 3000, 
+        });
+        setTimer(30)
+        startTimer()
+      }
+    } catch (error) {}
   };
   useEffect(() => {
     startTimer();
@@ -24,18 +85,22 @@ const Otp = props => {
       <View>
         <Text style={styles.heading}>Enter OTP</Text>
       </View>
-      <OTPInputView
-        style={{width: '80%', height: 70, color:"red"}}
-        pinCount={4}
-        // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-        // onCodeChanged = {code => { this.setState({code})}}
-        autoFocusOnLoad
-        codeInputFieldStyle={{color:"black"}}
-        codeInputHighlightStyle={{borderColor:"black"}}
-        onCodeFilled={code => {
-          props.navigation.navigate("Home")
-        }}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="gray" />
+      ) : (
+        <OTPInputView
+          style={{width: '90%', height: 70, color: 'red'}}
+          pinCount={6}
+          // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+          // onCodeChanged = {code => { this.setState({code})}}
+          autoFocusOnLoad
+          codeInputFieldStyle={{color: 'black'}}
+          codeInputHighlightStyle={{borderColor: 'black'}}
+          onCodeFilled={code => {
+            verifyOtp(code);
+          }}
+        />
+      )}
 
       <Text style={[styles.timerText, styles.textCenter]}>
         {timer == 0 ? (
@@ -44,10 +109,15 @@ const Otp = props => {
           <Text>{timer} sec</Text>
         )}
       </Text>
-      <View style={styles.optionGroup}>
+      {timer==0 && <View style={styles.optionGroup}>
         <Text style={styles.timerText}>Didn’t get OTP?</Text>
-        <Text style={[styles.timerText, styles.borderBottom]}>Resend code</Text>
-      </View>
+        <Pressable onPress={()=>resendOtp()}>
+
+        <Text style={[styles.timerText, styles.borderBottom]} >Resend OTP</Text>
+        </Pressable>
+      </View>}
+      
+      <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );
 };

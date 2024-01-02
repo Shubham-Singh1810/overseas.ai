@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const GetCertificate = () => {
+const ApplyPcc = () => {
   return (
     <View style={styles.main}>
     <Text>Work in progress</Text>
@@ -9,12 +9,12 @@ const GetCertificate = () => {
   )
 }
 
-export default GetCertificate
+export default ApplyPcc
 
 const styles = StyleSheet.create({
-  main:{
-    flex:1,
-    justifyContent:"center",
-    alignItems:"center"
-}
+    main:{
+        flex:1,
+        justifyContent:"center",
+        alignItems:"center"
+    }
 })

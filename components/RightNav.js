@@ -13,7 +13,7 @@ import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 const RightNav = props => {
   const {globalState, setGlobalState} = useGlobalState();
-  
+  const[showModal, setShowModal] = useState(false)
   return (
     <>
       <View style={styles.topNav}>
@@ -52,7 +52,54 @@ const RightNav = props => {
           </Pressable>
         </View>
       </View>
-      
+      <Modal transparent={false} visible={showModal} animationType="slide">
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:"rgba(0,0,0,0.5)"}}>
+          <View style={styles.main}>
+            <View>
+              <Text style={styles.languagetext}>
+                Please select your language
+              </Text>
+              <Text style={styles.languagetext}>कृपया अपनी भाषा चुनें</Text>
+              <Text style={styles.languagetext}>আপনার ভাষা নির্বাচন করুন</Text>
+            </View>
+            <View style={{marginTop: 20}}>
+              <TouchableOpacity
+                style={styles.selectBox}
+                onPress={() => {
+                  setShowModal(false);
+                  setGlobalState({...globalState, selectedLanguage: 'english'});
+                }}>
+                <Text style={styles.textCenter}>English</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.selectBox}
+                onPress={() => {
+                  setShowModal(false);
+                  setGlobalState({...globalState, selectedLanguage: 'hindi'});
+                }}>
+                <Text style={styles.textCenter}>हिंदी </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.selectBox}
+                onPress={() => {
+                  setShowModal(false);
+                  setGlobalState({...globalState, selectedLanguage: 'bangla'});
+                }}>
+                <Text style={styles.textCenter}>বাংলা</Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                width: 250,
+                marginTop: -15,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}>
+              <Button title="Close" onPress={() => setShowModal(false)} />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };

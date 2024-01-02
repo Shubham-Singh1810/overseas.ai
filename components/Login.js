@@ -6,11 +6,12 @@ import {
   Button,
   Pressable,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 import Toast from 'react-native-toast-message';
-import {loginUsingPassword} from '../services/user.service';
+import {loginUsingPassword, loginUsingOtp} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = ({props}) => {
   const [loading, setLoading] = useState(false);
@@ -89,21 +90,47 @@ const Login = ({props}) => {
       });
     }
   };
-  const handleRouteToOtp =()=>{
+  function isValidIndianMobileNumber(mobileNumber) {
+    // Regular expression for Indian mobile numbers
+    const indianMobileNumberRegex = /^[6-9]\d{9}$/;
+  
+    // Check if the provided number matches the regex
+    return indianMobileNumberRegex.test(mobileNumber);
+  }
+  const storeDataInLocal = async (tempPhone) => {
+    try {
+      // Store phone number and OTP in local storage
+      await AsyncStorage.setItem('tempPhone', tempPhone);
+      console.log('Data stored successfully!');
+    } catch (error) {
+      console.error('Error storing data:', error);
+    }
+  };
+  const handleRouteToOtp = async()=>{
     const newErrors = {...errors};
-
     // Validate mobile_no length
     if (formData.empPhone.trim().length != 10) {
       newErrors.empPhone = 'Mobile no. must be of 10 digit';
       setErrors(newErrors);
     } else {
-      newErrors.empPhone = '';
-      setErrors(newErrors);
-      setFormData({
-        empPhone: '',
-        password: '',
-      })
-      props.navigation.navigate("Verify Otp")
+      if (isValidIndianMobileNumber(formData.empPhone)) {
+        newErrors.empPhone = '';
+        setErrors(newErrors);
+        try {
+          let response = await loginUsingOtp(formData);
+          if(response.data.msg =="Otp Sent Succefully."){
+            storeDataInLocal(formData.empPhone)
+              props.navigation.navigate("Verify Otp")
+          }
+        } catch (error) {
+          Alert("Something Went Wrong")
+        }
+      } else {
+        newErrors.empPhone = 'Please enter a valid number';
+        setErrors(newErrors);
+      }
+      
+      
     }
   }
   return (

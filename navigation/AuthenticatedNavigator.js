@@ -23,20 +23,21 @@ import BuildProfile from '../screens/BuildProfile';
 import YourHra from '../screens/YourHra';
 import GetCertificate from '../screens/GetCertificate';
 import NeedMigrationLoan from '../screens/NeedMigrationLoan';
-import Refer from '../screens/Refer';
 import CustomDrawerContent from './CustomDrawerContent';
 import Video from '../screens/Video';
 import FavrouiteJob from '../screens/FavrouiteJob';
 import AppliedJob from '../components/AppliedJob';
 
 import DetailedHra from '../screens/DetailedHra';
+import MedicalTest from '../screens/MedicalTest';
+import ApplyPcc from '../screens/ApplyPcc';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
         initialRouteName="Home"
-        drawerContent={props => <CustomDrawerContent {...props}/>}>
+        drawerContent={props => <CustomDrawerContent {...props} />}>
         <Drawer.Screen
           name="Feed"
           component={NewsFeed}
@@ -134,7 +135,46 @@ const AuthenticatedNavigator = () => {
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
-
+        <Drawer.Screen
+          name="Apply Medical Test"
+          component={MedicalTest}
+          options={({navigation, route}) => ({
+            title: 'Apply Medical Test',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Apply PCC"
+          component={ApplyPcc}
+          options={({navigation, route}) => ({
+            title: 'Apply PCC',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Get Certificate"
+          component={GetCertificate}
+          options={({navigation, route}) => ({
+            title: 'Get Certificate',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Need Migration Loan"
+          component={NeedMigrationLoan}
+          options={({navigation, route}) => ({
+            title: 'Need Migration Loan',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Contact Us"
+          component={Help}
+          options={({navigation, route}) => ({
+            title: 'Contact Us',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
         {/* Add more screens as needed */}
       </Drawer.Navigator>
     </NavigationContainer>
@@ -142,4 +182,3 @@ const AuthenticatedNavigator = () => {
 };
 
 export default AuthenticatedNavigator;
-

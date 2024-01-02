@@ -22,7 +22,9 @@ const MyProfile = (props) => {
         <View>
           <View style={{flexDirection: 'row', marginTop:25, justifyContent: 'center'}}>
             <Image
-              source={require('../images/hiredCondidate.png')}
+              source={{
+                uri: JSON.parse(globalState?.user)?.empData.empPhoto,
+              }}
               style={styles.myPic}
             />
              {/* <Image

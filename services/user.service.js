@@ -15,6 +15,28 @@ export const loginUsingPassword = async (formData) => {
   }
 };
 
+export const loginUsingOtp = async (formData) => {
+  try {
+    const response = await axios.post(BASE_URL+"otp-request" , formData);
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+export const verifyOtpForLogin = async (formData) => {
+  try {
+    const response = await axios.post(BASE_URL+"otp-login" , formData);
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
 // Function to make a POST request
 export const postApiData = async (endpoint, data) => {
   try {
