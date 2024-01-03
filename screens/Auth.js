@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import {useState} from 'react';
 import SignUp from '../components/SignUp';
 import Login from '../components/Login';
@@ -23,25 +23,6 @@ const Auth = props => {
       <View>
         {showLogin ? <Login props={props} /> : <SignUp props={props} />}
       </View>
-      {/* <View style={styles.footer}>
-        <Text style={styles.footerBigText}>
-          {translation.orContinueWithSocialAccount}
-        </Text>
-        <View style={styles.socialGroup}>
-          <Image
-            source={require('../images/facebookLogo.png')}
-            style={{marginRight: 10}}
-          />
-          <Image
-            source={require('../images/googleLogo.png')}
-            style={{marginLeft: 10}}
-          />
-        </View>
-        <Text style={styles.footerSmallText}>
-          {translation.bySigningUpLogginInIAgreeTo}{' '}
-          <Text style={{color: '#4E69FF'}}>{translation.termsCondition}.</Text>{' '}
-        </Text>
-      </View> */}
     </View>
   );
 };

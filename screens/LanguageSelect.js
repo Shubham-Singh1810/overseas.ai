@@ -20,6 +20,9 @@ const LanguageSelect = (props) => {
         <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("Login"); setGlobalState({...globalState, selectedLanguage:"bangla"})}}>
           <Text style={styles.textCenter}>বাংলা</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("CandidateDetails1"); }}>
+          <Text style={styles.textCenter}>Step 1</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

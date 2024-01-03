@@ -1,5 +1,4 @@
 import {StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
-import CandidateDetails from '../screens/CandidateDetails';
 import Home from '../screens/Home';
 import MyProfile from '../screens/MyProfile';
 import JobApplied from '../screens/JobApplied';

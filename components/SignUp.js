@@ -66,8 +66,7 @@ const SignUp = ({props}) => {
   const handleSubmit = () => {
     if (validateForm()) {
       // Form is valid, perform form submission logic here
-      
-      props.navigation.navigate("Verify Otp")
+      props.navigation.navigate("Candidate Details")
     } else {
       // Form is invalid, do something (e.g., display an error message)
       Toast.show({

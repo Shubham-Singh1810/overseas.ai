@@ -5,6 +5,7 @@ import Otp from '../screens/Otp';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useGlobalState} from '../GlobalProvider';
+import CandidateDetailsStep1 from '../screens/CandidateDetailsStep1';
 const LayoutNavigator = () => {
   const Stack = createNativeStackNavigator();
   const {translation} = useGlobalState();
@@ -21,6 +22,7 @@ const LayoutNavigator = () => {
             component={Auth}
           />
           <Stack.Screen name="Verify Otp" component={Otp} />
+          <Stack.Screen name="CandidateDetails1" component={CandidateDetailsStep1}  options={{ headerShown: false }}/>
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
