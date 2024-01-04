@@ -13,7 +13,7 @@ import {useGlobalState} from '../GlobalProvider';
 import Toast from 'react-native-toast-message';
 import {loginUsingPassword, loginUsingOtp} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const Login = ({props}) => {
+const Login = props => {
   const [loading, setLoading] = useState(false);
   const {translation, globalState, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
@@ -49,7 +49,7 @@ const Login = ({props}) => {
   const setUserData = async () => {
     try {
       let user = await AsyncStorage.getItem('user');
-      setGlobalState({...globalState, user:user})
+      setGlobalState({...globalState, user: user});
     } catch (error) {
       console.warn('error from global provider');
     }
@@ -60,8 +60,8 @@ const Login = ({props}) => {
       try {
         let response = await loginUsingPassword(formData);
         if (response.data.access_token) {
-         await AsyncStorage.setItem("user", JSON.stringify(response.data));
-         setUserData()
+          await AsyncStorage.setItem('user', JSON.stringify(response.data));
+          setUserData();
           setFormData({
             empPhone: '',
             password: '',
@@ -93,11 +93,11 @@ const Login = ({props}) => {
   function isValidIndianMobileNumber(mobileNumber) {
     // Regular expression for Indian mobile numbers
     const indianMobileNumberRegex = /^[6-9]\d{9}$/;
-  
+
     // Check if the provided number matches the regex
     return indianMobileNumberRegex.test(mobileNumber);
   }
-  const storeDataInLocal = async (tempPhone) => {
+  const storeDataInLocal = async tempPhone => {
     try {
       // Store phone number and OTP in local storage
       await AsyncStorage.setItem('tempPhone', tempPhone);
@@ -106,7 +106,7 @@ const Login = ({props}) => {
       console.error('Error storing data:', error);
     }
   };
-  const handleRouteToOtp = async()=>{
+  const handleRouteToOtp = async () => {
     const newErrors = {...errors};
     // Validate mobile_no length
     if (formData.empPhone.trim().length != 10) {
@@ -118,57 +118,67 @@ const Login = ({props}) => {
         setErrors(newErrors);
         try {
           let response = await loginUsingOtp(formData);
-          if(response.data.msg =="Otp Sent Succefully."){
-            storeDataInLocal(formData.empPhone)
-              props.navigation.navigate("Verify Otp")
+          if (response.data.msg == 'Otp Sent Succefully.') {
+            storeDataInLocal(formData.empPhone);
+            props.navigation.navigate('Verify Otp');
           }
         } catch (error) {
-          Alert("Something Went Wrong")
+          Alert('Something Went Wrong');
         }
       } else {
         newErrors.empPhone = 'Please enter a valid number';
         setErrors(newErrors);
       }
-      
-      
     }
-  }
+  };
   return (
-    <View style={styles.main}>
-      <Text style={styles.heading}>{translation.LogInToYourAccount}</Text>
-      <View>
-        <TextInput
-          placeholder={translation.mobileNumber}
-          style={styles.input}
-          onChangeText={text => setFormData({...formData, empPhone: text})}
-          value={formData.empPhone}
-        />
-        <Text style={styles.errorMessage}>{errors.empPhone}</Text>
-        <TextInput
-          placeholder={translation.password}
-          style={styles.input}
-          onChangeText={text => setFormData({...formData, password: text})}
-          value={formData.password}
-          secureTextEntry={true}
-        />
-        <Text style={styles.errorMessage}>{errors.password}</Text>
-        {loading ? (
-          <ActivityIndicator size="large" color="gray" />
-        ) : (
-          <View>
-            <View style={{flexDirection: 'row'}}>
-              {/* <Text style={styles.smallText}>
+    <View style={styles.authMain}>
+      <View style={styles.main}>
+        <Text style={styles.heading}>{translation.LogInToYourAccount}</Text>
+        <View>
+          <TextInput
+            placeholder={translation.mobileNumber}
+            style={styles.input}
+            onChangeText={text => setFormData({...formData, empPhone: text})}
+            value={formData.empPhone}
+          />
+          <Text style={styles.errorMessage}>{errors.empPhone}</Text>
+          <TextInput
+            placeholder={translation.password}
+            style={styles.input}
+            onChangeText={text => setFormData({...formData, password: text})}
+            value={formData.password}
+            secureTextEntry={true}
+          />
+          <Text style={styles.errorMessage}>{errors.password}</Text>
+          {loading ? (
+            <ActivityIndicator size="large" color="gray" />
+          ) : (
+            <View>
+              <View style={{flexDirection: 'row'}}>
+                {/* <Text style={styles.smallText}>
                 {translation.forgetPassword}?
               </Text> */}
-              <Text style={[styles.sendOtp]} onPress={handleRouteToOtp}>Login via OTP verification</Text>
+                <Text style={[styles.sendOtp]} onPress={handleRouteToOtp}>
+                  Login via OTP verification
+                </Text>
+              </View>
+              <Pressable style={styles.btn} onPress={handleSubmit}>
+                <Text style={styles.btnText}>{translation.logIn}</Text>
+              </Pressable>
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:"center", marginTop:20}}>
+                <Text>Don't have any account?</Text>
+                <Pressable
+                  style={{borderBottomColor: '#5F90CA',borderBottomWidth:1, marginLeft:4, paddingHorizontal:5}}
+                  onPress={() => props.navigation.navigate("SignUpCom")}>
+                  <Text>Sign Up</Text>
+                </Pressable>
+              </View>
             </View>
-            <Pressable style={styles.btn} onPress={handleSubmit}>
-              <Text style={styles.btnText}>{translation.logIn}</Text>
-            </Pressable>
-          </View>
-        )}
+          )}
+        </View>
+        <Toast ref={ref => Toast.setRef(ref)} />
       </View>
-      <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );
 };
@@ -176,8 +186,28 @@ const Login = ({props}) => {
 export default Login;
 
 const styles = StyleSheet.create({
+  authMain: {
+    backgroundColor: '#F5F5FA',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  authNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  navItem: {
+    color: '#000',
+    fontFamily: 'Noto Sans',
+    fontSize: 20,
+  },
+  borderBottom: {
+    borderBottomWidth: 2,
+    borderColor: '#5F90CA',
+  },
   main: {
-    marginTop: 50,
+    // marginTop: 50,
     width: 270,
   },
   heading: {

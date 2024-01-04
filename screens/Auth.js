@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Pressable, Button} from 'react-native';
 import {useState} from 'react';
 import SignUp from '../components/SignUp';
 import Login from '../components/Login';
@@ -9,16 +9,16 @@ const Auth = props => {
   return (
     <View style={styles.main}>
       <View style={styles.authNav}>
-        <TouchableOpacity onPress={() => {setShowLogin(false)}}>
+        <Pressable onPress={() => props.navigation.navigate("SignUpCom")}>
           <Text style={[styles.navItem, !showLogin && styles.borderBottom]}>
             {translation.signUp}
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setShowLogin(true)}>
+        </Pressable>
+        <Pressable onPress={() => props.navigation.navigate("LoginCom")}>
           <Text style={[styles.navItem, showLogin && styles.borderBottom]}>
             {translation.logIn}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View>
         {showLogin ? <Login props={props} /> : <SignUp props={props} />}

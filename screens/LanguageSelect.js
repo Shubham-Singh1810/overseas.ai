@@ -11,13 +11,13 @@ const LanguageSelect = (props) => {
         <Text style={styles.languagetext}>আপনার ভাষা নির্বাচন করুন</Text>
       </View>
       <View style={{marginTop:20}}>
-        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("Login"); setGlobalState({...globalState, selectedLanguage:"english"})}}>
+        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("LoginCom"); setGlobalState({...globalState, selectedLanguage:"english"})}}>
           <Text style={styles.textCenter}>English</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("Login"); setGlobalState({...globalState, selectedLanguage:"hindi"})}}>
+        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("LoginCom"); setGlobalState({...globalState, selectedLanguage:"hindi"})}}>
           <Text style={styles.textCenter}>हिंदी </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("Login"); setGlobalState({...globalState, selectedLanguage:"bangla"})}}>
+        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("LoginCom"); setGlobalState({...globalState, selectedLanguage:"bangla"})}}>
           <Text style={styles.textCenter}>বাংলা</Text>
         </TouchableOpacity>
       </View>

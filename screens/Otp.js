@@ -9,11 +9,18 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import {verifyOtpForLogin, loginUsingOtp} from '../services/user.service';
+import {
+  verifyOtpForLogin,
+  loginUsingOtp,
+  verifyOtpForSignUp,
+  signUp,
+} from '../services/user.service';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 const Otp = props => {
+  const {params} = props.route;
+  const [tempUser, setTempUser] = useState(params ? params.tempUser : null);
   const {translation, globalState, setGlobalState} = useGlobalState();
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(30);
@@ -36,45 +43,87 @@ const Otp = props => {
   const verifyOtp = async otp => {
     setLoading(true);
     try {
-      let response = await verifyOtpForLogin({
-        empPhone: await AsyncStorage.getItem('tempPhone'),
-        otp: otp,
-      });
-      if (response.data.access_token) {
-        await AsyncStorage.setItem('user', JSON.stringify(response.data));
-        setUserData();
-      } else {
-        setLoading(false);
-        Toast.show({
-          type: 'error', // 'success', 'error', 'info', or any custom type you define
-          // position: 'top',
-          text1: 'Wrong OTP',
-          visibilityTime: 3000, // Duration in milliseconds
+      let response;
+      if (tempUser) {
+        response = verifyOtpForSignUp({
+          empPhone: tempUser.mobile_no,
+          empName: tempUser.name,
+          password: tempUser.password,
+          otp: otp,
         });
+        if (response.data.access_token) {
+          console.log(response.data)
+        } else {
+          setLoading(false);
+          Toast.show({
+            type: 'error', // 'success', 'error', 'info', or any custom type you define
+            // position: 'top',
+            text1: 'Wrong OTP',
+            visibilityTime: 3000, // Duration in milliseconds
+          });
+        }
+      } 
+      else {
+        response = await verifyOtpForLogin({
+          empPhone: await AsyncStorage.getItem('tempPhone'),
+          otp: otp,
+        });
+        console.log(response)
+        if (response.data.access_token) {
+          await AsyncStorage.setItem('user', JSON.stringify(response.data));
+          setUserData();
+        } else {
+          setLoading(false);
+          Toast.show({
+            type: 'error', // 'success', 'error', 'info', or any custom type you define
+            // position: 'top',
+            text1: 'Wrong OTP',
+            visibilityTime: 3000, // Duration in milliseconds
+          });
+        }
       }
     } catch (error) {
       setLoading(false);
       Toast.show({
-        type: 'error', 
+        type: 'error',
         // position: 'top',
-        text1: 'Something went wrong56',
-        visibilityTime: 3000, 
+        text1: 'Something went wrong',
+        visibilityTime: 3000,
       });
     }
   };
   const resendOtp = async () => {
     try {
-      let response = await loginUsingOtp({empPhone: await AsyncStorage.getItem('tempPhone')});
-      if(response.data.msg =="Otp Sent Succefully."){
-        Toast.show({
-          type: 'success', 
-          // position: 'top',
-          text1: 'OTP resend successfully',
-          visibilityTime: 3000, 
+      if (tempUser) {
+        let response = await signUp({
+          empPhone: tempUser.mobile_no,
         });
-        setTimer(30)
-        startTimer()
+        if (response.data.msg == 'Otp Sent Succefully.') {
+          Toast.show({
+            type: 'success',
+            // position: 'top',
+            text1: 'OTP resend successfully',
+            visibilityTime: 3000,
+          });
+          setTimer(30);
+          startTimer();
+        }
+      } else {
+        let response = await loginUsingOtp({
+          empPhone: await AsyncStorage.getItem('tempPhone'),
+        });
+        if (response.data.msg == 'Otp Sent Succefully.') {
+          Toast.show({
+            type: 'success',
+            // position: 'top',
+            text1: 'OTP resend successfully',
+            visibilityTime: 3000,
+          });
+          setTimer(30);
+          startTimer();
+        }
       }
+      setLoading(false);
     } catch (error) {}
   };
   useEffect(() => {
@@ -109,14 +158,17 @@ const Otp = props => {
           <Text>{timer} sec</Text>
         )}
       </Text>
-      {timer==0 && <View style={styles.optionGroup}>
-        <Text style={styles.timerText}>Didn’t get OTP?</Text>
-        <Pressable onPress={()=>resendOtp()}>
+      {timer == 0 && (
+        <View style={styles.optionGroup}>
+          <Text style={styles.timerText}>Didn’t get OTP?</Text>
+          <Pressable onPress={resendOtp}>
+            <Text style={[styles.timerText, styles.borderBottom]}>
+              Resend OTP
+            </Text>
+          </Pressable>
+        </View>
+      )}
 
-        <Text style={[styles.timerText, styles.borderBottom]} >Resend OTP</Text>
-        </Pressable>
-      </View>}
-      
       <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );

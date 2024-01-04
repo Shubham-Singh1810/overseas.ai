@@ -6,6 +6,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useGlobalState} from '../GlobalProvider';
 import CandidateDetailsStep1 from '../screens/CandidateDetailsStep1';
+import Login from '../components/Login';
+import SignUp from '../components/SignUp';
 const LayoutNavigator = () => {
   const Stack = createNativeStackNavigator();
   const {translation} = useGlobalState();
@@ -22,11 +24,24 @@ const LayoutNavigator = () => {
             component={Auth}
           />
           <Stack.Screen name="Verify Otp" component={Otp} />
-          <Stack.Screen name="CandidateDetails1" component={CandidateDetailsStep1}  options={{ headerShown: false }}/>
+          <Stack.Screen
+            name="CandidateDetails1"
+            component={CandidateDetailsStep1}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="LoginCom"
+            component={Login}
+            options={{title: 'Login'}}
+          />
+          <Stack.Screen
+            name="SignUpCom"
+            component={SignUp}
+            options={{title: 'Sign Up'}}
+          />
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
-    
   );
 };
 
@@ -35,6 +50,5 @@ export default LayoutNavigator;
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-
   },
 });

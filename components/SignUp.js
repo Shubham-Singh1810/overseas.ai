@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import Toast from 'react-native-toast-message';
 import {useGlobalState} from '../GlobalProvider';
 import { getApiData, postApiData, signUp } from '../services/user.service';
-const SignUp = ({props}) => {
+const SignUp = (props) => {
   const {translation} = useGlobalState();
   const[formData, setFormData] = useState({
     name:"",
@@ -66,10 +66,25 @@ const SignUp = ({props}) => {
   const handleSubmit = async() => {
     if (validateForm()) {
       try {
-        let response = await signUp({empPhone:mobile_no});
-        console.log("response",response)
-      } catch (error) {
+        let response = await signUp({empPhone:formData.mobile_no});
+        if(response.data.msg=="Otp Sent Successfully."){
+          props.navigation.navigate("Verify Otp", {tempUser:formData})
+        }else{
+          Toast.show({
+            type: "error", // 'success', 'error', 'info', or any custom type you define
+            // position: 'top',
+            text1: "User alredy registered",
+            visibilityTime: 3000, // Duration in milliseconds
+          });
+        }
         
+      } catch (error) {
+        Toast.show({
+          type: "error", // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: "Something went wrong",
+          visibilityTime: 3000, // Duration in milliseconds
+        });
       }
     } else {
       // Form is invalid, do something (e.g., display an error message)
@@ -83,31 +98,62 @@ const SignUp = ({props}) => {
   };
   
   return (
-    <View style={styles.main}>
+    <View style={styles.authMain}>
+      
+      <View style={styles.main}>
       <Text style={styles.heading}>{translation.createNewAccount}</Text>
       <View>
         <TextInput placeholder={translation.name} style={styles.input} onChangeText={(text) => setFormData({ ...formData, name: text })}/>
         <Text style={styles.errorMessage}>{errors.name}</Text>
-        <TextInput placeholder={translation.mobileNumber} style={styles.input} onChangeText={(text) => setFormData({ ...formData, mobile_no: text })}/>
+        <TextInput  placeholder={translation.mobileNumber} style={styles.input} onChangeText={(text) => setFormData({ ...formData, mobile_no: text })}/>
         <Text style={styles.errorMessage}>{errors.mobile_no}</Text>
-        <TextInput placeholder={translation.enterPassword} style={styles.input} onChangeText={(text) => setFormData({ ...formData, password: text })}/>
-        <Text style={styles.errorMessage}>{errors.password}</Text>
-        <TextInput placeholder={translation.reEnterPassword} style={styles.input} onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}/>
+        <TextInput secureTextEntry={true} placeholder={translation.enterPassword} style={styles.input} onChangeText={(text) => setFormData({ ...formData, password: text })}/>
+        <Text  style={styles.errorMessage}>{errors.password}</Text>
+        <TextInput secureTextEntry={true} placeholder={translation.reEnterPassword} style={styles.input} onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}/>
         <Text style={styles.errorMessage}>{errors.confirmPassword}</Text>
         <Pressable style={styles.btn} onPress={handleSubmit}>
           <Text style={styles.btnText}>{translation.signUp}</Text>
         </Pressable>
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:"center", marginTop:20}}>
+                <Text>Already have an account? </Text>
+                <Pressable
+                  style={{borderBottomColor: '#5F90CA',borderBottomWidth:1, marginLeft:4, paddingHorizontal:5}}
+                  onPress={() => props.navigation.navigate("LoginCom")}>
+                  <Text>Login</Text>
+                </Pressable>
+              </View>
       </View>
       <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
+      </View>
+    
   );
 };
 
 export default SignUp;
 
 const styles = StyleSheet.create({
+  authMain: {
+    backgroundColor: '#F5F5FA',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  authNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  navItem: {
+    color: '#000',
+    fontFamily: 'Noto Sans',
+    fontSize: 20,
+  },
+  borderBottom: {
+    borderBottomWidth: 2,
+    borderColor: '#5F90CA',
+  },
   main: {
-    marginTop: 50,
     width: 270,
   },
   heading: {
