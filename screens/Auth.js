@@ -9,7 +9,7 @@ const Auth = props => {
   return (
     <View style={styles.main}>
       <View style={styles.authNav}>
-        <TouchableOpacity onPress={() => setShowLogin(false)}>
+        <TouchableOpacity onPress={() => {setShowLogin(false)}}>
           <Text style={[styles.navItem, !showLogin && styles.borderBottom]}>
             {translation.signUp}
           </Text>

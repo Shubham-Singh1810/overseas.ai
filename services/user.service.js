@@ -37,16 +37,18 @@ export const verifyOtpForLogin = async (formData) => {
   }
 };
 
-// export const signUp = async (formData) => {
-//   try {
-//     const response = await axios.post(BASE_URL+"" , formData);
-//     return (response);
-//   } catch (error) {
-//     // Handle error (e.g., log or throw an error)
-//     console.error('Error fetching data:', error);
-//     throw error;
-//   }
-// };
+export const signUp = async (formData) => {
+  try {
+    const response = await axios.post(BASE_URL+"get-otp",{
+      params: formData,
+    } );
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
 // Function to make a POST request
 export const postApiData = async (endpoint, data) => {
   try {

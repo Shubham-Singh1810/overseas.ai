@@ -9,7 +9,7 @@ import {
 import React, { useState } from 'react';
 import Toast from 'react-native-toast-message';
 import {useGlobalState} from '../GlobalProvider';
-import { getApiData, postApiData } from '../services/user.service';
+import { getApiData, postApiData, signUp } from '../services/user.service';
 const SignUp = ({props}) => {
   const {translation} = useGlobalState();
   const[formData, setFormData] = useState({
@@ -63,10 +63,14 @@ const SignUp = ({props}) => {
     setErrors(newErrors);
     return valid;
   };
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (validateForm()) {
-      // Form is valid, perform form submission logic here
-      props.navigation.navigate("Candidate Details")
+      try {
+        let response = await signUp({empPhone:mobile_no});
+        console.log("response",response)
+      } catch (error) {
+        
+      }
     } else {
       // Form is invalid, do something (e.g., display an error message)
       Toast.show({
