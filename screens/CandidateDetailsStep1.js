@@ -297,7 +297,7 @@ const CandidateDetailsStep1 = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{fontWeight: '500', fontSize: 20}}>
                 Language Known
               </Text>
               <TouchableOpacity

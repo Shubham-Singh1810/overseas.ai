@@ -51,8 +51,9 @@ const Otp = props => {
           password: tempUser.password,
           otp: otp,
         });
-        if (response.data.access_token) {
-          console.log(response.data)
+        if (response) {
+          console.log(response)
+          props.navigation.navigate("CandidateDetails1")
         } else {
           setLoading(false);
           Toast.show({
@@ -68,7 +69,6 @@ const Otp = props => {
           empPhone: await AsyncStorage.getItem('tempPhone'),
           otp: otp,
         });
-        console.log(response)
         if (response.data.access_token) {
           await AsyncStorage.setItem('user', JSON.stringify(response.data));
           setUserData();

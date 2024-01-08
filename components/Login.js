@@ -50,6 +50,10 @@ const Login = props => {
     try {
       let user = await AsyncStorage.getItem('user');
       setGlobalState({...globalState, user: user});
+      setFormData({
+        empPhone: '',
+        password: '',
+      });
     } catch (error) {
       console.warn('error from global provider');
     }
@@ -62,10 +66,7 @@ const Login = props => {
         if (response.data.access_token) {
           await AsyncStorage.setItem('user', JSON.stringify(response.data));
           setUserData();
-          setFormData({
-            empPhone: '',
-            password: '',
-          });
+          
           // props.navigation.navigate('Home');
           setLoading(false);
         } else {

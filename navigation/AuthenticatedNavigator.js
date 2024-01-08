@@ -58,7 +58,7 @@ const AuthenticatedNavigator = () => {
           name="Improve Profile"
           component={BuildProfile}
           options={({navigation, route}) => ({
-            title: 'Improve Profile',
+            title: 'Improve Your Profile',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

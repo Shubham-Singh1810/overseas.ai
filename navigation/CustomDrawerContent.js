@@ -212,7 +212,7 @@ const CustomDrawerContent = ({navigation}) => {
                       color: '#334B5E',
                       fontSize: 16,
                       fontWeight: '500',
-                      marginVertical: 10,
+                      marginVertical: 20,
                     }}>
                     {v.title}
                   </Text>

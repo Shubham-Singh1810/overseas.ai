@@ -7,19 +7,31 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import {useState} from 'react';
 
-const DetailedHra = () => {
+const DetailedHra = props => {
+  const {params} = props.route;
+  const[showJobDetails, setShowJobDetails]=useState(false)
   return (
     <ScrollView style={styles.main}>
       <View style={styles.flex}>
         <Image
-          source={require('../images/circle.png')}
-          style={{marginRight: 12}}
+          source={{
+            uri: params.logoUrl,
+          }}
+          style={{
+            height: 100,
+            width: 100,
+            borderRadius: 50,
+            resizeMode: 'stretch',
+            marginRight: 15,
+            borderWidth: 0.5,
+            borderColor: 'gray',
+          }}
         />
         <View>
           <View style={[styles.flex, {alignItems: 'center'}]}>
-            <Text style={styles.hraName}>Ambey International</Text>
+            <Text style={styles.hraName}>{params?.title}</Text>
             <Text style={styles.countryName}>(Qatar)</Text>
           </View>
           <View style={[styles.flex, {alignItems: 'center'}]}>
@@ -27,11 +39,11 @@ const DetailedHra = () => {
             <Text style={styles.countryName}>followers</Text>
           </View>
           <View style={[styles.flex, {alignItems: 'center'}]}>
-            <Text style={styles.lightText}>5 years in business</Text>
+            <Text style={styles.lightText}>Since {params.since}</Text>
             <View style={[styles.flex]}>
-              <Image source={require('../images/starIcon.png')} />
-              <Image source={require('../images/starIcon.png')} />
-              <Image source={require('../images/starIcon.png')} />
+              {params.ratting.map((v, i) => {
+                return <Image source={require('../images/starIcon.png')} />;
+              })}
             </View>
           </View>
           <View style={[styles.flex]}>
@@ -72,15 +84,22 @@ const DetailedHra = () => {
           style={[
             styles.flex,
             styles.tableItemPadding,
-            styles.borderBottom,
+             styles.borderBottom,
             {justifyContent: 'space-between'},
           ]}>
-          <Text style={styles.tableText}>Job titles served</Text>
-          <View style={[styles.flex]}>
-            <Text style={[styles.tableText, {marginRight: 5}]}>Cook ,</Text>
-            <Text style={styles.tableText}>Housekeeper</Text>
-          </View>
+          <Text style={styles.tableText}>Industries Served</Text>
+          <TouchableOpacity onPress={()=>setShowJobDetails(!showJobDetails)}>
+            <Image source={!showJobDetails? require('../images/downArrow.png') : require('../images/upArrow.png')} />
+          </TouchableOpacity>
         </View>
+        {showJobDetails && params.industriesServed.map((v, i) => {
+          return (
+            <View style={[styles.tableItemPadding, styles.borderBottom,{backgroundColor:"#fff"}]}>
+              <Text style={styles.tableText}>{v}</Text>
+            </View>
+          );
+        })}
+
         <View
           style={[
             styles.flex,
@@ -93,6 +112,7 @@ const DetailedHra = () => {
           </Text>
           <Text style={[styles.tableText]}>35</Text>
         </View>
+
         <View
           style={[
             styles.flex,
@@ -160,13 +180,28 @@ const DetailedHra = () => {
         </ScrollView>
       </View>
       <View>
-        <Text style={[styles.hraName, {marginBottom:8}]}>Rate HRA</Text>
+        <Text style={[styles.hraName, {marginBottom: 8}]}>Rate HRA</Text>
         <View style={styles.flex}>
-          <Image source={require("../images/whiteStar.png")} style={{marginRight:3}}/>
-          <Image source={require("../images/whiteStar.png")} style={{marginRight:3}}/>
-          <Image source={require("../images/whiteStar.png")} style={{marginRight:3}}/>
-          <Image source={require("../images/whiteStar.png")} style={{marginRight:3}}/>
-          <Image source={require("../images/whiteStar.png")} style={{marginRight:3}}/>
+          <Image
+            source={require('../images/whiteStar.png')}
+            style={{marginRight: 3}}
+          />
+          <Image
+            source={require('../images/whiteStar.png')}
+            style={{marginRight: 3}}
+          />
+          <Image
+            source={require('../images/whiteStar.png')}
+            style={{marginRight: 3}}
+          />
+          <Image
+            source={require('../images/whiteStar.png')}
+            style={{marginRight: 3}}
+          />
+          <Image
+            source={require('../images/whiteStar.png')}
+            style={{marginRight: 3}}
+          />
         </View>
       </View>
     </ScrollView>
