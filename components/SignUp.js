@@ -6,30 +6,30 @@ import {
   Button,
   Pressable,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {useGlobalState} from '../GlobalProvider';
-import { getApiData, postApiData, signUp } from '../services/user.service';
-const SignUp = (props) => {
+import {getApiData, postApiData, signUp} from '../services/user.service';
+const SignUp = props => {
   const {translation} = useGlobalState();
-  const[formData, setFormData] = useState({
-    name:"",
-    mobile_no:"",
-    password:"",
-    confirmPassword:""
-  })
+  const [formData, setFormData] = useState({
+    name: '',
+    mobile_no: '',
+    password: '',
+    confirmPassword: '',
+  });
   const [errors, setErrors] = useState({
-    name:"",
+    name: '',
     mobile_no: '',
     password: '',
     confirmPassword: '',
   });
   const validateForm = () => {
     let valid = true;
-    const newErrors = { ...errors };
-    
+    const newErrors = {...errors};
+
     // Validate Name
-    if (formData.name.trim() == "") {
+    if (formData.name.trim() == '') {
       newErrors.name = 'Name is a required field';
       valid = false;
     } else {
@@ -42,7 +42,6 @@ const SignUp = (props) => {
     } else {
       newErrors.mobile_no = '';
     }
-    
 
     // Validate password
     if (formData.password.length < 6) {
@@ -53,7 +52,7 @@ const SignUp = (props) => {
     }
 
     // Validate confirm password
-    if (formData.confirmPassword!=formData.password) {
+    if (formData.confirmPassword != formData.password) {
       newErrors.confirmPassword = 'Confirm Password does not match';
       valid = false;
     } else {
@@ -63,70 +62,98 @@ const SignUp = (props) => {
     setErrors(newErrors);
     return valid;
   };
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     if (validateForm()) {
       try {
-        let response = await signUp({empPhone:formData.mobile_no});
-        if(response.data.msg=="Otp Sent Successfully."){
-          props.navigation.navigate("Verify Otp", {tempUser:formData})
-        }else{
+        let response = await signUp({empPhone: formData.mobile_no});
+        if (response.data.msg == 'Otp Sent Successfully.') {
+          props.navigation.navigate('Verify Otp', {tempUser: formData});
+        } else {
           Toast.show({
-            type: "error", // 'success', 'error', 'info', or any custom type you define
+            type: 'error', // 'success', 'error', 'info', or any custom type you define
             // position: 'top',
-            text1: "User alredy registered",
+            text1: 'User alredy registered',
             visibilityTime: 3000, // Duration in milliseconds
           });
         }
-        
       } catch (error) {
         Toast.show({
-          type: "error", // 'success', 'error', 'info', or any custom type you define
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
-          text1: "Something went wrong",
+          text1: 'Something went wrong',
           visibilityTime: 3000, // Duration in milliseconds
         });
       }
     } else {
       // Form is invalid, do something (e.g., display an error message)
       Toast.show({
-        type: "error", // 'success', 'error', 'info', or any custom type you define
+        type: 'error', // 'success', 'error', 'info', or any custom type you define
         // position: 'top',
-        text1: "Form validation failed",
+        text1: 'Form validation failed',
         visibilityTime: 3000, // Duration in milliseconds
       });
     }
   };
-  
+
   return (
     <View style={styles.authMain}>
-      
       <View style={styles.main}>
-      <Text style={styles.heading}>{translation.createNewAccount}</Text>
-      <View>
-        <TextInput placeholder={translation.name} style={styles.input} onChangeText={(text) => setFormData({ ...formData, name: text })}/>
-        <Text style={styles.errorMessage}>{errors.name}</Text>
-        <TextInput  placeholder={translation.mobileNumber} style={styles.input} onChangeText={(text) => setFormData({ ...formData, mobile_no: text })}/>
-        <Text style={styles.errorMessage}>{errors.mobile_no}</Text>
-        <TextInput secureTextEntry={true} placeholder={translation.enterPassword} style={styles.input} onChangeText={(text) => setFormData({ ...formData, password: text })}/>
-        <Text  style={styles.errorMessage}>{errors.password}</Text>
-        <TextInput secureTextEntry={true} placeholder={translation.reEnterPassword} style={styles.input} onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}/>
-        <Text style={styles.errorMessage}>{errors.confirmPassword}</Text>
-        <Pressable style={styles.btn} onPress={handleSubmit}>
-          <Text style={styles.btnText}>{translation.signUp}</Text>
-        </Pressable>
-        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:"center", marginTop:20}}>
-                <Text>Already have an account? </Text>
-                <Pressable
-                  style={{borderBottomColor: '#5F90CA',borderBottomWidth:1, marginLeft:4, paddingHorizontal:5}}
-                  onPress={() => props.navigation.navigate("LoginCom")}>
-                  <Text>Login</Text>
-                </Pressable>
-              </View>
+        <Text style={styles.heading}>{translation.createNewAccount}</Text>
+        <View>
+          <TextInput
+            placeholder={translation.name}
+            style={styles.input}
+            onChangeText={text => setFormData({...formData, name: text})}
+          />
+          <Text style={styles.errorMessage}>{errors.name}</Text>
+          <TextInput
+            placeholder={translation.mobileNumber}
+            style={styles.input}
+            onChangeText={text => setFormData({...formData, mobile_no: text})}
+          />
+          <Text style={styles.errorMessage}>{errors.mobile_no}</Text>
+          <TextInput
+            secureTextEntry={true}
+            placeholder={translation.enterPassword}
+            style={styles.input}
+            onChangeText={text => setFormData({...formData, password: text})}
+          />
+          <Text style={styles.errorMessage}>{errors.password}</Text>
+          <TextInput
+            secureTextEntry={true}
+            placeholder={translation.reEnterPassword}
+            style={styles.input}
+            onChangeText={text =>
+              setFormData({...formData, confirmPassword: text})
+            }
+          />
+          <Text style={styles.errorMessage}>{errors.confirmPassword}</Text>
+          <Pressable style={styles.btn} onPress={handleSubmit}>
+            <Text style={styles.btnText}>{translation.signUp}</Text>
+          </Pressable>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
+            <Text>Already have an account? </Text>
+            <Pressable
+              style={{
+                borderBottomColor: '#5F90CA',
+                borderBottomWidth: 1,
+                marginLeft: 4,
+                paddingHorizontal: 5,
+              }}
+              onPress={() => props.navigation.navigate('LoginCom')}>
+              <Text>Login</Text>
+            </Pressable>
+          </View>
+        </View>
+        <Toast ref={ref => Toast.setRef(ref)} />
       </View>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
-      </View>
-    
   );
 };
 
@@ -184,11 +211,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
-  errorMessage:{
+  errorMessage: {
     color: 'red',
     fontFamily: 'Noto Sans',
     fontSize: 10,
-    position:"relative",
-    bottom:15
-  }
+    position: 'relative',
+    bottom: 15,
+  },
 });

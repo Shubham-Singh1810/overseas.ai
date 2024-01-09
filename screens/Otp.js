@@ -45,13 +45,13 @@ const Otp = props => {
     try {
       let response;
       if (tempUser) {
-        response = verifyOtpForSignUp({
+        response = await verifyOtpForSignUp({
           empPhone: tempUser.mobile_no,
           empName: tempUser.name,
           password: tempUser.password,
           otp: otp,
         });
-        if (response) {
+        if (response.data.access_token) {
           console.log(response)
           props.navigation.navigate("CandidateDetails1")
         } else {

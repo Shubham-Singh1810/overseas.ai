@@ -50,7 +50,6 @@ export const signUp = async (formData) => {
   }
 };
 export const verifyOtpForSignUp = async (formData) => {
-  console.log(formData)
   try {
     const response = await axios.post(BASE_URL+"resgister-person-step1",formData );
     return (response);

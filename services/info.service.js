@@ -38,6 +38,17 @@ export const getOccupations = async data => {
   }
 };
 
+// Function to get  occupation wise skill
+export const getSkillsByOccuId = async (occuId) => {
+  try {
+    const response = await axios.get(BASE_URL + 'get-occupations/'+ occuId);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+
 // Function to get job occupation list
 export const getCountries = async data => {
   try {

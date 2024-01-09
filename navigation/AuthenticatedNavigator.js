@@ -30,6 +30,7 @@ import AppliedJob from '../components/AppliedJob';
 import DetailedHra from '../screens/DetailedHra';
 import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
+import Support from '../screens/Support';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (
@@ -171,6 +172,14 @@ const AuthenticatedNavigator = () => {
           component={Help}
           options={({navigation, route}) => ({
             title: 'Contact Us',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Support"
+          component={Support}
+          options={({navigation, route}) => ({
+            title: 'Support',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

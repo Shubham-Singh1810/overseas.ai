@@ -34,7 +34,6 @@ const Home = props => {
     try {
       let response = await getOccupations();
       setOccupations(response?.occupation);
-      console.log('line 42', response);
     } catch (error) {}
   };
   const getCountryList = async () => {
