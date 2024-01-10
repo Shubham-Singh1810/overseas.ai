@@ -52,7 +52,7 @@ const Otp = props => {
           otp: otp,
         });
         if (response.data.access_token) {
-          console.log(response)
+          await AsyncStorage.setItem('signUpUser', JSON.stringify(response.data));
           props.navigation.navigate("CandidateDetails1")
         } else {
           setLoading(false);
@@ -75,10 +75,9 @@ const Otp = props => {
         } else {
           setLoading(false);
           Toast.show({
-            type: 'error', // 'success', 'error', 'info', or any custom type you define
-            // position: 'top',
+            type: 'error', 
             text1: 'Wrong OTP',
-            visibilityTime: 3000, // Duration in milliseconds
+            visibilityTime: 3000,
           });
         }
       }

@@ -23,7 +23,7 @@ const MyProfile = (props) => {
           <View style={{flexDirection: 'row', marginTop:25, justifyContent: 'center'}}>
             <Image
               source={{
-                uri: JSON.parse(globalState?.user)?.empData.empPhoto,
+                uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
               }}
               style={styles.myPic}
             />
@@ -49,13 +49,13 @@ const MyProfile = (props) => {
             </View>
           </View>
           <View style={{flexDirection:"row",  alignItems:"center", justifyContent:"center"}}>
-            <Text style={styles.name}>{JSON.parse(globalState?.user)?.user.name}</Text>
+            <Text style={styles.name}>{JSON.parse(globalState?.user)?.user?.name}</Text>
             <Image source={require('../images/starIcon.png')} style={{marginBottom:5}}/>
           </View>
-          <Text style={[styles.welderText]}>{JSON.parse(globalState?.user)?.empData.empOccupationModel.occupation}</Text>
+          <Text style={[styles.welderText]}>{JSON.parse(globalState?.user)?.empData?.empOccupationModel?.occupation}</Text>
           <View style={{flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
             <Image source={require('../images/greenPhoneIcon.png')} style={{marginRight:8}}/>
-            <Text style={styles.welderText}>{JSON.parse(globalState?.user)?.user.phone}</Text>
+            <Text style={styles.welderText}>{JSON.parse(globalState?.user)?.user?.phone}</Text>
           </View>
           <View style={{flexDirection:"row", justifyContent:"center",}}>
           <Text style={styles.clickText}>{translation.clickToPlayVideoResume}</Text>

@@ -131,7 +131,7 @@ const CustomDrawerContent = ({navigation}) => {
             style={{flexDirection: 'row', alignItems: 'center', margin: 10}}>
             <Image
               source={{
-                uri: JSON.parse(globalState?.user)?.empData.empPhoto,
+                uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
               }}
               style={{height: 40, width: 40, borderRadius: 20, marginRight: 10}}
             />

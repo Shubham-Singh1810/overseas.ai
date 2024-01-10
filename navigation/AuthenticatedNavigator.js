@@ -31,6 +31,7 @@ import DetailedHra from '../screens/DetailedHra';
 import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
 import Support from '../screens/Support';
+import CandidateDetails2 from '../screens/CandidateDetails2';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (

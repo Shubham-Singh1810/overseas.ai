@@ -3,6 +3,8 @@ import axios from 'axios';
 // Define your API base URL
 const BASE_URL = "https://overseas.ai/api/";
 
+
+
 // Function to make a GET request
 export const loginUsingPassword = async (formData) => {
   try {
@@ -51,7 +53,8 @@ export const signUp = async (formData) => {
 };
 export const verifyOtpForSignUp = async (formData) => {
   try {
-    const response = await axios.post(BASE_URL+"resgister-person-step1",formData );
+    
+    const response = await axios.post(BASE_URL+"resgister-person-step1",formData);
     return (response);
   } catch (error) {
     // Handle error (e.g., log or throw an error)
@@ -60,10 +63,30 @@ export const verifyOtpForSignUp = async (formData) => {
   }
 };
 // Function to make a POST request
-export const postApiData = async (endpoint, data) => {
+export const registerUserStep1 = async (formData, access_token) => {
+  console.log(formData)
   try {
-    const response = await axios.post(`${BASE_URL}/${endpoint}`, data);
+    const response = await axios.post(BASE_URL+"user-profile-complete-step2", formData ,{
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
     return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+export const addExperienceStep2 = async (formData, access_token) => {
+  console.log("formData", formData);
+  try {
+    const response = await axios.post(BASE_URL+"add-experience-step2", formData,{
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    console.log(response?.data)
+    return response;
   } catch (error) {
     console.error('Error posting data:', error);
     throw error;

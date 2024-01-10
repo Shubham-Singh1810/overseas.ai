@@ -8,6 +8,7 @@ import {useGlobalState} from '../GlobalProvider';
 import CandidateDetailsStep1 from '../screens/CandidateDetailsStep1';
 import Login from '../components/Login';
 import SignUp from '../components/SignUp';
+import CandidateDetails2 from '../screens/CandidateDetails2';
 const LayoutNavigator = () => {
   const Stack = createNativeStackNavigator();
   const {translation} = useGlobalState();
@@ -27,6 +28,11 @@ const LayoutNavigator = () => {
           <Stack.Screen
             name="CandidateDetails1"
             component={CandidateDetailsStep1}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="CandidateDetails2"
+            component={CandidateDetails2}
             options={{headerShown: false}}
           />
           <Stack.Screen

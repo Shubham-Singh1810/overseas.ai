@@ -146,7 +146,7 @@ const SignUp = props => {
                 marginLeft: 4,
                 paddingHorizontal: 5,
               }}
-              onPress={() => props.navigation.navigate('LoginCom')}>
+              onPress={() => props.navigation.navigate('CandidateDetails1')}>
               <Text>Login</Text>
             </Pressable>
           </View>
