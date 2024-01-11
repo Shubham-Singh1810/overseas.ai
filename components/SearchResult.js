@@ -33,7 +33,7 @@ const SearchResult = ({value}) => {
             {translation.applyBefore} - {value?.jobDeadline}
           </Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
           <View>
             <Text style={styles.currencyText}>1400 SAR = 30,123 INR</Text>
             <View
@@ -88,16 +88,10 @@ const SearchResult = ({value}) => {
               </View>
             )}
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              width: '50%',
-            }}>
+          <View style={{marginTop:'auto', paddingBottom:15}}>
             <View>
               <Image
-                style={{height: 120, width: 120, borderRadius: 10}}
+                style={{height: 100, width: 100, borderRadius: 10}}
                 source={{
                   uri: value?.jobPhoto,
                 }}

@@ -19,7 +19,11 @@ import FooterNav from '../components/FooterNav';
 import SearchResult from '../components/SearchResult';
 import {useGlobalState} from '../GlobalProvider';
 import {getCountries, getHomeData} from '../services/info.service';
-import {getOccupations, getJobByDepartment} from '../services/job.service';
+import {
+  getOccupations,
+  getJobByDepartment,
+  getSearchResult,
+} from '../services/job.service';
 import {Picker} from '@react-native-picker/picker';
 const Home = props => {
   const {globalState, translation, setGlobalState} = useGlobalState();
@@ -51,26 +55,15 @@ const Home = props => {
     } catch (error) {}
   };
   const [jobList, setJobList] = useState([]);
-  const getJobsByDetartmentFunc = async departmentId => {
+  const searchJob = async () => {
     try {
-      let response = await getJobByDepartment(departmentId);
-      setJobList(response?.data?.jobs?.data);
+      let response = await getSearchResult(searchJobKey, searchCounterKey);
+      setJobList(response?.data?.jobs);
     } catch (error) {}
   };
-  // const searchJob = async (searchCounterKey, searchJobKey)=>{
-
-
-
-  //   try {
-  //     let response = await getJobByDepartment(departmentId);
-  //     setJobList(response?.data?.jobs?.data);
-  //   } catch (error) {
-      
-  //   }
-  // }
-  // useEffect(()=>{
-  //   searchJob()
-  // },[])
+  useEffect(()=>{
+    searchJob()
+  }, [searchJobKey, searchCounterKey])
   useEffect(() => {
     getOccupationList();
     getCountryList();
@@ -115,7 +108,7 @@ const Home = props => {
                 selectedValue={searchJobKey}
                 onValueChange={(itemValue, itemIndex) => {
                   setSearchJobKey(itemValue);
-                  getJobsByDetartmentFunc(itemValue);
+                  
                 }}>
                 <Picker.Item
                   label="Select an occupation"
@@ -161,11 +154,14 @@ const Home = props => {
               <Text style={{fontSize: 18, marginTop: 15, color: '#000'}}>
                 Search results :
               </Text>
-              <View style={{marginTop: 20}}>
+              {jobList.length==0 ? <View style={{flexDirection:'row',height:300, justifyContent:'center', alignItems:'center'}}>
+                <Text style={{fontSize:20, color:'maroon',paddingHorizontal:20, textAlign:'center'}}>Opps! No result found for this combination</Text>
+              </View> : <View style={{marginTop: 20}}>
                 {jobList?.map((value, i) => {
                   return <SearchResult value={value} />;
                 })}
-              </View>
+              </View>}
+              
             </View>
           ) : (
             <View style={{marginTop: 20}}>
@@ -210,7 +206,6 @@ export default Home;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#F5F5FA',
     paddingHorizontal: 10,
     paddingVertical: 20,
     marginBottom: 40,
