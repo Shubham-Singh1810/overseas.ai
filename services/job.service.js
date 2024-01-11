@@ -56,3 +56,18 @@ export const getSearchResult = async (occId, countryId) => {
     throw error;
   }
 };
+
+// apply job
+export const applyJobApi = async (formData, access_token) => {
+  try {
+    const response = await axios.post(BASE_URL + `apply-job-r`, formData, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

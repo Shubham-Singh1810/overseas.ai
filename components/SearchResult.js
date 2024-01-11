@@ -1,24 +1,60 @@
 import {Image, StyleSheet, Button, Modal, Text, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
-import {getJobById} from "../services/job.service"
+import {getJobById, applyJobApi} from '../services/job.service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 const SearchResult = ({value}) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const {translation} = useGlobalState();
-  const[moreDetails, setMoreDetails]= useState(null)
-  const getJobByIdFunc = async()=>{
+  const [moreDetails, setMoreDetails] = useState(null);
+  const getJobByIdFunc = async () => {
     try {
       let response = await getJobById(value?.id);
-      console.log(response.data.jobs)
-      setMoreDetails(response.data.jobs)
+      console.log(response.data.jobs);
+      setMoreDetails(response.data.jobs);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  useEffect(()=>{
-    getJobByIdFunc()
-  },[])
+  };
+  const handleApplyJob = async jobId => {
+    try {
+      let user = await AsyncStorage.getItem('user');
+      let payload = {
+        id: jobId,
+        'apply-job': '',
+      };
+      let response = await applyJobApi(payload, JSON.parse(user).access_token);
+      if (response?.data?.msg) {
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: response?.data?.msg,
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+      if (response.data.error) {
+        Toast.show({
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: response?.data?.error,
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+      console.log(response.data.error);
+    } catch (error) {
+      Toast.show({
+        type: 'error', // 'success', 'error', 'info', or any custom type you define
+        // position: 'top',
+        text1: 'Something went wrong',
+        visibilityTime: 3000, // Duration in milliseconds
+      });
+    }
+  };
+  useEffect(() => {
+    getJobByIdFunc();
+  }, []);
   return (
     <>
       <View style={styles.main}>
@@ -33,7 +69,7 @@ const SearchResult = ({value}) => {
             {translation.applyBefore} - {value?.jobDeadline}
           </Text>
         </View>
-        <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View>
             <Text style={styles.currencyText}>1400 SAR = 30,123 INR</Text>
             <View
@@ -71,7 +107,7 @@ const SearchResult = ({value}) => {
                 }}>
                 <Button
                   title={translation.applyNow}
-                  onPress={() => setShowModal(true)}
+                  onPress={() => handleApplyJob(value?.id)}
                 />
                 <Text
                   style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
@@ -88,10 +124,15 @@ const SearchResult = ({value}) => {
               </View>
             )}
           </View>
-          <View style={{marginTop:'auto', paddingBottom:15}}>
+          <View style={{marginTop: 'auto', paddingBottom: 15}}>
             <View>
               <Image
-                style={{height: 100, width: 100,marginBottom:10, borderRadius: 10}}
+                style={{
+                  height: 100,
+                  width: 100,
+                  marginBottom: 10,
+                  borderRadius: 10,
+                }}
                 source={{
                   uri: value?.jobPhoto,
                 }}
@@ -151,7 +192,7 @@ const SearchResult = ({value}) => {
                 }}>
                 <Button
                   title={translation.applyNow}
-                  onPress={() => setShowModal(true)}
+                  onPress={() => handleApplyJob(value?.id)}
                 />
                 <Text
                   style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
@@ -234,6 +275,7 @@ const SearchResult = ({value}) => {
           </View>
         </View>
       </Modal>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 };
