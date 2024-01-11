@@ -58,6 +58,7 @@ const Home = props => {
   const searchJob = async () => {
     try {
       let response = await getSearchResult(searchJobKey, searchCounterKey);
+      console.log(response.data.jobs)
       setJobList(response?.data?.jobs);
     } catch (error) {}
   };

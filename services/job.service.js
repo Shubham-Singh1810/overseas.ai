@@ -48,7 +48,7 @@ export const getJobById = async id => {
 };
 // get search result
 export const getSearchResult = async (occId, countryId) => {
-  console.log(occId, countryId)
+  console.log(BASE_URL + `jobs-by-department-by-country/${occId}/${countryId}`)
   try {
     const response = await axios.post(BASE_URL + `jobs-by-department-by-country/${occId}/${countryId}`);
     return response;

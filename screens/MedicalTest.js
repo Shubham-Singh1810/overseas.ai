@@ -5,7 +5,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 const MedicalTest = () => {
   return (
     <View style={styles.main}>
-      <Text style={styles.headingText}>"Medical Clearance Certificate Application Form"</Text>
+      <Text style={styles.headingText}>Medical Clearance Certificate Application Form</Text>
       <ScrollView>
         <Text style={styles.labal}>Full Name*</Text>
         <TextInput
