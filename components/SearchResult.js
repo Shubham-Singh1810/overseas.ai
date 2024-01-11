@@ -27,7 +27,7 @@ const SearchResult = ({value}) => {
         </View>
         <View style={styles.navTop}>
           <Text style={styles.jobName}>
-            {value?.jobTitle.substring(0, 15)}...
+            {value?.jobTitle.substring(0, 10)}...
           </Text>
           <Text style={styles.dateText}>
             {translation.applyBefore} - {value?.jobDeadline}
@@ -91,7 +91,7 @@ const SearchResult = ({value}) => {
           <View style={{marginTop:'auto', paddingBottom:15}}>
             <View>
               <Image
-                style={{height: 100, width: 100, borderRadius: 10}}
+                style={{height: 100, width: 100,marginBottom:10, borderRadius: 10}}
                 source={{
                   uri: value?.jobPhoto,
                 }}
@@ -100,7 +100,7 @@ const SearchResult = ({value}) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
-                  marginTop: 3,
+                  marginTop: 10,
                 }}>
                 <Image source={require('../images/heartIcon.png')} />
               </View>
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   jobName: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '600',
     fontFamily: 'Noto Sans',
     color: '#000',

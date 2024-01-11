@@ -205,7 +205,7 @@ const YourHra = props => {
                     backgroundColor: '#EFF8FF',
                   }}
                   onPress={() => setShowModal(false)}>
-                  <Text style={{fontWeight: '500'}}>Ratting</Text>
+                  <Text style={{fontWeight: '500'}}>Rating</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
@@ -251,8 +251,8 @@ const YourHra = props => {
                       />
                       <View>
                         <Text style={styles.name}>
-                          {v.title.length > 25 ? (
-                            <>{v.title.substring(0, 25)}...</>
+                          {v.title.length > 20 ? (
+                            <>{v.title.substring(0, 20)}...</>
                           ) : (
                             v.title
                           )}
