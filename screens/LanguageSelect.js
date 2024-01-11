@@ -1,8 +1,18 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGlobalState } from '../GlobalProvider';
 const LanguageSelect = (props) => {
   const { globalState, setGlobalState } = useGlobalState();
+  const handleStep1Screen = async ()=>{
+    let signUpUser = JSON.parse(await AsyncStorage.getItem('signUpUser'));
+    if(signUpUser){
+      props.navigation.navigate("CandidateDetails1")
+    }
+    else{
+      props.navigation.navigate("LoginCom")
+    }
+  }
   return (
     <View style={styles.main}>
       <View>
@@ -11,13 +21,13 @@ const LanguageSelect = (props) => {
         <Text style={styles.languagetext}>আপনার ভাষা নির্বাচন করুন</Text>
       </View>
       <View style={{marginTop:20}}>
-        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("LoginCom"); setGlobalState({...globalState, selectedLanguage:"english"})}}>
+        <TouchableOpacity style={styles.selectBox} onPress={()=>{handleStep1Screen(); setGlobalState({...globalState, selectedLanguage:"english"})}}>
           <Text style={styles.textCenter}>English</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("LoginCom"); setGlobalState({...globalState, selectedLanguage:"hindi"})}}>
+        <TouchableOpacity style={styles.selectBox} onPress={()=>{handleStep1Screen(); setGlobalState({...globalState, selectedLanguage:"hindi"})}}>
           <Text style={styles.textCenter}>हिंदी </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectBox} onPress={()=>{props.navigation.navigate("LoginCom"); setGlobalState({...globalState, selectedLanguage:"bangla"})}}>
+        <TouchableOpacity style={styles.selectBox} onPress={()=>{handleStep1Screen(); setGlobalState({...globalState, selectedLanguage:"bangla"})}}>
           <Text style={styles.textCenter}>বাংলা</Text>
         </TouchableOpacity>
       </View>

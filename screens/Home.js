@@ -19,7 +19,7 @@ import FooterNav from '../components/FooterNav';
 import SearchResult from '../components/SearchResult';
 import {useGlobalState} from '../GlobalProvider';
 import {getCountries, getHomeData} from '../services/info.service';
-import {getOccupations} from '../services/job.service';
+import {getOccupations, getJobByDepartment} from '../services/job.service';
 import {Picker} from '@react-native-picker/picker';
 const Home = props => {
   const {globalState, translation, setGlobalState} = useGlobalState();
@@ -50,6 +50,27 @@ const Home = props => {
       setHomeData(response);
     } catch (error) {}
   };
+  const [jobList, setJobList] = useState([]);
+  const getJobsByDetartmentFunc = async departmentId => {
+    try {
+      let response = await getJobByDepartment(departmentId);
+      setJobList(response?.data?.jobs?.data);
+    } catch (error) {}
+  };
+  // const searchJob = async (searchCounterKey, searchJobKey)=>{
+
+
+
+  //   try {
+  //     let response = await getJobByDepartment(departmentId);
+  //     setJobList(response?.data?.jobs?.data);
+  //   } catch (error) {
+      
+  //   }
+  // }
+  // useEffect(()=>{
+  //   searchJob()
+  // },[])
   useEffect(() => {
     getOccupationList();
     getCountryList();
@@ -61,7 +82,12 @@ const Home = props => {
       <ScrollView>
         <View style={styles.main}>
           <View style={styles.messageGroup}>
-            <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
               <View>
                 <Text style={styles.greetText}>{translation.hello}</Text>
                 <Text style={styles.nameText}>
@@ -74,7 +100,7 @@ const Home = props => {
                   backgroundColor: '#035292',
                   padding: 8,
                   elevation: 10,
-                  borderRadius:3
+                  borderRadius: 3,
                 }}>
                 <Text style={{color: 'white', fontWeight: '500'}}>
                   Video Tutorial
@@ -89,6 +115,7 @@ const Home = props => {
                 selectedValue={searchJobKey}
                 onValueChange={(itemValue, itemIndex) => {
                   setSearchJobKey(itemValue);
+                  getJobsByDetartmentFunc(itemValue);
                 }}>
                 <Picker.Item
                   label="Select an occupation"
@@ -131,9 +158,14 @@ const Home = props => {
           </View>
           {searchJobKey || searchCounterKey ? (
             <View>
-              <Text style={{fontSize: 18, marginTop: 15, color: '#555'}}>
+              <Text style={{fontSize: 18, marginTop: 15, color: '#000'}}>
                 Search results :
               </Text>
+              <View style={{marginTop: 20}}>
+                {jobList?.map((value, i) => {
+                  return <SearchResult value={value} />;
+                })}
+              </View>
             </View>
           ) : (
             <View style={{marginTop: 20}}>
@@ -166,44 +198,6 @@ const Home = props => {
                   })}
                 </ScrollView>
               </View>
-              {/* <View style={{flexDirection: 'row'}}>
-               <Image source={require('../images/arrowPost.png')} />
-               <Image source={require('../images/searchPost.png')} />
-             </View> */}
-              {/* <View style={styles.largeBtnGroup}>
-               <TouchableOpacity style={[styles.largeBtn, styles.bgBlue]}>
-                 <Text style={styles.largeBtnText}>
-                   {translation.getCertified}
-                 </Text>
-                 <Image source={require('../images/rightArrow.png')} />
-               </TouchableOpacity>
-               <TouchableOpacity style={[styles.largeBtn, styles.bgGreen]}>
-                 <Text style={styles.largeBtnText}>
-                   {translation.learnNewSkills}
-                 </Text>
-                 <Image source={require('../images/rightArrow.png')} />
-               </TouchableOpacity>
-               <TouchableOpacity style={[styles.largeBtn, styles.bgYellow]}>
-                 <Text style={styles.largeBtnText}>
-                   {translation.applyForPassport}
-                 </Text>
-                 <Image source={require('../images/rightArrow.png')} />
-               </TouchableOpacity>
-             </View> */}
-              {/* <View style={{marginTop: 30}}>
-               <View style={styles.jobsList}>
-                 <Text style={styles.heading}>
-                   {translation.getTrainingToEnhanceYourSkill}
-                 </Text>
-                 <ScrollView horizontal={true}>
-                   <SkillsGola />
-                   <SkillsGola />
-                   <SkillsGola />
-                   <SkillsGola />
-                   <SkillsGola />
-                 </ScrollView>
-               </View>
-             </View> */}
             </View>
           )}
         </View>

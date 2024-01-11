@@ -129,7 +129,9 @@ const CandidateDetailsStep1 = () => {
         finalPayload,
         localUser.access_token,
       );
+      console.log(response)
       if (response.msg == 'Data Updated Successfully') {
+        await AsyncStorage.clear();
         props.navigation.navigate('CandidateDetails2');
       }
     } catch (error) {}

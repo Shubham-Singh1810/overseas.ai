@@ -70,27 +70,23 @@ const SignUp = props => {
           props.navigation.navigate('Verify Otp', {tempUser: formData});
         } else {
           Toast.show({
-            type: 'error', // 'success', 'error', 'info', or any custom type you define
-            // position: 'top',
+            type: 'error', 
             text1: 'User alredy registered',
-            visibilityTime: 3000, // Duration in milliseconds
+            visibilityTime: 3000, 
           });
         }
       } catch (error) {
         Toast.show({
-          type: 'error', // 'success', 'error', 'info', or any custom type you define
-          // position: 'top',
+          type: 'error', 
           text1: 'Something went wrong',
-          visibilityTime: 3000, // Duration in milliseconds
+          visibilityTime: 3000, 
         });
       }
     } else {
-      // Form is invalid, do something (e.g., display an error message)
       Toast.show({
-        type: 'error', // 'success', 'error', 'info', or any custom type you define
-        // position: 'top',
+        type: 'error', 
         text1: 'Form validation failed',
-        visibilityTime: 3000, // Duration in milliseconds
+        visibilityTime: 3000,
       });
     }
   };
@@ -146,7 +142,7 @@ const SignUp = props => {
                 marginLeft: 4,
                 paddingHorizontal: 5,
               }}
-              onPress={() => props.navigation.navigate('CandidateDetails1')}>
+              onPress={() => props.navigation.navigate('LoginCom')}>
               <Text>Login</Text>
             </Pressable>
           </View>

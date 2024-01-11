@@ -41,12 +41,14 @@ const Video = () => {
         <Pressable
           onPress={() => setShowModal(true)}
           style={{
-            backgroundColor:"#035292",
-            padding:8,
-            elevation:10,
-            borderRadius:3
+            backgroundColor: '#035292',
+            padding: 8,
+            elevation: 10,
+            borderRadius: 3,
           }}>
-          <Text style={{color:"white", fontWeight:"500"}}>Video Tutorial</Text>
+          <Text style={{color: 'white', fontWeight: '500'}}>
+            Video Tutorial
+          </Text>
         </Pressable>
       </View>
 
@@ -54,7 +56,9 @@ const Video = () => {
         <ScrollView horizontal={true} style={{marginTop: 10}}>
           <View>
             <Image
-              source={require('../images/candidate.png')}
+              source={{
+                uri: 'https://media.licdn.com/dms/image/D4D35AQFVJViksoztjQ/profile-framedphoto-shrink_100_100/0/1696905508788?e=1705564800&v=beta&t=b3K06TK8ff1K3zJcPX--dUxmkGlVXi_ensN7qk25-o4',
+              }}
               style={{
                 height: 100,
                 width: 120,
@@ -78,32 +82,34 @@ const Video = () => {
             </View>
             <Text style={{textAlign: 'center'}}>English</Text>
           </View>
-          <View>
-            <Image
-              source={require('../images/candidate.png')}
-              style={{
-                height: 100,
-                width: 120,
-                borderRadius: 5,
-                marginRight: 10,
-              }}
-            />
-            <View
-              style={{
-                position: 'absolute',
-                top: 40,
-                left: 50,
-                padding: 6,
-                backgroundColor: 'white',
-                borderRadius: 11,
-              }}>
+          <TouchableOpacity onPress={pickMedia}>
+            <View>
               <Image
-                source={require('../images/playVideoIcon.png')}
-                style={{height: 10, width: 10}}
+                source={require('../images/rectangle.png')}
+                style={{
+                  height: 100,
+                  width: 120,
+                  borderRadius: 5,
+                  marginRight: 10,
+                }}
               />
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 40,
+                  left: 50,
+                  padding: 6,
+                  backgroundColor: 'white',
+                  borderRadius: 11,
+                }}>
+                <Image
+                  source={require('../images/playVideoIcon.png')}
+                  style={{height: 10, width: 10}}
+                />
+              </View>
+              <Text style={{textAlign: 'center'}}>Upload in Hindi</Text>
             </View>
-            <Text style={{textAlign: 'center'}}>Hindi</Text>
-          </View>
+          </TouchableOpacity>
 
           <TouchableOpacity onPress={pickMedia}>
             <View>
