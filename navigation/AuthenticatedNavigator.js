@@ -32,6 +32,7 @@ import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
 import Support from '../screens/Support';
 import CandidateDetails2 from '../screens/CandidateDetails2';
+import AppliedJobById from '../screens/AppliedJobById';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (
@@ -181,6 +182,14 @@ const AuthenticatedNavigator = () => {
           component={Support}
           options={({navigation, route}) => ({
             title: 'Support',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Applied Job By Id"
+          component={AppliedJobById}
+          options={({navigation, route}) => ({
+            title: '',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

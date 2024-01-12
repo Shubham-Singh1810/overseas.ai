@@ -71,3 +71,50 @@ export const applyJobApi = async (formData, access_token) => {
     throw error;
   }
 };
+
+// get applied job list 
+export const appliedJobList = async (access_token) => {
+  console.log(access_token)
+  try {
+    const response = await axios.get(BASE_URL + `user-applied-job-list`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+// get applied job list 
+export const appliedJobById = async (id, access_token) => {
+  console.log(BASE_URL + `user-applied-job-list/`+id)
+  try {
+    const response = await axios.get(BASE_URL + `user-applied-job-list/`+id, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+// get favourite job list
+export const favouriteJobList = async (access_token) => {
+  console.log("token", access_token)
+  try {
+    const response = await axios.post(BASE_URL + `user-favourite-job-list`,{}, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

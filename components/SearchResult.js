@@ -28,27 +28,24 @@ const SearchResult = ({value}) => {
       let response = await applyJobApi(payload, JSON.parse(user).access_token);
       if (response?.data?.msg) {
         Toast.show({
-          type: 'success', // 'success', 'error', 'info', or any custom type you define
-          // position: 'top',
+          type: 'success',
           text1: response?.data?.msg,
-          visibilityTime: 3000, // Duration in milliseconds
+          visibilityTime: 3000,
         });
       }
       if (response.data.error) {
         Toast.show({
-          type: 'error', // 'success', 'error', 'info', or any custom type you define
-          // position: 'top',
+          type: 'error',
           text1: response?.data?.error,
-          visibilityTime: 3000, // Duration in milliseconds
+          visibilityTime: 3000, 
         });
       }
       console.log(response.data.error);
     } catch (error) {
       Toast.show({
-        type: 'error', // 'success', 'error', 'info', or any custom type you define
-        // position: 'top',
+        type: 'error', 
         text1: 'Something went wrong',
-        visibilityTime: 3000, // Duration in milliseconds
+        visibilityTime: 3000,
       });
     }
   };

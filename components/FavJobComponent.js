@@ -1,228 +1,105 @@
-import {StyleSheet, Image, Button, Modal, Text, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  Image,
+  Button,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
-const FavJobComponent = ({saved}) => {
+const FavJobComponent = ({props, value}) => {
   const {translation} = useGlobalState();
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   return (
-    <>
-      <View style={styles.main}>
-        <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-          <Text style={styles.newText}>{translation.new}</Text>
-        </View>
-        <View style={styles.navTop}>
-          <Text style={styles.jobName}>Welder</Text>
-          <Text style={styles.dateText}>
-            {translation.applyBefore} - 04/05/23
+    <View style={styles.main}>
+      <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
+        <Image source={require("../images/starIcon.png")}/>
+      </View>
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <Text style={[styles.heading]}>
+            {value?.jobTitle.length > 15 ? (
+              <>{value?.jobTitle?.substring(0, 15)}...</>
+            ) : (
+              value?.jobTitle
+            )}
           </Text>
+          <Text style={styles.date}>Apply Before - {value?.jobDeadline}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
           <View>
-            <Text style={styles.currencyText}>1400 SAR = 30,123 INR</Text>
+            <Text
+              style={[styles.companyName, {maxWidth: 150, flexWrap: 'wrap'}]}>
+              {value?.jobCompany
+                ? value?.jobCompany
+                : 'Company Name not provided'}
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: 2,
+                marginVertical: 10,
               }}>
-              <Image source={require('../images/locationIcon.png')} />
-              <Text style={[{marginLeft: 9}, styles.otherDetail]}>USA</Text>
-            </View>
-            <Text style={styles.countryName}>
-              {/* {translation.experience} - 3 {translation.years} */}
-              Number Of Vacancy : 50
-            </Text>
-            <Text style={styles.countryName}>
-              {/* {translation.experience} - 3 {translation.years} */}
-              Salary/Wage Per Month :
-            </Text>
-            <Text style={styles.countryName}>
-              {/* {translation.experience} - 3 {translation.years} */}
-              2300
-            </Text>
-            <Text style={[styles.messageText, {marginTop: 5}]}>
-              {translation.yourProfileMatched} 87%
-            </Text>
-            {!showDetails ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 5,
-                }}>
-                <Button
-                  title={translation.applyNow}
-                  onPress={() => setShowModal(true)}
-                />
-                <Text
-                  style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
-                  onPress={() => setShowDetails(true)}>
-                  {translation.readDetails}
-                </Text>
-              </View>
-            ) : (
-              <View>
-                <Text style={[styles.lightText, styles.marginFix]}>
-                  Duty hours - 9 hours
-                </Text>
-                <Text style={styles.lightText}>Over Time Facility -Yes</Text>
-              </View>
-            )}
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              width: '50%',
-            }}>
-            <View>
               <Image
-                style={{height: 120, width: 120, borderRadius: 10}}
-                // source={{
-                //   uri: value?.jobPhoto,
-                // }}
-              />
-              <View
+                source={{
+                  uri: `https://overseas.ai/storage/uploads/countryFlag/${value?.countryFlag}`,
+                }}
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                  marginTop: 3,
-                }}>
-                     <Image style={{height:16, width:17}} source={saved ? require('../images/savedJobs.png') : require('../images/heartIcon.png')} />
-              </View>
+                  marginRight: 8,
+                  height: 26,
+                  width: 26,
+                  borderRadius: 13,
+                }}
+              />
+              <Text style={styles.countryText}>{value?.jobCountry}</Text>
             </View>
+            <Text style={styles.currency}>
+              {value?.jobWages} {value?.jobWagesCurrencyType}
+            </Text>
+          </View>
+          <View>
+            <Image
+              style={{
+                height: 80,
+                width: 80,
+                marginBottom: 10,
+                borderRadius: 10,
+              }}
+              source={{
+                uri: value?.jobPhoto,
+              }}
+            />
           </View>
         </View>
-        {showDetails && (
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <View>
-                <Text style={styles.boldText}>Responsibilties</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>
-                    Need to manage all tools perfectly
-                  </Text>
-                </View>
-              </View>
-              <View>
-                <Text style={styles.boldText}>Qualifications</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>
-                    {translation.experience} - 3 {translation.year}
-                  </Text>
-                </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>Proficient in languages</Text>
-                </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>Gulf return</Text>
-                </View>
-              </View>
-              <View>
-                <Text style={styles.boldText}>Skills Required</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>Hard Working</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 15,
-                }}>
-                <Button
-                  title={translation.applyNow}
-                  onPress={() => setShowModal(true)}
-                />
-                <Text
-                  style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
-                  onPress={() => setShowDetails(false)}>
-                  Hide Details
-                </Text>
-              </View>
-            </View>
-            <View style={{marginTop: 30}}>
-              <View
-                style={{
-                  height: 100,
-                  width: 100,
-                  borderRadius: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderColor: '#F00',
-                  borderWidth: 7,
-                }}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: '#F00',
-                    fontFamily: 'Noto Sans',
-                  }}>
-                  87%
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: '#F00',
-                    fontFamily: 'Noto Sans',
-                  }}>
-                  Match
-                </Text>
-              </View>
-            </View>
-          </View>
-        )}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 15,
+            justifyContent: 'space-between',
+          }}>
+          <Button
+            title="Apply Now"
+            // onPress={() => handleApplyJob(value?.id)}
+          />
+          <Text style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}>
+            Hide Details
+          </Text>
+        </View>
       </View>
-      <Modal transparent={true} visible={showModal} animationType="slide">
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View style={styles.modalMain}>
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-              <Image
-                source={require('../images/correctIcon.png')}
-                style={{height: 90, width: 90}}
-              />
-            </View>
-            <View style={{marginTop: 15, marginBottom: 10}}>
-              <Text style={styles.modelText}>Congratulations !!! </Text>
-              <Text style={styles.modelText}>
-                {' '}
-                You have successfully applied for the job.
-              </Text>
-            </View>
-            <View>
-              <Text style={{color: '#4FB988', fontSize: 12, marginBottom: 5}}>
-                We have sent your:
-              </Text>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View>
-                  <Image source={require('../images/cvImage.png')} />
-                  <Text style={styles.docText}>CV</Text>
-                </View>
-                <View>
-                  <Image source={require('../images/passwordImg.png')} />
-                  <Text style={styles.docText}>Passport</Text>
-                </View>
-                <View>
-                  <Image source={require('../images/docImg.png')} />
-                  <Text style={styles.docText}>Experie....</Text>
-                </View>
-              </View>
-            </View>
-            <View style={{marginTop: 15}}>
-              <Button title="Done" onPress={() => setShowModal(false)} />
-            </View>
-          </View>
-        </View>
-      </Modal>
-    </>
+    </View>
   );
 };
 
@@ -230,106 +107,70 @@ export default FavJobComponent;
 
 const styles = StyleSheet.create({
   main: {
+    padding: 15,
+    borderColor: '#B3B3B3',
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#B3B3B3',
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     backgroundColor: '#fff',
   },
-  newText: {
-    backgroundColor: 'maroon',
-    paddingHorizontal: 10,
-    color: 'white',
-    borderRadius: 4,
-    fontFamily: 'monospace',
-    margin: 5,
-  },
-  navTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  jobName: {
-    fontSize: 24,
+  heading: {
+    color: '#0F0C0C',
+    fontSize: 22,
     fontWeight: '600',
-    fontFamily: 'Noto Sans',
-    color: '#000',
+    fontFamily: 'Nato Sans',
   },
-  dateText: {
+  date: {
+    color: '#000',
     fontSize: 10,
-    fontWeight: '400',
-    fontFamily: 'Noto Sans',
-    color: '#F00',
+    fontWeight: '300',
+    fontFamily: 'Nato Sans',
   },
-  currencyText: {
-    fontSize: 16,
-    fontWeight: '600',
-    fontFamily: 'Noto Sans',
-    color: '#000',
-    marginBottom: 3,
-  },
-  countryName: {
-    fontSize: 12,
-    fontWeight: '400',
-    fontFamily: 'Noto Sans',
-    color: '#000',
-  },
-  messageText: {
-    fontSize: 12,
-    fontWeight: '400',
-    fontFamily: 'Noto Sans',
-    color: '#F00',
-    marginBottom: 14,
-  },
-  boldText: {
-    fontSize: 16,
-    fontWeight: '500',
-    fontFamily: 'Noto Sans',
-    color: '#000',
-    marginTop: 8,
-    marginBottom: 4,
-  },
-  lightText: {
-    fontSize: 14,
-    fontWeight: '400',
-    fontFamily: 'Noto Sans',
-    color: '#000',
-  },
-  marginFix: {
-    marginTop: -6,
-    marginBottom: 6,
-  },
-  dot: {
+  grayDot: {
     height: 4,
     width: 4,
     borderRadius: 2,
-    backgroundColor: '#000',
-    marginHorizontal: 8,
+    backgroundColor: 'gray',
+    marginRight: 10,
+    marginVertical: 3,
+    marginLeft: 3,
   },
-  modalMain: {
-    paddingHorizontal: 20,
-    paddingVertical: 40,
-    width: 350,
-    borderColor: '#CCC',
-    borderRadius: 6,
+  highlight: {
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    marginRight: 7,
+    borderColor: 'black',
     borderWidth: 1,
-    backgroundColor: '#fff',
   },
-  modelText: {
-    textAlign: 'center',
-    fontSize: 16,
+  backgroundColorGreen: {
+    backgroundColor: '#4FB988',
+  },
+  currency: {
+    marginVertical: 10,
+    color: '#0F0C0C',
+    fontSize: 14,
     fontWeight: '500',
-    fontFamily: 'Noto Sans',
+    fontFamily: 'Nato Sans',
   },
-  docText: {
-    marginVertical: 5,
-    textAlign: 'center',
-    fontSize: 12,
+  countryText: {
+    color: '#0F0C0C',
+    fontSize: 14,
     fontWeight: '400',
-    fontFamily: 'Noto Sans',
-    color: '#000',
+    fontFamily: 'Nato Sans',
+  },
+
+  companyName: {
+    color: '#0F0C0C',
+    fontSize: 14,
+    fontWeight: '400',
+    fontFamily: 'Nato Sans',
+    marginTop: 10,
+  },
+  textGreen: {
+    color: '#4FB988',
+    fontSize: 14,
+    fontWeight: '400',
+    fontFamily: 'Nato Sans',
   },
 });

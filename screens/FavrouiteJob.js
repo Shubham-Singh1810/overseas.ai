@@ -8,11 +8,12 @@ import {
   FlatList,
   Pressable,
 } from 'react-native';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import FavJobComponent from '../components/FavJobComponent';
 import {ScrollView} from 'react-native-gesture-handler';
-
-const FavrouiteJob = () => {
+import {favouriteJobList} from '../services/job.service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const FavrouiteJob = (props) => {
   const [showModal, setShowModal] = useState(false);
   const hraData = [
     {id: '1', color: 'red'},
@@ -25,6 +26,18 @@ const FavrouiteJob = () => {
     {id: '8', color: 'brown'},
     {id: '9', color: 'cyan'},
   ];
+  const [favouriteJobListArr, setFavouriteJobListArr] = useState([]);
+  const getFavouriteJobs = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await favouriteJobList(JSON.parse(user).access_token);
+      console.log("res", response.data);
+      setFavouriteJobListArr(response?.data?.jobs);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getFavouriteJobs();
+  }, []);
   return (
     <View style={styles.main}>
       <ScrollView>
@@ -48,12 +61,9 @@ const FavrouiteJob = () => {
             </Text>
           </Pressable>
         </View>
-
-        <FavJobComponent />
-        <FavJobComponent />
-        <FavJobComponent />
-        <FavJobComponent />
-        <FavJobComponent />
+        {favouriteJobListArr?.map((v, i) => {
+          return <FavJobComponent props={props} value={v}/>;
+        })}
       </ScrollView>
     </View>
   );

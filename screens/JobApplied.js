@@ -7,12 +7,25 @@ import {
   Button,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import AppliedJob from '../components/AppliedJob';
-import FooterNav from '../components/FooterNav';
-import { useGlobalState } from '../GlobalProvider';
+import {appliedJobList} from "../services/job.service"
+import {useGlobalState} from '../GlobalProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const JobApplied = props => {
-  const {translation } = useGlobalState();
+  const[appliedJobListArr, setAppliedJobListArr]=useState([])
+  const {translation} = useGlobalState();
+  const getAppliedJobList = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await appliedJobList(JSON.parse(user).access_token);
+      console.log(response.data)
+      setAppliedJobListArr(response?.data?.jobs)
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getAppliedJobList();
+  }, []);
   return (
     <>
       <ScrollView>
@@ -21,9 +34,12 @@ const JobApplied = props => {
             {translation.checkUpdatesOnYourApplication}
           </Text>
           <View>
-            <AppliedJob />
-            <AppliedJob />
-            <AppliedJob />
+            {appliedJobListArr?.map((v, i)=>{
+              return(
+                <AppliedJob props={props} value={v}/>
+              )
+            })}
+            
           </View>
         </View>
       </ScrollView>
