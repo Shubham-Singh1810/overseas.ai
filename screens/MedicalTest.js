@@ -1,11 +1,11 @@
 import {Button, StyleSheet, TextInput, Text, View} from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-
+import WebView from 'react-native-webview';
 const MedicalTest = () => {
   return (
     <View style={styles.main}>
-      <Text style={styles.headingText}>Medical Clearance Certificate Application Form</Text>
+      {/* <Text style={styles.headingText}>Medical Clearance Certificate Application Form</Text>
       <ScrollView>
         <Text style={styles.labal}>Full Name*</Text>
         <TextInput
@@ -36,7 +36,13 @@ const MedicalTest = () => {
         <Text style={styles.labal}>Why you required PCC?</Text>
         <TextInput value="" placeholder="Required For" style={styles.input} />
         <Button title="Submit" color="#5F90CA" />
-      </ScrollView>
+      </ScrollView> */}
+      <View style={{flex: 1}}>
+        <WebView
+          source={{uri: 'https://wafid.com/book-appointment/'}}
+          style={{flex: 1}}
+        />
+      </View>
     </View>
   );
 }
@@ -47,7 +53,7 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: '#fff',
     flex: 1,
-    padding: 18,
+    
   },
   input: {
     borderColor: '#CCC',

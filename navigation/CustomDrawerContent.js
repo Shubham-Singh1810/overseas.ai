@@ -137,7 +137,7 @@ const CustomDrawerContent = ({navigation}) => {
             />
             <View>
               <Text style={styles.userName}>
-                {JSON.parse(globalState?.user)?.user.name}
+                {JSON.parse(globalState?.user)?.empData?.empName}
               </Text>
               <Text style={{color: '#00111F', fontSize: 11}}>
                 Profile strength (53%)

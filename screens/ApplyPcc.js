@@ -1,12 +1,14 @@
 import {Button, StyleSheet, TextInput, Text, View} from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-
+import WebView from 'react-native-webview';
 const ApplyPcc = () => {
   return (
     <View style={styles.main}>
-      <Text style={styles.headingText}>Police Clearance Certificate Application Form</Text>
-      <ScrollView>
+      {/* <Text style={styles.headingText}>
+        Police Clearance Certificate Application Form
+      </Text> */}
+      {/* <ScrollView>
         <Text style={styles.labal}>Full Name*</Text>
         <TextInput
           value="Shubham Singh"
@@ -36,7 +38,13 @@ const ApplyPcc = () => {
         <Text style={styles.labal}>Why you required PCC?</Text>
         <TextInput value="" placeholder="Required For" style={styles.input} />
         <Button title="Submit" color="#5F90CA" />
-      </ScrollView>
+      </ScrollView> */}
+      <View style={{flex: 1}}>
+        <WebView
+          source={{uri: 'https://portal2.passportindia.gov.in/AppOnlineProject/online/pccOnlineApp'}}
+          style={{flex: 1}}
+        />
+      </View>
     </View>
   );
 };
@@ -47,7 +55,7 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: '#fff',
     flex: 1,
-    padding: 18,
+    // padding: 18,
   },
   input: {
     borderColor: '#CCC',
@@ -57,17 +65,17 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     backgroundColor: 'white',
   },
-  headingText:{
+  headingText: {
     color: '#000',
     fontFamily: 'Noto Sans',
     fontSize: 17,
     fontFamily: '600',
     marginTop: 10,
     marginBottom: 30,
-    textAlign:"center"
+    textAlign: 'center',
   },
-  labal:{
-    color:"#000",
-    marginBottom:5
-  }
+  labal: {
+    color: '#000',
+    marginBottom: 5,
+  },
 });

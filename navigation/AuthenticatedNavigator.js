@@ -23,7 +23,7 @@ import YourHra from '../screens/YourHra';
 import GetCertificate from '../screens/GetCertificate';
 import NeedMigrationLoan from '../screens/NeedMigrationLoan';
 import CustomDrawerContent from './CustomDrawerContent';
-import Video from '../screens/Video';
+import VideoScreen from '../screens/VideoScreen';
 import FavrouiteJob from '../screens/FavrouiteJob';
 import AppliedJob from '../components/AppliedJob';
 
@@ -51,7 +51,7 @@ const AuthenticatedNavigator = () => {
         <Drawer.Screen name="MyProfile" component={MyProfile} />
         <Drawer.Screen
           name="Upload Video"
-          component={Video}
+          component={VideoScreen}
           options={({navigation, route}) => ({
             title: 'My Videos',
             headerRight: () => <RightNav navigation={navigation} />,
@@ -142,6 +142,7 @@ const AuthenticatedNavigator = () => {
           component={MedicalTest}
           options={({navigation, route}) => ({
             title: 'Apply Medical Test',
+            headerShown: false, 
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -150,6 +151,7 @@ const AuthenticatedNavigator = () => {
           component={ApplyPcc}
           options={({navigation, route}) => ({
             title: 'Apply PCC',
+            headerShown: false, 
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

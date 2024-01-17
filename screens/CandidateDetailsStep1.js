@@ -9,22 +9,25 @@ import {
   Pressable,
   Button,
   Modal,
+  Alert,
 } from 'react-native';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-modern-datepicker';
 import Toast from 'react-native-toast-message';
+
 import {
   getOccupations,
   getSkillsByOccuId,
   getCountries,
   getState,
+  getDistrict
 } from '../services/info.service';
 import {registerUserStep1, addExperienceStep2} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
-const CandidateDetailsStep1 = () => {
+const CandidateDetailsStep1 = props => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showWhatsappInput, setShowWhatsappInput] = useState(false);
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
@@ -45,6 +48,9 @@ const CandidateDetailsStep1 = () => {
     empEduYear: '',
     empTechEdu: '',
     empSpecialEdu: '',
+    empState:'',
+    empDistrict:'',
+    empPin:''
   });
   const handleLanguageSelect = selectedLanguage => {
     if (formData.empLanguage.includes(selectedLanguage)) {
@@ -101,6 +107,7 @@ const CandidateDetailsStep1 = () => {
       setCountryList(response?.countries);
     } catch (error) {}
   };
+  
   const [stateList, setStateList] = useState([]);
   const getStateList = async () => {
     try {
@@ -110,13 +117,22 @@ const CandidateDetailsStep1 = () => {
       console.log(error);
     }
   };
+  const [districtList, setDistrictList] = useState([]);
+  const getDistrictListFunc = async (stateId)=>{
+    try {
+      let response = await getDistrict(stateId)
+      setDistrictList(response?.districts)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
     getOccupationList();
     getLocalUser();
     getCountryList();
     getStateList();
   }, []);
-  
+
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
 
   const handleSubmit = async () => {
@@ -129,10 +145,14 @@ const CandidateDetailsStep1 = () => {
         finalPayload,
         localUser.access_token,
       );
-      console.log(response)
-      if (response.msg == 'Data Updated Successfully') {
+      console.log(response?.msg);
+      if (response?.msg == 'Data Updated Successfully') {
+        props.navigation.navigate('CandidateDetails2', { localUser: localUser});
         await AsyncStorage.clear();
-        props.navigation.navigate('CandidateDetails2');
+      }
+      else{
+        console.warn(response?.error)
+        Alert(response?.error)
       }
     } catch (error) {}
   };
@@ -153,13 +173,13 @@ const CandidateDetailsStep1 = () => {
         experienceForm,
         localUser.access_token,
       );
-      if(response?.data?.msg=="Experience Successfully Added."){
+      if (response?.data?.msg == 'Experience Successfully Added.') {
         Toast.show({
-          type: 'success', 
+          type: 'success',
           position: 'bottom',
-          text1: "Experience Successfully Added.",
+          text1: 'Experience Successfully Added.',
           visibilityTime: 3000,
-        })
+        });
         setExperienceForm({
           experinceCompanyName: '',
           jobProfile: '',
@@ -170,23 +190,22 @@ const CandidateDetailsStep1 = () => {
           countryName: '',
           stateName: '',
           certificateImage: '',
-        })
-      }
-      else{
+        });
+      } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
-          text1:"Something went grong",
+          text1: 'Something went grong',
           visibilityTime: 3000, // Duration in milliseconds
-        })
+        });
       }
     } catch (error) {
       Toast.show({
         type: 'error', // 'success', 'error', 'info', or any custom type you define
         // position: 'top',
-        text1:"Something went grong",
+        text1: 'Something went grong',
         visibilityTime: 3000, // Duration in milliseconds
-      })
+      });
     }
   };
   return (
@@ -439,6 +458,51 @@ const CandidateDetailsStep1 = () => {
               </Picker>
             </View>
           </View>
+          <Text style={{color:"black", marginBottom:18}}>Current Address*</Text>
+          <View style={styles.picker}>
+            <Picker
+              selectedValue={formData.empState}
+              onValueChange={(itemValue, itemIndex) => {
+                setFormData({...formData, empState: itemValue});
+                getDistrictListFunc(itemValue)
+              }}>
+              <Picker.Item label="State" value="" style={{color: 'gray'}} />
+              {stateList?.map((v, i) => {
+                return (
+                  <Picker.Item
+                    label={v?.name}
+                    value={v.id}
+                    style={{color: 'gray'}}
+                  />
+                );
+              })}
+
+              {/* Add more Picker.Item as needed */}
+            </Picker>
+          </View>
+          
+          <View style={styles.picker}>
+            <Picker
+              selectedValue={formData.empDistrict}
+              onValueChange={(itemValue, itemIndex) => {
+                setFormData({...formData, empDistrict: itemValue});
+              }}>
+              <Picker.Item label="District" value="" style={{color: 'gray'}} />
+              {districtList?.map((v, i) => {
+                return (
+                  <Picker.Item label={v.name} value={v.id} style={{color: 'gray'}} />
+                );
+              })}
+
+              {/* Add more Picker.Item as needed */}
+            </Picker>
+          </View>
+          <TextInput
+            placeholder="Pin Code*"
+            keyboardType="numeric"
+            style={styles.input}
+            onChangeText={text => setFormData({...formData, empPin: text})}
+          />
           <View
             style={{
               flexDirection: 'row',
@@ -700,6 +764,7 @@ const CandidateDetailsStep1 = () => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
+          
         </View>
         <View style={styles.nextBtn}>
           <Button
@@ -708,6 +773,13 @@ const CandidateDetailsStep1 = () => {
             color="#035292"
           />
         </View>
+        {/* <View style={styles.nextBtn}>
+          <Button
+            title="Save and Continue"
+            onPress={()=>props.navigation.navigate('CandidateDetails2')}
+            color="#035292"
+          />
+        </View> */}
       </View>
       <Modal transparent={true} visible={showLanguageSelect}>
         <View
@@ -975,13 +1047,11 @@ const CandidateDetailsStep1 = () => {
               mode="calender"
               format="YYYY-MM-DD"
               onDateChange={date => {
-                
                 const formattedDate = moment(date, 'YYYY/MM/DD').format(
                   'YYYY-MM-DD',
                 );
                 console.log(formattedDate);
 
-                
                 setExperienceForm({...experienceForm, fromDate: formattedDate});
                 setJoiningCalender(false);
               }}

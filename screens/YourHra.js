@@ -15,7 +15,7 @@ const YourHra = props => {
   const [showModal, setShowModal] = useState(false);
   const hraData = [
     {
-      id: '1',
+      id: '92',
       title: 'AGHA CARAVAN INTERNATIONAL',
       since: '1993',
       industriesServed: [
@@ -27,7 +27,7 @@ const YourHra = props => {
       logoUrl: 'https://www.aghacaravan.com/images/logo-new.png',
     },
     {
-      id: '2',
+      id: '91',
       title: 'F Gheewala Human Resources Consultants',
       since: '1993',
       industriesServed: [
@@ -92,7 +92,7 @@ const YourHra = props => {
     },
     {
       id: '7',
-      title: 'AI Taher Liaison Pvt Ltd',
+      title: 'AL Taher Liaison Pvt Ltd',
       since: '1979',
       industriesServed: [
         'Oil and Gas',

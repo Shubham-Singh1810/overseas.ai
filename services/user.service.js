@@ -77,6 +77,20 @@ export const registerUserStep1 = async (formData, access_token) => {
     throw error;
   }
 };
+export const registerUserStep2 = async (formData, access_token) => {
+  console.log(formData)
+  try {
+    const response = await axios.post(BASE_URL+"user-profile-complete-step3", formData ,{
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
 export const addExperienceStep2 = async (formData, access_token) => {
   console.log("formData", formData);
   try {
@@ -92,3 +106,20 @@ export const addExperienceStep2 = async (formData, access_token) => {
     throw error;
   }
 };
+export const uploadWorkVideo = async (formData, access_token) => {
+  console.log("formData", formData);
+  try {
+    const response = await axios.post(BASE_URL+"store-work-video", formData,{
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    console.log(response?.data)
+    return response;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+

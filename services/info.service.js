@@ -16,9 +16,10 @@ export const getState = async formData => {
 
 // Function to get district list
 export const getDistrict = async data => {
+  console.log(data)
   try {
     const response = await axios.get(BASE_URL + 'district-list', {
-      params: data,
+      params: {state_id:data},
     });
     return response.data;
   } catch (error) {
