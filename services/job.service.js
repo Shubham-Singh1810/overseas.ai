@@ -119,3 +119,31 @@ export const favouriteJobList = async (access_token) => {
     throw error;
   }
 };
+export const saveJobById = async (jobId, access_token) => {
+  console.log(jobId, access_token)
+  try {
+    const response = await axios.post(BASE_URL + `save-job-by-user`, {jobId: jobId}, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+export const  savedJobList = async (access_token) => {
+  console.log( access_token)
+  try {
+    const response = await axios.get(BASE_URL + `user-saved-job-list`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

@@ -13,6 +13,7 @@ import FavJobComponent from '../components/FavJobComponent';
 import {ScrollView} from 'react-native-gesture-handler';
 import {favouriteJobList} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SearchResult from '../components/SearchResult';
 const FavrouiteJob = (props) => {
   const [showModal, setShowModal] = useState(false);
   const hraData = [
@@ -62,7 +63,8 @@ const FavrouiteJob = (props) => {
           </Pressable>
         </View>
         {favouriteJobListArr?.map((v, i) => {
-          return <FavJobComponent props={props} value={v}/>;
+          // return <FavJobComponent props={props} value={v}/>;
+          return <SearchResult favroite={true} props={props} value={v}/>
         })}
       </ScrollView>
     </View>

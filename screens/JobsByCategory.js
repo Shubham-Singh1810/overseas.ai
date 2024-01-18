@@ -17,7 +17,7 @@ const JobsByCategory = () => {
   };
   useEffect(() => {
     getJobsByDetartmentFunc();
-  }, []);
+  }, [departmentId]);
   return (
     <>
       <ScrollView>

@@ -25,10 +25,10 @@ const RightNav = props => {
               flexDirection: 'row',
               marginRight: 0,
             }}>
-            <Image source={require('../images/bellIcon.png')} />
+            <Image source={require('../images/blackBell.png')} />
             <View
               style={{
-                backgroundColor: 'orangered',
+                backgroundColor: '#D31416',
                 position: 'relative',
                 right: 6,
                 top: 8,

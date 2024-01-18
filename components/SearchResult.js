@@ -1,10 +1,19 @@
-import {Image, StyleSheet, Button, Modal, Text, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Button,
+  Modal,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {useEffect, useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 import {getJobById, applyJobApi} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
-const SearchResult = ({value}) => {
+import {saveJobById} from '../services/job.service';
+const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const {translation} = useGlobalState();
@@ -37,16 +46,38 @@ const SearchResult = ({value}) => {
         Toast.show({
           type: 'error',
           text1: response?.data?.error,
-          visibilityTime: 3000, 
+          visibilityTime: 3000,
         });
       }
       console.log(response.data.error);
     } catch (error) {
       Toast.show({
-        type: 'error', 
+        type: 'error',
         text1: 'Something went wrong',
         visibilityTime: 3000,
       });
+    }
+  };
+  const handleSaveJob = async jobId => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await saveJobById(jobId, JSON.parse(user).access_token);
+      if(response?.data?.message=="Job unsaved successfully" || response?.data?.message=="Job saved successfully"){
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: response?.data?.message,
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+      if(saved){
+        setTimeout(()=>{
+          getListOfSavedJobs()
+        }, 1000)
+      }
+      
+    } catch (error) {
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -56,14 +87,18 @@ const SearchResult = ({value}) => {
     <>
       <View style={styles.main}>
         <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-          <Text style={styles.newText}>{translation.new}</Text>
+          {favroite ? (
+            <Image source={require('../images/starIcon.png')} />
+          ) : (
+            <Text style={styles.newText}>{value?.jobID}</Text>
+          )}
         </View>
         <View style={styles.navTop}>
           <Text style={styles.jobName}>
-            {value?.jobTitle.substring(0, 10)}...
+            {value?.jobTitle?.substring(0, 10)}...
           </Text>
           <Text style={styles.dateText}>
-            {translation.applyBefore} - {value?.jobDeadline}
+            {translation.applyBefore} - {value?.jobDeadline ? value?.jobDeadline: "No Deadline"}
           </Text>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -140,7 +175,19 @@ const SearchResult = ({value}) => {
                   justifyContent: 'flex-end',
                   marginTop: 10,
                 }}>
-                <Image source={require('../images/heartIcon.png')} />
+                <TouchableOpacity onPress={() => handleSaveJob(saved? value?.JobPrimaryId:  value?.id)}>
+                  {saved ? (
+                    <Image
+                    source={require('../images/redHeart.png')}
+                    style={{resizeMode: 'contain'}}
+                  />
+                  ) : (
+                    <Image
+                      source={require('../images/emptyHeart.png')}
+                      style={{resizeMode: 'contain'}}
+                    />
+                  )}
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -290,12 +337,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   newText: {
-    backgroundColor: 'maroon',
-    paddingHorizontal: 10,
-    color: 'white',
+    paddingHorizontal: 5,
+    color: 'maroon',
+    borderWidth:.5,
     borderRadius: 4,
     fontFamily: 'monospace',
-    margin: 5,
+    marginTop: 10,
+    fontSize:12
   },
   navTop: {
     flexDirection: 'row',

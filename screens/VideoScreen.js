@@ -100,19 +100,21 @@ const VideoScreen = () => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getIntroVideo(JSON.parse(user).access_token);
-      setIntroVideoList(response?.data?.videos);
-      setShowIntroInput(
-        languageKnown.filter(
-          itemA =>
-            !response?.data?.videos.some(itemB => itemB.videoLanguage == itemA),
-        ),
-      );
+      if(response?.data?.msg=="List of all introduction videos."){
+        setIntroVideoList(response?.data?.videos);
+        setShowIntroInput(
+          languageKnown.filter(
+            itemA =>
+              !response?.data?.videos.some(itemB => itemB.videoLanguage == itemA),
+          ),
+        );
+      }
+      
     } catch (error) {
       Toast.show({
-        type: 'error', // 'success', 'error', 'info', or any custom type you define
-        // position: 'top',
+        type: 'error',
         text1: 'Something went wrong',
-        visibilityTime: 3000, // Duration in milliseconds
+        visibilityTime: 3000,
       });
     }
   };
@@ -181,6 +183,7 @@ const VideoScreen = () => {
     setShowLoading(false)
   };
   const pickMediaForIntroVideo = async language => {
+    setShowLoading(true)
     try {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.video],
@@ -214,6 +217,7 @@ const VideoScreen = () => {
         console.error('Error picking media', err);
       }
     }
+    setShowLoading(false)
   };
   useEffect(() => {
     getUserWorkVideoList();

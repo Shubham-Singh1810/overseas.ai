@@ -17,7 +17,7 @@ const JobsByCountry = () => {
   };
   useEffect(() => {
     getJobsByCountryFunc();
-  }, []);
+  }, [countryId]);
   return (
     <>
       <ScrollView>

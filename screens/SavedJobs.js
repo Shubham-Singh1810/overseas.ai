@@ -1,13 +1,45 @@
-import {StyleSheet, ScrollView, Pressable, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet,Modal, ScrollView, Pressable, Text, View, ActivityIndicator} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import JobApplied from './JobApplied';
 import SearchResult from '../components/SearchResult';
 import FooterNav from '../components/FooterNav';
 import FavJobComponent from '../components/FavJobComponent';
-
+import {savedJobList} from '../services/job.service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const SavedJobs = props => {
+  const [showLoading, setShowLoading] = useState(false)
+  const [savedList, setSavedList] = useState([]);
+  const getListOfSavedJobs = async () => {
+    setShowLoading(true)
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await savedJobList(JSON.parse(user).access_token);
+      if (response?.data?.msg == 'Saved job list retrieved successfully.') {
+        setSavedList(response?.data?.jobs);
+      } else {
+        console.log('Something went wrong');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setShowLoading(false)
+  };
+  useEffect(()=>{
+    getListOfSavedJobs()
+  }, [])
   return (
     <>
+    <Modal transparent={true} visible={showLoading} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.3)',
+          }}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      </Modal>
       <ScrollView>
         <View style={{padding: 10}}>
           <View
@@ -16,7 +48,7 @@ const SavedJobs = props => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={styles.messageText}>Job you haved saved earlier</Text>
+            <Text style={styles.messageText}>Jobs you have saved earlier</Text>
             <Pressable
               // onPress={() => setShowModal(true)}
               style={{
@@ -30,8 +62,9 @@ const SavedJobs = props => {
               </Text>
             </Pressable>
           </View>
-
-          <FavJobComponent saved={true} />
+          {savedList?.length==0 ? <View style={{height:500, justifyContent:"center", alignItems:"center"}}><Text style={{fontSize:22}}>You haven't saved any job yet !!!</Text></View> :savedList?.map((v, i) => {
+            return <SearchResult getListOfSavedJobs={getListOfSavedJobs} saved={true} props={props} value={v} />;
+          })}
         </View>
       </ScrollView>
     </>
