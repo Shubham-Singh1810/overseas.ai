@@ -9,6 +9,7 @@ import {
   Pressable,
   Modal,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import Video from 'react-native-video';
@@ -18,22 +19,24 @@ import {useGlobalState} from '../GlobalProvider';
 import {uploadWorkVideo} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
+import Toast from 'react-native-toast-message';
 import {
   getWorkVideo,
   getIntroVideo,
   deleteWorkVideo,
   uploadIntroVideo,
-  deleteIntroVideo
+  deleteIntroVideo,
 } from '../services/userVideo.service';
-import {Thumbnail} from 'react-native-thumbnail-video';
-import { launchCamera } from 'react-native-image-picker';
 const VideoScreen = () => {
-  const {globalState, setGlobalState} = useGlobalState();
+  const [videoToBeDeleted, setvideoToBeDeleted] = useState('');
+  const [workVideoToBeDeleted, setWorkVideoToBeDeleted] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     video: null,
     relatedSkill: 'abc',
   });
+  const [showLoading, setShowLoading] = useState(false)
+  const [showDeleteConfirmPop, setShowDeleteConfirmPop] = useState(false);
   const pickMediaForWorkVideo = async () => {
     try {
       const result = await DocumentPicker.pick({
@@ -53,6 +56,7 @@ const VideoScreen = () => {
   };
   const [workVideoPopUp, setWorkVideoPopUp] = useState(false);
   const handleWorkVideoUpload = async () => {
+    setShowLoading(true)
     let user = await AsyncStorage.getItem('user');
     const videoFormData = new FormData();
     videoFormData.append('video', {
@@ -67,12 +71,19 @@ const VideoScreen = () => {
         JSON.parse(user).access_token,
       );
       if (response?.data?.msg == 'Video Added Successfully.') {
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: 'Video Added Successfully.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
         setWorkVideoPopUp(false);
         getUserWorkVideoList();
       }
     } catch (error) {
       console.warn('Something went wrong');
     }
+    setShowLoading(false)
   };
   const [workVideoList, setWorkVideoList] = useState([]);
   const getUserWorkVideoList = async () => {
@@ -80,19 +91,34 @@ const VideoScreen = () => {
     try {
       let response = await getWorkVideo(JSON.parse(user).access_token);
       setWorkVideoList(response?.data?.videos);
+      getUserIntroVideoList()
     } catch (error) {}
   };
   const [introVideoList, setIntroVideoList] = useState([]);
-  const[showIntroInput, setShowIntroInput]=useState([])
+  const [showIntroInput, setShowIntroInput] = useState([]);
   const getUserIntroVideoList = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getIntroVideo(JSON.parse(user).access_token);
       setIntroVideoList(response?.data?.videos);
-      setShowIntroInput(languageKnown.filter(itemA => !response?.data?.videos.some(itemB => itemB.videoLanguage == itemA)))
-    } catch (error) {}
+      setShowIntroInput(
+        languageKnown.filter(
+          itemA =>
+            !response?.data?.videos.some(itemB => itemB.videoLanguage == itemA),
+        ),
+      );
+    } catch (error) {
+      Toast.show({
+        type: 'error', // 'success', 'error', 'info', or any custom type you define
+        // position: 'top',
+        text1: 'Something went wrong',
+        visibilityTime: 3000, // Duration in milliseconds
+      });
+    }
   };
   const [occuListArr, setOccuListArr] = useState([]);
+  const [showDeleteWorkVideoConfirmPop, setShowDeleteWorkVideoConfirmPop] =
+    useState(false);
   const getOccList = async () => {
     try {
       let response = await getOccupations();
@@ -102,6 +128,7 @@ const VideoScreen = () => {
     }
   };
   const handleDeleteVideo = async videoId => {
+    setShowLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await deleteWorkVideo(
@@ -109,11 +136,19 @@ const VideoScreen = () => {
         JSON.parse(user).access_token,
       );
       if (response?.data?.msg == 'Video successfully deleted.') {
+        setShowDeleteWorkVideoConfirmPop(false);
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: 'Video Deleted Successfully.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
         getUserWorkVideoList();
       }
     } catch (error) {
       console.warn('Something went wrong');
     }
+    setShowLoading(false)
   };
   const [languageKnown, setLanguageKnown] = useState([]);
   const setLanguageKnownFunc = async () => {
@@ -122,6 +157,7 @@ const VideoScreen = () => {
     setLanguageKnown(JSON.parse(stringArr));
   };
   const handleDeleteIntroVideo = async videoId => {
+    setShowLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await deleteIntroVideo(
@@ -130,17 +166,20 @@ const VideoScreen = () => {
       );
       if (response?.data?.msg == 'Video successfully deleted.') {
         getUserIntroVideoList();
+        setShowDeleteConfirmPop(false);
+        setvideoToBeDeleted('');
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: 'Video Deleted Successfully.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
       }
     } catch (error) {
       console.warn('Something went wrong');
     }
+    setShowLoading(false)
   };
-  useEffect(() => {
-    getUserWorkVideoList();
-    getUserIntroVideoList();
-    getOccList();
-    setLanguageKnownFunc();
-  }, []);
   const pickMediaForIntroVideo = async language => {
     try {
       const result = await DocumentPicker.pick({
@@ -158,7 +197,15 @@ const VideoScreen = () => {
         videoFormData,
         JSON.parse(user).access_token,
       );
-      getUserIntroVideoList();
+      if (response?.data?.msg == 'Video Added Successfully.') {
+        getUserIntroVideoList();
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: 'Video Added Successfully.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker
@@ -168,6 +215,13 @@ const VideoScreen = () => {
       }
     }
   };
+  useEffect(() => {
+    getUserWorkVideoList();
+    getOccList();
+    setLanguageKnownFunc();
+    getUserIntroVideoList()
+  }, []);
+  
   return (
     <>
       <View style={styles.main}>
@@ -226,19 +280,19 @@ const VideoScreen = () => {
                 <>
                   <View style={{display: 'flex'}}>
                     <Video
-                        source={{
-                          uri: v?.videoUrl,
-                        }}
-                        style={{
-                          height: 100,
-                          width: 160,
-                          borderRadius: 5,
-                          marginRight: 10,
-                          borderWidth:1
-                        }}
-                        controls={true}
-                        resizeMode="cover"
-                      />
+                      source={{
+                        uri: v?.videoUrl,
+                      }}
+                      style={{
+                        height: 100,
+                        width: 160,
+                        borderRadius: 5,
+                        marginRight: 10,
+                        borderWidth: 1,
+                      }}
+                      controls={true}
+                      resizeMode="cover"
+                    />
                     {/* <Image
                       source={require('../images/rectangle.png')}
                       style={{
@@ -259,7 +313,10 @@ const VideoScreen = () => {
                       <Text style={{color: '#000'}}>{v?.videoLanguage}</Text>
                       <TouchableOpacity
                         style={{position: 'relative', right: 5}}
-                        onPress={() => handleDeleteIntroVideo(v?.id)}>
+                        onPress={() => {
+                          setvideoToBeDeleted(v?.id);
+                          setShowDeleteConfirmPop(true);
+                        }}>
                         <Image source={require('../images/delete.png')} />
                       </TouchableOpacity>
                     </View>
@@ -316,7 +373,7 @@ const VideoScreen = () => {
                           width: 160,
                           borderRadius: 5,
                           marginRight: 10,
-                          borderWidth:1
+                          borderWidth: 1,
                         }}
                         controls={true}
                         resizeMode="cover"
@@ -347,7 +404,10 @@ const VideoScreen = () => {
                         </Text>
                         <TouchableOpacity
                           style={{position: 'relative', right: 5}}
-                          onPress={() => handleDeleteVideo(v?.id)}>
+                          onPress={() => {
+                            setShowDeleteWorkVideoConfirmPop(true);
+                            setWorkVideoToBeDeleted(v?.id);
+                          }}>
                           <Image source={require('../images/delete.png')} />
                         </TouchableOpacity>
                       </View>
@@ -453,6 +513,121 @@ const VideoScreen = () => {
           </View>
         </View>
       </Modal>
+      <Modal transparent={true} visible={showLoading} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.3)',
+          }}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      </Modal>
+      <Modal
+        transparent={true}
+        visible={showDeleteConfirmPop}
+        animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View style={styles.modalMain}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 18,
+              }}>
+              <Text style={styles.nameText}>
+                Are you sure you want to delete this video ?
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 20,
+                justifyContent: 'space-between',
+              }}>
+              <View style={{width: '45%'}}>
+                <Button
+                  title="No"
+                  onPress={() => {
+                    setShowDeleteConfirmPop(false), setvideoToBeDeleted('');
+                  }}
+                  color="#dc3545"
+                />
+              </View>
+
+              <View style={{width: '45%'}}>
+                <Button
+                  title="Yes"
+                  // onPress={handleDeleteIntroVideo(videoToBeDeleted)}
+                  onPress={() => handleDeleteIntroVideo(videoToBeDeleted)}
+                  color="#28a745"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        transparent={true}
+        visible={showDeleteWorkVideoConfirmPop}
+        animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View style={styles.modalMain}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 18,
+              }}>
+              <Text style={styles.nameText}>
+                Are you sure you want to delete this video ?
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 20,
+                justifyContent: 'space-between',
+              }}>
+              <View style={{width: '45%'}}>
+                <Button
+                  title="No"
+                  onPress={() => {
+                    setShowDeleteWorkVideoConfirmPop(false),
+                      setWorkVideoToBeDeleted('');
+                  }}
+                  color="#dc3545"
+                />
+              </View>
+
+              <View style={{width: '45%'}}>
+                <Button
+                  title="Yes"
+                  // onPress={handleDeleteIntroVideo(videoToBeDeleted)}
+                  onPress={() => handleDeleteVideo(workVideoToBeDeleted)}
+                  color="#28a745"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 };
