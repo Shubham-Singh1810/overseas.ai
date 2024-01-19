@@ -6,6 +6,7 @@ import FooterNav from '../components/FooterNav';
 import FavJobComponent from '../components/FavJobComponent';
 import {savedJobList} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 const SavedJobs = props => {
   const [showLoading, setShowLoading] = useState(false)
   const [savedList, setSavedList] = useState([]);
@@ -24,12 +25,15 @@ const SavedJobs = props => {
     }
     setShowLoading(false)
   };
-  useEffect(()=>{
-    getListOfSavedJobs()
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      // This will be called when the screen is focused
+      getListOfSavedJobs();
+    }, [])
+  );
   return (
     <>
-    <Modal transparent={true} visible={showLoading} animationType="slide">
+    <Modal transparent={true} visible={showLoading} animationType="fade">
         <View
           style={{
             flex: 1,
@@ -40,7 +44,7 @@ const SavedJobs = props => {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       </Modal>
-      <ScrollView>
+      <ScrollView style={{ flex:1, backgroundColor:"#fff"}}>
         <View style={{padding: 10}}>
           <View
             style={{

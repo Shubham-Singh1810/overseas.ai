@@ -20,8 +20,8 @@ const JobsByCountry = () => {
   }, [countryId]);
   return (
     <>
-      <ScrollView>
-        <View style={{padding: 15, marginBottom:50}}>
+      <ScrollView style={{flex:1, backgroundColor:"#fff"}}>
+        <View style={{padding: 15, marginBottom:50,}}>
           <Text style={{fontSize:18,  marginBottom:15}}>Location: <Text style={{color:"#000"}}>{countryName}</Text></Text>
           {jobList?.map((value, i) => {
             return (

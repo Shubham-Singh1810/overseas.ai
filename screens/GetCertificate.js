@@ -22,7 +22,8 @@ const GetCertificate = () => {
           }}>
           <View>
             <Text style={styles.greetText}>
-              Looking for job opportunity overseas?
+              Looking for job opportunity {'\n'}
+              overseas?
             </Text>
             <Text style={styles.nameText}>Get Certified</Text>
           </View>
@@ -140,10 +141,10 @@ export default GetCertificate;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#F5F5FA',
+    backgroundColor: '#fff',
     paddingHorizontal: 10,
     paddingVertical: 20,
-    marginBottom: 40,
+    
   },
   topNav: {
     flexDirection: 'row',

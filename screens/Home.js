@@ -208,8 +208,9 @@ export default Home;
 const styles = StyleSheet.create({
   main: {
     paddingHorizontal: 10,
-    paddingVertical: 20,
-    marginBottom: 40,
+    paddingTop: 20,
+    paddingBottom: 40,
+    backgroundColor:"#fff"
   },
   topNav: {
     flexDirection: 'row',

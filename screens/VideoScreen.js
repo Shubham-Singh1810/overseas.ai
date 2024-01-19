@@ -11,7 +11,8 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import Video from 'react-native-video';
 import {getOccupations} from '../services/info.service';
 import DocumentPicker from 'react-native-document-picker';
@@ -33,9 +34,13 @@ const VideoScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     video: null,
-    relatedSkill: 'abc',
+    relatedSkill: 'unKnown',
   });
-  const [showLoading, setShowLoading] = useState(false)
+  const [introformData, setIntroFormData] = useState({
+    video: null,
+    videoLanguage: '',
+  });
+  const [showLoading, setShowLoading] = useState(false);
   const [showDeleteConfirmPop, setShowDeleteConfirmPop] = useState(false);
   const pickMediaForWorkVideo = async () => {
     try {
@@ -54,9 +59,27 @@ const VideoScreen = () => {
       }
     }
   };
+  const pickMediaForIntroVideo = async () => {
+    try {
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.video],
+      });
+      // Set the selected media URI
+      console.log(result[0]);
+      setIntroFormData({...introformData, video: result[0]});
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker
+        console.log('User cancelled media picker');
+      } else {
+        console.error('Error picking media', err);
+      }
+    }
+  };
   const [workVideoPopUp, setWorkVideoPopUp] = useState(false);
+  const [introVideoPopUp, setIntroVideoPopUp] = useState(false);
   const handleWorkVideoUpload = async () => {
-    setShowLoading(true)
+    setShowLoading(true);
     let user = await AsyncStorage.getItem('user');
     const videoFormData = new FormData();
     videoFormData.append('video', {
@@ -83,7 +106,38 @@ const VideoScreen = () => {
     } catch (error) {
       console.warn('Something went wrong');
     }
-    setShowLoading(false)
+    setShowLoading(false);
+  };
+  const handleIntroVideoUpload = async () => {
+    setShowLoading(true);
+    let user = await AsyncStorage.getItem('user');
+    const videoFormData = new FormData();
+    videoFormData.append('video', {
+      uri: introformData.video.uri,
+      type: introformData.video.type,
+      name: introformData.video.name,
+    });
+    introformData.append('languageKnown', introformData.languageKnown);
+    try {
+      let response = await uploadIntroVideo(
+        videoFormData,
+        JSON.parse(user).access_token,
+      );
+      console.log(response)
+      if (response?.data?.msg == 'Video Added Successfully.') {
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: 'Video Added Successfully.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+        getUserIntroVideoList();
+        setIntroVideoPopUp(false)
+      }
+    } catch (error) {
+      console.warn('Something went wrong');
+    }
+    setShowLoading(false);
   };
   const [workVideoList, setWorkVideoList] = useState([]);
   const getUserWorkVideoList = async () => {
@@ -91,7 +145,7 @@ const VideoScreen = () => {
     try {
       let response = await getWorkVideo(JSON.parse(user).access_token);
       setWorkVideoList(response?.data?.videos);
-      getUserIntroVideoList()
+      getUserIntroVideoList();
     } catch (error) {}
   };
   const [introVideoList, setIntroVideoList] = useState([]);
@@ -100,16 +154,18 @@ const VideoScreen = () => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getIntroVideo(JSON.parse(user).access_token);
-      if(response?.data?.msg=="List of all introduction videos."){
+      if (response?.data?.msg == 'List of all introduction videos.') {
+        console.log(response?.data);
         setIntroVideoList(response?.data?.videos);
         setShowIntroInput(
           languageKnown.filter(
             itemA =>
-              !response?.data?.videos.some(itemB => itemB.videoLanguage == itemA),
+              !response?.data?.videos?.some(
+                itemB => itemB?.videoLanguage == itemA,
+              ),
           ),
         );
       }
-      
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -130,7 +186,7 @@ const VideoScreen = () => {
     }
   };
   const handleDeleteVideo = async videoId => {
-    setShowLoading(true)
+    setShowLoading(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await deleteWorkVideo(
@@ -150,7 +206,7 @@ const VideoScreen = () => {
     } catch (error) {
       console.warn('Something went wrong');
     }
-    setShowLoading(false)
+    setShowLoading(false);
   };
   const [languageKnown, setLanguageKnown] = useState([]);
   const setLanguageKnownFunc = async () => {
@@ -159,7 +215,7 @@ const VideoScreen = () => {
     setLanguageKnown(JSON.parse(stringArr));
   };
   const handleDeleteIntroVideo = async videoId => {
-    setShowLoading(true)
+    setShowLoading(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await deleteIntroVideo(
@@ -180,52 +236,18 @@ const VideoScreen = () => {
     } catch (error) {
       console.warn('Something went wrong');
     }
-    setShowLoading(false)
+    setShowLoading(false);
   };
-  const pickMediaForIntroVideo = async language => {
-    setShowLoading(true)
-    try {
-      const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.video],
-      });
-      let user = await AsyncStorage.getItem('user');
-      const videoFormData = new FormData();
-      videoFormData.append('video', {
-        uri: result[0].uri,
-        type: result[0].type,
-        name: result[0].name,
-      });
-      videoFormData.append('videoLanguage', language);
-      let response = await uploadIntroVideo(
-        videoFormData,
-        JSON.parse(user).access_token,
-      );
-      if (response?.data?.msg == 'Video Added Successfully.') {
-        getUserIntroVideoList();
-        Toast.show({
-          type: 'success', // 'success', 'error', 'info', or any custom type you define
-          // position: 'top',
-          text1: 'Video Added Successfully.',
-          visibilityTime: 3000, // Duration in milliseconds
-        });
-      }
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker
-        console.log('User cancelled media picker');
-      } else {
-        console.error('Error picking media', err);
-      }
-    }
-    setShowLoading(false)
-  };
-  useEffect(() => {
-    getUserWorkVideoList();
-    getOccList();
-    setLanguageKnownFunc();
-    getUserIntroVideoList()
-  }, []);
-  
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserWorkVideoList();
+      getOccList();
+      setLanguageKnownFunc();
+      getUserIntroVideoList();
+    }, []),
+  );
+
   return (
     <>
       <View style={styles.main}>
@@ -247,38 +269,36 @@ const VideoScreen = () => {
 
         <View>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
-            {showIntroInput?.map((v, i) => {
-              return (
-                <TouchableOpacity onPress={() => pickMediaForIntroVideo(v)}>
-                  <View>
+            <TouchableOpacity onPress={() => setIntroVideoPopUp(true)}>
+                <View>
+                  <Image
+                    source={require('../images/rectangle.png')}
+                    style={{
+                      height: 100,
+                      width: 160,
+                      borderRadius: 5,
+                      marginRight: 10,
+                    }}
+                  />
+                  <View
+                    style={{
+                      position: 'absolute',
+                      top: 40,
+                      left: 70,
+                      padding: 6,
+                      backgroundColor: 'white',
+                      borderRadius: 11,
+                    }}>
                     <Image
-                      source={require('../images/rectangle.png')}
-                      style={{
-                        height: 100,
-                        width: 160,
-                        borderRadius: 5,
-                        marginRight: 10,
-                      }}
+                      source={require('../images/playVideoIcon.png')}
+                      style={{height: 10, width: 10}}
                     />
-                    <View
-                      style={{
-                        position: 'absolute',
-                        top: 40,
-                        left: 70,
-                        padding: 6,
-                        backgroundColor: 'white',
-                        borderRadius: 11,
-                      }}>
-                      <Image
-                        source={require('../images/playVideoIcon.png')}
-                        style={{height: 10, width: 10}}
-                      />
-                    </View>
-                    <Text style={{textAlign: 'center'}}>Upload in {v}</Text>
                   </View>
-                </TouchableOpacity>
-              );
-            })}
+                </View>
+                <Text style={{textAlign: 'center', marginVertical: 5}}>
+                  Upload Intro Video
+                </Text>
+              </TouchableOpacity>
             {introVideoList?.map((v, i) => {
               return (
                 <>
@@ -517,6 +537,68 @@ const VideoScreen = () => {
           </View>
         </View>
       </Modal>
+      <Modal transparent={true} visible={introVideoPopUp} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View style={styles.modalMain}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 18,
+              }}>
+              <Text style={styles.nameText}>Upload Intro Video</Text>
+              <Pressable onPress={() => setIntroVideoPopUp(false)}>
+                <Image source={require('../images/close.png')} />
+              </Pressable>
+            </View>
+            <TouchableOpacity
+              style={styles.input}
+              onPress={pickMediaForIntroVideo}>
+              <Text>
+                {introformData.video == null
+                  ? 'Choose Video File'
+                  : introformData.video.name}
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.picker}>
+              <Picker
+                selectedValue={introformData.languageKnown}
+                onValueChange={(itemValue, itemIndex) => {
+                  setIntroFormData({...introformData, languageKnown:itemValue})
+                }}>
+                <Picker.Item
+                  label="Select Language"
+                  value="Unknown"
+                  style={{color: 'gray'}}
+                />
+                {languageKnown?.map((v, i) => {
+                  return (
+                    <Picker.Item
+                      label={v}
+                      value={v}
+                      style={{color: 'gray'}}
+                    />
+                  );
+                })}
+
+                {/* Add more Picker.Item as needed */}
+              </Picker>
+            </View>
+            <Button
+              title="Submit"
+              onPress={handleIntroVideoUpload}
+              color="#035292"
+            />
+          </View>
+        </View>
+      </Modal>
       <Modal transparent={true} visible={showLoading} animationType="slide">
         <View
           style={{
@@ -641,6 +723,8 @@ export default VideoScreen;
 const styles = StyleSheet.create({
   main: {
     padding: 15,
+    backgroundColor:"#fff",
+    flex:1
   },
   title: {
     fontFamily: 'Noto Sans',

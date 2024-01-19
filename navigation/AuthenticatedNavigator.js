@@ -33,6 +33,7 @@ import ApplyPcc from '../screens/ApplyPcc';
 import Support from '../screens/Support';
 import CandidateDetails2 from '../screens/CandidateDetails2';
 import AppliedJobById from '../screens/AppliedJobById';
+import EditProfile from '../screens/EditProfile';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (
@@ -192,6 +193,14 @@ const AuthenticatedNavigator = () => {
           component={AppliedJobById}
           options={({navigation, route}) => ({
             title: '',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Edit Profile"
+          component={EditProfile}
+          options={({navigation, route}) => ({
+            title: 'Edit Profile',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

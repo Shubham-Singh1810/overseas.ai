@@ -20,7 +20,7 @@ const JobsByCategory = () => {
   }, [departmentId]);
   return (
     <>
-      <ScrollView>
+      <ScrollView style={{flex:1, backgroundColor:"#fff"}}>
         <View style={{padding: 15, marginBottom:50}}>
           <Text style={{fontSize:18,  marginBottom:15}}>Occupation: <Text style={{color:"#000"}}>{departmentName}</Text></Text>
           {jobList?.map((value, i) => {

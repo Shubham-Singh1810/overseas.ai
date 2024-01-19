@@ -76,6 +76,7 @@ export default FavrouiteJob;
 const styles = StyleSheet.create({
   main: {
     padding: 15,
+    // backgroundColor:"#fff"
   },
   sortOption: {
     width: '25%',

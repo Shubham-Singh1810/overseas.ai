@@ -328,13 +328,13 @@ export default SearchResult;
 
 const styles = StyleSheet.create({
   main: {
-    borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#B3B3B3',
     paddingHorizontal: 10,
     paddingBottom: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     backgroundColor: '#fff',
+    elevation:5,
+    paddingVertical:5
   },
   newText: {
     paddingHorizontal: 5,

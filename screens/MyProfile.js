@@ -31,16 +31,9 @@ const MyProfile = (props) => {
             }}
             style={styles.myPic}
           />}
-            
-             {/* <Image
-              source={{
-                uri:`https://overseasdata.s3.ap-south-1.amazonaws.com/EmpData/2/3/OV1111259/thumbAfterDepartureVideos.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAWDCXZNCOR3S6IVWY%2F20231214%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20231214T102119Z&X-Amz-SignedHeaders=host&X-Amz-Expires=604800&X-Amz-Signature=93fe5a903ccf982f05bea494446ec0267fb19fe56da88e9d44f0e0107a093f9a`,
-              }}
-              style={styles.myPic}
-            /> */}
             <Image
               source={require('../images/bedgeIcon.png')}
-              style={styles.bedge}
+              style={[styles.bedge, {resizeMode:"contain"}]}
             />
           </View>
           <View style={{marginVertical: 15}}>
@@ -122,7 +115,7 @@ export default MyProfile;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#F5F5FA',
+    backgroundColor: '#fff',
     padding: 10,
     marginBottom: 60,
   },
