@@ -6,32 +6,63 @@ import {
   Image,
   Button,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import {useState} from 'react';
-
+import {getJobByHra} from "../services/hra.service"
 const DetailedHra = props => {
   const {params} = props.route;
-  const[showJobDetails, setShowJobDetails]=useState(false)
+  console.log(params);
+  const [showJobDetails, setShowJobDetails] = useState(false);
+  const renderStars = numRatings => {
+    const stars = [];
+    for (let i = 0; i < numRatings; i++) {
+      stars.push(
+        <Image
+          key={i}
+          source={require('../images/starIcon.png')} // You might need to adjust the source based on your project structure
+          style={{width: 20, height: 20, resizeMode: 'contain'}}
+        />,
+      );
+    }
+    return stars;
+  };
   return (
     <ScrollView style={styles.main}>
       <View style={styles.flex}>
-        <Image
-          source={{
-            uri: params.logoUrl,
-          }}
-          style={{
-            height: 100,
-            width: 100,
-            borderRadius: 50,
-            resizeMode: 'stretch',
-            marginRight: 15,
-            borderWidth: 0.5,
-            borderColor: 'gray',
-          }}
-        />
+        {params?.cmpLogoS3 != 'placeholder/logo.png' ? (
+          <Image
+            source={{
+              uri: params?.cmpLogoS3,
+            }}
+            style={{
+              height: 100,
+              width: 100,
+              borderRadius: 50,
+              resizeMode: 'contain',
+              marginRight: 15,
+              borderWidth: 0.5,
+              borderColor: 'gray',
+            }}
+          />
+        ) : (
+          <Image
+            source={require('../images/hraDummyIcon.png')}
+            style={{
+              height: 100,
+              width: 100,
+              borderRadius: 50,
+              resizeMode: 'contain',
+              marginRight: 15,
+              borderWidth: 0.5,
+              borderColor: 'gray',
+            }}
+          />
+        )}
+
         <View>
           <View style={[styles.flex, {alignItems: 'center'}]}>
-            <Text style={styles.hraName}>{params?.title}</Text>
+            <Text style={styles.hraName}>{params?.cmpName}</Text>
             <Text style={styles.countryName}>(Qatar)</Text>
           </View>
           <View style={[styles.flex, {alignItems: 'center'}]}>
@@ -39,19 +70,21 @@ const DetailedHra = props => {
             <Text style={styles.countryName}>followers</Text>
           </View>
           <View style={[styles.flex, {alignItems: 'center'}]}>
-            <Text style={styles.lightText}>Since {params.since}</Text>
-            <View style={[styles.flex]}>
-              {params.ratting.map((v, i) => {
-                return <Image source={require('../images/starIcon.png')} />;
-              })}
+            <Text style={styles.lightText}>Since {params?.cmpWorkingFrom}</Text>
+            <View style={[styles.flex, {marginLeft: 5}]}>
+              {renderStars(params?.cmpRating)}
             </View>
           </View>
           <View style={[styles.flex]}>
-            <Image
-              source={require('../images/globleIcon.png')}
-              style={{marginRight: 5}}
-            />
-            <Image source={require('../images/facebookLogo.png')} />
+            <Pressable>
+              <Image
+                source={require('../images/globleIcon.png')}
+                style={{marginRight: 5}}
+              />
+            </Pressable>
+            <Pressable>
+              <Image source={require('../images/facebookLogo.png')} />
+            </Pressable>
           </View>
         </View>
       </View>
@@ -59,6 +92,30 @@ const DetailedHra = props => {
         <Text style={styles.buttonText}>Follow</Text>
       </TouchableOpacity>
       <View style={styles.otherDetailsContainer}>
+        <View style={[styles.tableItemPadding, styles.borderBottom]}>
+          <Text style={[styles.tableText]}>Country Presence :</Text>
+          <View style={[styles.flex, {marginTop: 5}]}>
+            {params?.cmpWorkingCountryNames?.map((v, i) => {
+              return (
+                <Text
+                  style={[
+                    styles.tableText,
+                    {
+                      marginRight: 6,
+                      paddingHorizontal: 4,
+                      paddingVertical: 2,
+                      elevation: 2,
+                      backgroundColor: '#fff',
+                      borderRadius: 4,
+                    },
+                  ]}>
+                  {v}
+                </Text>
+              );
+            })}
+          </View>
+        </View>
+
         <View
           style={[
             styles.flex,
@@ -66,39 +123,30 @@ const DetailedHra = props => {
             styles.borderBottom,
             {justifyContent: 'space-between'},
           ]}>
-          <Text style={[styles.tableText]}>Country Presence</Text>
-          <View style={[styles.flex]}>
-            <Text style={[styles.tableText, styles.borderBottom]}>Qatar</Text>
-            <Text
-              style={[
-                styles.tableText,
-                styles.borderBottom,
-                {marginHorizontal: 10},
-              ]}>
-              Iran
-            </Text>
-            <Text style={[styles.tableText, styles.borderBottom]}>Daman</Text>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.flex,
-            styles.tableItemPadding,
-             styles.borderBottom,
-            {justifyContent: 'space-between'},
-          ]}>
           <Text style={styles.tableText}>Industries Served</Text>
-          <TouchableOpacity onPress={()=>setShowJobDetails(!showJobDetails)}>
-            <Image source={!showJobDetails? require('../images/downArrow.png') : require('../images/upArrow.png')} />
+          <TouchableOpacity onPress={() => setShowJobDetails(!showJobDetails)}>
+            <Image
+              source={
+                !showJobDetails
+                  ? require('../images/downArrow.png')
+                  : require('../images/upArrow.png')
+              }
+            />
           </TouchableOpacity>
         </View>
-        {showJobDetails && params.industriesServed.map((v, i) => {
-          return (
-            <View style={[styles.tableItemPadding, styles.borderBottom,{backgroundColor:"#fff"}]}>
-              <Text style={styles.tableText}>{v}</Text>
-            </View>
-          );
-        })}
+        {showJobDetails &&
+          params.cmpWorkingDepartmentNames.map((v, i) => {
+            return (
+              <View
+                style={[
+                  styles.tableItemPadding,
+                  styles.borderBottom,
+                  {backgroundColor: '#fff'},
+                ]}>
+                <Text style={styles.tableText}>{v}</Text>
+              </View>
+            );
+          })}
 
         <View
           style={[
@@ -108,12 +156,12 @@ const DetailedHra = props => {
             {justifyContent: 'space-between'},
           ]}>
           <Text style={[styles.tableText]}>
-            No. of candidates placed during {'\n'} last 5 years
+            No. of average candidates {'\n'}placed yearly
           </Text>
-          <Text style={[styles.tableText]}>35</Text>
+          <Text style={[styles.tableText]}>{params?.cmpYearlyPlacement}</Text>
         </View>
 
-        <View
+        {/* <View
           style={[
             styles.flex,
             styles.tableItemPadding,
@@ -124,7 +172,7 @@ const DetailedHra = props => {
             Average salary for different job title
           </Text>
           <Text style={[styles.tableText]}>Rs. 10,000</Text>
-        </View>
+        </View> */}
         <View
           style={[
             styles.flex,

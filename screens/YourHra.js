@@ -8,11 +8,14 @@ import {
   Modal,
   ScrollView,
 } from 'react-native';
-import {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {getHraList} from '../services/hra.service';
 import {TextInput} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
+import {useFocusEffect} from '@react-navigation/native';
 const YourHra = props => {
   const [showModal, setShowModal] = useState(false);
+  const [hraList, setHraList] = useState([]);
   const hraData = [
     {
       id: '92',
@@ -154,7 +157,61 @@ const YourHra = props => {
         'https://bismillahenterprises.net/wp-content/uploads/2023/04/bismillah_enterprises_logo.png',
     },
   ];
+  const getHraFunc = async () => {
+    try {
+      let response = await getHraList();
+      setHraList(response?.data?.cmpData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const [searchKey, setSearchKey] = useState('');
+  const [ratingOrd, setRatingOrd] = useState("asc");
+  const [sinceOrd, setSinceOrd] = useState("asc");
+  const [nameOrd, setNameOrd] = useState("asc");
+  useFocusEffect(
+    React.useCallback(() => {
+      getHraFunc();
+      setTimeout(()=>{
+        alphaSort()
 
+      }, 5000)
+    }, []),
+  );
+  const [filteredArray, setFilteredArray] = useState([]);
+  const searchResultFunc = key => {
+    if (key.length != 0) {
+      setFilteredArray(
+        hraList.filter(item =>
+          item?.cmpName.toLowerCase().includes(key.toLowerCase()),
+        ),
+      );
+    } else {
+      setFilteredArray(hraList);
+    }
+    // sort by alphabet
+  };
+  const alphaSort = () =>{
+    if(nameOrd){
+      setHraList(hraList.sort((a, b) => a.cmpName.localeCompare(b.cmpName)));
+    }
+    else{
+      setFilteredArray(hraList);
+    }
+  }
+  const renderStars = numRatings => {
+    const stars = [];
+    for (let i = 0; i < numRatings; i++) {
+      stars.push(
+        <Image
+          key={i}
+          source={require('../images/starIcon.png')} // You might need to adjust the source based on your project structure
+          style={{width: 20, height: 20, resizeMode: 'contain'}}
+        />,
+      );
+    }
+    return stars;
+  };
   return (
     <View style={styles.main}>
       <View
@@ -163,7 +220,15 @@ const YourHra = props => {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-        <TextInput placeholder="Search By Name" style={styles.input} />
+        <TextInput
+          placeholder="Search By Name"
+          value={searchKey}
+          style={styles.input}
+          onChangeText={text => {
+            searchResultFunc(text);
+            setSearchKey(text);
+          }}
+        />
         <TouchableOpacity
           style={styles.sortOption}
           onPress={() => setShowModal(!showModal)}>
@@ -195,7 +260,7 @@ const YourHra = props => {
                     backgroundColor: '#EFF8FF',
                   }}
                   onPress={() => setShowModal(false)}>
-                  <Text style={{fontWeight: '500'}}>Country</Text>
+                  <Text style={{fontWeight: '500'}}>Rating : High To Low</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
@@ -205,7 +270,9 @@ const YourHra = props => {
                     backgroundColor: '#EFF8FF',
                   }}
                   onPress={() => setShowModal(false)}>
-                  <Text style={{fontWeight: '500'}}>Rating</Text>
+                  <Text style={{fontWeight: '500'}}>
+                    Since : Newest To Oldest
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
@@ -215,66 +282,63 @@ const YourHra = props => {
                     backgroundColor: '#EFF8FF',
                   }}
                   onPress={() => setShowModal(false)}>
-                  <Text style={{fontWeight: '500'}}>Years in Business</Text>
+                  <Text style={{fontWeight: '500'}}>Name : A To Z</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
       )}
-      <View style={{marginHorizontal: -12, marginTop: 10, paddingBottom: 100}}>
+      <View style={{marginHorizontal: -8, marginTop: 10, paddingBottom: 100}}>
         <ScrollView>
-          <View>
-            {hraData.map((v, i) => {
+          {searchKey && (
+            <Text style={styles.searchKey}>
+              Showing resultes for : {searchKey}
+            </Text>
+          )}
+
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            {(searchKey.length == 0 ? hraList  : filteredArray).map((v, i) => {
               return (
                 <TouchableOpacity
+                  key={i}
                   onPress={() =>
                     props.navigation.navigate('DetailedHra', (detailedHra = v))
-                  }>
-                  <View>
-                    <View
-                      style={[
-                        styles.hraBox,
-                        {flexDirection: 'row', alignItems: 'center'},
-                      ]}>
+                  }
+                  style={{width: '50%'}}>
+                  <View style={[styles.hraBox]}>
+                    {v?.cmpLogoS3 != 'placeholder/logo.png' ? (
                       <Image
                         source={{
-                          uri: v.logoUrl,
+                          uri: v?.cmpLogoS3,
                         }}
                         style={{
                           height: 100,
-                          width: 150,
-                          borderRadius: 40,
+                          width: '100%',
+                          borderRadius: 2,
                           resizeMode: 'contain',
-                          marginRight: 10,
                         }}
                       />
-                      <View>
-                        <Text style={styles.name}>
-                          {v.title.length > 20 ? (
-                            <>{v.title.substring(0, 20)}...</>
-                          ) : (
-                            v.title
-                          )}
-                        </Text>
-                        <Text style={styles.experience}>Since {v.since}</Text>
-                        <View style={{flexDirection: 'row', marginTop: -3}}>
-                          {v.ratting.map((v, i) => {
-                            return (
-                              <Image
-                                source={require('../images/starIcon.png')}
-                              />
-                            );
-                          })}
-                        </View>
-                      </View>
-                    </View>
+                    ) : (
+                      <Image
+                        source={require('../images/hraDummyIcon.png')}
+                        style={{
+                          height: 100,
+                          width: '100%',
+                          borderRadius: 2,
+                          resizeMode: 'contain',
+                        }}
+                      />
+                    )}
+
                     <View>
-                      {/* {v.industriesServed.map((v, i) => {
-                      return(
-                        <Text>{v}</Text>
-                      )
-                    })} */}
+                      <Text style={styles.name}>{v?.cmpName}</Text>
+                      <Text style={styles.experience}>
+                        Since {v?.cmpWorkingFrom}
+                      </Text>
+                      <View style={{flexDirection: 'row', marginTop: -3}}>
+                        {renderStars(v?.cmpRating)}
+                      </View>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -319,8 +383,7 @@ const styles = StyleSheet.create({
   },
   hraBox: {
     flex: 1,
-    marginHorizontal: 15,
-    marginVertical: 8,
+    margin: 8,
     backgroundColor: 'white',
     borderRadius: 4,
     padding: 10,
@@ -338,5 +401,11 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     fontWeight: '400',
     color: 'black',
+  },
+  searchKey: {
+    color: '#000',
+    marginLeft: 10,
+    marginVertical: 10,
+    fontSize: 17,
   },
 });
