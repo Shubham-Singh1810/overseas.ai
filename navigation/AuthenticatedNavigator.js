@@ -34,6 +34,7 @@ import Support from '../screens/Support';
 import CandidateDetails2 from '../screens/CandidateDetails2';
 import AppliedJobById from '../screens/AppliedJobById';
 import EditProfile from '../screens/EditProfile';
+import JobById from '../screens/JobById';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (
@@ -201,6 +202,14 @@ const AuthenticatedNavigator = () => {
           component={EditProfile}
           options={({navigation, route}) => ({
             title: 'Edit Profile',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Job By Id"
+          component={JobById}
+          options={({navigation, route}) => ({
+            title: '',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

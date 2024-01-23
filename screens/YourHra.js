@@ -166,16 +166,12 @@ const YourHra = props => {
     }
   };
   const [searchKey, setSearchKey] = useState('');
-  const [ratingOrd, setRatingOrd] = useState("asc");
-  const [sinceOrd, setSinceOrd] = useState("asc");
-  const [nameOrd, setNameOrd] = useState("asc");
+  const [ratingOrd, setRatingOrd] = useState("");
+  const [sinceOrd, setSinceOrd] = useState("");
+  const [nameOrd, setNameOrd] = useState("");
   useFocusEffect(
     React.useCallback(() => {
       getHraFunc();
-      setTimeout(()=>{
-        alphaSort()
-
-      }, 5000)
     }, []),
   );
   const [filteredArray, setFilteredArray] = useState([]);
@@ -189,11 +185,72 @@ const YourHra = props => {
     } else {
       setFilteredArray(hraList);
     }
-    // sort by alphabet
+    
   };
-  const alphaSort = () =>{
-    if(nameOrd){
+  const alphaSort = (order) =>{
+    setShowModal(false);
+    setSearchKey("");
+    setSinceOrd("");
+    setRatingOrd("")
+    if(order=="asc"){
       setHraList(hraList.sort((a, b) => a.cmpName.localeCompare(b.cmpName)));
+    }
+    else if(order=="desc"){
+      setHraList(hraList.sort((b, a) => a.cmpName.localeCompare(b.cmpName)));
+    }
+    else{
+      setFilteredArray(hraList);
+    }
+  }
+  const ratingSort = (order) =>{
+    setShowModal(false);
+    setSearchKey("");
+    setNameOrd("");
+    setSinceOrd("");
+    if(order=="asc"){
+      setHraList(hraList.sort((a, b) => {
+        const ratingA = a.cmpRating || ''; // Use an empty string if cmpRating is null
+        const ratingB = b.cmpRating || '';
+      
+        return ratingA.localeCompare(ratingB);
+      }));
+    }
+    else if(order=="desc"){
+      setHraList(hraList.sort((b, a) => {
+        const ratingA = a.cmpRating || ''; // Use an empty string if cmpRating is null
+        const ratingB = b.cmpRating || '';
+      
+        return ratingA.localeCompare(ratingB);
+      }));
+    }
+    else{
+      setFilteredArray(hraList);
+    }
+  }
+  const sinceSort = (order) =>{
+    setShowModal(false);
+    setSearchKey("");
+    setNameOrd("");
+    setRatingOrd("")
+    if(order=="asc"){
+      setHraList(hraList.sort((a, b) => {
+        // Handle null values for cmpWorkingFrom
+        const workingFromA = a.cmpWorkingFrom || '0000-00-00'; // Use a default date if cmpWorkingFrom is null
+        const workingFromB = b.cmpWorkingFrom || '0000-00-00';
+      
+        // Compare dates
+        return workingFromA.localeCompare(workingFromB);
+      }));
+    }
+    else if(order=="desc"){
+      setHraList(hraList.sort((b, a) => {
+        // Handle null values for cmpWorkingFrom
+        const workingFromA = a.cmpWorkingFrom || '0000-00-00'; // Use a default date if cmpWorkingFrom is null
+        const workingFromB = b.cmpWorkingFrom || '0000-00-00';
+      
+        // Compare dates
+        return workingFromA.localeCompare(workingFromB);
+      }));
     }
     else{
       setFilteredArray(hraList);
@@ -253,36 +310,45 @@ const YourHra = props => {
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <View style={styles.modalMain}>
                 <TouchableOpacity
-                  style={{
-                    paddingVertical: 10,
-                    paddingLeft: 5,
-                    marginBottom: 10,
-                    backgroundColor: '#EFF8FF',
-                  }}
-                  onPress={() => setShowModal(false)}>
-                  <Text style={{fontWeight: '500'}}>Rating : High To Low</Text>
+                  style={[
+                    {
+                      paddingVertical: 10,
+                      paddingLeft: 5,
+                      marginBottom: 10,
+                      backgroundColor: '#EFF8FF',
+                    },
+                    ratingOrd !== "" && {borderWidth:1, borderColor:"#035292", borderRadius:3}
+                  ]}
+                  onPress={() =>{ratingSort(ratingOrd=="asc"? "desc": "asc"); setRatingOrd(ratingOrd=="asc"? "desc": "asc")} }>
+                  <Text style={{fontWeight: '500'}}>Rating : {ratingOrd=="asc"? "High To Low": "Low To High"}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={{
-                    paddingVertical: 10,
-                    paddingLeft: 5,
-                    marginBottom: 10,
-                    backgroundColor: '#EFF8FF',
-                  }}
-                  onPress={() => setShowModal(false)}>
+                  style={[
+                    {
+                      paddingVertical: 10,
+                      paddingLeft: 5,
+                      marginBottom: 10,
+                      backgroundColor: '#EFF8FF',
+                    },
+                    sinceOrd !== "" && {borderWidth:1, borderColor:"#035292", borderRadius:3}
+                  ]}
+                  onPress={() =>{sinceSort(sinceOrd=="asc"? "desc": "asc"); setSinceOrd(sinceOrd=="asc"? "desc": "asc")}}>
                   <Text style={{fontWeight: '500'}}>
-                    Since : Newest To Oldest
+                    Since : {sinceOrd=="asc"? "Newest To Oldest": "Oldest To Newest"}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={{
-                    paddingVertical: 10,
-                    paddingLeft: 5,
-                    marginBottom: 10,
-                    backgroundColor: '#EFF8FF',
-                  }}
-                  onPress={() => setShowModal(false)}>
-                  <Text style={{fontWeight: '500'}}>Name : A To Z</Text>
+                   style={[
+                    {
+                      paddingVertical: 10,
+                      paddingLeft: 5,
+                      marginBottom: 10,
+                      backgroundColor: '#EFF8FF',
+                    },
+                    nameOrd !== "" && {borderWidth:1, borderColor:"#035292", borderRadius:3}
+                  ]}
+                  onPress={() =>{alphaSort(nameOrd=="asc"? "desc": "asc"); setNameOrd(nameOrd=="asc"? "desc": "asc")} }>
+                  <Text style={{fontWeight: '500'}}>Name : {nameOrd=="asc"? "Z To A": "A To Z"}</Text>
                 </TouchableOpacity>
               </View>
             </View>

@@ -42,14 +42,13 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
           visibilityTime: 3000,
         });
       }
-      if (response.data.error) {
+      if (response?.data?.error) {
         Toast.show({
-          type: 'error',
+          type: "error",
           text1: response?.data?.error,
           visibilityTime: 3000,
         });
       }
-      console.log(response.data.error);
     } catch (error) {
       Toast.show({
         type: 'error',
