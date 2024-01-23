@@ -35,6 +35,7 @@ import CandidateDetails2 from '../screens/CandidateDetails2';
 import AppliedJobById from '../screens/AppliedJobById';
 import EditProfile from '../screens/EditProfile';
 import JobById from '../screens/JobById';
+import GetInstituteById from '../screens/GetInstituteById';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (
@@ -210,6 +211,14 @@ const AuthenticatedNavigator = () => {
           component={JobById}
           options={({navigation, route}) => ({
             title: '',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Get Institute By Id"
+          component={GetInstituteById}
+          options={({navigation, route}) => ({
+            title: 'Training Institute',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

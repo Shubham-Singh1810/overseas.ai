@@ -5,7 +5,7 @@ import { useGlobalState } from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyProfile = (props) => {
   const {translation, globalState, setGlobalState } = useGlobalState();
-  console.log(JSON.parse(globalState?.user))
+  console.log(JSON.parse(globalState?.user)?.empData?.empPhoto)
   const handleLogOut = async()=>{
     try {
       await AsyncStorage.removeItem('user');

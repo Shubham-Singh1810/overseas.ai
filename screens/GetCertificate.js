@@ -6,11 +6,33 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import SkillsGola from '../components/SkillsGola';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
-const GetCertificate = () => {
+import {getInstituteList} from '../services/institute.service';
+import {useFocusEffect} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const GetCertificate = props => {
+  const [instituteList, setInstituteList] = useState([]);
+  const getInstituteListFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getInstituteList(JSON.parse(user).access_token);
+      console.log(response.msg);
+      if (response.msg == 'Institute list retrieved successfully!') {
+        console.log(response.data);
+        setInstituteList(response?.data);
+      }
+    } catch (error) {
+      console.log('Something went wrong');
+    }
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getInstituteListFunc();
+    }, []),
+  );
   return (
     <View style={styles.main}>
       <ScrollView>
@@ -40,7 +62,7 @@ const GetCertificate = () => {
             </Text>
           </Pressable>
         </View>
-        <View style={{marginTop:20}}>
+        <View style={{marginTop: 20}}>
           <TouchableOpacity style={styles.input}>
             <Picker onValueChange={(itemValue, itemIndex) => {}}>
               <Picker.Item
@@ -63,30 +85,50 @@ const GetCertificate = () => {
         <View style={{marginTop: 20}}>
           <Text style={styles.heading}>Top Institutes</Text>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>ABC college</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>ABC college</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>ABC college</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>ABC college</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>ABC college</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>ABC college</Text>
-            </View>
+            {instituteList?.map((v, i) => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate(
+                      'Get Institute By Id',
+                      (instituteDetails = v),
+                    )
+                  }
+                  style={{marginRight: 10}}>
+                  {v?.profileImageUrl != null ? (
+            <Image
+              source={{
+                uri: v?.profileImageUrl,
+              }}
+              style={{
+                height: 100,
+                width: 150,
+                borderRadius: 5,
+                resizeMode: 'contain',
+                borderWidth: 0.5,
+                borderColor: 'gray',
+              }}
+            />
+          ) : (
+            <Image
+              source={require('../images/hraDummyIcon.png')}
+              style={{
+                height: 100,
+                width: 150,
+                borderRadius: 5,
+                resizeMode: 'contain',
+
+                borderWidth: 0.5,
+                borderColor: 'gray',
+              }}
+            />
+          )}
+                  <Text style={{textAlign: 'center', color: 'black'}}>
+                    {v?.instituteName}
+                  </Text>
+                </Pressable>
+              );
+            })}
           </ScrollView>
         </View>
         <View style={{marginTop: 20}}>
@@ -144,7 +186,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     paddingVertical: 20,
-    
   },
   topNav: {
     flexDirection: 'row',
