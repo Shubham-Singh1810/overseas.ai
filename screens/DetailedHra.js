@@ -330,10 +330,11 @@ const DetailedHra = props => {
             Jobs posted by HRA : <Text>{hraJobList?.length}</Text>
           </Text>
         </View>
-
-        {hraJobList?.map((v, i) => {
-          return <SearchResult value={v} />;
-        })}
+        <View style={{paddingBottom: 0}}>
+          {hraJobList?.map((v, i) => {
+            return <SearchResult value={v} />;
+          })}
+        </View>
       </ScrollView>
 
       {/* <View>

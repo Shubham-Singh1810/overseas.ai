@@ -6,7 +6,7 @@ const MyDocument = (props) => {
   const {translation } = useGlobalState();
   return (
     <>
-    <ScrollView>
+    <ScrollView style={{flex:1, backgroundColor:"white"}}>
       <View style={styles.main}>
         <Text style={styles.messageText}>{translation.saveAllYourImportantDocumentsHere}</Text>
         <View style={{ paddingBottom:6}}>
@@ -50,7 +50,7 @@ const MyDocument = (props) => {
         <Text style={styles.grayText}>{translation.allYourDocumentsAreSafeWithUs}</Text>
       </View>
     </ScrollView>
-    <FooterNav props={props}/>
+    
       </>
   )
 }
@@ -59,9 +59,10 @@ export default MyDocument
 
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: '#F5F5FA',
+        backgroundColor: '#fff',
         padding: 10,
         marginBottom: 60,
+        flex:1
       },
       mainHeading: {
         color: '#0F0C0C',

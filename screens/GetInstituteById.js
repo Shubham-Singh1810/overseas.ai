@@ -16,6 +16,7 @@ import CourseGola from '../components/CourseGola';
 import {getCourseByInstitute} from '../services/institute.service';
 import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 const GetInstituteById = props => {
   const {params} = props.route;
   const [showWebsite, setShowWebsite] = useState(false);
@@ -43,7 +44,7 @@ const GetInstituteById = props => {
     <View style={styles.main}>
       <View style={[styles.flex, {alignItems: 'center'}]}>
         <View style={{marginRight: 15}}>
-          {params?.profileImageUrl != null ? (
+          {params?.profileImage != null ? (
             <Image
               source={{
                 uri: params?.profileImageUrl,
@@ -72,7 +73,7 @@ const GetInstituteById = props => {
               }}
             />
           )}
-          <Pressable onPress={() => setShowWebsite(true)}>
+          {params?.insWebLink && <Pressable onPress={() => setShowWebsite(true)}>
             <Text
               style={{
                 textAlign: 'center',
@@ -80,9 +81,10 @@ const GetInstituteById = props => {
                 marginVertical: 5,
                 color: '#035292',
               }}>
-              Vist Web
+              Vist Website
             </Text>
-          </Pressable>
+          </Pressable>}
+          
         </View>
 
         <View>
@@ -136,12 +138,15 @@ const GetInstituteById = props => {
         </View>
         <View style={{marginVertical: 20}}>
           <Text style={[styles.hraName]}>
-            Course provided by Institute : <Text>12</Text>
+            Course provided by Institute : <Text>{courseList?.length}</Text>
           </Text>
         </View>
+        <View style={{paddingBottom: 10}}>
         {courseList?.map((v, i) => {
-          return <CourseGola />;
+          return <CourseGola value={v} props={props}/>;
         })}
+        </View>
+        
       </ScrollView>
 
       <Modal transparent={false} visible={showWebsite} animationType="slide">
@@ -167,6 +172,7 @@ const GetInstituteById = props => {
           <WebView source={{uri: params?.insWebLink}} style={{flex: 1}} />
         </View>
       </Modal>
+      
     </View>
   );
 };
@@ -178,6 +184,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 20,
     backgroundColor: 'white',
+    flex:1
   },
   flex: {
     flexDirection: 'row',

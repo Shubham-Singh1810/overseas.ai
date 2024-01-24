@@ -80,7 +80,12 @@ const CustomDrawerContent = ({navigation}) => {
       name: 'Applied Job',
       subMenu: [],
     },
-
+    {
+      title: 'Get Certificate',
+      component: GetCertificate,
+      name: 'Get Certificate',
+      subMenu: [],
+    },
     {
       title: 'Apply Medical Test',
       component: MedicalTest,
@@ -93,12 +98,7 @@ const CustomDrawerContent = ({navigation}) => {
       name: 'Apply PCC',
       subMenu: [],
     },
-    {
-      title: 'Get Certificate',
-      component: GetCertificate,
-      name: 'Get Certificate',
-      subMenu: [],
-    },
+    
     {
       title: 'Need Migration Loan',
       component: NeedMigrationLoan,

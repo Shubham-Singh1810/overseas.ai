@@ -10,27 +10,61 @@ import React, {useState} from 'react';
 import SkillsGola from '../components/SkillsGola';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
-import {getInstituteList} from '../services/institute.service';
+import {
+  getInstituteList,
+  getCourseList,
+  searchForCourse,
+} from '../services/institute.service';
 import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CountryGola from '../components/CountryGola';
+import {isBefore, subWeeks} from 'date-fns';
+import CourseGola from '../components/CourseGola';
 const GetCertificate = props => {
   const [instituteList, setInstituteList] = useState([]);
+  const [courseList, setCourseList] = useState([]);
+  const [showHotJob, setShowHotJob] = useState(false);
+  const [searchInstitute, setSearchInstitute] = useState('');
   const getInstituteListFunc = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getInstituteList(JSON.parse(user).access_token);
-      console.log(response.msg);
+
       if (response.msg == 'Institute list retrieved successfully!') {
-        console.log(response.data);
         setInstituteList(response?.data);
       }
     } catch (error) {
       console.log('Something went wrong');
     }
   };
+  const getCourseListFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getCourseList(JSON.parse(user).access_token);
+      if (response.msg == 'Course list retrieved successfully!') {
+        setCourseList(response?.data);
+      }
+    } catch (error) {
+      console.log('Something went wrong');
+    }
+  };
+  const [searchResult, setSearchResult] = useState([]);
+  const getSearchResultForCourseFunc = async id => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await searchForCourse({
+        id: id,
+        access_token: JSON.parse(user).access_token,
+      });
+      setSearchResult(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useFocusEffect(
     React.useCallback(() => {
       getInstituteListFunc();
+      getCourseListFunc();
     }, []),
   );
   return (
@@ -63,7 +97,7 @@ const GetCertificate = props => {
           </Pressable>
         </View>
         <View style={{marginTop: 20}}>
-          <TouchableOpacity style={styles.input}>
+          {/* <TouchableOpacity style={styles.input}>
             <Picker onValueChange={(itemValue, itemIndex) => {}}>
               <Picker.Item
                 label="Course Name"
@@ -71,17 +105,44 @@ const GetCertificate = props => {
                 style={{color: 'gray'}}
               />
             </Picker>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity style={styles.input}>
-            <Picker onValueChange={(itemValue, itemIndex) => {}}>
+            <Picker
+              selectedValue={searchInstitute}
+              onValueChange={(itemValue, itemIndex) => {
+                setSearchInstitute(itemValue);
+                getSearchResultForCourseFunc(itemValue);
+              }}>
               <Picker.Item
-                label="Institute name"
-                value={null}
+                label="Select Institute"
+                value=""
                 style={{color: 'gray'}}
               />
+              {instituteList?.map((v, i) => {
+                return (
+                  <Picker.Item
+                    label={v?.instituteName}
+                    value={v?.id}
+                    style={{color: 'gray'}}
+                  />
+                );
+              })}
             </Picker>
           </TouchableOpacity>
         </View>
+        {searchInstitute != '' && (
+          <View style={{marginTop: 10}}>
+            <Text style={styles.nameText}>
+              Search Result : {searchResult.length}
+            </Text>
+            <View style={{marginTop: 15}}>
+              {searchResult?.map((v, i) => {
+                return <CourseGola value={v} />;
+              })}
+            </View>
+          </View>
+        )}
+
         <View style={{marginTop: 20}}>
           <Text style={styles.heading}>Top Institutes</Text>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
@@ -95,34 +156,34 @@ const GetCertificate = props => {
                     )
                   }
                   style={{marginRight: 10}}>
-                  {v?.profileImageUrl != null ? (
-            <Image
-              source={{
-                uri: v?.profileImageUrl,
-              }}
-              style={{
-                height: 100,
-                width: 150,
-                borderRadius: 5,
-                resizeMode: 'contain',
-                borderWidth: 0.5,
-                borderColor: 'gray',
-              }}
-            />
-          ) : (
-            <Image
-              source={require('../images/hraDummyIcon.png')}
-              style={{
-                height: 100,
-                width: 150,
-                borderRadius: 5,
-                resizeMode: 'contain',
+                  {v?.profileImage ? (
+                    <Image
+                      source={{
+                        uri: v?.profileImageUrl,
+                      }}
+                      style={{
+                        height: 100,
+                        width: 150,
+                        borderRadius: 5,
+                        resizeMode: 'contain',
+                        borderWidth: 0.5,
+                        borderColor: 'gray',
+                      }}
+                    />
+                  ) : (
+                    <Image
+                      source={require('../images/hraDummyIcon.png')}
+                      style={{
+                        height: 100,
+                        width: 150,
+                        borderRadius: 5,
+                        resizeMode: 'contain',
 
-                borderWidth: 0.5,
-                borderColor: 'gray',
-              }}
-            />
-          )}
+                        borderWidth: 0.5,
+                        borderColor: 'gray',
+                      }}
+                    />
+                  )}
                   <Text style={{textAlign: 'center', color: 'black'}}>
                     {v?.instituteName}
                   </Text>
@@ -131,46 +192,148 @@ const GetCertificate = props => {
             })}
           </ScrollView>
         </View>
-        <View style={{marginTop: 20}}>
+        <View style={{marginTop: 30}}>
           <Text style={styles.heading}>Top Courses</Text>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>Cooking</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>Driving</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>Welding</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>Carpentry</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>ABC college</Text>
-            </View>
-            <View style={{marginRight: 10}}>
-              <Image source={require('../images/hraDummyIcon.png')} />
-              <Text style={{textAlign: 'center'}}>ABC college</Text>
-            </View>
+            {courseList?.map((v, i) => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate(
+                      'Get Course By Id',
+                      (CourseDetails = v),
+                    )
+                  }>
+                  <View style={{marginRight: 10}}>
+                    {v?.course_image !=
+                    'https://overseas.ai/placeholder/course.jpg' ? (
+                      <Image
+                        source={{
+                          uri: v?.course_image,
+                        }}
+                        style={{
+                          height: 100,
+                          width: 150,
+                          borderRadius: 5,
+                          resizeMode: 'contain',
+                          borderWidth: 0.5,
+                          borderColor: 'gray',
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        source={require('../images/hraDummyIcon.png')}
+                        style={{
+                          height: 100,
+                          width: 150,
+                          borderRadius: 5,
+                          resizeMode: 'contain',
+                          borderWidth: 0.5,
+                          borderColor: 'gray',
+                        }}
+                      />
+                    )}
+
+                    <Text style={{textAlign: 'center', color: 'black'}}>
+                      {v?.course_name}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            })}
           </ScrollView>
         </View>
         <View style={{flexDirection: 'row', marginTop: 20, marginBottom: -15}}>
-          <Image source={require('../images/arrowPost.png')} />
-          <Image source={require('../images/searchPost.png')} />
+          <Pressable
+            style={[
+              {width: '50%'},
+              showHotJob && {elevation: 1, borderRadius: 2},
+            ]}
+            onPress={() => setShowHotJob(!showHotJob)}>
+            <Image
+              source={require('../images/arrowPost.png')}
+              style={{resizeMode: 'contain'}}
+            />
+          </Pressable>
+          <Pressable
+            style={{width: '50%'}}
+            onPress={() => props.navigation.navigate('Feed')}>
+            <Image
+              source={require('../images/searchPost.png')}
+              style={{resizeMode: 'contain'}}
+            />
+          </Pressable>
         </View>
+        {showHotJob && (
+          <View style={{marginTop: 30}}>
+            <Text style={styles.heading}>Course Added This Week</Text>
+            <ScrollView horizontal={true} style={{marginTop: 10}}>
+              {courseList
+                ?.filter((v, i) => {
+                  return !isBefore(
+                    new Date(v?.created_at),
+                    subWeeks(new Date(), 1),
+                  );
+                })
+                .map((v, i) => {
+                  return (
+                    <Pressable
+                      onPress={() =>
+                        props.navigation.navigate(
+                          'Get Course By Id',
+                          (CourseDetails = v),
+                        )
+                      }>
+                      <View style={{marginRight: 10}}>
+                        {v?.course_image !=
+                        'https://overseas.ai/placeholder/course.jpg' ? (
+                          <Image
+                            source={{
+                              uri: v?.course_image,
+                            }}
+                            style={{
+                              height: 100,
+                              width: 150,
+                              borderRadius: 5,
+                              resizeMode: 'contain',
+                              borderWidth: 0.5,
+                              borderColor: 'gray',
+                            }}
+                          />
+                        ) : (
+                          <Image
+                            source={require('../images/hraDummyIcon.png')}
+                            style={{
+                              height: 100,
+                              width: 150,
+                              borderRadius: 5,
+                              resizeMode: 'contain',
+                              borderWidth: 0.5,
+                              borderColor: 'gray',
+                            }}
+                          />
+                        )}
+
+                        <Text style={{textAlign: 'center', color: 'black'}}>
+                          {v?.course_name}
+                        </Text>
+                      </View>
+                    </Pressable>
+                  );
+                })}
+            </ScrollView>
+          </View>
+        )}
         <View style={styles.largeBtnGroup}>
-          <TouchableOpacity style={[styles.largeBtn, styles.bgBlue]}>
-            <Text style={styles.largeBtnText}>Hot Course</Text>
+          <TouchableOpacity
+            style={[styles.largeBtn, styles.bgBlue]}
+            onPress={() => props.navigation.navigate('Applied Courses')}>
+            <Text style={styles.largeBtnText}>Applied Course</Text>
             <Image source={require('../images/rightArrow.png')} />
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.largeBtn, styles.bgGreen]}>
-            <Text style={styles.largeBtnText}>Most Recent</Text>
+          <TouchableOpacity style={[styles.largeBtn, styles.bgGreen]}
+          onPress={() => props.navigation.navigate('My Certificates')}>
+            <Text style={styles.largeBtnText}>My Certificate</Text>
             <Image source={require('../images/rightArrow.png')} />
           </TouchableOpacity>
         </View>

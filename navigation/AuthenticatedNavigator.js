@@ -36,6 +36,9 @@ import AppliedJobById from '../screens/AppliedJobById';
 import EditProfile from '../screens/EditProfile';
 import JobById from '../screens/JobById';
 import GetInstituteById from '../screens/GetInstituteById';
+import GetCourseById from '../screens/GetCourseById';
+import AppliedCourseList from '../screens/AppliedCourseList';
+import MyCertificate from '../screens/MyCertificate';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (
@@ -219,6 +222,38 @@ const AuthenticatedNavigator = () => {
           component={GetInstituteById}
           options={({navigation, route}) => ({
             title: 'Training Institute',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Get Course By Id"
+          component={GetCourseById}
+          options={({navigation, route}) => ({
+            title: 'Course Details',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Applied Courses"
+          component={AppliedCourseList}
+          options={({navigation, route}) => ({
+            title: 'Applied Courses',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="My Documents"
+          component={MyDocument}
+          options={({navigation, route}) => ({
+            title: 'My Documents',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="My Certificates"
+          component={MyCertificate}
+          options={({navigation, route}) => ({
+            title: 'My Certificates',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

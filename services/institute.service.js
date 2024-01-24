@@ -35,3 +35,69 @@ export const getCourseByInstitute = async params => {
     throw error;
   }
 };
+export const getCourseList = async access_token => {
+  try {
+    const response = await axios.get(
+      BASE_URL + 'list-all-course',
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+export const searchForCourse = async (params) => {
+  console.log("params", params)
+  try {
+    const response = await axios.post(
+      BASE_URL + 'filter-courses', {instId:params.id},
+      {
+        headers: {
+          Authorization: `Bearer ${params?.access_token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+export const applyCourse = async (params) => {
+  console.log("params", params)
+  try {
+    const response = await axios.post(
+      BASE_URL + 'apply-course/'+ params.id, {},
+      {
+        headers: {
+          Authorization: `Bearer ${params?.access_token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+export const getListOfAppliedCourse = async (access_token) => {
+  try {
+    const response = await axios.get(
+      BASE_URL + 'applied-course',
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
