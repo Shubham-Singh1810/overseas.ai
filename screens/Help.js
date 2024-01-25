@@ -198,32 +198,38 @@ const Help = props => {
             style={[styles.btn]}
             onPress={pickMediaForHelpVideo}>
             <View style={{backgroundColor: '#333333', borderRadius: 15}}>
-            {formData.help_video != ''
-                ?<Pressable onPress={()=>setFormData({...formData, help_video:""})} style={{backgroundColor: '#fff', borderRadius: 15}}><Image source={require('../images/close.png')} /></Pressable> 
-                : <Image source={require('../images/play_circle_outline.png')} />}
-              
+              {formData.help_video != '' ? (
+                <Pressable
+                  onPress={() => setFormData({...formData, help_video: ''})}
+                  style={{backgroundColor: '#fff', borderRadius: 15}}>
+                  <Image source={require('../images/close.png')} />
+                </Pressable>
+              ) : (
+                <Image source={require('../images/play_circle_outline.png')} />
+              )}
             </View>
 
             <Text style={styles.btnText}>
-              {formData.help_video != ''
-                ? "Selected"
-                : 'Upload Video'}
+              {formData.help_video != '' ? 'Selected' : 'Upload Video'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.btn]}
             onPress={pickMediaForHelpaAudio}>
             <View style={{backgroundColor: '#333333', borderRadius: 15}}>
-            {formData.help_audio != ''
-                ?<Pressable onPress={()=>setFormData({...formData, help_audio:""})} style={{backgroundColor: '#fff', borderRadius: 15}}><Image source={require('../images/close.png')} /></Pressable> 
-                : <Image source={require('../images/mic.png')} />}
-              
+              {formData.help_audio != '' ? (
+                <Pressable
+                  onPress={() => setFormData({...formData, help_audio: ''})}
+                  style={{backgroundColor: '#fff', borderRadius: 15}}>
+                  <Image source={require('../images/close.png')} />
+                </Pressable>
+              ) : (
+                <Image source={require('../images/mic.png')} />
+              )}
             </View>
 
             <Text style={styles.btnText}>
-              {formData.help_audio != ''
-                ? "Selected"
-                : 'Upload Audio'}
+              {formData.help_audio != '' ? 'Selected' : 'Upload Audio'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -236,7 +242,7 @@ const Help = props => {
             justifyContent: 'center',
             backgroundColor: 'white',
             width: '100%',
-            marginTop:20,
+            marginTop: 20,
             padding: 20,
             // backgroundColor:"#035292",
           }}>
