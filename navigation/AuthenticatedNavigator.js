@@ -182,6 +182,7 @@ const AuthenticatedNavigator = () => {
           component={Help}
           options={({navigation, route}) => ({
             title: 'Contact Us',
+            headerShown: false, 
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
