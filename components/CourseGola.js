@@ -14,7 +14,7 @@ const CourseGola = ({value, props, isApplied}) => {
       if (response?.message == 'Application submitted successfully!') {
         Toast.show({
           type: 'success', // 'success', 'error', 'info', or any custom type you define
-          position: 'bottom',
+          position: 'top',
           text1: response?.message,
           visibilityTime: 3000, // Duration in milliseconds
         });
@@ -23,7 +23,7 @@ const CourseGola = ({value, props, isApplied}) => {
       ) {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
-          position: 'bottom',
+          position: 'top',
           text1: 'You have already applied for this course.',
           visibilityTime: 3000, // Duration in milliseconds
         });
@@ -31,7 +31,7 @@ const CourseGola = ({value, props, isApplied}) => {
     } catch (error) {
       Toast.show({
         type: 'error', // 'success', 'error', 'info', or any custom type you define
-        position: 'bottom',
+        position: 'top',
         text1: 'Something went wrong',
         visibilityTime: 3000, // Duration in milliseconds
       });
@@ -39,6 +39,7 @@ const CourseGola = ({value, props, isApplied}) => {
   };
   return (
     <View style={styles.main}>
+      
       <Text
         style={{
           textAlign: 'right',
@@ -136,7 +137,7 @@ const CourseGola = ({value, props, isApplied}) => {
           </Text>
         </Pressable>
       </View>
-      <Toast ref={ref => Toast.setRef(ref)} />
+      
     </View>
   );
 };

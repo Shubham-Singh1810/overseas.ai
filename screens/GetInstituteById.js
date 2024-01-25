@@ -42,6 +42,7 @@ const GetInstituteById = props => {
   );
   return (
     <View style={styles.main}>
+      
       <View style={[styles.flex, {alignItems: 'center'}]}>
         <View style={{marginRight: 15}}>
           {params?.profileImage != null ? (
@@ -172,7 +173,7 @@ const GetInstituteById = props => {
           <WebView source={{uri: params?.insWebLink}} style={{flex: 1}} />
         </View>
       </Modal>
-      
+      <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );
 };

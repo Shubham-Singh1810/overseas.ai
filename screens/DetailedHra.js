@@ -14,10 +14,7 @@ import {getJobByHra} from '../services/hra.service';
 import WebView from 'react-native-webview';
 import {useFocusEffect} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import {
-  getFollowerCount,
-  handleFollow
-} from '../services/hra.service';
+import {getFollowerCount, handleFollow} from '../services/hra.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchResult from '../components/SearchResult';
 const DetailedHra = props => {
@@ -51,12 +48,11 @@ const DetailedHra = props => {
         cmpId: params?.id,
       });
       if (response.status == 200) {
-        
         Toast.show({
-          type: 'success', // 'success', 'error', 'info', or any custom type you define
-          // position: 'top',
+          type: 'success',
+          position: 'top',
           text1: response?.data?.message,
-          visibilityTime: 3000, // Duration in milliseconds
+          visibilityTime: 3000,
         });
         getFollowCountFunc();
       } else {
@@ -103,261 +99,264 @@ const DetailedHra = props => {
     return stars;
   };
   return (
-    <View style={styles.main}>
-      <View style={styles.flex}>
-        {params?.cmpLogoS3 != 'placeholder/logo.png' ? (
-          <Image
-            source={{
-              uri: params?.cmpLogoS3,
-            }}
-            style={{
-              height: 110,
-              width: 110,
-              borderRadius: 55,
-              resizeMode: 'contain',
-              marginRight: 15,
-              borderWidth: 0.5,
-              borderColor: 'gray',
-            }}
-          />
-        ) : (
-          <Image
-            source={require('../images/hraDummyIcon.png')}
-            style={{
-              height: 110,
-              width: 110,
-              borderRadius: 55,
-              resizeMode: 'contain',
-              marginRight: 15,
-              borderWidth: 0.5,
-              borderColor: 'gray',
-            }}
-          />
-        )}
+    <>
+      <View style={styles.main}>
+        <View style={styles.flex}>
+          {params?.cmpLogoS3 != 'placeholder/logo.png' ? (
+            <Image
+              source={{
+                uri: params?.cmpLogoS3,
+              }}
+              style={{
+                height: 110,
+                width: 110,
+                borderRadius: 55,
+                resizeMode: 'contain',
+                marginRight: 15,
+                borderWidth: 0.5,
+                borderColor: 'gray',
+              }}
+            />
+          ) : (
+            <Image
+              source={require('../images/hraDummyIcon.png')}
+              style={{
+                height: 110,
+                width: 110,
+                borderRadius: 55,
+                resizeMode: 'contain',
+                marginRight: 15,
+                borderWidth: 0.5,
+                borderColor: 'gray',
+              }}
+            />
+          )}
 
-        <View>
-          <View style={[styles.flex, {alignItems: 'center'}]}>
-            <Text style={styles.hraName}>{params?.cmpName}</Text>
-          </View>
-          <View style={[styles.flex, {marginLeft: 0}]}>
-            {renderStars(params?.cmpRating)}
-          </View>
-          <View style={[styles.flex, {alignItems: 'center'}]}>
-            <Text style={styles.hraName}>{followDetails?.totalFollowers}</Text>
-            <Text style={styles.countryName}>followers</Text>
-          </View>
-          <Text style={styles.countryName}>{params?.state_name?.name}</Text>
-          <View style={[styles.flex, {alignItems: 'center'}]}>
-            <Text style={styles.lightText}>Since {params?.cmpWorkingFrom}</Text>
-          </View>
+          <View>
+            <View style={[styles.flex, {alignItems: 'center'}]}>
+              <Text style={styles.hraName}>{params?.cmpName}</Text>
+            </View>
+            <View style={[styles.flex, {marginLeft: 0}]}>
+              {renderStars(params?.cmpRating)}
+            </View>
+            <View style={[styles.flex, {alignItems: 'center'}]}>
+              <Text style={styles.hraName}>
+                {followDetails?.totalFollowers}
+              </Text>
+              <Text style={styles.countryName}>followers</Text>
+            </View>
+            <Text style={styles.countryName}>{params?.state_name?.name}</Text>
+            <View style={[styles.flex, {alignItems: 'center'}]}>
+              <Text style={styles.lightText}>
+                Since {params?.cmpWorkingFrom}
+              </Text>
+            </View>
 
-          <View style={[styles.flex]}>
-            {params?.cmpWebsiteLink && (
-              <Pressable onPress={() => setShowWebsite(true)}>
-                <Image
-                  source={require('../images/globleIcon.png')}
-                  style={{marginRight: 5}}
-                />
-              </Pressable>
-            )}
-            {params?.cmpFBLink && (
-              <Pressable onPress={() => setShowFacebook(true)}>
-                <Image source={require('../images/facebookLogo.png')} />
-              </Pressable>
-            )}
+            <View style={[styles.flex]}>
+              {params?.cmpWebsiteLink && (
+                <Pressable onPress={() => setShowWebsite(true)}>
+                  <Image
+                    source={require('../images/globleIcon.png')}
+                    style={{marginRight: 5}}
+                  />
+                </Pressable>
+              )}
+              {params?.cmpFBLink && (
+                <Pressable onPress={() => setShowFacebook(true)}>
+                  <Image source={require('../images/facebookLogo.png')} />
+                </Pressable>
+              )}
+            </View>
           </View>
         </View>
-      </View>
-      <TouchableOpacity
-        style={[
-          styles.button,
-          followDetails?.followStatus
-            ? {
-                backgroundColor: '#F1F7FF',
-                borderWidth: 1,
-                borderRadius: 5,
-                borderColor: '#035292',
-              }
-            : {color: '#035292'},
-        ]}
-        onPress={() => followFunc()}>
-        <Text
+        <TouchableOpacity
           style={[
-            !followDetails?.followStatus
-              ? styles.buttonText
+            styles.button,
+            followDetails?.followStatus
+              ? {
+                  backgroundColor: '#F1F7FF',
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  borderColor: '#035292',
+                }
               : {color: '#035292'},
-          ]}>
-          {followDetails?.followStatus ? 'Unfollow' : 'Follow'}
-        </Text>
-      </TouchableOpacity>
+          ]}
+          onPress={() => followFunc()}>
+          <Text
+            style={[
+              !followDetails?.followStatus
+                ? styles.buttonText
+                : {color: '#035292'},
+            ]}>
+            {followDetails?.followStatus ? 'Unfollow' : 'Follow'}
+          </Text>
+        </TouchableOpacity>
+        <ScrollView>
+          <View style={styles.otherDetailsContainer}>
+            <View style={[styles.tableItemPadding, styles.borderBottom]}>
+              <Text style={[styles.tableText]}>Country Presence :</Text>
+              <View style={[styles.flex, {marginTop: 5}]}>
+                {params?.cmpWorkingCountryNames?.map((v, i) => {
+                  return (
+                    <Text
+                      style={[
+                        styles.tableText,
+                        {
+                          marginRight: 6,
+                          paddingHorizontal: 4,
+                          paddingVertical: 2,
+                          elevation: 2,
+                          backgroundColor: '#fff',
+                          borderRadius: 4,
+                        },
+                      ]}>
+                      {v}
+                    </Text>
+                  );
+                })}
+              </View>
+            </View>
 
-
-      <ScrollView>
-        <View style={styles.otherDetailsContainer}>
-          <View style={[styles.tableItemPadding, styles.borderBottom]}>
-            <Text style={[styles.tableText]}>Country Presence :</Text>
-            <View style={[styles.flex, {marginTop: 5}]}>
-              {params?.cmpWorkingCountryNames?.map((v, i) => {
+            <Pressable
+              onPress={() => setShowJobDetails(!showJobDetails)}
+              style={[
+                styles.flex,
+                styles.tableItemPadding,
+                styles.borderBottom,
+                {justifyContent: 'space-between'},
+              ]}>
+              <Text style={styles.tableText}>Industries Served</Text>
+              <View>
+                <Image
+                  source={
+                    !showJobDetails
+                      ? require('../images/downArrow.png')
+                      : require('../images/upArrow.png')
+                  }
+                />
+              </View>
+            </Pressable>
+            {showJobDetails &&
+              params.cmpWorkingDepartmentNames.map((v, i) => {
                 return (
-                  <Text
+                  <View
                     style={[
-                      styles.tableText,
-                      {
-                        marginRight: 6,
-                        paddingHorizontal: 4,
-                        paddingVertical: 2,
-                        elevation: 2,
-                        backgroundColor: '#fff',
-                        borderRadius: 4,
-                      },
+                      styles.tableItemPadding,
+                      styles.borderBottom,
+                      {backgroundColor: '#fff'},
                     ]}>
-                    {v}
-                  </Text>
+                    <Text style={styles.tableText}>{v}</Text>
+                  </View>
                 );
               })}
+
+            <View
+              style={[
+                styles.flex,
+                styles.tableItemPadding,
+                styles.borderBottom,
+                {justifyContent: 'space-between'},
+              ]}>
+              <Text style={[styles.tableText]}>
+                No. of average candidates {'\n'}placed yearly
+              </Text>
+              <Text style={[styles.tableText]}>
+                {params?.cmpYearlyPlacement}
+              </Text>
             </View>
+            <Pressable
+              onPress={() => setShowClientName(!showClientName)}
+              style={[
+                styles.flex,
+                styles.tableItemPadding,
+                styles.borderBottom,
+                {justifyContent: 'space-between'},
+              ]}>
+              <Text style={styles.tableText}>List of Clients of the HRA</Text>
+              <View>
+                <Image
+                  source={
+                    !showClientName
+                      ? require('../images/downArrow.png')
+                      : require('../images/upArrow.png')
+                  }
+                />
+              </View>
+            </Pressable>
+            {showClientName &&
+              JSON.parse(params?.clientName)?.map((v, i) => {
+                return (
+                  <View
+                    style={[
+                      styles.tableItemPadding,
+                      styles.borderBottom,
+                      {backgroundColor: '#fff'},
+                    ]}>
+                    <Text style={styles.tableText}>{v}</Text>
+                  </View>
+                );
+              })}
           </View>
-
-          <Pressable
-            onPress={() => setShowJobDetails(!showJobDetails)}
-            style={[
-              styles.flex,
-              styles.tableItemPadding,
-              styles.borderBottom,
-              {justifyContent: 'space-between'},
-            ]}>
-            <Text style={styles.tableText}>Industries Served</Text>
-            <View>
-              <Image
-                source={
-                  !showJobDetails
-                    ? require('../images/downArrow.png')
-                    : require('../images/upArrow.png')
-                }
-              />
-            </View>
-          </Pressable>
-          {showJobDetails &&
-            params.cmpWorkingDepartmentNames.map((v, i) => {
-              return (
-                <View
-                  style={[
-                    styles.tableItemPadding,
-                    styles.borderBottom,
-                    {backgroundColor: '#fff'},
-                  ]}>
-                  <Text style={styles.tableText}>{v}</Text>
-                </View>
-              );
-            })}
-
-          <View
-            style={[
-              styles.flex,
-              styles.tableItemPadding,
-              styles.borderBottom,
-              {justifyContent: 'space-between'},
-            ]}>
-            <Text style={[styles.tableText]}>
-              No. of average candidates {'\n'}placed yearly
+          <View style={{marginVertical: 30}}>
+            <Text style={[styles.hraName]}>
+              Jobs posted by HRA : <Text>{hraJobList?.length}</Text>
             </Text>
-            <Text style={[styles.tableText]}>{params?.cmpYearlyPlacement}</Text>
           </View>
-          <Pressable
-            onPress={() => setShowClientName(!showClientName)}
-            style={[
-              styles.flex,
-              styles.tableItemPadding,
-              styles.borderBottom,
-              {justifyContent: 'space-between'},
-            ]}>
-            <Text style={styles.tableText}>List of Clients of the HRA</Text>
-            <View>
-              <Image
-                source={
-                  !showClientName
-                    ? require('../images/downArrow.png')
-                    : require('../images/upArrow.png')
-                }
-              />
-            </View>
-          </Pressable>
-          {showClientName &&
-            JSON.parse(params?.clientName)?.map((v, i) => {
-              return (
-                <View
-                  style={[
-                    styles.tableItemPadding,
-                    styles.borderBottom,
-                    {backgroundColor: '#fff'},
-                  ]}>
-                  <Text style={styles.tableText}>{v}</Text>
-                </View>
-              );
+          <View style={{paddingBottom: 0}}>
+            {hraJobList?.map((v, i) => {
+              return <SearchResult value={v} />;
             })}
-          
-        </View>
-        <View style={{marginVertical: 30}}>
-          <Text style={[styles.hraName]}>
-            Jobs posted by HRA : <Text>{hraJobList?.length}</Text>
-          </Text>
-        </View>
-        <View style={{paddingBottom: 0}}>
-          {hraJobList?.map((v, i) => {
-            return <SearchResult value={v} />;
-          })}
-        </View>
-      </ScrollView>
-
-      
-      <Modal transparent={false} visible={showWebsite} animationType="slide">
-        <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}>
-          <Pressable
-            style={{
-              backgroundColor: 'white',
-              padding: 18,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-            onPress={() => setShowWebsite(false)}>
-            <Image source={require('../images/backIcon.png')} />
-            <Text
+          </View>
+        </ScrollView>
+        <Modal transparent={false} visible={showWebsite} animationType="slide">
+          <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}>
+            <Pressable
               style={{
-                textDecorationLine: 'underline',
-                color: '#035292',
-                fontWeight: '700',
-              }}>
-              Back
-            </Text>
-          </Pressable>
-          <WebView source={{uri: params?.cmpWebsiteLink}} style={{flex: 1}} />
-        </View>
-      </Modal>
-      <Modal transparent={false} visible={showFacebook} animationType="slide">
-        <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}>
-          <Pressable
-            style={{
-              backgroundColor: 'white',
-              padding: 18,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-            onPress={() => setShowFacebook(false)}>
-            <Image source={require('../images/backIcon.png')} />
-            <Text
+                backgroundColor: 'white',
+                padding: 18,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              onPress={() => setShowWebsite(false)}>
+              <Image source={require('../images/backIcon.png')} />
+              <Text
+                style={{
+                  textDecorationLine: 'underline',
+                  color: '#035292',
+                  fontWeight: '700',
+                }}>
+                Back
+              </Text>
+            </Pressable>
+            <WebView source={{uri: params?.cmpWebsiteLink}} style={{flex: 1}} />
+          </View>
+        </Modal>
+        <Modal transparent={false} visible={showFacebook} animationType="slide">
+          <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}>
+            <Pressable
               style={{
-                textDecorationLine: 'underline',
-                color: '#035292',
-                fontWeight: '700',
-              }}>
-              Back
-            </Text>
-          </Pressable>
-          <WebView source={{uri: params?.cmpFBLink}} style={{flex: 1}} />
-        </View>
-      </Modal>
+                backgroundColor: 'white',
+                padding: 18,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              onPress={() => setShowFacebook(false)}>
+              <Image source={require('../images/backIcon.png')} />
+              <Text
+                style={{
+                  textDecorationLine: 'underline',
+                  color: '#035292',
+                  fontWeight: '700',
+                }}>
+                Back
+              </Text>
+            </Pressable>
+            <WebView source={{uri: params?.cmpFBLink}} style={{flex: 1}} />
+          </View>
+        </Modal>
+      </View>
       <Toast ref={ref => Toast.setRef(ref)} />
-    </View>
+    </>
   );
 };
 

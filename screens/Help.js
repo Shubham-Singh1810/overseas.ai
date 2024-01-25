@@ -161,7 +161,7 @@ const Help = props => {
             />
           </View>
           <View style={{marginLeft: 10}}>
-            <Text style={styles.phoneNumberText}>+91 9087654321</Text>
+            <Text style={styles.phoneNumberText}>1800 890 4788</Text>
             <Text style={styles.text}>Available 24X7 for your quires</Text>
           </View>
         </View>
@@ -198,12 +198,15 @@ const Help = props => {
             style={[styles.btn]}
             onPress={pickMediaForHelpVideo}>
             <View style={{backgroundColor: '#333333', borderRadius: 15}}>
-              <Image source={require('../images/play_circle_outline.png')} />
+            {formData.help_video != ''
+                ?<Pressable onPress={()=>setFormData({...formData, help_video:""})} style={{backgroundColor: '#fff', borderRadius: 15}}><Image source={require('../images/close.png')} /></Pressable> 
+                : <Image source={require('../images/play_circle_outline.png')} />}
+              
             </View>
 
             <Text style={styles.btnText}>
               {formData.help_video != ''
-                ? formData.help_video.name
+                ? "Selected"
                 : 'Upload Video'}
             </Text>
           </TouchableOpacity>
@@ -211,12 +214,15 @@ const Help = props => {
             style={[styles.btn]}
             onPress={pickMediaForHelpaAudio}>
             <View style={{backgroundColor: '#333333', borderRadius: 15}}>
-              <Image source={require('../images/mic.png')} />
+            {formData.help_audio != ''
+                ?<Pressable onPress={()=>setFormData({...formData, help_audio:""})} style={{backgroundColor: '#fff', borderRadius: 15}}><Image source={require('../images/close.png')} /></Pressable> 
+                : <Image source={require('../images/mic.png')} />}
+              
             </View>
 
             <Text style={styles.btnText}>
               {formData.help_audio != ''
-                ? formData.help_audio.name
+                ? "Selected"
                 : 'Upload Audio'}
             </Text>
           </TouchableOpacity>
@@ -224,30 +230,29 @@ const Help = props => {
         <TouchableOpacity style={styles.submitBtn} onPress={sendQuery}>
           <Text style={styles.subBtnText}>Submit</Text>
         </TouchableOpacity>
-      </ScrollView>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          position: 'absolute',
-          width: '100%',
-          padding: 20,
-          // backgroundColor:"#035292",
-          bottom: 0,
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
-        }}>
-        <Text style={{color: '#000'}}>Need</Text>
-        <Text
-          onPress={() => props.navigation.navigate('Support')}
+        <View
           style={{
-            color: '#035292',
-            marginHorizontal: 7,
-            textDecorationLine: 'underline',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            backgroundColor: 'white',
+            width: '100%',
+            marginTop:20,
+            padding: 20,
+            // backgroundColor:"#035292",
           }}>
-          Support?
-        </Text>
-      </View>
+          <Text style={{color: '#000'}}>Need</Text>
+          <Text
+            onPress={() => props.navigation.navigate('Support')}
+            style={{
+              color: '#035292',
+              marginHorizontal: 7,
+              textDecorationLine: 'underline',
+            }}>
+            Support?
+          </Text>
+        </View>
+      </ScrollView>
+
       <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
