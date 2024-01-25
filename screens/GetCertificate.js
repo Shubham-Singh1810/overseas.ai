@@ -185,7 +185,7 @@ const GetCertificate = props => {
                     />
                   )}
                   <Text style={{textAlign: 'center', color: 'black'}}>
-                    {v?.instituteName}
+                    {v?.instituteName?.length>20? <>{v?.instituteName?.substring(0, 20)}...</>: v?.instituteName}
                   </Text>
                 </Pressable>
               );
@@ -235,7 +235,7 @@ const GetCertificate = props => {
                     )}
 
                     <Text style={{textAlign: 'center', color: 'black'}}>
-                      {v?.course_name}
+                    {v?.course_name?.length>20? <>{v?.course_name?.substring(0, 20)}...</>: v?.course_name}
                     </Text>
                   </View>
                 </Pressable>

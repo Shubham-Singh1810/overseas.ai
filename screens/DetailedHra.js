@@ -13,10 +13,10 @@ import React, {useEffect, useState} from 'react';
 import {getJobByHra} from '../services/hra.service';
 import WebView from 'react-native-webview';
 import {useFocusEffect} from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 import {
   getFollowerCount,
-  handleFollow,
-  getHraList,
+  handleFollow
 } from '../services/hra.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchResult from '../components/SearchResult';
@@ -51,6 +51,13 @@ const DetailedHra = props => {
         cmpId: params?.id,
       });
       if (response.status == 200) {
+        
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: response?.data?.message,
+          visibilityTime: 3000, // Duration in milliseconds
+        });
         getFollowCountFunc();
       } else {
         console.warn('Something went wrong');
@@ -104,9 +111,9 @@ const DetailedHra = props => {
               uri: params?.cmpLogoS3,
             }}
             style={{
-              height: 100,
-              width: 100,
-              borderRadius: 50,
+              height: 110,
+              width: 110,
+              borderRadius: 55,
               resizeMode: 'contain',
               marginRight: 15,
               borderWidth: 0.5,
@@ -117,9 +124,9 @@ const DetailedHra = props => {
           <Image
             source={require('../images/hraDummyIcon.png')}
             style={{
-              height: 100,
-              width: 100,
-              borderRadius: 50,
+              height: 110,
+              width: 110,
+              borderRadius: 55,
               resizeMode: 'contain',
               marginRight: 15,
               borderWidth: 0.5,
@@ -132,7 +139,9 @@ const DetailedHra = props => {
           <View style={[styles.flex, {alignItems: 'center'}]}>
             <Text style={styles.hraName}>{params?.cmpName}</Text>
           </View>
-
+          <View style={[styles.flex, {marginLeft: 0}]}>
+            {renderStars(params?.cmpRating)}
+          </View>
           <View style={[styles.flex, {alignItems: 'center'}]}>
             <Text style={styles.hraName}>{followDetails?.totalFollowers}</Text>
             <Text style={styles.countryName}>followers</Text>
@@ -140,9 +149,6 @@ const DetailedHra = props => {
           <Text style={styles.countryName}>{params?.state_name?.name}</Text>
           <View style={[styles.flex, {alignItems: 'center'}]}>
             <Text style={styles.lightText}>Since {params?.cmpWorkingFrom}</Text>
-            <View style={[styles.flex, {marginLeft: 5}]}>
-              {renderStars(params?.cmpRating)}
-            </View>
           </View>
 
           <View style={[styles.flex]}>
@@ -185,9 +191,6 @@ const DetailedHra = props => {
         </Text>
       </TouchableOpacity>
 
-      {/* <Text style={[{marginTop: 20}, styles.clientLink]}>
-        List of Clients of the HRA
-      </Text> */}
 
       <ScrollView>
         <View style={styles.otherDetailsContainer}>
@@ -215,7 +218,8 @@ const DetailedHra = props => {
             </View>
           </View>
 
-          <View
+          <Pressable
+            onPress={() => setShowJobDetails(!showJobDetails)}
             style={[
               styles.flex,
               styles.tableItemPadding,
@@ -223,8 +227,7 @@ const DetailedHra = props => {
               {justifyContent: 'space-between'},
             ]}>
             <Text style={styles.tableText}>Industries Served</Text>
-            <TouchableOpacity
-              onPress={() => setShowJobDetails(!showJobDetails)}>
+            <View>
               <Image
                 source={
                   !showJobDetails
@@ -232,8 +235,8 @@ const DetailedHra = props => {
                     : require('../images/upArrow.png')
                 }
               />
-            </TouchableOpacity>
-          </View>
+            </View>
+          </Pressable>
           {showJobDetails &&
             params.cmpWorkingDepartmentNames.map((v, i) => {
               return (
@@ -260,20 +263,8 @@ const DetailedHra = props => {
             </Text>
             <Text style={[styles.tableText]}>{params?.cmpYearlyPlacement}</Text>
           </View>
-
-          {/* <View
-          style={[
-            styles.flex,
-            styles.tableItemPadding,
-            styles.borderBottom,
-            {justifyContent: 'space-between'},
-          ]}>
-          <Text style={[styles.tableText]}>
-            Average salary for different job title
-          </Text>
-          <Text style={[styles.tableText]}>Rs. 10,000</Text>
-        </View> */}
-          <View
+          <Pressable
+            onPress={() => setShowClientName(!showClientName)}
             style={[
               styles.flex,
               styles.tableItemPadding,
@@ -281,17 +272,16 @@ const DetailedHra = props => {
               {justifyContent: 'space-between'},
             ]}>
             <Text style={styles.tableText}>List of Clients of the HRA</Text>
-            <TouchableOpacity
-              onPress={() => setShowClientName(!showClientName)}>
+            <View>
               <Image
                 source={
-                  !showJobDetails
+                  !showClientName
                     ? require('../images/downArrow.png')
                     : require('../images/upArrow.png')
                 }
               />
-            </TouchableOpacity>
-          </View>
+            </View>
+          </Pressable>
           {showClientName &&
             JSON.parse(params?.clientName)?.map((v, i) => {
               return (
@@ -305,25 +295,7 @@ const DetailedHra = props => {
                 </View>
               );
             })}
-          {/* <View
-          style={[
-            styles.flex,
-            styles.tableItemPadding,
-            styles.borderBottom,
-            {justifyContent: 'space-between'},
-          ]}>
-          <Text style={[styles.tableText]}>Average service charge</Text>
-          <Text style={[styles.tableText]}>Rs. 10,000</Text>
-        </View>
-        <View
-          style={[
-            styles.flex,
-            styles.tableItemPadding,
-            {justifyContent: 'space-between'},
-          ]}>
-          <Text style={[styles.tableText]}>Percentage of free job</Text>
-          <Text style={[styles.tableText]}>60%</Text>
-        </View> */}
+          
         </View>
         <View style={{marginVertical: 30}}>
           <Text style={[styles.hraName]}>
@@ -337,31 +309,7 @@ const DetailedHra = props => {
         </View>
       </ScrollView>
 
-      {/* <View>
-        <Text style={[styles.hraName, {marginBottom: 8}]}>Rate HRA</Text>
-        <View style={styles.flex}>
-          <Image
-            source={require('../images/whiteStar.png')}
-            style={{marginRight: 3}}
-          />
-          <Image
-            source={require('../images/whiteStar.png')}
-            style={{marginRight: 3}}
-          />
-          <Image
-            source={require('../images/whiteStar.png')}
-            style={{marginRight: 3}}
-          />
-          <Image
-            source={require('../images/whiteStar.png')}
-            style={{marginRight: 3}}
-          />
-          <Image
-            source={require('../images/whiteStar.png')}
-            style={{marginRight: 3}}
-          />
-        </View>
-      </View> */}
+      
       <Modal transparent={false} visible={showWebsite} animationType="slide">
         <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}>
           <Pressable
@@ -408,6 +356,7 @@ const DetailedHra = props => {
           <WebView source={{uri: params?.cmpFBLink}} style={{flex: 1}} />
         </View>
       </Modal>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );
 };

@@ -123,3 +123,18 @@ export const uploadWorkVideo = async (formData, access_token) => {
   }
 };
 
+export const submitContactQuery = async (params) => {
+  try {
+    const response = await axios.post(BASE_URL+"need-help" , params?.formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${params?.access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
