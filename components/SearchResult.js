@@ -13,7 +13,7 @@ import {getJobById, applyJobApi} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {saveJobById} from '../services/job.service';
-const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
+const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const {translation} = useGlobalState();
@@ -44,7 +44,7 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
       }
       if (response?.data?.error) {
         Toast.show({
-          type: "error",
+          type: 'error',
           text1: response?.data?.error,
           visibilityTime: 3000,
         });
@@ -61,7 +61,10 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await saveJobById(jobId, JSON.parse(user).access_token);
-      if(response?.data?.message=="Job unsaved successfully" || response?.data?.message=="Job saved successfully"){
+      if (
+        response?.data?.message == 'Job unsaved successfully' ||
+        response?.data?.message == 'Job saved successfully'
+      ) {
         Toast.show({
           type: 'success', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
@@ -69,12 +72,11 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
           visibilityTime: 3000, // Duration in milliseconds
         });
       }
-      if(saved){
-        setTimeout(()=>{
-          getListOfSavedJobs()
-        }, 1000)
+      if (saved) {
+        setTimeout(() => {
+          getListOfSavedJobs();
+        }, 1000);
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +99,8 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
             {value?.jobTitle?.substring(0, 10)}...
           </Text>
           <Text style={styles.dateText}>
-            {translation.applyBefore} - {value?.jobDeadline ? value?.jobDeadline: "No Deadline"}
+            {translation.applyBefore} -{' '}
+            {value?.jobDeadline ? value?.jobDeadline : 'No Deadline'}
           </Text>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -126,34 +129,27 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
               {/* {translation.experience} - 3 {translation.years} */}
               {value.jobWages}
             </Text>
-            <Text style={[styles.messageText, {marginTop: 5}]}>
+            {/* <Text style={[styles.messageText, {marginTop: 5}]}>
               {translation.yourProfileMatched} 87%
-            </Text>
-            {!showDetails ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 5,
-                }}>
-                <Button
-                  title={translation.applyNow}
-                  onPress={() => handleApplyJob(value?.id)}
-                />
-                <Text
-                  style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
-                  onPress={() => setShowDetails(true)}>
-                  {translation.readDetails}
-                </Text>
-              </View>
-            ) : (
-              <View>
-                <Text style={[styles.lightText, styles.marginFix]}>
-                  Duty hours - 9 hours
-                </Text>
-                <Text style={styles.lightText}>Over Time Facility -Yes</Text>
-              </View>
-            )}
+            </Text> */}
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: 15,
+              }}>
+              <Button
+                title={translation.applyNow}
+                onPress={() => handleApplyJob(value?.id)}
+              />
+              <Text
+                style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
+                onPress={() =>
+                  props.navigation.navigate('Job Details', {jobId:value.id})
+                }>
+                {translation.readDetails}
+              </Text>
+            </View>
           </View>
           <View style={{marginTop: 'auto', paddingBottom: 15}}>
             <View>
@@ -174,12 +170,15 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
                   justifyContent: 'flex-end',
                   marginTop: 10,
                 }}>
-                <TouchableOpacity onPress={() => handleSaveJob(saved? value?.JobPrimaryId:  value?.id)}>
+                <TouchableOpacity
+                  onPress={() =>
+                    handleSaveJob(saved ? value?.JobPrimaryId : value?.id)
+                  }>
                   {saved ? (
                     <Image
-                    source={require('../images/redHeart.png')}
-                    style={{resizeMode: 'contain'}}
-                  />
+                      source={require('../images/redHeart.png')}
+                      style={{resizeMode: 'contain'}}
+                    />
                   ) : (
                     <Image
                       source={require('../images/emptyHeart.png')}
@@ -191,90 +190,6 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite}) => {
             </View>
           </View>
         </View>
-        {showDetails && (
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <View>
-                <Text style={styles.boldText}>Responsibilties</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>
-                    Need to manage all tools perfectly
-                  </Text>
-                </View>
-              </View>
-              <View>
-                <Text style={styles.boldText}>Qualifications</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>
-                    {translation.experience} - 3 {translation.year}
-                  </Text>
-                </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>Proficient in languages</Text>
-                </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>Gulf return</Text>
-                </View>
-              </View>
-              <View>
-                <Text style={styles.boldText}>Skills Required</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <View style={styles.dot}></View>
-                  <Text style={styles.lightText}>Hard Working</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 15,
-                }}>
-                <Button
-                  title={translation.applyNow}
-                  onPress={() => handleApplyJob(value?.id)}
-                />
-                <Text
-                  style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
-                  onPress={() => setShowDetails(false)}>
-                  Hide Details
-                </Text>
-              </View>
-            </View>
-            <View style={{marginTop: 30}}>
-              <View
-                style={{
-                  height: 100,
-                  width: 100,
-                  borderRadius: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderColor: '#F00',
-                  borderWidth: 7,
-                }}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: '#F00',
-                    fontFamily: 'Noto Sans',
-                  }}>
-                  87%
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: '#F00',
-                    fontFamily: 'Noto Sans',
-                  }}>
-                  Match
-                </Text>
-              </View>
-            </View>
-          </View>
-        )}
       </View>
       <Modal transparent={true} visible={showModal} animationType="slide">
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -332,17 +247,17 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginBottom: 20,
     backgroundColor: '#fff',
-    elevation:5,
-    paddingVertical:5
+    elevation: 5,
+    paddingVertical: 5,
   },
   newText: {
     paddingHorizontal: 5,
     color: 'maroon',
-    borderWidth:.5,
+    borderWidth: 0.5,
     borderRadius: 4,
     fontFamily: 'monospace',
     marginTop: 10,
-    fontSize:12
+    fontSize: 12,
   },
   navTop: {
     flexDirection: 'row',

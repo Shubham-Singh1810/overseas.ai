@@ -39,6 +39,7 @@ import GetInstituteById from '../screens/GetInstituteById';
 import GetCourseById from '../screens/GetCourseById';
 import AppliedCourseList from '../screens/AppliedCourseList';
 import MyCertificate from '../screens/MyCertificate';
+import JobDetailedScreen from '../screens/JobDetailedScreen';
 const Drawer = createDrawerNavigator();
 const AuthenticatedNavigator = () => {
   return (
@@ -255,6 +256,14 @@ const AuthenticatedNavigator = () => {
           component={MyCertificate}
           options={({navigation, route}) => ({
             title: 'My Certificates',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Job Details"
+          component={JobDetailedScreen}
+          options={({navigation, route}) => ({
+            title: 'Job Details',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

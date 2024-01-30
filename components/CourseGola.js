@@ -4,6 +4,7 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {applyCourse} from '../services/institute.service';
 const CourseGola = ({value, props, isApplied}) => {
+  console.log(props)
   const handleApplyCourse = async id => {
     let user = await AsyncStorage.getItem('user');
     try {

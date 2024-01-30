@@ -55,6 +55,7 @@ export const deleteIntroVideo = async (videoId, access_token) => {
   }
 };
 export const uploadIntroVideo = async (formData, access_token) => {
+  console.log("SDUHFI", formData)
   try {
     const response = await axios.post(BASE_URL+"store-introduction-video", formData,{
       headers: {

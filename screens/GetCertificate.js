@@ -137,7 +137,7 @@ const GetCertificate = props => {
             </Text>
             <View style={{marginTop: 15}}>
               {searchResult?.map((v, i) => {
-                return <CourseGola value={v} />;
+                return <CourseGola value={v} props={props} />;
               })}
             </View>
           </View>
@@ -185,7 +185,11 @@ const GetCertificate = props => {
                     />
                   )}
                   <Text style={{textAlign: 'center', color: 'black'}}>
-                    {v?.instituteName?.length>20? <>{v?.instituteName?.substring(0, 20)}...</>: v?.instituteName}
+                    {v?.instituteName?.length > 20 ? (
+                      <>{v?.instituteName?.substring(0, 20)}...</>
+                    ) : (
+                      v?.instituteName
+                    )}
                   </Text>
                 </Pressable>
               );
@@ -235,7 +239,11 @@ const GetCertificate = props => {
                     )}
 
                     <Text style={{textAlign: 'center', color: 'black'}}>
-                    {v?.course_name?.length>20? <>{v?.course_name?.substring(0, 20)}...</>: v?.course_name}
+                      {v?.course_name?.length > 20 ? (
+                        <>{v?.course_name?.substring(0, 20)}...</>
+                      ) : (
+                        v?.course_name
+                      )}
                     </Text>
                   </View>
                 </Pressable>
@@ -329,12 +337,14 @@ const GetCertificate = props => {
             style={[styles.largeBtn, styles.bgBlue]}
             onPress={() => props.navigation.navigate('Applied Courses')}>
             <Text style={styles.largeBtnText}>Applied Course</Text>
-            <Image source={require('../images/rightArrow.png')} />
+            <Image source={require('../images/rightArrow.png')} style={{resizeMode: 'contain'}}/>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.largeBtn, styles.bgGreen]}
-          onPress={() => props.navigation.navigate('My Certificates')}>
+          <TouchableOpacity
+            style={[styles.largeBtn, styles.bgGreen]}
+            onPress={() => props.navigation.navigate('My Certificates')}>
             <Text style={styles.largeBtnText}>My Certificate</Text>
-            <Image source={require('../images/rightArrow.png')} />
+            <Image source={require('../images/rightArrow.png')} style={{resizeMode: 'contain'}}
+            />
           </TouchableOpacity>
         </View>
       </ScrollView>

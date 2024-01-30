@@ -102,6 +102,10 @@ const VideoScreen = () => {
         });
         setWorkVideoPopUp(false);
         getUserWorkVideoList();
+        setFormData({
+          video: null,
+          relatedSkill: 'unKnown',
+        });
       }
     } catch (error) {
       console.warn('Something went wrong');
@@ -117,13 +121,12 @@ const VideoScreen = () => {
       type: introformData.video.type,
       name: introformData.video.name,
     });
-    introformData.append('languageKnown', introformData.languageKnown);
+    videoFormData.append('videoLanguage', introformData.videoLanguage);
     try {
       let response = await uploadIntroVideo(
         videoFormData,
         JSON.parse(user).access_token,
       );
-      console.log(response)
       if (response?.data?.msg == 'Video Added Successfully.') {
         Toast.show({
           type: 'success', // 'success', 'error', 'info', or any custom type you define
@@ -131,8 +134,12 @@ const VideoScreen = () => {
           text1: 'Video Added Successfully.',
           visibilityTime: 3000, // Duration in milliseconds
         });
+        setIntroFormData({
+          video: null,
+          videoLanguage: '',
+        });
         getUserIntroVideoList();
-        setIntroVideoPopUp(false)
+        setIntroVideoPopUp(false);
       }
     } catch (error) {
       console.warn('Something went wrong');
@@ -269,36 +276,37 @@ const VideoScreen = () => {
 
         <View>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
-            <TouchableOpacity onPress={() => setIntroVideoPopUp(true)}>
-                <View>
+            {showIntroInput.length!=0 && <TouchableOpacity onPress={() => setIntroVideoPopUp(true)}>
+              <View>
+                <Image
+                  source={require('../images/rectangle.png')}
+                  style={{
+                    height: 100,
+                    width: 160,
+                    borderRadius: 5,
+                    marginRight: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    top: 40,
+                    left: 70,
+                    padding: 6,
+                    backgroundColor: 'white',
+                    borderRadius: 11,
+                  }}>
                   <Image
-                    source={require('../images/rectangle.png')}
-                    style={{
-                      height: 100,
-                      width: 160,
-                      borderRadius: 5,
-                      marginRight: 10,
-                    }}
+                    source={require('../images/playVideoIcon.png')}
+                    style={{height: 10, width: 10}}
                   />
-                  <View
-                    style={{
-                      position: 'absolute',
-                      top: 40,
-                      left: 70,
-                      padding: 6,
-                      backgroundColor: 'white',
-                      borderRadius: 11,
-                    }}>
-                    <Image
-                      source={require('../images/playVideoIcon.png')}
-                      style={{height: 10, width: 10}}
-                    />
-                  </View>
                 </View>
-                <Text style={{textAlign: 'center', marginVertical: 5}}>
-                  Upload Intro Video
-                </Text>
-              </TouchableOpacity>
+              </View>
+              <Text style={{textAlign: 'center', marginVertical: 5}}>
+                Upload Intro Video
+              </Text>
+            </TouchableOpacity>}
+            
             {introVideoList?.map((v, i) => {
               return (
                 <>
@@ -315,6 +323,7 @@ const VideoScreen = () => {
                         borderWidth: 1,
                       }}
                       controls={true}
+                      paused={true}
                       resizeMode="cover"
                     />
                     {/* <Image
@@ -401,6 +410,7 @@ const VideoScreen = () => {
                         }}
                         controls={true}
                         resizeMode="cover"
+                        paused={true}
                       />
                       {/* <Image
                         source={require('../images/rectangle.png')}
@@ -569,22 +579,21 @@ const VideoScreen = () => {
             </TouchableOpacity>
             <View style={styles.picker}>
               <Picker
-                selectedValue={introformData.languageKnown}
+                selectedValue={introformData.videoLanguage}
                 onValueChange={(itemValue, itemIndex) => {
-                  setIntroFormData({...introformData, languageKnown:itemValue})
+                  setIntroFormData({
+                    ...introformData,
+                    videoLanguage: itemValue,
+                  });
                 }}>
                 <Picker.Item
                   label="Select Language"
                   value="Unknown"
                   style={{color: 'gray'}}
                 />
-                {languageKnown?.map((v, i) => {
+                {showIntroInput?.map((v, i) => {
                   return (
-                    <Picker.Item
-                      label={v}
-                      value={v}
-                      style={{color: 'gray'}}
-                    />
+                    <Picker.Item label={v} value={v} style={{color: 'gray'}} />
                   );
                 })}
 
@@ -723,8 +732,8 @@ export default VideoScreen;
 const styles = StyleSheet.create({
   main: {
     padding: 15,
-    backgroundColor:"#fff",
-    flex:1
+    backgroundColor: '#fff',
+    flex: 1,
   },
   title: {
     fontFamily: 'Noto Sans',

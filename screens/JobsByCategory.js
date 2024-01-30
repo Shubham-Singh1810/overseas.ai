@@ -5,7 +5,7 @@ import {getOccupations, getJobByDepartment} from '../services/job.service';
 import FooterNav from '../components/FooterNav';
 import SearchResult from '../components/SearchResult';
 import JobByDepartmentGola from '../components/JobByDepartmentGola';
-const JobsByCategory = () => {
+const JobsByCategory = (props) => {
   const route = useRoute();
   const {departmentId, departmentName} = route.params;
   const [jobList, setJobList] = useState([]);
@@ -25,7 +25,7 @@ const JobsByCategory = () => {
           <Text style={{fontSize:18,  marginBottom:15}}>Occupation: <Text style={{color:"#000"}}>{departmentName}</Text></Text>
           {jobList?.map((value, i) => {
             return (
-              <SearchResult value={value}/>
+              <SearchResult value={value} props={props}/>
             );
           })}
         </View>
