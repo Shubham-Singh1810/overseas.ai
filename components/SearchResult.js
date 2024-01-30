@@ -145,7 +145,7 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
               <Text
                 style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
                 onPress={() =>
-                  props.navigation.navigate('Job Details', {jobId:value.id})
+                  props.navigation.navigate('Job Details', {jobId: value.id})
                 }>
                 {translation.readDetails}
               </Text>
@@ -233,7 +233,6 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
           </View>
         </View>
       </Modal>
-      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 };

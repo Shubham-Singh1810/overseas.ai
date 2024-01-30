@@ -7,6 +7,7 @@ import {
   View,
   Modal,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {getHraList} from '../services/hra.service';
@@ -17,17 +18,20 @@ const YourHra = props => {
   const [showModal, setShowModal] = useState(false);
   const [hraList, setHraList] = useState([]);
   const getHraFunc = async () => {
+    setShowLoader(true)
     try {
       let response = await getHraList();
       setHraList(response?.data?.cmpData);
     } catch (error) {
       console.log(error);
     }
+    setShowLoader(false)
   };
   const [searchKey, setSearchKey] = useState('');
-  const [ratingOrd, setRatingOrd] = useState("");
-  const [sinceOrd, setSinceOrd] = useState("");
-  const [nameOrd, setNameOrd] = useState("");
+  const [ratingOrd, setRatingOrd] = useState('');
+  const [sinceOrd, setSinceOrd] = useState('');
+  const [nameOrd, setNameOrd] = useState('');
+  const [showLoader, setShowLoader] = useState(false);
   useFocusEffect(
     React.useCallback(() => {
       getHraFunc();
@@ -44,77 +48,78 @@ const YourHra = props => {
     } else {
       setFilteredArray(hraList);
     }
-    
   };
-  const alphaSort = (order) =>{
+  const alphaSort = order => {
     setShowModal(false);
-    setSearchKey("");
-    setSinceOrd("");
-    setRatingOrd("")
-    if(order=="asc"){
+    setSearchKey('');
+    setSinceOrd('');
+    setRatingOrd('');
+    if (order == 'asc') {
       setHraList(hraList.sort((a, b) => a.cmpName.localeCompare(b.cmpName)));
-    }
-    else if(order=="desc"){
+    } else if (order == 'desc') {
       setHraList(hraList.sort((b, a) => a.cmpName.localeCompare(b.cmpName)));
-    }
-    else{
+    } else {
       setFilteredArray(hraList);
     }
-  }
-  const ratingSort = (order) =>{
+  };
+  const ratingSort = order => {
     setShowModal(false);
-    setSearchKey("");
-    setNameOrd("");
-    setSinceOrd("");
-    if(order=="asc"){
-      setHraList(hraList.sort((a, b) => {
-        const ratingA = a.cmpRating || ''; // Use an empty string if cmpRating is null
-        const ratingB = b.cmpRating || '';
-      
-        return ratingA.localeCompare(ratingB);
-      }));
-    }
-    else if(order=="desc"){
-      setHraList(hraList.sort((b, a) => {
-        const ratingA = a.cmpRating || ''; // Use an empty string if cmpRating is null
-        const ratingB = b.cmpRating || '';
-      
-        return ratingA.localeCompare(ratingB);
-      }));
-    }
-    else{
+    setSearchKey('');
+    setNameOrd('');
+    setSinceOrd('');
+    if (order == 'asc') {
+      setHraList(
+        hraList.sort((a, b) => {
+          const ratingA = a.cmpRating || ''; // Use an empty string if cmpRating is null
+          const ratingB = b.cmpRating || '';
+
+          return ratingA.localeCompare(ratingB);
+        }),
+      );
+    } else if (order == 'desc') {
+      setHraList(
+        hraList.sort((b, a) => {
+          const ratingA = a.cmpRating || ''; // Use an empty string if cmpRating is null
+          const ratingB = b.cmpRating || '';
+
+          return ratingA.localeCompare(ratingB);
+        }),
+      );
+    } else {
       setFilteredArray(hraList);
     }
-  }
-  const sinceSort = (order) =>{
+  };
+  const sinceSort = order => {
     setShowModal(false);
-    setSearchKey("");
-    setNameOrd("");
-    setRatingOrd("")
-    if(order=="asc"){
-      setHraList(hraList.sort((a, b) => {
-        // Handle null values for cmpWorkingFrom
-        const workingFromA = a.cmpWorkingFrom || '0000-00-00'; // Use a default date if cmpWorkingFrom is null
-        const workingFromB = b.cmpWorkingFrom || '0000-00-00';
-      
-        // Compare dates
-        return workingFromA.localeCompare(workingFromB);
-      }));
-    }
-    else if(order=="desc"){
-      setHraList(hraList.sort((b, a) => {
-        // Handle null values for cmpWorkingFrom
-        const workingFromA = a.cmpWorkingFrom || '0000-00-00'; // Use a default date if cmpWorkingFrom is null
-        const workingFromB = b.cmpWorkingFrom || '0000-00-00';
-      
-        // Compare dates
-        return workingFromA.localeCompare(workingFromB);
-      }));
-    }
-    else{
+    setSearchKey('');
+    setNameOrd('');
+    setRatingOrd('');
+    if (order == 'asc') {
+      setHraList(
+        hraList.sort((a, b) => {
+          // Handle null values for cmpWorkingFrom
+          const workingFromA = a.cmpWorkingFrom || '0000-00-00'; // Use a default date if cmpWorkingFrom is null
+          const workingFromB = b.cmpWorkingFrom || '0000-00-00';
+
+          // Compare dates
+          return workingFromA.localeCompare(workingFromB);
+        }),
+      );
+    } else if (order == 'desc') {
+      setHraList(
+        hraList.sort((b, a) => {
+          // Handle null values for cmpWorkingFrom
+          const workingFromA = a.cmpWorkingFrom || '0000-00-00'; // Use a default date if cmpWorkingFrom is null
+          const workingFromB = b.cmpWorkingFrom || '0000-00-00';
+
+          // Compare dates
+          return workingFromA.localeCompare(workingFromB);
+        }),
+      );
+    } else {
       setFilteredArray(hraList);
     }
-  }
+  };
   const renderStars = numRatings => {
     const stars = [];
     for (let i = 0; i < numRatings; i++) {
@@ -176,10 +181,20 @@ const YourHra = props => {
                       marginBottom: 10,
                       backgroundColor: '#EFF8FF',
                     },
-                    ratingOrd !== "" && {borderWidth:1, borderColor:"#035292", borderRadius:3}
+                    ratingOrd !== '' && {
+                      borderWidth: 1,
+                      borderColor: '#035292',
+                      borderRadius: 3,
+                    },
                   ]}
-                  onPress={() =>{ratingSort(ratingOrd=="asc"? "desc": "asc"); setRatingOrd(ratingOrd=="asc"? "desc": "asc")} }>
-                  <Text style={{fontWeight: '500'}}>Rating : {ratingOrd=="asc"? "High To Low": "Low To High"}</Text>
+                  onPress={() => {
+                    ratingSort(ratingOrd == 'asc' ? 'desc' : 'asc');
+                    setRatingOrd(ratingOrd == 'asc' ? 'desc' : 'asc');
+                  }}>
+                  <Text style={{fontWeight: '500'}}>
+                    Rating :{' '}
+                    {ratingOrd == 'asc' ? 'High To Low' : 'Low To High'}
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
@@ -189,87 +204,119 @@ const YourHra = props => {
                       marginBottom: 10,
                       backgroundColor: '#EFF8FF',
                     },
-                    sinceOrd !== "" && {borderWidth:1, borderColor:"#035292", borderRadius:3}
+                    sinceOrd !== '' && {
+                      borderWidth: 1,
+                      borderColor: '#035292',
+                      borderRadius: 3,
+                    },
                   ]}
-                  onPress={() =>{sinceSort(sinceOrd=="asc"? "desc": "asc"); setSinceOrd(sinceOrd=="asc"? "desc": "asc")}}>
+                  onPress={() => {
+                    sinceSort(sinceOrd == 'asc' ? 'desc' : 'asc');
+                    setSinceOrd(sinceOrd == 'asc' ? 'desc' : 'asc');
+                  }}>
                   <Text style={{fontWeight: '500'}}>
-                    Since : {sinceOrd=="asc"? "Newest To Oldest": "Oldest To Newest"}
+                    Since :{' '}
+                    {sinceOrd == 'asc'
+                      ? 'Newest To Oldest'
+                      : 'Oldest To Newest'}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                   style={[
+                  style={[
                     {
                       paddingVertical: 10,
                       paddingLeft: 5,
                       marginBottom: 10,
                       backgroundColor: '#EFF8FF',
                     },
-                    nameOrd !== "" && {borderWidth:1, borderColor:"#035292", borderRadius:3}
+                    nameOrd !== '' && {
+                      borderWidth: 1,
+                      borderColor: '#035292',
+                      borderRadius: 3,
+                    },
                   ]}
-                  onPress={() =>{alphaSort(nameOrd=="asc"? "desc": "asc"); setNameOrd(nameOrd=="asc"? "desc": "asc")} }>
-                  <Text style={{fontWeight: '500'}}>Name : {nameOrd=="asc"? "Z To A": "A To Z"}</Text>
+                  onPress={() => {
+                    alphaSort(nameOrd == 'asc' ? 'desc' : 'asc');
+                    setNameOrd(nameOrd == 'asc' ? 'desc' : 'asc');
+                  }}>
+                  <Text style={{fontWeight: '500'}}>
+                    Name : {nameOrd == 'asc' ? 'Z To A' : 'A To Z'}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
       )}
-      <View style={{marginHorizontal: -8, marginTop: 10, paddingBottom: 100}}>
+      <View style={{marginHorizontal: -8, marginTop: 10, paddingBottom: 40}}>
         <ScrollView>
           {searchKey && (
             <Text style={styles.searchKey}>
               Showing resultes for : {searchKey}
             </Text>
           )}
+          {showLoader ? (
+            <View
+              style={{
+                height:500,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          ) : (
+            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+              {(searchKey.length == 0 ? hraList : filteredArray).map((v, i) => {
+                return (
+                  <TouchableOpacity
+                    key={i}
+                    onPress={() =>
+                      props.navigation.navigate(
+                        'DetailedHra',
+                        (detailedHra = v),
+                      )
+                    }
+                    style={{width: '50%'}}>
+                    <View style={[styles.hraBox]}>
+                      {v?.cmpLogoS3 != 'placeholder/logo.png' ? (
+                        <Image
+                          source={{
+                            uri: v?.cmpLogoS3,
+                          }}
+                          style={{
+                            height: 100,
+                            width: '100%',
+                            borderRadius: 2,
+                            resizeMode: 'contain',
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          source={require('../images/hraDummyIcon.png')}
+                          style={{
+                            height: 100,
+                            width: '100%',
+                            borderRadius: 2,
+                            resizeMode: 'contain',
+                          }}
+                        />
+                      )}
 
-          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            {(searchKey.length == 0 ? hraList  : filteredArray).map((v, i) => {
-              return (
-                <TouchableOpacity
-                  key={i}
-                  onPress={() =>
-                    props.navigation.navigate('DetailedHra', (detailedHra = v))
-                  }
-                  style={{width: '50%'}}>
-                  <View style={[styles.hraBox]}>
-                    {v?.cmpLogoS3 != 'placeholder/logo.png' ? (
-                      <Image
-                        source={{
-                          uri: v?.cmpLogoS3,
-                        }}
-                        style={{
-                          height: 100,
-                          width: '100%',
-                          borderRadius: 2,
-                          resizeMode: 'contain',
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        source={require('../images/hraDummyIcon.png')}
-                        style={{
-                          height: 100,
-                          width: '100%',
-                          borderRadius: 2,
-                          resizeMode: 'contain',
-                        }}
-                      />
-                    )}
-
-                    <View>
-                      <Text style={styles.name}>{v?.cmpName}</Text>
-                      <Text style={styles.experience}>
-                        Since {v?.cmpWorkingFrom}
-                      </Text>
-                      <View style={{flexDirection: 'row', marginTop: -3}}>
-                        {renderStars(v?.cmpRating)}
+                      <View>
+                        <Text style={styles.name}>{v?.cmpName}</Text>
+                        <Text style={styles.experience}>
+                          Since {v?.cmpWorkingFrom}
+                        </Text>
+                        <View style={{flexDirection: 'row', marginTop: -3}}>
+                          {renderStars(v?.cmpRating)}
+                        </View>
                       </View>
                     </View>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          )}
         </ScrollView>
       </View>
     </View>
@@ -281,6 +328,8 @@ export default YourHra;
 const styles = StyleSheet.create({
   main: {
     padding: 15,
+    backgroundColor:"#fff",
+    flex:1
   },
   sortOption: {
     width: '25%',

@@ -4,7 +4,14 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {applyCourse} from '../services/institute.service';
 import WebView from 'react-native-webview';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
+
+  
 const GetCourseById = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate('Get Certificate');
+    return true;
+  });
   const courseDetails = props?.route?.params;
   const [showWebsite, setShowWebsite] = useState(false);
   const handleApplyCourse = async id => {

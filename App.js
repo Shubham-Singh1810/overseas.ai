@@ -24,8 +24,6 @@ const App = () => {
     <GlobalStateProvider>
       {showWelcome ? <WelcomeScreen/>: <Navigator/> }
     </GlobalStateProvider>
-    // <VideoInput/>
-    //  
   );
 };
 

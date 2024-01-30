@@ -56,7 +56,7 @@ const DetailedHra = props => {
       });
       if (response.status == 200) {
         Toast.show({
-          type: 'success',
+          type: 'info',
           position: 'top',
           text1: response?.data?.message,
           visibilityTime: 3000,
@@ -70,24 +70,25 @@ const DetailedHra = props => {
     }
   };
   const [hraJobList, setHraJobList] = useState([]);
-  const getJobByHraFunc = async (id) => {
+  const getJobByHraFunc = async id => {
     setShowLoader(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getJobByHra({
         access_token: JSON.parse(user).access_token,
-        cmpID:id,
+        cmpID: id,
       });
       if (response?.status == 200) {
         setHraJobList(response?.data?.jobs);
-        setShowLoader(false);
       } else {
         console.warn('something went wrong');
       }
     } catch (error) {
       console.warn('something went wrong');
-    }
-    
+    };
+    setTimeout(() => {
+      setShowLoader(false);
+    }, 1000);
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -106,7 +107,7 @@ const DetailedHra = props => {
       stars.push(
         <Image
           key={i}
-          source={require('../images/starIcon.png')} 
+          source={require('../images/starIcon.png')}
           style={{width: 20, height: 20, resizeMode: 'contain'}}
         />,
       );
@@ -184,7 +185,6 @@ const DetailedHra = props => {
             </View>
           </View>
         </View>
-
         <TouchableOpacity
           style={[
             styles.button,
@@ -207,7 +207,6 @@ const DetailedHra = props => {
             {followDetails?.followStatus ? 'Unfollow' : 'Follow'}
           </Text>
         </TouchableOpacity>
-
         <ScrollView>
           <View style={styles.otherDetailsContainer}>
             <View style={[styles.tableItemPadding, styles.borderBottom]}>
@@ -314,7 +313,16 @@ const DetailedHra = props => {
                 );
               })}
           </View>
-          {!showLoader ? (
+          {showLoader ? (
+            <View
+              style={{
+                height: 350,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          ) : (
             <View>
               <View style={{marginVertical: 30}}>
                 <Text style={[styles.hraName]}>
@@ -326,15 +334,6 @@ const DetailedHra = props => {
                   return <SearchResult value={v} />;
                 })}
               </View>
-            </View>
-          ) : (
-            <View
-              style={{
-                height: 350,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <ActivityIndicator size="large" color="#0000ff" />
             </View>
           )}
         </ScrollView>
@@ -384,8 +383,8 @@ const DetailedHra = props => {
             <WebView source={{uri: params?.cmpFBLink}} style={{flex: 1}} />
           </View>
         </Modal>
-        <Toast ref={ref => Toast.setRef(ref)} />
       </View>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 };

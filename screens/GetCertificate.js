@@ -5,6 +5,7 @@ import {
   View,
   Pressable,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import React, {useState} from 'react';
 import SkillsGola from '../components/SkillsGola';
@@ -22,10 +23,14 @@ import {isBefore, subWeeks} from 'date-fns';
 import CourseGola from '../components/CourseGola';
 const GetCertificate = props => {
   const [instituteList, setInstituteList] = useState([]);
+  const [showCourseLoader, setShowCourseLoader]=useState(false);
+  const [showInstituteLoader, setShowInstituteLoader]=useState(false);
+  const [showSearchLoader, setShowSearchLoader]=useState(false);
   const [courseList, setCourseList] = useState([]);
   const [showHotJob, setShowHotJob] = useState(false);
   const [searchInstitute, setSearchInstitute] = useState('');
   const getInstituteListFunc = async () => {
+    setShowInstituteLoader(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getInstituteList(JSON.parse(user).access_token);
@@ -36,8 +41,10 @@ const GetCertificate = props => {
     } catch (error) {
       console.log('Something went wrong');
     }
+    setShowInstituteLoader(false);
   };
   const getCourseListFunc = async () => {
+    setShowCourseLoader(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getCourseList(JSON.parse(user).access_token);
@@ -47,9 +54,11 @@ const GetCertificate = props => {
     } catch (error) {
       console.log('Something went wrong');
     }
+    setShowCourseLoader(false)
   };
   const [searchResult, setSearchResult] = useState([]);
   const getSearchResultForCourseFunc = async id => {
+    setShowSearchLoader(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await searchForCourse({
@@ -60,6 +69,7 @@ const GetCertificate = props => {
     } catch (error) {
       console.log(error);
     }
+    setShowSearchLoader(false)
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -133,12 +143,15 @@ const GetCertificate = props => {
         {searchInstitute != '' && (
           <View style={{marginTop: 10}}>
             <Text style={styles.nameText}>
-              Search Result : {searchResult.length}
+              Search Result : {searchResult?.length}
             </Text>
             <View style={{marginTop: 15}}>
-              {searchResult?.map((v, i) => {
+              {showSearchLoader ? <View style={{height:100,width:100, flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
+            <ActivityIndicator/>
+            </View> :searchResult?.map((v, i) => {
                 return <CourseGola value={v} props={props} />;
               })}
+              
             </View>
           </View>
         )}
@@ -146,7 +159,10 @@ const GetCertificate = props => {
         <View style={{marginTop: 20}}>
           <Text style={styles.heading}>Top Institutes</Text>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
-            {instituteList?.map((v, i) => {
+            {showInstituteLoader ? <View style={{height:100,width:100, flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
+            <ActivityIndicator/>
+            </View> : 
+            instituteList?.map((v, i) => {
               return (
                 <Pressable
                   onPress={() =>
@@ -193,13 +209,15 @@ const GetCertificate = props => {
                   </Text>
                 </Pressable>
               );
-            })}
+            })}  
           </ScrollView>
         </View>
         <View style={{marginTop: 30}}>
           <Text style={styles.heading}>Top Courses</Text>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
-            {courseList?.map((v, i) => {
+            {showCourseLoader ? <View style={{height:100,width:100, flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
+            <ActivityIndicator/>
+            </View>: courseList?.map((v, i) => {
               return (
                 <Pressable
                   onPress={() =>
@@ -249,26 +267,28 @@ const GetCertificate = props => {
                 </Pressable>
               );
             })}
+          
+            
           </ScrollView>
         </View>
-        <View style={{flexDirection: 'row', marginTop: 20, marginBottom: -15}}>
+        <View style={{flexDirection: 'row',justifyContent:"space-between", marginTop: 20, marginBottom: -15}}>
           <Pressable
             style={[
-              {width: '50%'},
+              {width: '45%'},
               showHotJob && {elevation: 1, borderRadius: 2},
             ]}
             onPress={() => setShowHotJob(!showHotJob)}>
             <Image
               source={require('../images/arrowPost.png')}
-              style={{resizeMode: 'contain'}}
+              style={{resizeMode: 'contain', width:"100%"}}
             />
           </Pressable>
           <Pressable
-            style={{width: '50%'}}
+            style={{width: '45%'}}
             onPress={() => props.navigation.navigate('Feed')}>
             <Image
               source={require('../images/searchPost.png')}
-              style={{resizeMode: 'contain'}}
+              style={{resizeMode: 'contain', width:"100%"}}
             />
           </Pressable>
         </View>
@@ -337,13 +357,13 @@ const GetCertificate = props => {
             style={[styles.largeBtn, styles.bgBlue]}
             onPress={() => props.navigation.navigate('Applied Courses')}>
             <Text style={styles.largeBtnText}>Applied Course</Text>
-            <Image source={require('../images/rightArrow.png')} style={{resizeMode: 'contain'}}/>
+            <Image source={require('../images/rightArrow.png')} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.largeBtn, styles.bgGreen]}
             onPress={() => props.navigation.navigate('My Certificates')}>
             <Text style={styles.largeBtnText}>My Certificate</Text>
-            <Image source={require('../images/rightArrow.png')} style={{resizeMode: 'contain'}}
+            <Image source={require('../images/rightArrow.png')} 
             />
           </TouchableOpacity>
         </View>

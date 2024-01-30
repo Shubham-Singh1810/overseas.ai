@@ -17,7 +17,12 @@ import {getCourseByInstitute} from '../services/institute.service';
 import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const GetInstituteById = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate('Get Certificate');
+    return true;
+  });
   const {params} = props.route;
   const [showWebsite, setShowWebsite] = useState(false);
   const [courseList, setCourseList] = useState([]);

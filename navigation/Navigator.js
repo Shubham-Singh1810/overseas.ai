@@ -4,6 +4,7 @@ import AuthenticatedNavigator from './AuthenticatedNavigator';
 import LayoutNavigator from './LayoutNavigator';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Navigator = () => {
   const {translation, globalState, setGlobalState} = useGlobalState();
   const setUserData = async () => {
