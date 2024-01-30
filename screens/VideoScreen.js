@@ -276,7 +276,7 @@ const VideoScreen = () => {
 
         <View>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
-            {showIntroInput.length!=0 && <TouchableOpacity onPress={() => setIntroVideoPopUp(true)}>
+            <TouchableOpacity onPress={() => setIntroVideoPopUp(true)}>
               <View>
                 <Image
                   source={require('../images/rectangle.png')}
@@ -305,8 +305,8 @@ const VideoScreen = () => {
               <Text style={{textAlign: 'center', marginVertical: 5}}>
                 Upload Intro Video
               </Text>
-            </TouchableOpacity>}
-            
+            </TouchableOpacity>
+
             {introVideoList?.map((v, i) => {
               return (
                 <>
@@ -568,43 +568,53 @@ const VideoScreen = () => {
                 <Image source={require('../images/close.png')} />
               </Pressable>
             </View>
-            <TouchableOpacity
-              style={styles.input}
-              onPress={pickMediaForIntroVideo}>
-              <Text>
-                {introformData.video == null
-                  ? 'Choose Video File'
-                  : introformData.video.name}
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.picker}>
-              <Picker
-                selectedValue={introformData.videoLanguage}
-                onValueChange={(itemValue, itemIndex) => {
-                  setIntroFormData({
-                    ...introformData,
-                    videoLanguage: itemValue,
-                  });
-                }}>
-                <Picker.Item
-                  label="Select Language"
-                  value="Unknown"
-                  style={{color: 'gray'}}
-                />
-                {showIntroInput?.map((v, i) => {
-                  return (
-                    <Picker.Item label={v} value={v} style={{color: 'gray'}} />
-                  );
-                })}
+            {showIntroInput.length > 0 ? (
+              <View>
+                <TouchableOpacity
+                  style={styles.input}
+                  onPress={pickMediaForIntroVideo}>
+                  <Text>
+                    {introformData.video == null
+                      ? 'Choose Video File'
+                      : introformData.video.name}
+                  </Text>
+                </TouchableOpacity>
+                <View style={styles.picker}>
+                  <Picker
+                    selectedValue={introformData.videoLanguage}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setIntroFormData({
+                        ...introformData,
+                        videoLanguage: itemValue,
+                      });
+                    }}>
+                    <Picker.Item
+                      label="Select Language"
+                      value="Unknown"
+                      style={{color: 'gray'}}
+                    />
+                    {showIntroInput?.map((v, i) => {
+                      return (
+                        <Picker.Item
+                          label={v}
+                          value={v}
+                          style={{color: 'gray'}}
+                        />
+                      );
+                    })}
 
-                {/* Add more Picker.Item as needed */}
-              </Picker>
-            </View>
-            <Button
-              title="Submit"
-              onPress={handleIntroVideoUpload}
-              color="#035292"
-            />
+                    {/* Add more Picker.Item as needed */}
+                  </Picker>
+                </View>
+                <Button
+                  title="Submit"
+                  onPress={handleIntroVideoUpload}
+                  color="#035292"
+                />
+              </View>
+            ) : (
+              <Text>You have already uploaded all the introduction video in different languages.</Text>
+            )}
           </View>
         </View>
       </Modal>

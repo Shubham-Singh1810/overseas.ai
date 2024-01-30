@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   Button,
+  Share
 } from 'react-native';
 import Home from '../screens/Home';
 import JobApplied from '../screens/JobApplied';
@@ -120,6 +121,25 @@ const CustomDrawerContent = ({navigation}) => {
   ]);
   const [showSubMnu, setShowSubmenu] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'https://play.google.com/store/apps/details?id=ai.overseas',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
   return (
     <>
       <DrawerContentScrollView>
@@ -226,11 +246,8 @@ const CustomDrawerContent = ({navigation}) => {
           } else if (v.title == 'Share with friends') {
             return (
               <TouchableOpacity
-                onPress={() =>
-                  console.warn(
-                    'This action will show popup for sharing the application on different social application',
-                  )
-                }>
+              onPress={onShare}
+              >
                 <View
                   style={{
                     flexDirection: 'row',

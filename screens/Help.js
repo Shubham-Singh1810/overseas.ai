@@ -134,25 +134,7 @@ const Help = props => {
       });
     }
   };
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'Overseas.ai | A video based job portal for migrants',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  };
+  
   return (
     <>
       <View
@@ -269,8 +251,7 @@ const Help = props => {
           }}>
           <Text style={{color: '#000'}}>Need</Text>
           <Text
-            // onPress={() => props.navigation.navigate('Support')}
-            onPress={onShare}
+            onPress={() => props.navigation.navigate('Support')}
             style={{
               color: '#035292',
               marginHorizontal: 7,
