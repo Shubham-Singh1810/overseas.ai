@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -34,37 +35,49 @@ const Home = props => {
   const [searchCounterKey, setSearchCountryKey] = useState('');
   const [occupations, setOccupations] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [loaderOccu, setLoaderOccu] = useState(true);
+  const [loaderCandidate, setLoaderCandidate] = useState(true);
+  const [loaderCountry, setLoaderCountry] = useState(true);
+  const [loaderSearch, setLoaderSearch] = useState(true);
   const getOccupationList = async () => {
+    setLoaderOccu(true);
     try {
       let response = await getOccupations();
       setOccupations(response?.occupation);
     } catch (error) {}
+    setLoaderOccu(false);
   };
   const getCountryList = async () => {
+    setLoaderCountry(true);
     try {
       let response = await getCountries();
       setCountries(response?.countries);
     } catch (error) {}
+    setLoaderCountry(false);
   };
   const [homeData, setHomeData] = useState(null);
   const getHomeDataFunc = async () => {
+    setLoaderCandidate(true);
     try {
       let response = await getHomeData();
       console.log('hello', response.afterDepartureVideos);
       setHomeData(response);
     } catch (error) {}
+    setLoaderCandidate(false);
   };
   const [jobList, setJobList] = useState([]);
   const searchJob = async () => {
+    setLoaderSearch(true);
     try {
       let response = await getSearchResult(searchJobKey, searchCounterKey);
-      console.log(response.data.jobs)
+      console.log(response.data.jobs);
       setJobList(response?.data?.jobs);
     } catch (error) {}
+    setLoaderSearch(false);
   };
-  useEffect(()=>{
-    searchJob()
-  }, [searchJobKey, searchCounterKey])
+  useEffect(() => {
+    searchJob();
+  }, [searchJobKey, searchCounterKey]);
   useEffect(() => {
     getOccupationList();
     getCountryList();
@@ -72,7 +85,7 @@ const Home = props => {
   }, []);
 
   return (
-    <View>
+    <View style={{backgroundColor:"#fff", flex:1}}>
       <ScrollView>
         <View style={styles.main}>
           <View style={styles.messageGroup}>
@@ -109,7 +122,6 @@ const Home = props => {
                 selectedValue={searchJobKey}
                 onValueChange={(itemValue, itemIndex) => {
                   setSearchJobKey(itemValue);
-                  
                 }}>
                 <Picker.Item
                   label="Select an occupation"
@@ -152,37 +164,97 @@ const Home = props => {
           </View>
           {searchJobKey || searchCounterKey ? (
             <View>
-              <Text style={{fontSize: 18, marginTop: 15, color: '#000'}}>
-                Search results :
-              </Text>
-              {jobList.length==0 ? <View style={{flexDirection:'row',height:300, justifyContent:'center', alignItems:'center'}}>
-                <Text style={{fontSize:20, color:'maroon',paddingHorizontal:20, textAlign:'center'}}>Opps! No result found for this combination</Text>
-              </View> : <View style={{marginTop: 20}}>
-                {jobList?.map((value, i) => {
-                  return <SearchResult value={value} />;
-                })}
-              </View>}
-              
+              {loaderSearch ? (
+                <View
+                  style={{
+                    flex:1,
+                    height:300,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <ActivityIndicator />
+                </View>
+              ) : (
+                <View>
+                  <Text style={{fontSize: 18, marginTop: 15, color: '#000'}}>
+                    Search results : {jobList.length}
+                  </Text>
+                  {jobList.length == 0 ? (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        height: 300,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          color: 'maroon',
+                          paddingHorizontal: 20,
+                          textAlign: 'center',
+                        }}>
+                        Opps! No result found for this combination
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={{marginTop: 20}}>
+                      {jobList?.map((value, i) => {
+                        return <SearchResult value={value} props={props}/>;
+                      })}
+                    </View>
+                  )}
+                </View>
+              )}
             </View>
           ) : (
             <View style={{marginTop: 20}}>
               <View style={styles.jobsList}>
                 <Text style={styles.heading}>{translation.jobsYouCanGet}</Text>
                 <ScrollView horizontal={true}>
-                  {occupations?.map((v, i) => {
-                    return <JobGola value={v} key={i} props={props} />;
-                  })}
+                  {loaderOccu ? (
+                    <View
+                      style={{
+                        height: 130,
+                        width: 100,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <ActivityIndicator />
+                    </View>
+                  ) : (
+                    occupations?.map((v, i) => {
+                      return <JobGola value={v} key={i} props={props} />;
+                    })
+                  )}
                 </ScrollView>
               </View>
               <View style={styles.jobsList}>
                 <Text style={styles.heading}>{translation.hereFromOther}</Text>
                 <ScrollView horizontal={true}>
-                  {homeData?.afterDepartureVideos.map((v, i) => {
-                    return <CandidateVideoGola value={v} index={i} />;
-                  })}
-                  {homeData?.beforeDepartureVideo.map((v, i) => {
-                    return <CandidateVideoGola value={v} />;
-                  })}
+                  {loaderCandidate ? (
+                    <View
+                      style={{
+                        height: 130,
+                        width: 100,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <ActivityIndicator />
+                    </View>
+                  ) : (
+                    <>
+                      {homeData?.afterDepartureVideos.map((v, i) => {
+                        return <CandidateVideoGola value={v} index={i} />;
+                      })}
+                      {homeData?.beforeDepartureVideo.map((v, i) => {
+                        return <CandidateVideoGola value={v} />;
+                      })}
+                    </>
+                  )}
                 </ScrollView>
               </View>
               <View style={styles.jobsList}>
@@ -190,9 +262,22 @@ const Home = props => {
                   {translation.countriesWhereYouCanApply}
                 </Text>
                 <ScrollView horizontal={true}>
-                  {countries?.map((v, i) => {
-                    return <CountryGola props={props} value={v} key={i} />;
-                  })}
+                  {loaderCountry ? (
+                    <View
+                      style={{
+                        height: 130,
+                        width: 100,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <ActivityIndicator />
+                    </View>
+                  ) : (
+                    countries?.map((v, i) => {
+                      return <CountryGola props={props} value={v} key={i} />;
+                    })
+                  )}
                 </ScrollView>
               </View>
             </View>
@@ -210,7 +295,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 20,
     paddingBottom: 40,
-    backgroundColor:"#fff"
+    backgroundColor: '#fff',
   },
   topNav: {
     flexDirection: 'row',

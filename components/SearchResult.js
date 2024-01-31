@@ -81,23 +81,35 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
       console.log(error);
     }
   };
+  function toTitleCase(inputString) {
+    // Check if the input is not an empty string
+    if (inputString && typeof inputString === 'string') {
+      // Split the string into words
+      let words = inputString.split(' ');
+
+      // Capitalize the first letter of each word
+      let titleCaseWords = words.map(word => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      });
+
+      // Join the words back into a sentence
+      return titleCaseWords.join(' ');
+    } else {
+      // Handle empty or non-string input
+      return inputString;
+    }
+  }
   useEffect(() => {
     getJobByIdFunc();
   }, []);
   return (
     <>
       <View style={styles.main}>
-        <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-          {favroite ? (
-            <Image source={require('../images/starIcon.png')} />
-          ) : (
-            <Text style={styles.newText}>{value?.jobID}</Text>
-          )}
-        </View>
         <View style={styles.navTop}>
-          <Text style={styles.jobName}>
-            {value?.jobTitle?.substring(0, 10)}...
-          </Text>
+          <Text style={styles.jobName}>{value?.jobTitle.length>30 ? <>{toTitleCase(value?.jobTitle).substring(0, 30)}...</>: toTitleCase(value?.jobTitle)}</Text>
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={styles.currencyText}>1400 SAR = 30,123 INR</Text>
           <Text style={styles.dateText}>
             {translation.applyBefore} -{' '}
             {value?.jobDeadline ? value?.jobDeadline : 'No Deadline'}
@@ -105,88 +117,114 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View>
-            <Text style={styles.currencyText}>1400 SAR = 30,123 INR</Text>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: 2,
+                marginBottom: 7,
+                marginTop:3
               }}>
               <Image source={require('../images/locationIcon.png')} />
               <Text style={[{marginLeft: 9}, styles.otherDetail]}>
-                {value?.country_location}
+                {favroite || saved ? value?.jobCountry : value?.country_location}
               </Text>
             </View>
             <Text style={styles.countryName}>
               {/* {translation.experience} - 3 {translation.years} */}
-              Number Of Vacancy : {value.jobVacancyNo}
+              Age Limit : {value.jobAgeLimit}
             </Text>
             <Text style={styles.countryName}>
               {/* {translation.experience} - 3 {translation.years} */}
-              Salary/Wage Per Month :
+              Passport Type : {value.passportType}
             </Text>
             <Text style={styles.countryName}>
               {/* {translation.experience} - 3 {translation.years} */}
-              {value.jobWages}
+              Experie Type : {value.jobExpTypeReq}
             </Text>
-            {/* <Text style={[styles.messageText, {marginTop: 5}]}>
-              {translation.yourProfileMatched} 87%
-            </Text> */}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: 15,
-              }}>
-              <Button
-                title={translation.applyNow}
-                onPress={() => handleApplyJob(value?.id)}
-              />
-              <Text
-                style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
-                onPress={() =>
-                  props.navigation.navigate('Job Details', {jobId: value.id})
-                }>
-                {translation.readDetails}
-              </Text>
-            </View>
           </View>
           <View style={{marginTop: 'auto', paddingBottom: 15}}>
             <View>
               <Image
                 style={{
-                  height: 100,
-                  width: 100,
+                  height: 90,
+                  width: 90,
                   marginBottom: 10,
-                  borderRadius: 10,
+                  borderRadius: 5,
                 }}
                 source={{
                   uri: value?.jobPhoto,
                 }}
               />
+            </View>
+            {favroite && (
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
-                  marginTop: 10,
+                  alignItems: 'center',
+                  position: 'relative',
+                  bottom: 98,
+                  right: 5,
                 }}>
-                <TouchableOpacity
-                  onPress={() =>
-                    handleSaveJob(saved ? value?.JobPrimaryId : value?.id)
-                  }>
-                  {saved ? (
-                    <Image
-                      source={require('../images/redHeart.png')}
-                      style={{resizeMode: 'contain'}}
-                    />
-                  ) : (
-                    <Image
-                      source={require('../images/emptyHeart.png')}
-                      style={{resizeMode: 'contain'}}
-                    />
-                  )}
-                </TouchableOpacity>
+                <Image
+                  style={{
+                    padding: 5,
+                    borderRadius: 12,
+                    backgroundColor: '#fff',
+                    height:15,
+                    width:15,
+                    resizeMode:"contain"
+                  }}
+                  source={require('../images/starIcon.png')}
+                />
               </View>
+            )}
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginTop: favroite ? -35 : -20
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Button
+              title={translation.applyNow}
+              onPress={() => handleApplyJob(value?.id)}
+            />
+            <Text
+              style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
+              onPress={() =>
+                props.navigation.navigate('Job Details', {jobId: value.id, saved:saved, favroite:favroite})
+              }>
+              {translation.readDetails}
+            </Text>
+          </View>
+          <View>
+            
+            <View
+             >
+              <TouchableOpacity
+                onPress={() =>
+                  handleSaveJob(saved ? value?.JobPrimaryId : value?.id)
+                }>
+                {saved ? (
+                  <Image
+                    source={require('../images/redHeart.png')}
+                    style={{resizeMode: 'contain'}}
+                  />
+                ) : (
+                  <Image
+                    source={require('../images/emptyHeart.png')}
+                    style={{resizeMode: 'contain'}}
+                  />
+                )}
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -247,7 +285,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: '#fff',
     elevation: 5,
-    paddingVertical: 5,
+    paddingVertical: 15,
   },
   newText: {
     paddingHorizontal: 5,
@@ -265,7 +303,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   jobName: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: '600',
     fontFamily: 'Noto Sans',
     color: '#000',
@@ -274,10 +312,10 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '400',
     fontFamily: 'Noto Sans',
-    color: '#F00',
+    color: 'green',
   },
   currencyText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     fontFamily: 'Noto Sans',
     color: '#000',
@@ -288,6 +326,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'Noto Sans',
     color: '#000',
+    marginBottom:2
   },
   messageText: {
     fontSize: 12,
