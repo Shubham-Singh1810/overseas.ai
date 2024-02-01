@@ -51,7 +51,7 @@ export default JobApplied;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#F5F5FA',
+    backgroundColor: '#fff',
     padding: 10,
     marginBottom: 60,
   },

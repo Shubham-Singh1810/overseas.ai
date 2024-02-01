@@ -55,7 +55,10 @@ const AuthenticatedNavigator = () => {
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
-        <Drawer.Screen name="MyProfile" component={MyProfile} />
+        <Drawer.Screen name="MyProfile" component={MyProfile} options={({navigation, route}) => ({
+            title: 'My Profile',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}/>
         <Drawer.Screen
           name="Upload Video"
           component={VideoScreen}
