@@ -7,6 +7,7 @@ import {
   View,
   FlatList,
   Pressable,
+  ActivityIndicator
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import FavJobComponent from '../components/FavJobComponent';
@@ -14,33 +15,27 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {favouriteJobList} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchResult from '../components/SearchResult';
+import Toast from 'react-native-toast-message';
 const FavrouiteJob = (props) => {
-  const [showModal, setShowModal] = useState(false);
-  const hraData = [
-    {id: '1', color: 'red'},
-    {id: '2', color: 'green'},
-    {id: '3', color: 'blue'},
-    {id: '4', color: 'yellow'},
-    {id: '5', color: 'purple'},
-    {id: '6', color: 'orange'},
-    {id: '7', color: 'pink'},
-    {id: '8', color: 'brown'},
-    {id: '9', color: 'cyan'},
-  ];
+  const [showLoader, setShowLoader] = useState(true);
+  
   const [favouriteJobListArr, setFavouriteJobListArr] = useState([]);
   const getFavouriteJobs = async () => {
+    setShowLoader(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await favouriteJobList(JSON.parse(user).access_token);
-      console.log("res", response.data);
       setFavouriteJobListArr(response?.data?.jobs);
+      setShowLoader(false)
     } catch (error) {}
+    setShowLoader(false)
   };
   useEffect(() => {
     getFavouriteJobs();
   }, []);
   return (
     <View style={styles.main}>
+      
       <ScrollView>
         <View
           style={{
@@ -62,11 +57,13 @@ const FavrouiteJob = (props) => {
             </Text>
           </Pressable>
         </View>
-        {favouriteJobListArr?.map((v, i) => {
-          // return <FavJobComponent props={props} value={v}/>;
+        
+        {showLoader? <ActivityIndicator size="large" color="#0000ff" style={{marginTop:200}}/>: favouriteJobListArr?.map((v, i) => {
           return <SearchResult favroite={true} props={props} value={v}/>
         })}
+        
       </ScrollView>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );
 };

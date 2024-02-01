@@ -20,6 +20,8 @@ import FooterNav from '../components/FooterNav';
 import SearchResult from '../components/SearchResult';
 import {useGlobalState} from '../GlobalProvider';
 import {getCountries, getHomeData} from '../services/info.service';
+import Toast from 'react-native-toast-message';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import {
   getOccupations,
   getJobByDepartment,
@@ -27,6 +29,15 @@ import {
 } from '../services/job.service';
 import {Picker} from '@react-native-picker/picker';
 const Home = props => {
+  useAndroidBackHandler(() => {
+    if (searchJobKey || searchCounterKey) {
+      setSearchCountryKey("");
+      setSearchJobKey("")
+    }  else {
+      props.navigation.navigate('Feed');
+    }
+    return true;
+  });
   const {globalState, translation, setGlobalState} = useGlobalState();
   useEffect(() => {
     setGlobalState({...globalState, currentScreen: 'Search Job'});
@@ -70,8 +81,8 @@ const Home = props => {
     setLoaderSearch(true);
     try {
       let response = await getSearchResult(searchJobKey, searchCounterKey);
-      console.log(response.data.jobs);
       setJobList(response?.data?.jobs);
+      console.log(response?.data?.jobs[0])
     } catch (error) {}
     setLoaderSearch(false);
   };
@@ -251,7 +262,7 @@ const Home = props => {
                         return <CandidateVideoGola value={v} index={i} />;
                       })}
                       {homeData?.beforeDepartureVideo.map((v, i) => {
-                        return <CandidateVideoGola value={v} />;
+                        return <CandidateVideoGola value={v} index={i}/>;
                       })}
                     </>
                   )}
@@ -284,6 +295,7 @@ const Home = props => {
           )}
         </View>
       </ScrollView>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );
 };

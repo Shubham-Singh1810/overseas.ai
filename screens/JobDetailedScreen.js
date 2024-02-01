@@ -6,6 +6,7 @@ import {
   ScrollView,
   Pressable,
   Button,
+  Share
 } from 'react-native';
 import React from 'react';
 import {useEffect, useState} from 'react';
@@ -15,14 +16,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import Toast from 'react-native-toast-message';
 const JobDetailedScreen = params => {
-  console.log(params)
   useAndroidBackHandler(() => {
-    params.navigation.navigate('Search Job');
+    if (params.route.params.favroite) {
+      params.navigation.navigate('Favourite Job');
+    } else if (params.route.params.saved) {
+      params.navigation.navigate('Saved Jobs');
+    } else {
+      params.navigation.navigate('Search Job');
+    }
     return true;
   });
   const [details, setDetails] = useState(null);
   const [showFacility, setShowFacility] = useState(false);
   const [showReqDoc, setShowReqDoc] = useState(false);
+  const paramsJobId = params?.route?.params?.jobId;
   const handleApplyJob = async jobId => {
     try {
       let user = await AsyncStorage.getItem('user');
@@ -55,8 +62,7 @@ const JobDetailedScreen = params => {
   };
   const getJobByIdFunc = async () => {
     try {
-      let response = await getJobById(params?.route?.params?.jobId);
-      console.log(response.data.jobs);
+      let response = await getJobById(paramsJobId);
       setDetails(response.data.jobs);
     } catch (error) {
       console.log(error);
@@ -65,63 +71,81 @@ const JobDetailedScreen = params => {
   useFocusEffect(
     React.useCallback(() => {
       getJobByIdFunc();
-    }, [params?.params?.jobId]),
+    }, [paramsJobId]),
   );
-  function toTitleCase(inputString) {
-    // Check if the input is not an empty string
-    if (inputString && typeof inputString === 'string') {
-      // Split the string into words
-      let words = inputString.split(' ');
 
-      // Capitalize the first letter of each word
+  function toTitleCase(inputString) {
+    if (inputString && typeof inputString === 'string') {
+      let words = inputString.split(' ');
       let titleCaseWords = words.map(word => {
         return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
       });
-
-      // Join the words back into a sentence
       return titleCaseWords.join(' ');
     } else {
-      // Handle empty or non-string input
       return inputString;
     }
   }
+  const onShare = async (link) => {
+    try {
+      const result = await Share.share({
+        message:
+        link,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
   return (
     <View style={styles.main}>
-      
-        <View>
-          <Text
-            style={{
-              textAlign: 'right',
-              color: 'green',
-              fontSize: 12,
-              margin: 3,
-            }}>
-            Apply before : {details?.jobDeadline}
-          </Text>
-          <Image
-            style={{
-              height: 200,
-              marginTop: 3,
-              width: '100%',
-              resizeMode: 'stretch',
-            }}
-            source={{
-              uri: details?.jobPhoto,
-            }}
-          />
-          <View
-            style={{
-              position: 'relative',
-              bottom: 200,
-              right: 4,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}>
-            <Text style={styles.newText}>{details?.jobID}</Text>
-          </View>
+      <View>
+        <Text
+          style={{
+            textAlign: 'right',
+            color: 'green',
+            fontSize: 12,
+            margin: 3,
+          }}>
+          Apply before : {details?.jobDeadline}
+        </Text>
+        <Image
+          style={{
+            height: 200,
+            marginTop: 3,
+            width: '100%',
+            resizeMode: 'stretch',
+          }}
+          source={{
+            uri: details?.jobPhoto,
+          }}
+        />
+        <View
+          style={{
+            position: 'relative',
+            bottom: 200,
+            right: 4,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+          }}>
+          <Text style={styles.newText}>{details?.jobID}</Text>
         </View>
-        <View style={{ marginTop: -20, flexDirection:"row", justifyContent:"space-between", alignItems:"flex-end"}}>
-        <View >
+      </View>
+      <View
+        style={{
+          marginTop: -20,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+        }}>
+        <View>
           <Text style={styles.jobName}>{toTitleCase(details?.jobTitle)}</Text>
           {details?.jobWages ? (
             <Text style={styles.currencyText}>
@@ -134,31 +158,45 @@ const JobDetailedScreen = params => {
           ) : (
             <Text style={styles.currencyText}>Salary : Negotiable</Text>
           )}
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 7,
-              marginTop: 3,
-            }}>
-            <Image
-              source={{
-                uri: `https://overseas.ai/storage/uploads/countryFlag/${details?.jobLocationCountry?.countryFlag}`,
-              }}
-              style={{height: 20, width: 20}}
-            />
-            <Text style={[{marginLeft: 9}, styles.otherDetail]}>
-              {details?.jobLocationCountry?.name}
-            </Text>
-          </View>
         </View>
-        <View style={{marginBottom:5}}>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginVertical:5
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={{
+              uri: `https://overseas.ai/storage/uploads/countryFlag/${details?.jobLocationCountry?.countryFlag}`,
+            }}
+            style={{height: 20, width: 20}}
+          />
+          <Text style={[{marginLeft: 9}, styles.otherDetail]}>
+            {details?.jobLocationCountry?.name}
+          </Text>
+        </View>
 
-        <Button title='Apply Now' onPress={()=>handleApplyJob(details?.id)} color="#035292"/>
-        </View>
-        </View>
+        <Pressable onPress={()=>onShare(details?.jobUrl)}>
+          <Image source={require("../images/shareIcon.png")}/>
+        </Pressable>
+      </View>
+      <View style={{marginTop:7}}>
+      <Button
+        title="Apply Now"
+        onPress={() => handleApplyJob(details?.id)}
+        color="#035292"
         
-        <ScrollView>
+      />
+      </View>
+      
+      <ScrollView>
         <View style={styles.otherDetailsContainer}>
           <View style={[styles.tableItemPadding, styles.borderBottom]}>
             <Text style={[styles.tableText]}>Job Posted By :</Text>

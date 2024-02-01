@@ -7,6 +7,7 @@ import FavJobComponent from '../components/FavJobComponent';
 import {savedJobList} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 const SavedJobs = props => {
   const [showLoading, setShowLoading] = useState(false)
   const [savedList, setSavedList] = useState([]);
@@ -71,6 +72,7 @@ const SavedJobs = props => {
           })}
         </View>
       </ScrollView>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 };

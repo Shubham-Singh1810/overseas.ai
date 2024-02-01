@@ -10,6 +10,7 @@ import {
   Modal,
   TextInput,
   ActivityIndicator,
+  Share
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
@@ -32,6 +33,8 @@ const VideoScreen = () => {
   const [videoToBeDeleted, setvideoToBeDeleted] = useState('');
   const [workVideoToBeDeleted, setWorkVideoToBeDeleted] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [introActionValue, setIntroActionValue] = useState(null);
+  const [workActionValue, setWorkActionValue] = useState(null);
   const [formData, setFormData] = useState({
     video: null,
     relatedSkill: 'unKnown',
@@ -245,7 +248,8 @@ const VideoScreen = () => {
     }
     setShowLoading(false);
   };
-
+  const [showInroAction, setShowIntroAction] = useState(false);
+  const [showWorkAction, setShowWorkAction] = useState(false);
   useFocusEffect(
     React.useCallback(() => {
       getUserWorkVideoList();
@@ -254,7 +258,25 @@ const VideoScreen = () => {
       getUserIntroVideoList();
     }, []),
   );
-
+  const onShare = async (link) => {
+    try {
+      const result = await Share.share({
+        message:
+        link,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
   return (
     <>
       <View style={styles.main}>
@@ -347,10 +369,19 @@ const VideoScreen = () => {
                       <TouchableOpacity
                         style={{position: 'relative', right: 5}}
                         onPress={() => {
-                          setvideoToBeDeleted(v?.id);
-                          setShowDeleteConfirmPop(true);
+                          setIntroActionValue(v), setShowIntroAction(true);
                         }}>
-                        <Image source={require('../images/delete.png')} />
+                        {/* <Image source={require('../images/delete.png')} /> */}
+                        <Text
+                          style={{
+                            fontWeight: '900',
+                            color: 'black',
+                            position: 'relative',
+                            bottom: 3,
+                            right: 2,
+                          }}>
+                          ...
+                        </Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -439,10 +470,19 @@ const VideoScreen = () => {
                         <TouchableOpacity
                           style={{position: 'relative', right: 5}}
                           onPress={() => {
-                            setShowDeleteWorkVideoConfirmPop(true);
-                            setWorkVideoToBeDeleted(v?.id);
+                            setShowWorkAction(true);
+                            setWorkActionValue(v);
                           }}>
-                          <Image source={require('../images/delete.png')} />
+                          <Text
+                            style={{
+                              fontWeight: '900',
+                              color: 'black',
+                              position: 'relative',
+                              bottom: 3,
+                              right: 2,
+                            }}>
+                            ...
+                          </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -613,7 +653,10 @@ const VideoScreen = () => {
                 />
               </View>
             ) : (
-              <Text>You have already uploaded all the introduction video in different languages.</Text>
+              <Text>
+                You have already uploaded all the introduction video in
+                different languages.
+              </Text>
             )}
           </View>
         </View>
@@ -729,6 +772,130 @@ const VideoScreen = () => {
                 />
               </View>
             </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal transparent={true} visible={showInroAction} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View style={styles.modalMain}>
+            <Pressable
+            onPress={()=>setShowIntroAction(false)}
+              style={{
+                flexDirection: 'row',
+                // justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 18,
+              }}>
+              <Image source={require('../images/backIcon.png')} />
+              <Text
+                style={[{textDecorationLine: 'underline'}, styles.nameText]}>
+                My intro video
+              </Text>
+            </Pressable>
+            <Pressable
+             onPress={()=>{onShare(introActionValue?.videoUrl)}}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 10,
+                borderWidth: 1,
+                borderColor: '#f0f7ff',
+                backgroundColor: '#f0f7ff',
+                borderRadius: 5,
+                marginVertical: 4,
+              }}>
+              <Text style={{color: 'black', fontWeight: '600'}}>Share </Text>
+              <Image source={require('../images/shareIcon.png')} />
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                setvideoToBeDeleted(introActionValue?.id);
+                setShowDeleteConfirmPop(true);
+                setShowIntroAction(false);
+              }}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 10,
+                borderWidth: 1,
+                borderColor: '#FFCCCC',
+                backgroundColor: '#FFCCCC',
+                borderRadius: 5,
+                marginVertical: 4,
+              }}>
+              <Text style={{color: 'black', fontWeight: '600'}}>Delete</Text>
+              <Image source={require('../images/delete.png')} />
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <Modal transparent={true} visible={showWorkAction} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View style={styles.modalMain}>
+            <Pressable
+            onPress={()=>setShowWorkAction(false)}
+              style={{
+                flexDirection: 'row',
+                // justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 18,
+              }}>
+              <Image source={require('../images/backIcon.png')} />
+              <Text
+                style={[{textDecorationLine: 'underline'}, styles.nameText]}>
+                My work video
+              </Text>
+            </Pressable>
+            <Pressable
+            onPress={()=>{onShare(workActionValue?.videoUrl)}}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 10,
+                borderWidth: 1,
+                borderColor: '#f0f7ff',
+                backgroundColor: '#f0f7ff',
+                borderRadius: 5,
+                marginVertical: 4,
+              }}>
+              <Text style={{color: 'black', fontWeight: '600'}}>Share</Text>
+              <Image source={require('../images/shareIcon.png')} />
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                setShowDeleteWorkVideoConfirmPop(true);
+                setWorkVideoToBeDeleted(workActionValue?.id);
+                setShowWorkAction(false);
+              }}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 10,
+                borderWidth: 1,
+                borderColor: '#FFCCCC',
+                backgroundColor: '#FFCCCC',
+                borderRadius: 5,
+                marginVertical: 4,
+              }}>
+              <Text style={{color: 'black', fontWeight: '600'}}>Delete</Text>
+              <Image source={require('../images/delete.png')} />
+            </Pressable>
           </View>
         </View>
       </Modal>

@@ -21,7 +21,6 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
   const getJobByIdFunc = async () => {
     try {
       let response = await getJobById(value?.id);
-      console.log(response.data.jobs);
       setMoreDetails(response.data.jobs);
     } catch (error) {
       console.log(error);
@@ -82,20 +81,13 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
     }
   };
   function toTitleCase(inputString) {
-    // Check if the input is not an empty string
     if (inputString && typeof inputString === 'string') {
-      // Split the string into words
       let words = inputString.split(' ');
-
-      // Capitalize the first letter of each word
       let titleCaseWords = words.map(word => {
         return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
       });
-
-      // Join the words back into a sentence
       return titleCaseWords.join(' ');
     } else {
-      // Handle empty or non-string input
       return inputString;
     }
   }

@@ -47,9 +47,9 @@ export const getJobById = async id => {
   }
 };
 // get search result
-export const getSearchResult = async (occId, countryId) => {
+export const getSearchResult = async (occuId, countryId) => {
   try {
-    const response = await axios.post(BASE_URL + `jobs-by-department-by-country`, {occId, countryId});
+    const response = await axios.post(BASE_URL + `jobs-by-department-by-country`, {occuId, countryId});
     return response;
   } catch (error) {
     console.error('Error fetching data:', error);

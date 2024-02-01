@@ -1,32 +1,81 @@
-import {StyleSheet, Text, Image, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, Image, Pressable, View, Modal} from 'react-native';
+import React, {useState} from 'react';
 import Video from 'react-native-video';
 const CandidateVideoGola = ({value, index}) => {
-  console.log(index, value?.thumbAfterDepartureVideos)
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   return (
-    <View style={{marginRight: 10, marginTop: 20}}>
-      <Image
-        // source={require('../images/candidate.png')}
-        source={{
-          uri:value?.thumbAfterDepartureVideos? value?.thumbAfterDepartureVideos: value?.thumbBeforeDepartureVideo,
-        }}
-        style={{height: 85, width: 100, borderRadius: 5}}
-      />
-      <View style={styles.playIcon}>
-      <Image
-      source={require('../images/playVideoIcon.png')}
-      
-      />
-      </View>
-      
-      {/* <Video
-        source={{ uri: value?.beforeDepartureVideo }}
-        style={{height: 85, width: 100, borderRadius: 5}}
-        controls={false} // Show video controls (play, pause, etc.)
-        resizeMode="contain" // or "cover" for different video resizing options
-      /> */}
-      <Text style={{fontSize:10,color:"#000", marginTop:5, textAlign:"center"}} >{value?.empName}</Text>
-    </View>
+    <>
+      <Pressable
+        style={{marginRight: 10, marginTop: 20}}
+        onPress={() => setShowVideoPlayer(true)}>
+        <Image
+          // source={require('../images/candidate.png')}
+          source={{
+            uri: value?.thumbAfterDepartureVideos
+              ? value?.thumbAfterDepartureVideos
+              : value?.thumbBeforeDepartureVideo,
+          }}
+          style={{height: 85, width: 100, borderRadius: 5}}
+        />
+        <View style={styles.playIcon}>
+          <Image source={require('../images/playVideoIcon.png')} />
+        </View>
+        <Text
+          style={{
+            fontSize: 10,
+            color: '#000',
+            marginTop: 5,
+            textAlign: 'center',
+          }}>
+          {value?.empName}
+        </Text>
+      </Pressable>
+      <Modal transparent={false} visible={showVideoPlayer}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: '#FFF',
+            padding: 18,
+          }}>
+          <Pressable
+            style={{
+              backgroundColor: 'white',
+              flexDirection: 'row',
+              alignItems: 'center',
+              
+            }}
+            onPress={() => setShowVideoPlayer(false)}>
+            <Image source={require('../images/backIcon.png')} />
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+                color: '#035292',
+                fontWeight: '700',
+              }}>
+              Back
+            </Text>
+          </Pressable>
+          <Video
+            style={{
+              height: 300,
+              width: '100%',
+              marginVertical:15,
+              
+            }}
+            resizeMode="contain"
+            controls={true}
+            source={{
+              uri: value?.beforeDepartureVideo
+                ? value?.beforeDepartureVideo
+                : value?.afterDepartureVideo,
+            }}></Video>
+          <Text style={{fontSize: 18, color: 'black'}}>
+            You are listing to {value?.empName} who has been successfully placed
+            through our portal
+          </Text>
+        </View>
+      </Modal>
+    </>
   );
 };
 
@@ -37,12 +86,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '35%',
     left: '35%',
-    height:24,
-    width:24,
-    flexDirection:"row",
-    justifyContent:"center",
-    alignItems:"center",
-    backgroundColor:"#D9D9D9",
-    borderRadius:12
+    height: 24,
+    width: 24,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#D9D9D9',
+    borderRadius: 12,
   },
 });
