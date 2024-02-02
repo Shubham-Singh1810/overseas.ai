@@ -15,9 +15,10 @@ import React, {useState, useEffect} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import {getCountries} from '../services/info.service';
-import {registerUserStep2} from "../services/user.service";
+import {registerUserStep2, editProfile} from '../services/user.service';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 const CandidateDetails2 = ({route}) => {
   const localUser = route?.params?.localUser;
   const {globalState, setGlobalState} = useGlobalState();
@@ -34,12 +35,18 @@ const CandidateDetails2 = ({route}) => {
   });
   const [contactRef, setContactRef] = useState(false);
   const pickDocument = async () => {
+    const videoformData = new FormData();
     try {
       const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles], // You can specify the types of documents to pick
+        type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
-      console.warn(result);
-      // Handle the picked document here
+      videoformData.append('empPhoto', {
+        uri: result[0].uri,
+        type: result[0].type,
+        name: result[0].name,
+      });
+      let response = await editProfile(videoformData, localUser.access_token);
+      setFormData({...formData, empPhoto: response.data.empData.empPhoto});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -63,25 +70,73 @@ const CandidateDetails2 = ({route}) => {
       console.warn('error from global provider');
     }
   };
-  const handleSubmit = async()=>{
-    try {
-      let response = await registerUserStep2(formData, localUser.access_token);
-      console.log(response)
-      if(response?.msg=="Data Updated Successfully."){
-        await AsyncStorage.setItem('user', JSON.stringify(response));
-        setUserData();
-      }
-      else{
-        console.warn("something went wrong")
-      }
-    } catch (error) {
-      console.warn( error,"Enternal server error")
+  const formValidation = ()=>{
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(formData.empEmail)){
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Invalid Email',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false
     }
+    if(formData.empRefPhone!=10){
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Invalid Phone number of Refrence person',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false
+    }
+    if(formData.empAadharNo.length!=16){
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Invalid Adhar number',
+        visibilityTime: 3000,
+      });
+      return false
+    }
+    return true
   }
-  const handleSkip = async()=>{
+  const handleSubmit = async () => {
+    if(formValidation()){
+      try {
+        let response = await registerUserStep2(
+          {
+            empEmail: formData.empEmail,
+            empDailyWage: formData.empDailyWage,
+            empExpectedMonthlyIncome: formData.empExpectedMonthlyIncome,
+            empRelocationIntQ: formData.empRelocationIntQ,
+            empRelocationIntQCountry: formData.empRelocationIntQCountry,
+            empRefName: formData.empRefName,
+            empRefPhone: formData.empRefPhone,
+            empAadharNo: formData.empAadharNo,
+          },
+          localUser.access_token,
+        );
+        if (response?.msg == 'Data Updated Successfully.') {
+          await AsyncStorage.setItem('user', JSON.stringify(response));
+          setUserData();
+        } else {
+          console.warn('something went wrong');
+          console.log(response);
+        }
+      } catch (error) {
+        console.warn(error, 'Enternal server error');
+      }
+    }
+    
+  };
+
+  const handleSkip = async () => {
     await AsyncStorage.setItem('user', JSON.stringify(localUser));
     setUserData();
-  }
+  };
   useEffect(() => {
     getCountryList();
   }, []);
@@ -100,7 +155,27 @@ const CandidateDetails2 = ({route}) => {
               alignItems: 'center',
             }}>
             <Pressable onPress={pickDocument}>
-              <Image source={require('../images/circle.png')} />
+              {formData.empPhoto == '' ? (
+                <Image
+                  style={{
+                    height: 100,
+                    width: 100,
+                    borderRadius: 50,
+                  }}
+                  source={require('../images/circle.png')}
+                />
+              ) : (
+                <Image
+                  style={{
+                    height: 100,
+                    width: 100,
+                    borderRadius: 50,
+                  }}
+                  source={{
+                    uri: formData.empPhoto,
+                  }}
+                />
+              )}
               <Text style={{color: '#035292', textDecorationLine: 'underline'}}>
                 Add Profile Pic
               </Text>
@@ -149,9 +224,9 @@ const CandidateDetails2 = ({route}) => {
           ) : (
             <View style={styles.picker}>
               <Picker
-                selectedValue={contactRef}
+                // selectedValue={contactRef}
                 onValueChange={(itemValue, itemIndex) => {
-                  // setContactRef(itemValue);
+                  setContactRef(itemValue);
                 }}>
                 <Picker.Item
                   label="Any other contact "
@@ -187,7 +262,10 @@ const CandidateDetails2 = ({route}) => {
               <Picker
                 selectedValue={formData.empRelocationIntQCountry}
                 onValueChange={(itemValue, itemIndex) => {
-                  setFormData({...formData, empRelocationIntQCountry:itemValue})
+                  setFormData({
+                    ...formData,
+                    empRelocationIntQCountry: itemValue,
+                  });
                 }}>
                 <Picker.Item
                   label="Country "
@@ -195,14 +273,14 @@ const CandidateDetails2 = ({route}) => {
                   style={{color: 'gray'}}
                 />
                 {countryList?.map((v, i) => {
-                      return (
-                        <Picker.Item
-                          label={v?.name}
-                          value={v.id}
-                          style={{color: 'gray'}}
-                        />
-                      );
-                    })}
+                  return (
+                    <Picker.Item
+                      label={v?.name}
+                      value={v.id}
+                      style={{color: 'gray'}}
+                    />
+                  );
+                })}
 
                 {/* Add more Picker.Item as needed */}
               </Picker>
@@ -217,7 +295,8 @@ const CandidateDetails2 = ({route}) => {
             alignItems: 'center',
           }}>
           <TouchableOpacity
-            style={{flexDirection: 'row', justifyContent: 'flex-end'}} onPress={handleSkip}>
+            style={{flexDirection: 'row', justifyContent: 'flex-end'}}
+            onPress={handleSkip}>
             <Text
               style={{textDecorationLine: 'underline', paddingHorizontal: 10}}>
               Skip
@@ -231,12 +310,12 @@ const CandidateDetails2 = ({route}) => {
               alignItems: 'center',
               borderRadius: 5,
             }}
-            onPress={handleSubmit}
-          >
+            onPress={handleSubmit}>
             <Text style={{color: 'white'}}>Save</Text>
           </TouchableOpacity>
         </View>
       </View>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </ScrollView>
   );
 };
@@ -249,7 +328,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
-
   registerText: {
     color: '#5F90CA',
     fontFamily: 'Noto Sans',

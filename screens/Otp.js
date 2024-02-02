@@ -136,18 +136,25 @@ const Otp = props => {
       {loading ? (
         <ActivityIndicator size="large" color="gray" />
       ) : (
-        <OTPInputView
-          style={{width: '90%', height: 70, color: 'red'}}
-          pinCount={6}
-          // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-          // onCodeChanged = {code => { this.setState({code})}}
-          autoFocusOnLoad
-          codeInputFieldStyle={{color: 'black'}}
-          codeInputHighlightStyle={{borderColor: 'black'}}
-          onCodeFilled={code => {
-            verifyOtp(code);
-          }}
-        />
+        // <OTPInputView
+        //   style={{width: '90%', height: 70, color: 'red'}}
+        //   pinCount={6}
+        //   // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+        //   // onCodeChanged = {code => { this.setState({code})}}
+        //   autoFocusOnLoad
+        //   codeInputFieldStyle={{color: 'black'}}
+        //   codeInputHighlightStyle={{borderColor: 'black'}}
+        //   onCodeFilled={code => {
+        //     verifyOtp(code);
+        //   }}
+        // />
+        <TextInput onChangeText={(text)=>{
+          if(text.length===6){
+            verifyOtp(text);
+          }
+        }}keyboardType="numeric" style={{backgroundColor:"white", elevation:2,paddingHorizontal:20, marginBottom:25, borderRadius:5, fontSize:30}}>
+
+        </TextInput>
       )}
 
       <Text style={[styles.timerText, styles.textCenter]}>

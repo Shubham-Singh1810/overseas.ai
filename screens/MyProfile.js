@@ -27,9 +27,14 @@ const MyProfile = props => {
 
   return (
     <>
-      <ScrollView style={{backgroundColor:"white"}}>
-        <View style={styles.main}>
-          <View style={{flexDirection: 'row', marginBottom:15, alignItems: 'center'}}>
+      <View style={styles.main}>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginBottom: 15,
+              alignItems: 'center',
+            }}>
             <View>
               <View>
                 {JSON.parse(globalState?.user)?.empData?.empPhoto == null ? (
@@ -49,22 +54,29 @@ const MyProfile = props => {
               <TouchableOpacity
                 onPress={() => props.navigation.navigate('Edit Profile')}>
                 <Text
-                  style={{textDecorationLine: 'underline', color: '#035292', textAlign:"center"}}>
+                  style={{
+                    textDecorationLine: 'underline',
+                    color: '#035292',
+                    textAlign: 'center',
+                    marginTop:8
+                  }}>
                   Edit
                 </Text>
               </TouchableOpacity>
             </View>
-            <View>
+
+            <View style={{marginLeft:15}}>
               <Text style={styles.name}>
-                {JSON.parse(globalState?.user)?.empData?.empName} (56%)
+                {JSON.parse(globalState?.user)?.empData?.empName}
               </Text>
-              <View style={{flexDirection:"row", marginTop:-6, marginBottom:3}}>
-              <Image source={require("../images/starIcon.png")}/>
-              <Image source={require("../images/starIcon.png")}/>
-              <Image source={require("../images/starIcon.png")}/>
-              <Image source={require("../images/starIcon.png")}/>
+              <View
+                style={{flexDirection: 'row', marginTop: -6, marginBottom: 3}}>
+                <Image source={require('../images/starIcon.png')} />
+                <Image source={require('../images/starIcon.png')} />
+                <Image source={require('../images/starIcon.png')} />
+                <Image source={require('../images/starIcon.png')} />
               </View>
-              
+
               <Text style={[styles.welderText]}>
                 {
                   JSON.parse(globalState?.user)?.empData?.empOccupationModel
@@ -74,110 +86,156 @@ const MyProfile = props => {
               <View
                 style={{
                   flexDirection: 'row',
-
                   alignItems: 'center',
+                  //  marginTop:-10
                 }}>
                 <Image
                   source={require('../images/greenPhoneIcon.png')}
-                  style={{marginRight: 8}}
+                  style={{marginRight: 5}}
                 />
                 <Text style={styles.welderText}>
                   {JSON.parse(globalState?.user)?.empData?.empPhone}
                 </Text>
               </View>
-              
             </View>
           </View>
-          <View>
-            <View style={styles.navItem}>
-              <Image
-                resizeMode="contain"
-                source={require('../images/careerGraph.png')}
-                style={{height: 20, width: 20, marginRight: 10}}
-              />
-              <Text style={styles.navText}>{translation.myCareerGraph}</Text>
-            </View>
-
-            <Pressable
-              onPress={() => props.navigation.navigate('Applied Courses')}>
-              <View style={styles.navItem}>
-                <Image
-                  resizeMode="contain"
-                  source={require('../images/capIcon.png')}
-                  style={{height: 20, width: 20, marginRight: 10}}
-                />
-                <Text style={styles.navText}>{translation.coursesApplied}</Text>
-              </View>
-            </Pressable>
-
-            <Pressable onPress={() => props.navigation.navigate('Applied Job')}>
-              <View style={styles.navItem}>
-                <Image
-                  resizeMode="contain"
-                  source={require('../images/jobApplied2.png')}
-                  style={{height: 20, width: 20, marginRight: 10}}
-                />
-                <Text style={styles.navText}>{translation.jobApplied}</Text>
-              </View>
-            </Pressable>
-            <Pressable
-              onPress={() => props.navigation.navigate('My Documents')}>
-              <View style={styles.navItem}>
-                <Image
-                  resizeMode="contain"
-                  source={require('../images/documentIcon.png')}
-                  style={{height: 20, width: 20, marginRight: 10}}
-                />
-                <Text style={styles.navText}>{translation.myDocuments}</Text>
-              </View>
-            </Pressable>
-
-            <Pressable onPress={() => props.navigation.navigate('Saved Jobs')}>
-              <View style={styles.navItem}>
-                <Image
-                  resizeMode="contain"
-                  source={require('../images/savedJobs.png')}
-                  style={{height: 20, width: 20, marginRight: 10}}
-                />
-                <Text style={styles.navText}>{translation.savedJobs}</Text>
-              </View>
-            </Pressable>
-            <Pressable
-              onPress={() => props.navigation.navigate('Notifications')}>
-              <View style={styles.navItem}>
-                <Image
-                  resizeMode="contain"
-                  source={require('../images/notificationIcon.png')}
-                  style={{height: 20, width: 20, marginRight: 10}}
-                />
-                <Text style={styles.navText}>{translation.notifications}</Text>
-              </View>
-            </Pressable>
-
-            <Pressable onPress={() => props.navigation.navigate('Contact Us')}>
-              <View style={styles.navItem}>
-                <Image
-                  source={require('../images/helpIcon.png')}
-                  resizeMode="contain"
-                  style={{height: 20, width: 20, marginRight: 10}}
-                />
-                <Text style={styles.navText}>{translation.needHelp}</Text>
-              </View>
-            </Pressable>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              margin: 40,
-            }}>
-            <Text style={styles.logout} onPress={handleLogOut}>
-              {translation.logOut}
+          <View style={{marginBottom: 5}}>
+            <Text
+              style={[
+                styles.nameText,
+                styles.fontWeight500,
+                {marginTop: 16, marginBottom: -2},
+              ]}>
+              Profile Strength
             </Text>
-            <Text>{translation.version} 5.8.0</Text>
+            <View
+              style={{
+                width: '70%',
+                flexDirection: 'row',
+                marginBottom: 2,
+                justifyContent: 'flex-end',
+              }}>
+              <Text style={[styles.nameText, {color: '#079E3F', fontSize: 12}]}>
+                78%
+              </Text>
+            </View>
+            <View
+              style={{
+                width: '100%',
+                backgroundColor: '#ADE9C4',
+                height: 2,
+              }}></View>
+            <View
+              style={{
+                backgroundColor: '#13C756',
+                borderRadius: 3,
+                height: 6,
+                width: '70%',
+                position: 'relative',
+                bottom: 4,
+              }}></View>
           </View>
         </View>
-      </ScrollView>
+        <ScrollView style={{marginTop:20}}>
+          <View>
+            <View>
+              <View style={styles.navItem}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../images/careerGraph.png')}
+                  style={{height: 20, width: 20, marginRight: 10}}
+                />
+                <Text style={styles.navText}>{translation.myCareerGraph}</Text>
+              </View>
+
+              <Pressable
+                onPress={() => props.navigation.navigate('Applied Courses')}>
+                <View style={styles.navItem}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../images/capIcon.png')}
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>
+                    {translation.coursesApplied}
+                  </Text>
+                </View>
+              </Pressable>
+
+              <Pressable
+                onPress={() => props.navigation.navigate('Applied Job')}>
+                <View style={styles.navItem}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../images/jobApplied2.png')}
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>{translation.jobApplied}</Text>
+                </View>
+              </Pressable>
+              <Pressable
+                onPress={() => props.navigation.navigate('My Documents')}>
+                <View style={styles.navItem}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../images/documentIcon.png')}
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>{translation.myDocuments}</Text>
+                </View>
+              </Pressable>
+
+              <Pressable
+                onPress={() => props.navigation.navigate('Saved Jobs')}>
+                <View style={styles.navItem}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../images/savedJobs.png')}
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>{translation.savedJobs}</Text>
+                </View>
+              </Pressable>
+              <Pressable
+                onPress={() => props.navigation.navigate('Notifications')}>
+                <View style={styles.navItem}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../images/notificationIcon.png')}
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>
+                    {translation.notifications}
+                  </Text>
+                </View>
+              </Pressable>
+
+              <Pressable
+                onPress={() => props.navigation.navigate('Contact Us')}>
+                <View style={styles.navItem}>
+                  <Image
+                    source={require('../images/helpIcon.png')}
+                    resizeMode="contain"
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>{translation.needHelp}</Text>
+                </View>
+              </Pressable>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                margin: 40,
+              }}>
+              <Text style={styles.logout} onPress={handleLogOut}>
+                {translation.logOut}
+              </Text>
+              <Text>{translation.version} 5.8.0</Text>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     </>
   );
 };
@@ -186,9 +244,15 @@ export default MyProfile;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#fff',
     padding: 10,
-    flex:1
+    backgroundColor: 'white',
+    flex: 1,
+  },
+  nameText: {
+    fontFamily: 'Noto Sans',
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#000',
   },
   mainHeading: {
     color: '#0F0C0C',
@@ -204,9 +268,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   myPic: {
-    height: 120,
-    width: 120,
-    borderRadius: 60,
+    height: 100,
+    width: 100,
+    borderRadius: 50,
     resizeMode: 'contain',
   },
   bedge: {

@@ -7,9 +7,36 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
+import {useGlobalState} from '../GlobalProvider';
 const EditProfile = () => {
+  const {translation, globalState, setGlobalState} = useGlobalState();
+  const [formData, setFormData] = useState({
+    empOccuId: '',
+    empSkill: '',
+    empEdu: '',
+    empEduYear: '',
+    empTechEdu: '',
+    empSpecialEdu: '',
+    empPassportQ: '',
+    empMS: '',
+    empLanguage: '',
+    empInternationMigrationExp: '',
+    empWhatsapp: '',
+    empState: '',
+    empDistrict: '',
+    empPin: '',
+    empEmail: '',
+    empDailyWage: '',
+    empExpectedMonthlyIncome: '',
+    empRelocationIntQ: '',
+    empRelocationIntQCountry: '',
+    empRefName: '',
+    empRefPhone: '',
+    empPhoto: '',
+  });
+  console.log(JSON.parse(globalState?.user)?.empData)
   return (
     <ScrollView style={styles.main}>
       <View style={styles.body}>
@@ -20,7 +47,21 @@ const EditProfile = () => {
             marginBottom: 20,
           }}>
           <Pressable>
-            <Image source={require('../images/circle.png')} />
+            <View>
+              {JSON.parse(globalState?.user)?.empData?.empPhoto == null ? (
+                <Image
+                  source={require('../images/circle.png')}
+                  style={styles.myPic}
+                />
+              ) : (
+                <Image
+                  source={{
+                    uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
+                  }}
+                  style={styles.myPic}
+                />
+              )}
+            </View>
             <Text
               style={{
                 color: '#035292',
@@ -30,7 +71,7 @@ const EditProfile = () => {
               Edit Profile Pic
             </Text>
           </Pressable>
-          <View style={{marginLeft: 20}}>
+          <View style={{marginLeft: 15}}>
             <Text style={styles.heading}>Shubham Singh</Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Image source={require('../images/maleIcon.png')} />
@@ -40,7 +81,7 @@ const EditProfile = () => {
             <Text style={styles.heading}>hittheshubham1810@...</Text>
           </View>
         </View>
-        <View>
+        <View style={{marginTop: 20}}>
           <View style={styles.picker}>
             <Picker
               //   selectedValue={formData.empRelocationIntQ}
@@ -169,5 +210,11 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 18,
     backgroundColor: 'white',
+  },
+  myPic: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    resizeMode: 'contain',
   },
 });

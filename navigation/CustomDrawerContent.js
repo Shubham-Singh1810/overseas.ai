@@ -160,7 +160,7 @@ const CustomDrawerContent = ({navigation}) => {
                 {JSON.parse(globalState?.user)?.empData?.empName}
               </Text>
               <Text style={{color: '#00111F', fontSize: 11}}>
-                Profile strength {JSON.parse(globalState?.user)?.empData?.profileStrength}
+                Profile strength {JSON.parse(globalState?.user)?.empData?.profileStrength}%
               </Text>
             </View>
           </View>

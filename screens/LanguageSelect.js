@@ -5,13 +5,7 @@ import { useGlobalState } from '../GlobalProvider';
 const LanguageSelect = (props) => {
   const { globalState, setGlobalState } = useGlobalState();
   const handleStep1Screen = async ()=>{
-    let signUpUser = JSON.parse(await AsyncStorage.getItem('signUpUser'));
-    if(signUpUser){
-      props.navigation.navigate("CandidateDetails1")
-    }
-    else{
       props.navigation.navigate("LoginCom")
-    }
   }
   return (
     <View style={styles.main}>

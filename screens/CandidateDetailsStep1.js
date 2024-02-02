@@ -22,7 +22,7 @@ import {
   getSkillsByOccuId,
   getCountries,
   getState,
-  getDistrict
+  getDistrict,
 } from '../services/info.service';
 import {registerUserStep1, addExperienceStep2} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -48,9 +48,9 @@ const CandidateDetailsStep1 = props => {
     empEduYear: '',
     empTechEdu: '',
     empSpecialEdu: '',
-    empState:'',
-    empDistrict:'',
-    empPin:''
+    empState: '',
+    empDistrict: '',
+    empPin: '',
   });
   const handleLanguageSelect = selectedLanguage => {
     if (formData.empLanguage.includes(selectedLanguage)) {
@@ -107,7 +107,7 @@ const CandidateDetailsStep1 = props => {
       setCountryList(response?.countries);
     } catch (error) {}
   };
-  
+
   const [stateList, setStateList] = useState([]);
   const getStateList = async () => {
     try {
@@ -118,43 +118,235 @@ const CandidateDetailsStep1 = props => {
     }
   };
   const [districtList, setDistrictList] = useState([]);
-  const getDistrictListFunc = async (stateId)=>{
+  const getDistrictListFunc = async stateId => {
     try {
-      let response = await getDistrict(stateId)
-      setDistrictList(response?.districts)
+      let response = await getDistrict(stateId);
+      setDistrictList(response?.districts);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   useEffect(() => {
     getOccupationList();
     getLocalUser();
     getCountryList();
     getStateList();
   }, []);
-
+  const formValidaion = () => {
+    // empMS: '',
+    // empPassportQ: '',
+    // empSkill: '',
+    // empOccuId: '',
+    // empInternationMigrationExp: '',
+    // empEdu: '',
+    // empEduYear: '',
+    // empTechEdu: '',
+    // empSpecialEdu: '',
+    // empState:'',
+    // empDistrict:'',
+    // empPin:''
+    if (formData.empDob == '') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Date of Birth is a required Feild',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empGender == '') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Gender is required feild',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empWhatsapp == '') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Whatsapp is required feild',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empWhatsapp.length!=10) {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Invalid whatsapp number',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empLanguage.length == 0) {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Language select is required feild',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empMS=='') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Marital status is required field',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empPassportQ=='') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Please select : Do you have passport ?',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empOccuId=='') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Present working department is required field',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empSkill=='') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Present Occupation is required field',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empInternationMigrationExp=='') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Past International Migration Exp?',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empEdu=='') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Highest education qualification is required field',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empState=='') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'State is required field',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empDistrict=='') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'District is required field',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empPin.length!=6) {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Pin code is required field please write valid pin number',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empEduYear=="") {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Year of highest education qualification is required field',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (formData.empSpecialEdu=="") {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Specialisation is required field',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    return true;
+  };
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
 
   const handleSubmit = async () => {
-    try {
-      const finalPayload = {
-        ...formData,
-        empLanguage: JSON.stringify(formData.empLanguage),
-      };
-      let response = await registerUserStep1(
-        finalPayload,
-        localUser.access_token,
-      );
-      console.log(response?.msg);
-      if (response?.msg == 'Data Updated Successfully') {
-        props.navigation.navigate('CandidateDetails2', { localUser: localUser});
-        await AsyncStorage.clear();
+    if (formValidaion()) {
+      try {
+        const finalPayload = {
+          ...formData,
+          empLanguage: JSON.stringify(formData.empLanguage),
+        };
+        let response = await registerUserStep1(
+          finalPayload,
+          localUser.access_token,
+        );
+        console.log(response?.msg);
+        if (response?.msg == 'Data Updated Successfully') {
+          Toast.show({
+            type: 'success',
+            position: 'bottom',
+            text1: 'Data Updated Successfully',
+            // text2: '',
+            visibilityTime: 3000,
+          });
+          setTimeout(() => {
+            props.navigation.navigate('CandidateDetails2', {
+              localUser: localUser,
+            });
+          }, 1500);
+          await AsyncStorage.clear();
+        } else {
+          Toast.show({
+            type: 'error',
+            position: 'bottom',
+            text1: 'Something went wrong',
+            visibilityTime: 3000,
+          });
+          
+        }
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          position: 'bottom',
+          text1: 'Something went wrong',
+          visibilityTime: 3000,
+        });
       }
-      else{
-        console.warn(response?.error)
-        Alert(response?.error)
-      }
-    } catch (error) {}
+    }
   };
   const [experienceForm, setExperienceForm] = useState({
     experinceCompanyName: '',
@@ -208,6 +400,7 @@ const CandidateDetailsStep1 = props => {
       });
     }
   };
+
   return (
     <ScrollView>
       <View style={styles.main}>
@@ -258,55 +451,40 @@ const CandidateDetailsStep1 = props => {
               </TouchableOpacity>
             </View>
           </View>
-          {showWhatsappInput ? (
+          <View style={[{marginTop: 20}, styles.picker]}>
+            <Picker
+              // selectedValue={showWhatsappInput}
+              onValueChange={(itemValue, itemIndex) => {
+                setShowWhatsappInput(itemValue);
+                if(itemValue){
+                  setFormData({...formData, empWhatsapp:localUser.user.phone})
+                }else{
+                  setFormData({...formData, empWhatsapp:""})
+                }
+              }}>
+              <Picker.Item
+                label="Phone and whatsapp are same?"
+                value=""
+                style={{color: 'gray'}}
+              />
+              <Picker.Item label="Yes" value={true} style={{color: 'gray'}} />
+              <Picker.Item label="No" value={false} style={{color: 'gray'}} />
+
+              {/* Add more Picker.Item as needed */}
+            </Picker>
+          </View>
+          
             <TextInput
               placeholder="Whatsapp Number"
-              style={[styles.input, {marginTop: 20, marginBottom: 5}]}
-              value={formData.empWhatsapp}
+              style={[styles.input, { marginBottom: 5}]}
+              value={showWhatsappInput ?localUser.user.phone: formData.empWhatsapp}
               onChangeText={text => {
-                const integerValue = parseInt(text, 10);
-
-                if (!isNaN(integerValue)) {
-                  // Only update the state if the entered text is a valid integer
-                  setFormData({...formData, empWhatsapp: integerValue});
-                }
+                  setFormData({...formData, empWhatsapp: text});
               }}
               keyboardType="numeric"
             />
-          ) : (
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                marginTop: 30,
-                marginBottom: 20,
-                alignItems: 'center',
-              }}>
-              <Text>Do you have same phone number as whatsapp?</Text>
-              <Text
-                style={{
-                  marginHorizontal: 5,
-                  textDecorationLine: 'underline',
-                  color: '#000',
-                }}
-                onPress={() => {
-                  setFormData({...formData, empWhatsapp: localUser.user.phone});
-                  setShowWhatsappInput(true);
-                }}>
-                Yes
-              </Text>
-              <Text
-                style={{
-                  marginHorizontal: 5,
-                  textDecorationLine: 'underline',
-                  color: '#000',
-                }}
-                onPress={() => {
-                  setShowWhatsappInput(true);
-                }}>
-                No
-              </Text>
-            </Pressable>
-          )}
+          
+
           <TouchableOpacity
             onPress={() => setShowLanguageSelect(true)}
             style={[
@@ -445,7 +623,7 @@ const CandidateDetailsStep1 = props => {
                 }}>
                 <Picker.Item
                   label="Highest Education Qualification"
-                  value="hello"
+                  value=""
                   style={{color: 'gray'}}
                 />
                 {highestEducationArr.map((v, i) => {
@@ -458,13 +636,15 @@ const CandidateDetailsStep1 = props => {
               </Picker>
             </View>
           </View>
-          <Text style={{color:"black", marginBottom:18}}>Current Address*</Text>
+          <Text style={{color: 'black', marginBottom: 18}}>
+            Current Address*
+          </Text>
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empState}
               onValueChange={(itemValue, itemIndex) => {
                 setFormData({...formData, empState: itemValue});
-                getDistrictListFunc(itemValue)
+                getDistrictListFunc(itemValue);
               }}>
               <Picker.Item label="State" value="" style={{color: 'gray'}} />
               {stateList?.map((v, i) => {
@@ -480,7 +660,7 @@ const CandidateDetailsStep1 = props => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
-          
+
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empDistrict}
@@ -490,7 +670,11 @@ const CandidateDetailsStep1 = props => {
               <Picker.Item label="District" value="" style={{color: 'gray'}} />
               {districtList?.map((v, i) => {
                 return (
-                  <Picker.Item label={v.name} value={v.id} style={{color: 'gray'}} />
+                  <Picker.Item
+                    label={v.name}
+                    value={v.id}
+                    style={{color: 'gray'}}
+                  />
                 );
               })}
 
@@ -764,7 +948,6 @@ const CandidateDetailsStep1 = props => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
-          
         </View>
         <View style={styles.nextBtn}>
           <Button
@@ -809,7 +992,11 @@ const CandidateDetailsStep1 = props => {
               <Text style={{fontWeight: '500', fontSize: 20}}>
                 Language Known
               </Text>
-              <TouchableOpacity onPress={() => setShowLanguageSelect(false)}>
+              <TouchableOpacity
+                onPress={() => {
+                  setFormData({...formData, empLanguage: []});
+                  setShowLanguageSelect(false);
+                }}>
                 <Image source={require('../images/close.png')} />
               </TouchableOpacity>
             </View>
@@ -962,6 +1149,12 @@ const CandidateDetailsStep1 = props => {
                       styles.backgroundBlue,
                   ]}></View>
               </Pressable>
+            </View>
+            <View style={{marginHorizontal: 18, marginTop: 10}}>
+              <Button
+                title="Save"
+                onPress={() => setShowLanguageSelect(false)}
+              />
             </View>
           </View>
         </View>
@@ -1116,7 +1309,7 @@ export default CandidateDetailsStep1;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#F5F5FA',
+    backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
@@ -1167,7 +1360,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   genderGroupSelected: {
-    backgroundColor: '#CCC',
+    backgroundColor: '#F1F7FF',
+    borderColor: '#035292',
   },
   width45: {
     width: '45%',

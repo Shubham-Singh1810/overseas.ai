@@ -63,11 +63,17 @@ const Login = props => {
       setLoading(true);
       try {
         let response = await loginUsingPassword(formData);
+        console.log(response.data)
+        
         if (response.data.access_token) {
+          if(response.data.user.second_step=="0"){
+          await AsyncStorage.setItem('signUpUser', JSON.stringify(response.data));
+          props.navigation.navigate("CandidateDetails1");
+          setLoading(false);
+          return;
+        }
           await AsyncStorage.setItem('user', JSON.stringify(response.data));
           setUserData();
-          
-          // props.navigation.navigate('Home');
           setLoading(false);
         } else {
           Toast.show({
@@ -122,6 +128,14 @@ const Login = props => {
           if (response.data.msg == 'Otp Sent Succefully.') {
             storeDataInLocal(formData.empPhone);
             props.navigation.navigate('Verify Otp');
+          }
+          else{
+            Toast.show({
+              type: 'error', // 'success', 'error', 'info', or any custom type you define
+              position: 'top',
+              text1: "Phone number not registered",
+              visibilityTime: 3000, // Duration in milliseconds
+            });
           }
         } catch (error) {
           Alert('Something Went Wrong');

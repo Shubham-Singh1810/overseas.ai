@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {applyCourse} from '../services/institute.service';
 import WebView from 'react-native-webview';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import { ScrollView } from 'react-native-gesture-handler';
 
   
 const GetCourseById = props => {
@@ -48,7 +49,8 @@ const GetCourseById = props => {
     }
   };
   return (
-    <View style={styles.main}>
+    <ScrollView style={styles.main}>
+       <View >
       <View>
         <Text
           style={{
@@ -228,6 +230,8 @@ const GetCourseById = props => {
         </View>
       </Modal>
     </View>
+    </ScrollView>
+   
   );
 };
 
@@ -245,7 +249,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '500',
     color: '#000',
-    fontSize: 23,
+    fontSize: 20,
   },
 
   listText: {
