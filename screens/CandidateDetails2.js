@@ -72,34 +72,40 @@ const CandidateDetails2 = ({route}) => {
   };
   const formValidation = ()=>{
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!emailRegex.test(formData.empEmail)){
-      Toast.show({
-        type: 'error',
-        position: 'top',
-        text1: 'Invalid Email',
-        // text2: '',
-        visibilityTime: 3000,
-      });
-      return false
+    if(formData.empEmail!=""){
+      if(!emailRegex.test(formData.empEmail)){
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Invalid Email',
+          // text2: '',
+          visibilityTime: 3000,
+        });
+        return false
+      }
     }
-    if(formData.empRefPhone!=10){
-      Toast.show({
-        type: 'error',
-        position: 'top',
-        text1: 'Invalid Phone number of Refrence person',
-        // text2: '',
-        visibilityTime: 3000,
-      });
-      return false
+    if(formData.empRefPhone!=""){
+      if(formData.empRefPhone.length!=10){
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Invalid Phone number of Refrence person',
+          // text2: '',
+          visibilityTime: 3000,
+        });
+        return false
+      }  
     }
-    if(formData.empAadharNo.length!=16){
-      Toast.show({
-        type: 'error',
-        position: 'top',
-        text1: 'Invalid Adhar number',
-        visibilityTime: 3000,
-      });
-      return false
+    if(formData.empAadharNo!=""){
+      if(formData.empAadharNo.length!=16){
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Invalid Aadhar number',
+          visibilityTime: 3000,
+        });
+        return false
+      }
     }
     return true
   }
@@ -134,6 +140,7 @@ const CandidateDetails2 = ({route}) => {
   };
 
   const handleSkip = async () => {
+    
     await AsyncStorage.setItem('user', JSON.stringify(localUser));
     setUserData();
   };

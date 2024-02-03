@@ -16,7 +16,6 @@ import moment from 'moment';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-modern-datepicker';
 import Toast from 'react-native-toast-message';
-
 import {
   getOccupations,
   getSkillsByOccuId,
@@ -29,6 +28,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
 const CandidateDetailsStep1 = props => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [experienceMsgText, setShowExperinceMsgText] = useState(
+    'Do you have past experience ?',
+  );
   const [showWhatsappInput, setShowWhatsappInput] = useState(false);
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showCalender, setShowCalender] = useState(false);
@@ -132,19 +134,26 @@ const CandidateDetailsStep1 = props => {
     getCountryList();
     getStateList();
   }, []);
+  const [formDataError, setFormDataError] = useState({
+    empDob: '',
+    empGender: '',
+    empWhatsapp: '',
+    empLanguage: [],
+    empMS: '',
+    empPassportQ: '',
+    empSkill: '',
+    empOccuId: '',
+    empInternationMigrationExp: '',
+    empEdu: '',
+    empEduYear: '',
+    empTechEdu: '',
+    empSpecialEdu: '',
+    empState: '',
+    empDistrict: '',
+    empPin: '',
+  });
   const formValidaion = () => {
-    // empMS: '',
-    // empPassportQ: '',
-    // empSkill: '',
-    // empOccuId: '',
-    // empInternationMigrationExp: '',
-    // empEdu: '',
-    // empEduYear: '',
-    // empTechEdu: '',
-    // empSpecialEdu: '',
-    // empState:'',
-    // empDistrict:'',
-    // empPin:''
+    let result = true;
     if (formData.empDob == '') {
       Toast.show({
         type: 'error',
@@ -152,16 +161,25 @@ const CandidateDetailsStep1 = props => {
         text1: 'Date of Birth is a required Feild',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empDob: 'Date of Birth is a required Feild',
+      });
+      result = false;
     }
     if (formData.empGender == '') {
+      
       Toast.show({
         type: 'error',
         position: 'bottom',
         text1: 'Gender is required feild',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empGender: 'Gender is required feild',
+      });
+      result = false;
     }
     if (formData.empWhatsapp == '') {
       Toast.show({
@@ -170,16 +188,24 @@ const CandidateDetailsStep1 = props => {
         text1: 'Whatsapp is required feild',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empWhatsapp: 'Whatsapp is required feild',
+      });
+      result = false;
     }
-    if (formData.empWhatsapp.length!=10) {
+    if (formData.empWhatsapp.length != 10) {
       Toast.show({
         type: 'error',
         position: 'bottom',
         text1: 'Invalid whatsapp number',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empWhatsapp: 'Invalid whatsapp number',
+      });
+      result = false;
     }
     if (formData.empLanguage.length == 0) {
       Toast.show({
@@ -188,18 +214,26 @@ const CandidateDetailsStep1 = props => {
         text1: 'Language select is required feild',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empLanguage: 'Language select is required feild',
+      });
+      result = false;
     }
-    if (formData.empMS=='') {
+    if (formData.empMS == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
         text1: 'Marital status is required field',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empMS: 'Marital status is required field',
+      });
+      result = false;
     }
-    if (formData.empPassportQ=='') {
+    if (formData.empPassportQ == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -207,9 +241,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empPassportQ: 'Please select : Do you have passport ?',
+      });
+      result = false;
     }
-    if (formData.empOccuId=='') {
+    if (formData.empOccuId == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -217,9 +255,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empOccuId: 'Present working department is required field',
+      });
+      result = false;
     }
-    if (formData.empSkill=='') {
+    if (formData.empSkill == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -227,9 +269,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empSkill: 'Present Occupation is required field',
+      });
+      result = false;
     }
-    if (formData.empInternationMigrationExp=='') {
+    if (formData.empInternationMigrationExp == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -237,9 +283,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empInternationMigrationExp: 'Past International Migration Exp?',
+      });
+      result = false;
     }
-    if (formData.empEdu=='') {
+    if (formData.empEdu == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -247,9 +297,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empEdu: 'Highest education qualification is required field',
+      });
+      result = false;
     }
-    if (formData.empState=='') {
+    if (formData.empState == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -257,9 +311,10 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({...formDataError, empState: 'State is required field'});
+      result = false;
     }
-    if (formData.empDistrict=='') {
+    if (formData.empDistrict == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -267,9 +322,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empDistrict: 'District is required field',
+      });
+      result = false;
     }
-    if (formData.empPin.length!=6) {
+    if (formData.empPin.length != 6) {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -277,9 +336,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empPin: 'Pin code is required field please write valid pin number',
+      });
+      result = false;
     }
-    if (formData.empEduYear=="") {
+    if (formData.empEduYear == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -287,9 +350,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empEduYear: 'Year of highest education qualification is required field',
+      });
+      result = false;
     }
-    if (formData.empSpecialEdu=="") {
+    if (formData.empSpecialEdu == '') {
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -297,9 +364,13 @@ const CandidateDetailsStep1 = props => {
         // text2: '',
         visibilityTime: 3000,
       });
-      return false;
+      setFormDataError({
+        ...formDataError,
+        empSpecialEdu: 'Specialisation is required field',
+      });
+      result = false;
     }
-    return true;
+    return result;
   };
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
 
@@ -336,7 +407,6 @@ const CandidateDetailsStep1 = props => {
             text1: 'Something went wrong',
             visibilityTime: 3000,
           });
-          
         }
       } catch (error) {
         Toast.show({
@@ -346,6 +416,15 @@ const CandidateDetailsStep1 = props => {
           visibilityTime: 3000,
         });
       }
+    }
+    else{
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Form validation failed',
+        // text2: '',
+        visibilityTime: 3000,
+      });
     }
   };
   const [experienceForm, setExperienceForm] = useState({
@@ -365,11 +444,13 @@ const CandidateDetailsStep1 = props => {
         experienceForm,
         localUser.access_token,
       );
+      console.log('res', response);
       if (response?.data?.msg == 'Experience Successfully Added.') {
         Toast.show({
           type: 'success',
           position: 'bottom',
-          text1: 'Experience Successfully Added.',
+          text1: 'Experience successfully added.',
+          // text2:" Feel free to enrich your profile by adding more experiences if you desire.",
           visibilityTime: 3000,
         });
         setExperienceForm({
@@ -383,6 +464,8 @@ const CandidateDetailsStep1 = props => {
           stateName: '',
           certificateImage: '',
         });
+        setShowExperinceMsgText('Do you want to add more experience ?');
+        setShowAddExperienceForm(false);
       } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
@@ -407,17 +490,27 @@ const CandidateDetailsStep1 = props => {
         <View>
           <Text style={styles.heading}>Please Enter Your Details : 1/2</Text>
         </View>
-        <View style={styles.inputGroup}>
+        <View style={[styles.inputGroup]}>
           <TouchableOpacity
             onPress={() => setShowCalender(true)}
             style={[
               styles.input,
               {marginBottom: 15, padding: 17, marginTop: 5},
+              formDataError.empDob !== '' ? {borderColor: 'red'} : {},
             ]}>
             <Text>
               {formData?.empDob == '' ? 'Date of Birth' : formData?.empDob}
             </Text>
           </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 10,
+              marginBottom: 10,
+              marginTop: -12,
+              color: 'red',
+            }}>
+            {formDataError.empDob}
+          </Text>
           <View>
             <Text>Gender</Text>
             <View
@@ -451,8 +544,12 @@ const CandidateDetailsStep1 = props => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={[{marginTop: 20}, styles.picker]}>
-            <Picker
+          <Text
+            style={{fontSize: 10, marginBottom: 0, marginTop: 2, color: 'red'}}>
+            {formDataError.empGender}
+          </Text>
+          {/* <View style={[{marginTop: 20}, styles.picker]}> */}
+          {/* <Picker
               // selectedValue={showWhatsappInput}
               onValueChange={(itemValue, itemIndex) => {
                 setShowWhatsappInput(itemValue);
@@ -470,20 +567,23 @@ const CandidateDetailsStep1 = props => {
               <Picker.Item label="Yes" value={true} style={{color: 'gray'}} />
               <Picker.Item label="No" value={false} style={{color: 'gray'}} />
 
-              {/* Add more Picker.Item as needed */}
-            </Picker>
-          </View>
-          
-            <TextInput
-              placeholder="Whatsapp Number"
-              style={[styles.input, { marginBottom: 5}]}
-              value={showWhatsappInput ?localUser.user.phone: formData.empWhatsapp}
-              onChangeText={text => {
-                  setFormData({...formData, empWhatsapp: text});
-              }}
-              keyboardType="numeric"
-            />
-          
+            
+            </Picker> */}
+          {/* </View> */}
+
+          <TextInput
+            placeholder="Whatsapp Number"
+            style={[styles.input, {marginBottom: 5, marginTop: 20}]}
+            value={formData.empWhatsapp}
+            onChangeText={text => {
+              setFormData({...formData, empWhatsapp: text});
+            }}
+            keyboardType="numeric"
+          />
+          <Text
+            style={{fontSize: 10, marginBottom: 0, marginTop: 2, color: 'red'}}>
+            {formDataError.empWhatsapp}
+          </Text>
 
           <TouchableOpacity
             onPress={() => setShowLanguageSelect(true)}
@@ -497,6 +597,10 @@ const CandidateDetailsStep1 = props => {
                 : formData?.empLanguage.join(', ')}{' '}
             </Text>
           </TouchableOpacity>
+          <Text
+            style={{fontSize: 10, marginBottom: 0, marginTop: 2, color: 'red'}}>
+            {formDataError.empLanguage}
+          </Text>
           <View
             style={{
               marginTop: 15,
@@ -526,7 +630,15 @@ const CandidateDetailsStep1 = props => {
                 {/* Add more Picker.Item as needed */}
               </Picker>
             </View>
-
+            <Text
+              style={{
+                fontSize: 10,
+                marginBottom: 15,
+                marginTop: -12,
+                color: 'red',
+              }}>
+              {formDataError.empMS}
+            </Text>
             <View style={styles.picker}>
               <Picker
                 selectedValue={formData.empPassportQ}
@@ -544,6 +656,15 @@ const CandidateDetailsStep1 = props => {
                 {/* Add more Picker.Item as needed */}
               </Picker>
             </View>
+            <Text
+              style={{
+                fontSize: 10,
+                marginBottom: 15,
+                marginTop: -12,
+                color: 'red',
+              }}>
+              {formDataError.empPassportQ}
+            </Text>
             <View style={styles.picker}>
               <Picker
                 selectedValue={formData.empOccuId}
@@ -568,33 +689,53 @@ const CandidateDetailsStep1 = props => {
                 {/* Add more Picker.Item as needed */}
               </Picker>
             </View>
+            <Text
+              style={{
+                fontSize: 10,
+                marginBottom: 15,
+                marginTop: -12,
+                color: 'red',
+              }}>
+              {formDataError.empOccuId}
+            </Text>
             {formData.empOccuId != '' && (
-              <View style={styles.picker}>
-                <Picker
-                  selectedValue={formData.empSkill}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setFormData({...formData, empSkill: itemValue});
-                  }}>
-                  <Picker.Item
-                    label="Present Occupation"
-                    value=""
-                    style={{color: 'gray'}}
-                  />
-                  {skills?.map((v, i) => {
-                    return (
-                      <Picker.Item
-                        label={v?.skill}
-                        value={v.id}
-                        style={{color: 'gray'}}
-                      />
-                    );
-                  })}
+              <><View style={styles.picker}>
+              <Picker
+                selectedValue={formData.empSkill}
+                onValueChange={(itemValue, itemIndex) => {
+                  setFormData({...formData, empSkill: itemValue});
+                }}>
+                <Picker.Item
+                  label="Present Occupation"
+                  value=""
+                  style={{color: 'gray'}}
+                />
+                {skills?.map((v, i) => {
+                  return (
+                    <Picker.Item
+                      label={v?.skill}
+                      value={v.id}
+                      style={{color: 'gray'}}
+                    />
+                  );
+                })}
 
-                  {/* Add more Picker.Item as needed */}
-                </Picker>
-              </View>
+                {/* Add more Picker.Item as needed */}
+              </Picker>
+            </View>
+            <Text
+            style={{
+              fontSize: 10,
+              marginBottom: 15,
+              marginTop: -12,
+              color: 'red',
+            }}>
+            {formDataError.empSkill}
+          </Text>
+              </>
+              
             )}
-
+            
             <View style={styles.picker}>
               <Picker
                 selectedValue={formData.empInternationMigrationExp}
@@ -615,6 +756,15 @@ const CandidateDetailsStep1 = props => {
                 {/* Add more Picker.Item as needed */}
               </Picker>
             </View>
+            <Text
+              style={{
+                fontSize: 10,
+                marginBottom: 15,
+                marginTop: -12,
+                color: 'red',
+              }}>
+              {formDataError.empInternationMigrationExp}
+            </Text>
             <View style={styles.picker}>
               <Picker
                 selectedValue={formData.empEdu}
@@ -635,6 +785,15 @@ const CandidateDetailsStep1 = props => {
                 {/* Add more Picker.Item as needed */}
               </Picker>
             </View>
+            <Text
+              style={{
+                fontSize: 10,
+                marginBottom: 15,
+                marginTop: -12,
+                color: 'red',
+              }}>
+              {formDataError.empEduYear}
+            </Text>
           </View>
           <Text style={{color: 'black', marginBottom: 18}}>
             Current Address*
@@ -660,7 +819,15 @@ const CandidateDetailsStep1 = props => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
-
+          <Text
+            style={{
+              fontSize: 10,
+              marginBottom: 15,
+              marginTop: -12,
+              color: 'red',
+            }}>
+            {formDataError.empState}
+          </Text>
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empDistrict}
@@ -681,12 +848,30 @@ const CandidateDetailsStep1 = props => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
+          <Text
+            style={{
+              fontSize: 10,
+              marginBottom: 15,
+              marginTop: -12,
+              color: 'red',
+            }}>
+            {formDataError.empDistrict}
+          </Text>
           <TextInput
             placeholder="Pin Code*"
             keyboardType="numeric"
             style={styles.input}
             onChangeText={text => setFormData({...formData, empPin: text})}
           />
+          <Text
+            style={{
+              fontSize: 10,
+              marginBottom: 15,
+              marginTop: -12,
+              color: 'red',
+            }}>
+            {formDataError.empPin}
+          </Text>
           <View
             style={{
               flexDirection: 'row',
@@ -702,7 +887,7 @@ const CandidateDetailsStep1 = props => {
                 setShowAddExperienceForm(!showAddExperienceForm)
               }></Pressable>
             <Text style={{marginTop: 2, color: 'black'}}>
-              Do you have past experience ?{' '}
+              {experienceMsgText}{' '}
             </Text>
           </View>
 
@@ -921,6 +1106,15 @@ const CandidateDetailsStep1 = props => {
             style={styles.input}
             onChangeText={text => setFormData({...formData, empEduYear: text})}
           />
+          <Text
+            style={{
+              fontSize: 10,
+              marginBottom: 15,
+              marginTop: -12,
+              color: 'red',
+            }}>
+            {formDataError.empEduYear}
+          </Text>
           <TextInput
             placeholder="Specialisation*"
             onChangeText={text =>
@@ -928,6 +1122,15 @@ const CandidateDetailsStep1 = props => {
             }
             style={styles.input}
           />
+          <Text
+            style={{
+              fontSize: 10,
+              marginBottom: 15,
+              marginTop: -12,
+              color: 'red',
+            }}>
+            {formDataError.empSpecialEdu}
+          </Text>
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empTechEdu}
@@ -1197,6 +1400,7 @@ const CandidateDetailsStep1 = props => {
               format="YYYY-MM-DD"
               onDateChange={date => {
                 setFormData({...formData, empDob: date});
+                setFormDataError({...formDataError, empDob: ''});
                 setShowCalender(false);
               }}
             />
@@ -1231,7 +1435,7 @@ const CandidateDetailsStep1 = props => {
               <Text style={{fontWeight: '600', fontSize: 20}}>
                 Select Date Of Birth
               </Text>
-              <TouchableOpacity onPress={() => setShowCalender(false)}>
+              <TouchableOpacity onPress={() => setJoiningCalender(false)}>
                 <Image source={require('../images/close.png')} />
               </TouchableOpacity>
             </View>

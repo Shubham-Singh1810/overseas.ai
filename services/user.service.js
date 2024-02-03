@@ -92,7 +92,7 @@ export const registerUserStep2 = async (formData, access_token) => {
   }
 };
 export const addExperienceStep2 = async (formData, access_token) => {
-  console.log("formData", formData);
+  console.log("formData", access_token);
   try {
     const response = await axios.post(BASE_URL+"add-experience-step2", formData,{
       headers: {

@@ -7,6 +7,7 @@ import {
   Pressable,
   ActivityIndicator,
   Alert,
+  Image,
 } from 'react-native';
 import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
@@ -15,6 +16,7 @@ import {loginUsingPassword, loginUsingOtp} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = props => {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const {translation, globalState, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
     empPhone: '',
@@ -63,15 +65,18 @@ const Login = props => {
       setLoading(true);
       try {
         let response = await loginUsingPassword(formData);
-        console.log(response.data)
-        
+        console.log(response.data);
+
         if (response.data.access_token) {
-          if(response.data.user.second_step=="0"){
-          await AsyncStorage.setItem('signUpUser', JSON.stringify(response.data));
-          props.navigation.navigate("CandidateDetails1");
-          setLoading(false);
-          return;
-        }
+          if (response.data.user.second_step == '0') {
+            await AsyncStorage.setItem(
+              'signUpUser',
+              JSON.stringify(response.data),
+            );
+            props.navigation.navigate('CandidateDetails1');
+            setLoading(false);
+            return;
+          }
           await AsyncStorage.setItem('user', JSON.stringify(response.data));
           setUserData();
           setLoading(false);
@@ -128,12 +133,11 @@ const Login = props => {
           if (response.data.msg == 'Otp Sent Succefully.') {
             storeDataInLocal(formData.empPhone);
             props.navigation.navigate('Verify Otp');
-          }
-          else{
+          } else {
             Toast.show({
               type: 'error', // 'success', 'error', 'info', or any custom type you define
               position: 'top',
-              text1: "Phone number not registered",
+              text1: 'Phone number not registered',
               visibilityTime: 3000, // Duration in milliseconds
             });
           }
@@ -163,8 +167,26 @@ const Login = props => {
             style={styles.input}
             onChangeText={text => setFormData({...formData, password: text})}
             value={formData.password}
-            secureTextEntry={true}
+            secureTextEntry={showPassword}
           />
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Pressable
+              style={{
+                position: 'relative',
+                bottom: 55,
+                right: 10,
+              }}
+              onPress={() => setShowPassword(!showPassword)}>
+                {showPassword? <Image
+                source={require('../images/closeEye.png')}
+                style={{height: 25, width: 25, resizeMode: 'contain'}}
+              />:<Image
+              source={require('../images/openEye.png')}
+              style={{height: 25, width: 25, resizeMode: 'contain'}}
+            />}
+              
+            </Pressable>
+          </View>
           <Text style={styles.errorMessage}>{errors.password}</Text>
           {loading ? (
             <ActivityIndicator size="large" color="gray" />
@@ -181,11 +203,22 @@ const Login = props => {
               <Pressable style={styles.btn} onPress={handleSubmit}>
                 <Text style={styles.btnText}>{translation.logIn}</Text>
               </Pressable>
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:"center", marginTop:20}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 20,
+                }}>
                 <Text>Don't have any account?</Text>
                 <Pressable
-                  style={{borderBottomColor: '#5F90CA',borderBottomWidth:1, marginLeft:4, paddingHorizontal:5}}
-                  onPress={() => props.navigation.navigate("SignUpCom")}>
+                  style={{
+                    borderBottomColor: '#5F90CA',
+                    borderBottomWidth: 1,
+                    marginLeft: 4,
+                    paddingHorizontal: 5,
+                  }}
+                  onPress={() => props.navigation.navigate('SignUpCom')}>
                   <Text>Sign Up</Text>
                 </Pressable>
               </View>
@@ -202,7 +235,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   authMain: {
-    backgroundColor: '#F5F5FA',
+    backgroundColor: '#fff',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

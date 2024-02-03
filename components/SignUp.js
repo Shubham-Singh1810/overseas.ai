@@ -5,12 +5,15 @@ import {
   TextInput,
   Button,
   Pressable,
+  Image
 } from 'react-native';
 import React, {useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {useGlobalState} from '../GlobalProvider';
 import {getApiData, postApiData, signUp} from '../services/user.service';
 const SignUp = props => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {translation} = useGlobalState();
   const [formData, setFormData] = useState({
     name: '',
@@ -109,20 +112,58 @@ const SignUp = props => {
           />
           <Text style={styles.errorMessage}>{errors.mobile_no}</Text>
           <TextInput
-            secureTextEntry={true}
+            secureTextEntry={showPassword}
             placeholder={translation.enterPassword}
             style={styles.input}
             onChangeText={text => setFormData({...formData, password: text})}
           />
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Pressable
+              style={{
+                position: 'relative',
+                bottom: 55,
+                right: 10,
+                marginBottom:-55
+              }}
+              onPress={() => setShowPassword(!showPassword)}>
+                {showPassword? <Image
+                source={require('../images/closeEye.png')}
+                style={{height: 25, width: 25, resizeMode: 'contain'}}
+              />:<Image
+              source={require('../images/openEye.png')}
+              style={{height: 25, width: 25, resizeMode: 'contain'}}
+            />}
+              
+            </Pressable>
+          </View>
           <Text style={styles.errorMessage}>{errors.password}</Text>
           <TextInput
-            secureTextEntry={true}
+            secureTextEntry={showConfirmPassword}
             placeholder={translation.reEnterPassword}
             style={styles.input}
             onChangeText={text =>
               setFormData({...formData, confirmPassword: text})
             }
           />
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Pressable
+              style={{
+                position: 'relative',
+                bottom: 55,
+                right: 10,
+                marginBottom:-55
+              }}
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                {showConfirmPassword? <Image
+                source={require('../images/closeEye.png')}
+                style={{height: 25, width: 25, resizeMode: 'contain'}}
+              />:<Image
+              source={require('../images/openEye.png')}
+              style={{height: 25, width: 25, resizeMode: 'contain'}}
+            />}
+              
+            </Pressable>
+          </View>
           <Text style={styles.errorMessage}>{errors.confirmPassword}</Text>
           <Pressable style={styles.btn} onPress={handleSubmit}>
             <Text style={styles.btnText}>{translation.signUp}</Text>
@@ -157,7 +198,7 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   authMain: {
-    backgroundColor: '#F5F5FA',
+    backgroundColor: '#fff',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
