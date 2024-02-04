@@ -20,10 +20,11 @@ import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 const CandidateDetails2 = ({route}) => {
-  const localUser = route?.params?.localUser;
+  const localUser = route?.params?.localUser
+  const access_token = localUser.access_token;
   const {globalState, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
-    empEmail: '',
+    empEmail: '', 
     empDailyWage: '',
     empExpectedMonthlyIncome: '',
     empRelocationIntQ: '',
@@ -35,17 +36,18 @@ const CandidateDetails2 = ({route}) => {
   });
   const [contactRef, setContactRef] = useState(false);
   const pickDocument = async () => {
-    const videoformData = new FormData();
+    const imageformData = new FormData();
     try {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
-      videoformData.append('empPhoto', {
+      imageformData.append('empPhoto', {
         uri: result[0].uri,
         type: result[0].type,
         name: result[0].name,
       });
-      let response = await editProfile(videoformData, localUser.access_token);
+      console.log(imageformData)
+      let response = await editProfile(imageformData, access_token);
       setFormData({...formData, empPhoto: response.data.empData.empPhoto});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -161,7 +163,7 @@ const CandidateDetails2 = ({route}) => {
               marginBottom: 20,
               alignItems: 'center',
             }}>
-            <Pressable onPress={pickDocument}>
+            {/* <Pressable onPress={pickDocument}>
               {formData.empPhoto == '' ? (
                 <Image
                   style={{
@@ -186,7 +188,7 @@ const CandidateDetails2 = ({route}) => {
               <Text style={{color: '#035292', textDecorationLine: 'underline'}}>
                 Add Profile Pic
               </Text>
-            </Pressable>
+            </Pressable> */}
           </View>
           <TextInput
             style={styles.input}

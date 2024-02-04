@@ -327,6 +327,7 @@ const CandidateDetailsStep1 = props => {
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
 
   const handleSubmit = async () => {
+    
     if (formValidaion()) {
       try {
         const finalPayload = {
@@ -334,7 +335,7 @@ const CandidateDetailsStep1 = props => {
           empLanguage: JSON.stringify(formData.empLanguage),
         };
         let response = await registerUserStep1(
-          finalPayload,
+          finalPayload, localUser.access_token,
         );
         if (response?.msg == 'Data Updated Successfully') {
           Toast.show({
@@ -359,10 +360,11 @@ const CandidateDetailsStep1 = props => {
           });
         }
       } catch (error) {
+        console.log(error)
         Toast.show({
           type: 'error',
           position: 'bottom',
-          text1: 'Something went wrong',
+          text1: 'Internal server error',
           visibilityTime: 3000,
         });
       }
@@ -1450,7 +1452,7 @@ const CandidateDetailsStep1 = props => {
                   Toast.show({
                     type: 'error', // 'success', 'error', 'info', or any custom type you define
                     // position: 'top',
-                    text1: 'Age must be more than 16',
+                    text1: 'Age must be more than 16 years',
                     visibilityTime: 3000, // Duration in milliseconds
                   });
                 }else{
