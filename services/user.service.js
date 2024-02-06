@@ -153,3 +153,18 @@ export const editProfile = async (formData, access_token) => {
     throw error;
   }
 };
+export const getProfileStrength = async (access_token) => {
+  console.log(access_token)
+  try {
+    const response = await axios.get(BASE_URL+"user-improve-profile", {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

@@ -31,8 +31,8 @@ const CustomDrawerContent = ({navigation}) => {
   const [navItem, setNavItem] = useState([
     {
       title: 'Home',
-      component: NewsFeed,
-      name: 'Feed',
+      component: Home,
+      name: 'Search Job',
       subMenu: [],
     },
     {
@@ -50,11 +50,7 @@ const CustomDrawerContent = ({navigation}) => {
     {
       title: 'Jobs',
       subMenu: [
-        {
-          title: 'Search Job',
-          component: Home,
-          name: 'Search Job',
-        },
+        
         {
           title: 'Favourite Job',
           component: FavrouiteJob,
@@ -65,9 +61,12 @@ const CustomDrawerContent = ({navigation}) => {
           component: SavedJobs,
           name: 'Saved Jobs',
         },
+        {
+          title: 'Application Status',
+          component: JobApplied,
+          name: 'Applied Job',
+        }
       ],
-      component: NewsFeed,
-      name: 'Jobs',
     },
     {
       title: 'Your HRA',
@@ -76,11 +75,12 @@ const CustomDrawerContent = ({navigation}) => {
       subMenu: [],
     },
     {
-      title: 'Job Application Status',
-      component: JobApplied,
-      name: 'Applied Job',
+      title: 'News Feed',
+      component: NewsFeed,
+      name: 'Feed',
       subMenu: [],
     },
+    
     {
       title: 'Get Certificate',
       component: GetCertificate,
@@ -149,18 +149,22 @@ const CustomDrawerContent = ({navigation}) => {
           }}>
           <View
             style={{flexDirection: 'row', alignItems: 'center', margin: 10}}>
-            <Image
-              source={{
-                uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
-              }}
-              style={{height: 40, width: 40, borderRadius: 20, marginRight: 10}}
-            />
+              {JSON.parse(globalState?.user)?.empData?.empPhoto == null?<Image
+                  source={require('../images/dummyUserProfile.jpg')}
+                  style={{height: 40, width: 40, borderRadius: 20, marginRight: 10}}
+                />:<Image
+                source={{
+                  uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
+                }}
+                style={{height: 40, width: 40, borderRadius: 20, marginRight: 10}}
+              />}
+            
             <View>
               <Text style={styles.userName}>
                 {JSON.parse(globalState?.user)?.empData?.empName}
               </Text>
               <Text style={{color: '#00111F', fontSize: 11}}>
-                Profile strength {JSON.parse(globalState?.user)?.empData?.profileStrength}%
+                Profile Strength {globalState?.profileStrength?.profileStrength}%
               </Text>
             </View>
           </View>

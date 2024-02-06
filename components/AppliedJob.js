@@ -1,4 +1,4 @@
-import {StyleSheet, Text, Image, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, Image, View, TouchableOpacity, Pressable} from 'react-native';
 import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 const AppliedJob = ({props, value}) => {
@@ -7,7 +7,10 @@ const AppliedJob = ({props, value}) => {
   return (
     <View style={styles.main}>
       <View>
-        <View
+        <Pressable
+        onPress={() =>
+          props.navigation.navigate('Applied Job By Id', {id: value?.id})
+        }
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -23,7 +26,7 @@ const AppliedJob = ({props, value}) => {
           <Text style={styles.date}>
             {translation.appliedOn} - {value?.appliedOn}
           </Text>
-        </View>
+        </Pressable>
         <View
           style={{
             flexDirection: 'row',
@@ -75,7 +78,7 @@ const AppliedJob = ({props, value}) => {
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.countryText}>Status : </Text>
-            <Text style={styles.textGreen}>Applicatin send to HR</Text>
+            <Text style={styles.textGreen}>Applicatin sent to HRA</Text>
           </View>
           <TouchableOpacity
             onPress={() =>

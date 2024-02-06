@@ -24,7 +24,46 @@ const MyProfile = props => {
       console.error('Error removing user data from AsyncStorage:', error);
     }
   };
-
+  const renderStar = () => {
+    const strength = globalState?.profileStrength?.profileStrength;
+    if (strength <= 20) {
+      return <Image source={require('../images/starIcon.png')} />;
+    } else if (strength > 20 && strength <= 40) {
+      return (
+        <>
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+        </>
+      );
+    } else if (strength > 40 && strength <= 60) {
+      return (
+        <>
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+        </>
+      );
+    } else if (strength > 60 && strength <= 80) {
+      return (
+        <>
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+        </>
+      );
+    }
+  };
   return (
     <>
       <View style={styles.main}>
@@ -39,7 +78,7 @@ const MyProfile = props => {
               <View>
                 {JSON.parse(globalState?.user)?.empData?.empPhoto == null ? (
                   <Image
-                    source={require('../images/circle.png')}
+                    source={require('../images/dummyUserProfile.jpg')}
                     style={styles.myPic}
                   />
                 ) : (
@@ -58,23 +97,24 @@ const MyProfile = props => {
                     textDecorationLine: 'underline',
                     color: '#035292',
                     textAlign: 'center',
-                    marginTop:8
+                    marginTop: 8,
                   }}>
                   Edit
                 </Text>
               </TouchableOpacity>
             </View>
 
-            <View style={{marginLeft:15}}>
+            <View style={{marginLeft: 15}}>
               <Text style={styles.name}>
                 {JSON.parse(globalState?.user)?.empData?.empName}
               </Text>
               <View
-                style={{flexDirection: 'row', marginTop: -6, marginBottom: 3}}>
-                <Image source={require('../images/starIcon.png')} />
-                <Image source={require('../images/starIcon.png')} />
-                <Image source={require('../images/starIcon.png')} />
-                <Image source={require('../images/starIcon.png')} />
+                style={{
+                  flexDirection: 'row',
+                  marginTop: -6,
+                  marginBottom: 3,
+                }}>
+                {renderStar()}
               </View>
 
               <Text style={[styles.welderText]}>
@@ -100,53 +140,71 @@ const MyProfile = props => {
             </View>
           </View>
           <View style={{marginBottom: 5}}>
-            <Text
-              style={[
-                styles.nameText,
-                styles.fontWeight500,
-                {marginTop: 16, marginBottom: -2},
-              ]}>
-              Profile Strength
-            </Text>
             <View
               style={{
-                width: '70%',
+                width: globalState?.profileStrength?.profileStrength + '%',
                 flexDirection: 'row',
                 marginBottom: 2,
                 justifyContent: 'flex-end',
               }}>
-              <Text style={[styles.nameText, {color: '#079E3F', fontSize: 12}]}>
-                78%
+              <Text
+                style={[
+                  styles.nameText,
+                  {
+                    color:
+                      globalState?.profileStrength?.profileStrength < 30
+                        ? 'red'
+                        : globalState?.profileStrength?.profileStrength > 70
+                        ? '#079E3F'
+                        : '#007BFF',
+                    fontSize: 12,
+                  },
+                ]}>
+                {globalState?.profileStrength?.profileStrength}%
               </Text>
             </View>
             <View
               style={{
                 width: '100%',
-                backgroundColor: '#ADE9C4',
-                height: 2,
+                backgroundColor: '#fff',
+                borderWidth: 0.3,
+                height: 5,
               }}></View>
             <View
               style={{
-                backgroundColor: '#13C756',
+                backgroundColor:
+                  globalState?.profileStrength?.profileStrength < 30
+                    ? 'red'
+                    : globalState?.profileStrength?.profileStrength > 70
+                    ? '#079E3F'
+                    : '#007BFF',
                 borderRadius: 3,
-                height: 6,
-                width: '70%',
+                height: 5,
+                width: globalState?.profileStrength?.profileStrength + '%',
                 position: 'relative',
-                bottom: 4,
+                bottom: 5,
               }}></View>
+            <Text
+              style={[
+                styles.nameText,
+                styles.fontWeight500,
+                {marginTop: 5, marginBottom: -5, fontSize: 12},
+              ]}>
+              Profile Strength
+            </Text>
           </View>
         </View>
-        <ScrollView style={{marginTop:20}}>
+        <ScrollView style={{marginTop: 20}}>
           <View>
             <View>
-              <View style={styles.navItem}>
+              {/* <View style={styles.navItem}>
                 <Image
                   resizeMode="contain"
                   source={require('../images/careerGraph.png')}
                   style={{height: 20, width: 20, marginRight: 10}}
                 />
                 <Text style={styles.navText}>{translation.myCareerGraph}</Text>
-              </View>
+              </View> */}
 
               <Pressable
                 onPress={() => props.navigation.navigate('Applied Courses')}>
@@ -221,20 +279,23 @@ const MyProfile = props => {
                   <Text style={styles.navText}>{translation.needHelp}</Text>
                 </View>
               </Pressable>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                margin: 40,
-              }}>
-              <Text style={styles.logout} onPress={handleLogOut}>
-                {translation.logOut}
-              </Text>
-              <Text>{translation.version} 5.8.0</Text>
+              <Pressable
+                onPress={() => props.navigation.navigate('Contact Us')}>
+                <View style={styles.navItem}>
+                  <Image
+                    source={require('../images/helpIcon.png')}
+                    resizeMode="contain"
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.logout} onPress={handleLogOut}>
+                    {translation.logOut}
+                  </Text>
+                </View>
+              </Pressable>
             </View>
           </View>
         </ScrollView>
+        <Text style={{textAlign: 'center', padding: 10}}>Version 2.0.0</Text>
       </View>
     </>
   );

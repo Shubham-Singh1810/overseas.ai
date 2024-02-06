@@ -9,18 +9,18 @@ const Navigator = () => {
   const {translation, globalState, setGlobalState} = useGlobalState();
   const setUserData = async () => {
     try {
-      let user = await AsyncStorage.getItem('user')
+      let user = await AsyncStorage.getItem('user');
       setGlobalState({...globalState, user});
     } catch (error) {
       console.warn('error from global provider');
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     setUserData();
-  },[])
+  }, []);
   return (
     <View style={styles.main}>
-      {globalState?.user?  <AuthenticatedNavigator /> : <LayoutNavigator />}
+      {globalState?.user ? <AuthenticatedNavigator /> : <LayoutNavigator />}
     </View>
   );
 };

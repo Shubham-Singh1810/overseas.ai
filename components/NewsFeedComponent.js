@@ -65,27 +65,25 @@ export default NewsFeedComponent;
 
 const styles = StyleSheet.create({
   main: {
-    marginVertical: 10,
-    marginHorizontal: 15,
     padding: 12,
     borderRadius: 3,
     backgroundColor: '#fff',
     elevation: 4,
+    marginVertical:10
   },
   title: {
     color: '#000',
     fontFamily: 'Poppins',
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '400',
-    letterSpacing:1
-    // textAlign:"justify"
+    textAlign:"justify"
   },
   summery: {
     marginVertical: 12,
-    // color: '#00111F',
+    color: '#00111F',
     fontFamily: 'mono-space',
-    fontSize: 18,
-    lineHeight:25,
+    fontSize: 15,
+    lineHeight:20,
     textAlign:"justify"
   },
   link: {

@@ -1,4 +1,4 @@
-import {StyleSheet, Image, TouchableOpacity, Text, View} from 'react-native';
+import {StyleSheet, Image, TouchableOpacity, Text, View, Button} from 'react-native';
 import {useState, useEffect} from 'react';
 import {appliedJobById} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +10,7 @@ const AppliedJobById = props => {
     try {
       let response = await appliedJobById(id.id, JSON.parse(user).access_token);
       setAppliedJobDetails(response.data.job);
+      console.log(response.data.job)
     } catch (error) {}
   };
   useEffect(() => {
@@ -17,9 +18,8 @@ const AppliedJobById = props => {
   }, []);
   return (
     <View style={styles.main}>
-      <View style={{marginTop:20}}>
-      <Text style={[styles.heading,]}>{appliedJobDetails?.jobTitle}</Text>
-        
+      <View style={{marginTop:0}}>
+      <Text style={[styles.heading,]}>{appliedJobDetails?.jobTitle}</Text>       
         <View
           style={{
             flexDirection: 'row',
@@ -56,6 +56,7 @@ const AppliedJobById = props => {
               {appliedJobDetails?.jobWages}{' '}
               {appliedJobDetails?.jobWagesCurrencyType}
             </Text>
+            <Button title="View Details" color="#035292" onPress={()=>{props.navigation.navigate('Job Details', {jobId: appliedJobDetails.mainJobId})}}/>
           </View>
           <View>
             <Image
@@ -79,19 +80,17 @@ const AppliedJobById = props => {
             alignItems: 'center',
             marginRight:10
           }}>
-          
           <Text style={styles.date}>
             Applied on - {appliedJobDetails?.appliedOn}
           </Text>
-        </View>
-        
+        </View> 
       </View>
-      <View style={{marginTop: 0}}>
+      <View style={{marginTop: 15}}>
         <Text style={styles.countryText}>Status</Text>
         <View
           style={{flexDirection: 'row', marginTop: 10, alignItems: 'center'}}>
           <View style={[styles.highlight, styles.backgroundColorGreen]}></View>
-          <Text style={styles.textGreen}>Application Send to HR</Text>
+          <Text style={styles.textGreen}>Application Sent to HRA</Text>
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
@@ -103,7 +102,7 @@ const AppliedJobById = props => {
         <View style={styles.grayDot}></View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View style={styles.highlight}></View>
-          <Text>Selected</Text>
+          <Text>Selected or Rejected</Text>
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
@@ -115,7 +114,7 @@ const AppliedJobById = props => {
         <View style={styles.grayDot}></View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View style={styles.highlight}></View>
-          <Text>Upload Medical</Text>
+          <Text>Upload Documents</Text>
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>

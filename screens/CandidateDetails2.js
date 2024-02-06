@@ -266,7 +266,7 @@ const CandidateDetails2 = ({route}) => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
-          {formData.empRelocatedIntQ == 'Yes' && (
+          {formData.empRelocationIntQ == 'Yes' && (
             <View style={styles.picker}>
               <Picker
                 selectedValue={formData.empRelocationIntQCountry}
@@ -277,7 +277,7 @@ const CandidateDetails2 = ({route}) => {
                   });
                 }}>
                 <Picker.Item
-                  label="Country "
+                  label="Country"
                   value=""
                   style={{color: 'gray'}}
                 />

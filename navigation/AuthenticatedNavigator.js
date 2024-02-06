@@ -40,16 +40,37 @@ import GetCourseById from '../screens/GetCourseById';
 import AppliedCourseList from '../screens/AppliedCourseList';
 import MyCertificate from '../screens/MyCertificate';
 import JobDetailedScreen from '../screens/JobDetailedScreen';
+import { useEffect } from 'react';
+import {getProfileStrength} from "../services/user.service";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Drawer = createDrawerNavigator();
+
 const AuthenticatedNavigator = () => {
+  const {translation, globalState, setGlobalState, profileStrength} = useGlobalState();
+  const getProfileStrengthFunc = async() => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getProfileStrength(JSON.parse(user).access_token);
+      if(response?.data.msg=="Some fields are empty" || response?.data.msg=="Profile strength calculated successfully and updated in records"){
+        setGlobalState({...globalState, profileStrength:response?.data});
+      }
+    } catch (error) {
+      console.log("NEW", error)
+    }
+  };
+
+  useEffect(()=>{
+    getProfileStrengthFunc()
+  },[])
   return (
     <NavigationContainer>
       <Drawer.Navigator
         initialRouteName="Home"
         drawerContent={props => <CustomDrawerContent {...props} />}>
         <Drawer.Screen
-          name="Feed"
-          component={NewsFeed}
+          name="Search Job"
+          component={Home}
           options={({navigation, route}) => ({
             title: 'Home',
             headerRight: () => <RightNav navigation={navigation} />,
@@ -76,10 +97,10 @@ const AuthenticatedNavigator = () => {
           })}
         />
         <Drawer.Screen
-          name="Search Job"
-          component={Home}
+          name="Feed"
+          component={NewsFeed}
           options={({navigation, route}) => ({
-            title: 'Search Job',
+            title: 'News Feed',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

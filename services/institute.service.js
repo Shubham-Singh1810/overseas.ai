@@ -4,7 +4,7 @@ import axios from 'axios';
 const BASE_URL = 'https://overseas.ai/api/';
 
 // Function to get job occupation list
-export const getInstituteList = async access_token => {
+export const getInstituteList = async access_token => { 
   try {
     const response = await axios.get(BASE_URL + 'list-training-institute', {
       headers: {
@@ -18,7 +18,6 @@ export const getInstituteList = async access_token => {
   }
 };
 export const getCourseByInstitute = async params => {
-  console.log(params);
   try {
     const response = await axios.post(
       BASE_URL + 'courses-by-institute',

@@ -42,14 +42,14 @@ const RightNav = props => {
               <Text style={{fontSize: 6, color: '#fff'}}>1</Text>
             </View>
           </Pressable>
-          <Pressable
+          {/* <Pressable
             onPress={() => setShowModal(true)}
             style={{alignItems: 'center', flexDirection: 'row'}}>
             <Image
               source={require('../images/language.jpeg')}
               style={{height: 30, width: 30, borderRadius: 10}}
             />
-          </Pressable>
+          </Pressable> */}
         </View>
       </View>
       <Modal transparent={false} visible={showModal} animationType="slide">

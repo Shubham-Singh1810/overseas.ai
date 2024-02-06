@@ -6,6 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
@@ -97,9 +98,11 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
   return (
     <>
       <View style={styles.main}>
-        <View style={styles.navTop}>
+        <Pressable style={styles.navTop} onPress={() =>
+                props.navigation.navigate('Job Details', {jobId: value.id, saved:saved, favroite:favroite})
+              }>
           <Text style={styles.jobName}>{value?.jobTitle.length>30 ? <>{toTitleCase(value?.jobTitle).substring(0, 30)}...</>: toTitleCase(value?.jobTitle)}</Text>
-        </View>
+        </Pressable>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.currencyText}>1400 SAR = 30,123 INR</Text>
           <Text style={styles.dateText}>

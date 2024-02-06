@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState,useEffect} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import AppliedJob from '../components/AppliedJob';
 import {appliedJobList} from "../services/job.service"
 import {useGlobalState} from '../GlobalProvider';
@@ -23,12 +24,14 @@ const JobApplied = props => {
       setAppliedJobListArr(response?.data?.jobs)
     } catch (error) {}
   };
-  useEffect(() => {
-    getAppliedJobList();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getAppliedJobList();
+    }, []),
+  );
   return (
     <>
-      <ScrollView>
+      <ScrollView style={{flex:1, backgroundColor:"white"}}>
         <View style={styles.main}>
           <Text style={styles.messageText}>
             {translation.checkUpdatesOnYourApplication}
@@ -51,7 +54,6 @@ export default JobApplied;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#fff',
     padding: 10,
     marginBottom: 60,
   },

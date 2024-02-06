@@ -34,7 +34,6 @@ const GetCertificate = props => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getInstituteList(JSON.parse(user).access_token);
-
       if (response.msg == 'Institute list retrieved successfully!') {
         setInstituteList(response?.data);
       }

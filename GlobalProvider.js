@@ -19,7 +19,8 @@ export const GlobalStateProvider = ({children}) => {
     // Your initial global state values go here
     selectedLanguage: 'english',
     user: null,
-    currentScreen:"Feed"
+    currentScreen:"Feed",
+    profileStrength:null
   });
   const [translation, setTranslation] = useState({});
   const setLanguage = () => {

@@ -2,7 +2,6 @@ import {StyleSheet, Image, Text, View} from 'react-native';
 import React from 'react';
 
 const JobByDepartmentGola = ({value}) => {
-  console.log('hello', value);
   return (
     <View style={styles.main}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
