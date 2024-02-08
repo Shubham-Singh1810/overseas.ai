@@ -1,20 +1,19 @@
-import {StyleSheet, Image, TouchableOpacity, Text, View, Button} from 'react-native';
+import {StyleSheet, Image, Text, View, Button} from 'react-native';
 import {useState, useEffect} from 'react';
 import {appliedJobById} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const AppliedJobById = props => {
   const [appliedJobDetails, setAppliedJobDetails] = useState();
   const getAppliedJobById = async id => {
-    console.warn(id.id);
     let user = await AsyncStorage.getItem('user');
     try {
-      let response = await appliedJobById(id.id, JSON.parse(user).access_token);
+      let response = await appliedJobById(id, JSON.parse(user).access_token);
       setAppliedJobDetails(response.data.job);
       console.log(response.data.job)
     } catch (error) {}
   };
   useEffect(() => {
-    getAppliedJobById(props.route.params);
+    getAppliedJobById(props.route.params.id);
   }, []);
   return (
     <View style={styles.main}>

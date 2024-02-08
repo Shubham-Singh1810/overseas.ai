@@ -15,12 +15,13 @@ export const GlobalStateProvider = ({children}) => {
       console.warn('error from global provider');
     }
   };
+
   const [globalState, setGlobalState] = useState({
     // Your initial global state values go here
     selectedLanguage: 'english',
     user: null,
-    currentScreen:"Feed",
-    profileStrength:null
+    profileStrength:null,
+    notifications:null
   });
   const [translation, setTranslation] = useState({});
   const setLanguage = () => {
@@ -509,7 +510,7 @@ export const GlobalStateProvider = ({children}) => {
   }, []);
   return (
     <GlobalStateContext.Provider
-      value={{globalState, setGlobalState, translation}}>
+      value={{globalState, setGlobalState, translation, setUserData:setUserData}}>
       {children}
     </GlobalStateContext.Provider>
   );

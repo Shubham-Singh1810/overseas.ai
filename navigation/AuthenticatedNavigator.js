@@ -41,13 +41,26 @@ import AppliedCourseList from '../screens/AppliedCourseList';
 import MyCertificate from '../screens/MyCertificate';
 import JobDetailedScreen from '../screens/JobDetailedScreen';
 import { useEffect } from 'react';
-import {getProfileStrength} from "../services/user.service";
+import {getProfileStrength, getNotification} from "../services/user.service";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Drawer = createDrawerNavigator();
 
 const AuthenticatedNavigator = () => {
-  const {translation, globalState, setGlobalState, profileStrength} = useGlobalState();
+  const {translation, globalState, setGlobalState} = useGlobalState();
+  // const getNotificationFunc = async () => {
+    
+  //   let user = await AsyncStorage.getItem('user');
+  //   try {
+  //     let response = await getNotification(JSON.parse(user).access_token);
+  //     if (response.status == 200) {
+  //       setGlobalState({...globalState, notifications:response?.data})  
+  //     } else {
+  //       console.warn('sdkfj');
+  //     }
+  //   } catch (error) {}
+    
+  // };
   const getProfileStrengthFunc = async() => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -61,7 +74,8 @@ const AuthenticatedNavigator = () => {
   };
 
   useEffect(()=>{
-    getProfileStrengthFunc()
+    getProfileStrengthFunc();
+    // getNotificationFunc();
   },[])
   return (
     <NavigationContainer>
@@ -69,7 +83,7 @@ const AuthenticatedNavigator = () => {
         initialRouteName="Home"
         drawerContent={props => <CustomDrawerContent {...props} />}>
         <Drawer.Screen
-          name="Search Job"
+          name="Home"
           component={Home}
           options={({navigation, route}) => ({
             title: 'Home',
@@ -97,7 +111,7 @@ const AuthenticatedNavigator = () => {
           })}
         />
         <Drawer.Screen
-          name="Feed"
+          name="News Feed"
           component={NewsFeed}
           options={({navigation, route}) => ({
             title: 'News Feed',

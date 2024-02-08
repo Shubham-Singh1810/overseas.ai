@@ -52,6 +52,7 @@ const Otp = props => {
           otp: otp,
         });
         if (response.data.access_token) {
+          
           await AsyncStorage.setItem('signUpUser', JSON.stringify(response.data));
           props.navigation.navigate("CandidateDetails1")
         } else {
@@ -70,6 +71,15 @@ const Otp = props => {
           otp: otp,
         });
         if (response.data.access_token) {
+          if (response.data.user.second_step == '0') {
+            await AsyncStorage.setItem(
+              'signUpUser',
+              JSON.stringify(response.data),
+            );
+            props.navigation.navigate('CandidateDetails1');
+            setLoading(false);
+            return;
+          }
           await AsyncStorage.setItem('user', JSON.stringify(response.data));
           setUserData();
         } else {

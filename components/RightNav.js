@@ -13,7 +13,8 @@ import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 const RightNav = props => {
   const {globalState, setGlobalState} = useGlobalState();
-  const[showModal, setShowModal] = useState(false)
+  const[showModal, setShowModal] = useState(false);
+  
   return (
     <>
       <View style={styles.topNav}>
@@ -39,7 +40,9 @@ const RightNav = props => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{fontSize: 6, color: '#fff'}}>1</Text>
+              <Text style={{fontSize: 7, color: '#fff'}}>{globalState.profileStrength.emptyFields.filter?.((v,i)=>{
+              return(v.message)
+            }).length}</Text>
             </View>
           </Pressable>
           {/* <Pressable

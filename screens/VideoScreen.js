@@ -10,7 +10,7 @@ import {
   Modal,
   TextInput,
   ActivityIndicator,
-  Share
+  Share,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
@@ -165,16 +165,7 @@ const VideoScreen = () => {
     try {
       let response = await getIntroVideo(JSON.parse(user).access_token);
       if (response?.data?.msg == 'List of all introduction videos.') {
-        console.log(response?.data);
         setIntroVideoList(response?.data?.videos);
-        setShowIntroInput(
-          languageKnown.filter(
-            itemA =>
-              !response?.data?.videos?.some(
-                itemB => itemB?.videoLanguage == itemA,
-              ),
-          ),
-        );
       }
     } catch (error) {
       Toast.show({
@@ -258,11 +249,10 @@ const VideoScreen = () => {
       getUserIntroVideoList();
     }, []),
   );
-  const onShare = async (link) => {
+  const onShare = async link => {
     try {
       const result = await Share.share({
-        message:
-        link,
+        message: link,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -281,7 +271,7 @@ const VideoScreen = () => {
     <>
       <View style={styles.main}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.title}>Introductry Videos</Text>
+          <Text style={[styles.title, {color:"#000"}]}>Introductry Videos</Text>
           <Pressable
             onPress={() => setShowModal(true)}
             style={{
@@ -297,9 +287,116 @@ const VideoScreen = () => {
         </View>
 
         <View>
-          <ScrollView horizontal={true} style={{marginTop: 10}}>
-            <TouchableOpacity onPress={() => setIntroVideoPopUp(true)}>
-              <View>
+        <ScrollView horizontal={true} style={{ marginTop: 10 }}>
+  <TouchableOpacity
+    onPress={() => {
+      setIntroVideoPopUp(true);
+      setShowIntroInput(
+        languageKnown.filter(
+          itemA =>
+            !introVideoList?.some(
+              itemB => itemB?.videoLanguage == itemA,
+            ),
+        ),
+      );
+    }}>
+    <View>
+      <Image
+        source={require('../images/rectangle.png')}
+        style={{
+          height: 100,
+          width: 160,
+          borderRadius: 5,
+          marginRight: 10,
+          borderWidth: 1,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: 40,
+          left: 70,
+          padding: 6,
+          backgroundColor: 'white',
+          borderRadius: 11,
+        }}>
+        <Image
+          source={require('../images/playVideoIcon.png')}
+          style={{ height: 10, width: 10 }}
+        />
+      </View>
+    </View>
+    <Text style={{ textAlign: 'center', marginVertical: 5 }}>
+      Upload Intro Video
+    </Text>
+  </TouchableOpacity>
+
+  {introVideoList?.map((v, i) => {
+    return (
+      <View key={i} style={{ marginRight: 10 }}>
+        <View style={{ position: 'relative' }}>
+          <Video
+            source={{
+              uri: v?.videoUrl,
+            }}
+            style={{
+              height: 100,
+              width: 160,
+              borderRadius: 5,
+              borderWidth: 1,
+            }}
+            controls={true}
+            paused={true}
+            resizeMode="cover"
+          />
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 5,
+              left: 5,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              borderRadius: 5,
+            }}>
+            {/* Additional video controls can be placed here */}
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingRight: 5,
+            marginVertical: 5,
+          }}>
+          <Text style={{ color: '#000' }}>{v?.videoLanguage}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setIntroActionValue(v), setShowIntroAction(true);
+            }}>
+            {/* <Image source={require('../images/delete.png')} /> */}
+            <Text
+              style={{
+                fontWeight: '900',
+                color: 'black',
+              }}>
+              ...
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  })}
+</ScrollView>
+        </View>
+        <View style={{marginTop: 20,paddingTop:20, borderTopWidth:1.5,borderColor:"gray"}}>
+          <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+          <Text style={[styles.title, {color:"#000"}]}>Work Videos</Text>
+          <Button title="Upload" color="#035292"onPress={() => setWorkVideoPopUp(true)}/>
+          </View>
+          
+          <View>
+            {/* <TouchableOpacity onPress={() => setWorkVideoPopUp(true)}>
+              <View style={{}}>
                 <Image
                   source={require('../images/rectangle.png')}
                   style={{
@@ -323,40 +420,32 @@ const VideoScreen = () => {
                     style={{height: 10, width: 10}}
                   />
                 </View>
+                <Text
+                  style={{marginVertical: 5, width: 160, textAlign: 'center'}}>
+                  Upload Work
+                </Text>
               </View>
-              <Text style={{textAlign: 'center', marginVertical: 5}}>
-                Upload Intro Video
-              </Text>
-            </TouchableOpacity>
-
-            {introVideoList?.map((v, i) => {
-              return (
-                <>
-                  <View style={{display: 'flex'}}>
+            </TouchableOpacity> */}
+            <ScrollView style={{marginTop: 10, marginBottom:250}}>
+              {workVideoList?.map((v, i) => {
+                return (
+                  <View style={{width: '100%', marginBottom:15}}>
                     <Video
                       source={{
                         uri: v?.videoUrl,
                       }}
                       style={{
-                        height: 100,
-                        width: 160,
+                        height: 200,
+                        width: '100%',
                         borderRadius: 5,
                         marginRight: 10,
                         borderWidth: 1,
                       }}
                       controls={true}
-                      paused={true}
                       resizeMode="cover"
+                      paused={true}
                     />
-                    {/* <Image
-                      source={require('../images/rectangle.png')}
-                      style={{
-                        height: 100,
-                        width: 160,
-                        borderRadius: 5,
-                        marginRight: 10,
-                      }}
-                    /> */}
+
                     <View
                       style={{
                         flexDirection: 'row',
@@ -365,13 +454,19 @@ const VideoScreen = () => {
                         paddingRight: 5,
                         marginVertical: 5,
                       }}>
-                      <Text style={{color: '#000'}}>{v?.videoLanguage}</Text>
+                      <Text style={{color: '#000'}}>
+                        {v?.relatedSkill.length > 15 ? (
+                          <>{v?.relatedSkill?.substring(0, 15)}...</>
+                        ) : (
+                          v?.relatedSkill
+                        )}
+                      </Text>
                       <TouchableOpacity
                         style={{position: 'relative', right: 5}}
                         onPress={() => {
-                          setIntroActionValue(v), setShowIntroAction(true);
+                          setShowWorkAction(true);
+                          setWorkActionValue(v);
                         }}>
-                        {/* <Image source={require('../images/delete.png')} /> */}
                         <Text
                           style={{
                             fontWeight: '900',
@@ -385,108 +480,6 @@ const VideoScreen = () => {
                       </TouchableOpacity>
                     </View>
                   </View>
-                </>
-              );
-            })}
-          </ScrollView>
-        </View>
-        <View style={{marginTop: 20}}>
-          <Text style={styles.title}>Work Videos</Text>
-          <View>
-            <ScrollView horizontal={true} style={{marginTop: 10}}>
-              <TouchableOpacity onPress={() => setWorkVideoPopUp(true)}>
-                <View>
-                  <Image
-                    source={require('../images/rectangle.png')}
-                    style={{
-                      height: 100,
-                      width: 160,
-                      borderRadius: 5,
-                      marginRight: 10,
-                    }}
-                  />
-                  <View
-                    style={{
-                      position: 'absolute',
-                      top: 40,
-                      left: 70,
-                      padding: 6,
-                      backgroundColor: 'white',
-                      borderRadius: 11,
-                    }}>
-                    <Image
-                      source={require('../images/playVideoIcon.png')}
-                      style={{height: 10, width: 10}}
-                    />
-                  </View>
-                </View>
-                <Text style={{textAlign: 'center', marginVertical: 5}}>
-                  Upload Work
-                </Text>
-              </TouchableOpacity>
-              {workVideoList?.map((v, i) => {
-                return (
-                  <>
-                    <View style={{display: 'flex'}}>
-                      <Video
-                        source={{
-                          uri: v?.videoUrl,
-                        }}
-                        style={{
-                          height: 100,
-                          width: 160,
-                          borderRadius: 5,
-                          marginRight: 10,
-                          borderWidth: 1,
-                        }}
-                        controls={true}
-                        resizeMode="cover"
-                        paused={true}
-                      />
-                      {/* <Image
-                        source={require('../images/rectangle.png')}
-                        style={{
-                          height: 100,
-                          width: 160,
-                          borderRadius: 5,
-                          marginRight: 10,
-                        }}
-                      /> */}
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          paddingRight: 5,
-                          marginVertical: 5,
-                        }}>
-                        <Text style={{color: '#000'}}>
-                          {v?.relatedSkill.length > 15 ? (
-                            <>{v?.relatedSkill?.substring(0, 15)}...</>
-                          ) : (
-                            v?.relatedSkill
-                          )}
-                        </Text>
-                        <TouchableOpacity
-                          style={{position: 'relative', right: 5}}
-                          onPress={() => {
-                            setShowWorkAction(true);
-                            setWorkActionValue(v);
-                          }}>
-                          <Text
-                            style={{
-                              fontWeight: '900',
-                              color: 'black',
-                              position: 'relative',
-                              bottom: 3,
-                              right: 2,
-                            }}>
-                            ...
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </>
                 );
               })}
             </ScrollView>
@@ -785,7 +778,7 @@ const VideoScreen = () => {
           }}>
           <View style={styles.modalMain}>
             <Pressable
-            onPress={()=>setShowIntroAction(false)}
+              onPress={() => setShowIntroAction(false)}
               style={{
                 flexDirection: 'row',
                 // justifyContent: 'space-between',
@@ -799,7 +792,9 @@ const VideoScreen = () => {
               </Text>
             </Pressable>
             <Pressable
-             onPress={()=>{onShare(introActionValue?.videoUrl)}}
+              onPress={() => {
+                onShare(introActionValue?.videoUrl);
+              }}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -847,7 +842,7 @@ const VideoScreen = () => {
           }}>
           <View style={styles.modalMain}>
             <Pressable
-            onPress={()=>setShowWorkAction(false)}
+              onPress={() => setShowWorkAction(false)}
               style={{
                 flexDirection: 'row',
                 // justifyContent: 'space-between',
@@ -861,7 +856,9 @@ const VideoScreen = () => {
               </Text>
             </Pressable>
             <Pressable
-            onPress={()=>{onShare(workActionValue?.videoUrl)}}
+              onPress={() => {
+                onShare(workActionValue?.videoUrl);
+              }}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',

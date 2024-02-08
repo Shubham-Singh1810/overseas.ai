@@ -7,8 +7,10 @@ import {
   Pressable,
   ScrollView,
   TouchableOpacity,
+  Modal,
+  Button
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import FooterNav from '../components/FooterNav';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,7 +21,7 @@ const MyProfile = props => {
     try {
       await AsyncStorage.removeItem('user');
       setGlobalState({...globalState, user: null});
-      console.log('User data removed from AsyncStorage.');
+      setShowLogOutPopUp(false)
     } catch (error) {
       console.error('Error removing user data from AsyncStorage:', error);
     }
@@ -64,6 +66,7 @@ const MyProfile = props => {
       );
     }
   };
+  const [showLogOutPopUp, setShowLogOutPopUp]=useState(false)
   return (
     <>
       <View style={styles.main}>
@@ -153,7 +156,7 @@ const MyProfile = props => {
                   {
                     color:
                       globalState?.profileStrength?.profileStrength < 30
-                        ? 'red'
+                        ? '#dc3545'
                         : globalState?.profileStrength?.profileStrength > 70
                         ? '#079E3F'
                         : '#007BFF',
@@ -174,7 +177,7 @@ const MyProfile = props => {
               style={{
                 backgroundColor:
                   globalState?.profileStrength?.profileStrength < 30
-                    ? 'red'
+                    ? '#dc3545'
                     : globalState?.profileStrength?.profileStrength > 70
                     ? '#079E3F'
                     : '#007BFF',
@@ -280,14 +283,13 @@ const MyProfile = props => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('Contact Us')}>
+                onPress={() => setShowLogOutPopUp(true)}>
                 <View style={styles.navItem}>
                   <Image
-                    source={require('../images/helpIcon.png')}
-                    resizeMode="contain"
-                    style={{height: 20, width: 20, marginRight: 10}}
+                    source={require('../images/logoutIcon.png')}
+                    style={{height: 25, width: 25,position:"relative", right:3, marginRight:10}}
                   />
-                  <Text style={styles.logout} onPress={handleLogOut}>
+                  <Text style={styles.logout} >
                     {translation.logOut}
                   </Text>
                 </View>
@@ -297,6 +299,53 @@ const MyProfile = props => {
         </ScrollView>
         <Text style={{textAlign: 'center', padding: 10}}>Version 2.0.0</Text>
       </View>
+      <Modal
+        transparent={true}
+        visible={showLogOutPopUp}
+        animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View style={styles.modalMain}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 18,
+              }}>
+              <Text style={[styles.nameText]}>
+                Are you sure you want to logout ?{'\n'}
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 10,
+                justifyContent: 'space-between',
+              }}>
+              <View style={{width: '45%'}}>
+                <Button
+                  title="No"
+                  onPress={()=>setShowLogOutPopUp(false)}
+                  color="#28a745"
+                />
+              </View>
+              <View style={{width: '45%'}}>
+                <Button
+                  title="Yes"
+                  onPress={handleLogOut}
+                  color="#dc3545"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
@@ -359,7 +408,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     fontFamily: 'Nato Sans',
-
     color: '#000',
   },
   editText: {
@@ -396,9 +444,20 @@ const styles = StyleSheet.create({
     marginLeft: 3,
   },
   logout: {
-    fontSize: 12,
-    fontWeight: '400',
-    fontFamily: 'Montserrat',
+    fontSize: 13,
+    position:"relative",
+    top:3,
+    fontWeight: '500',
+    fontFamily: 'Nato Sans',
     color: 'maroon',
+  },
+  modalMain: {
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+    width: 350,
+    borderColor: '#CCC',
+    borderRadius: 6,
+    borderWidth: 1,
+    backgroundColor: '#fff',
   },
 });

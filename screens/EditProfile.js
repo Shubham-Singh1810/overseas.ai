@@ -18,6 +18,7 @@ import {
   getState,
   getDistrict,
 } from '../services/info.service';
+import RNRestart from 'react-native-restart';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
 import {useGlobalState} from '../GlobalProvider';
@@ -54,7 +55,7 @@ const EditProfile = () => {
       setCountryList(response?.countries);
     } catch (error) {}
   };
-  const {translation, globalState, setGlobalState} = useGlobalState();
+  const {translation, globalState,setUserData, setGlobalState} = useGlobalState();
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [formData, setFormData] = useState({
     empOccuId: '',
@@ -65,7 +66,6 @@ const EditProfile = () => {
     empSpecialEdu: '',
     empPassportQ: '',
     empMS: '',
-    empLanguage: '',
     empInternationMigrationExp: '',
     empWhatsapp: '',
     empEmail: '',
@@ -74,17 +74,21 @@ const EditProfile = () => {
     empRelocationIntQ: '',
     empRelocationIntQCountry: '',
     empAadharNo: '',
+    empLanguage: '',
+    empRefName: '',
+    empRefPhone: '',
   });
   const handleLanguageSelect = selectedLanguage => {
-    if (formData.empLanguage.includes(selectedLanguage)) {
-      const updatedLanguages = formData.empLanguage.filter(
+    if (JSON.parse(formData?.empLanguage).includes(selectedLanguage)) {
+      const updatedLanguages = JSON.parse(formData.empLanguage).filter(
         lang => lang !== selectedLanguage,
       );
-      setFormData({...formData, empLanguage: updatedLanguages});
+      setFormData({...formData, empLanguage: JSON.stringify(updatedLanguages)});
     } else {
+      let prevLang = JSON.parse(formData.empLanguage);
       setFormData({
         ...formData,
-        empLanguage: [...formData.empLanguage, selectedLanguage],
+        empLanguage: JSON.stringify([...prevLang, selectedLanguage]),
       });
     }
   };
@@ -147,34 +151,40 @@ const EditProfile = () => {
     } catch (error) {}
   };
   useEffect(() => {
+    getCountryList();
     getOccupationList();
-    setFormData(
-      ({
-        empOccuId,
-        empSkill,
-        empEdu,
-        empEduYear,
-        empTechEdu,
-        empSpecialEdu,
-        empPassportQ,
-        empMS,
-        empInternationMigrationExp,
-        empWhatsapp,
-        empEmail,
-        empDailyWage,
-        empExpectedMonthlyIncome,
-        empRelocationIntQ,
-        empRelocationIntQCountry,
-        empAadharNo,
-      } = JSON.parse(globalState.user).empData),
-    );
+    setFormData({
+      empOccuId: JSON.parse(globalState.user)?.empData?.empOccuId,
+      empSkill: JSON.parse(globalState.user).empData.empSkill,
+      empEdu: JSON.parse(globalState.user).empData.empEdu,
+      empEduYear: JSON.parse(globalState.user).empData.empEduYear,
+      empTechEdu: JSON.parse(globalState.user).empData.empTechEdu,
+      empSpecialEdu: JSON.parse(globalState.user).empData.empSpecialEdu,
+      empPassportQ: JSON.parse(globalState.user).empData.empPassportQ,
+      empMS: JSON.parse(globalState.user).empData.empMS,
+      empInternationMigrationExp: JSON.parse(globalState.user).empData
+        .empInternationMigrationExp,
+      empWhatsapp: JSON.parse(globalState.user).empData.empWhatsapp,
+      empEmail: JSON.parse(globalState.user).empData.empEmail,
+      empDailyWage: JSON.parse(globalState.user).empData.empDailyWage,
+      empExpectedMonthlyIncome: JSON.parse(globalState.user).empData
+        .empExpectedMonthlyIncome,
+      empRelocationIntQ: JSON.parse(globalState.user).empData.empRelocationIntQ,
+      empRelocationIntQCountry: JSON.parse(globalState.user).empData
+        .empRelocationIntQCountry,
+      empAadharNo: JSON.parse(globalState.user).empData.empAadharNo,
+      empLanguage: JSON.parse(globalState.user).empData.empLanguage,
+      empRefName: JSON.parse(globalState.user).empData.empRefName,
+      empRefPhone: JSON.parse(globalState.user).empData.empRefPhone,
+    });
+    getSkillListByOccuId(JSON.parse(globalState.user).empData.empOccuId);
   }, []);
 
   const handleSubmit = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await editProfile(
-        {empWhatsapp: 1234567890},
+        formData,
         JSON.parse(user).access_token,
       );
       if (response?.data?.msg == 'User profile updated successfully') {
@@ -184,7 +194,10 @@ const EditProfile = () => {
           position: 'bottom',
           visibilityTime: 3000,
         });
-        setUserImage(response?.data?.empData?.empPhoto);
+        // console.log("dsfsf1", response?.data.empData)
+        user = JSON.parse(user)
+        await AsyncStorage.setItem("user", JSON.stringify({...user, empData:response?.data.empData}))
+        setUserData()
       } else {
         Toast.show({
           type: 'error',
@@ -202,6 +215,7 @@ const EditProfile = () => {
       });
     }
   };
+
   return (
     <ScrollView style={styles.main}>
       <View style={styles.body}>
@@ -248,27 +262,69 @@ const EditProfile = () => {
           </View> */}
         </View>
         <View style={{marginTop: 15}}>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 1,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Whatsapp Number
+            </Text>
+          </View>
           <TextInput
-            placeholder="Whatsapp Number"
             style={[styles.input, {marginBottom: 16}]}
-            onChangeText={text => {}}
+            onChangeText={text => {
+              setFormData({...formData, empWhatsapp: text});
+            }}
             keyboardType="numeric"
             value={formData.empWhatsapp && formData.empWhatsapp}
           />
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 1,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Language Known
+            </Text>
+          </View>
           <TouchableOpacity
             onPress={() => setShowLanguageSelect(true)}
-            style={[
-              styles.input,
-              {marginBottom: 16, padding: 17},
-            ]}>
+            style={[styles.input, {marginBottom: 16, padding: 17}]}>
             <Text>
-              {/* {formData.empLanguage.length == 0
-                ? 'Language Select'
-                : formData?.empLanguage.join(', ')}{' '} */}
-                Language Select
+              {formData?.empLanguage.length > 2
+                ? formData?.empLanguage.substring(
+                    1,
+                    formData?.empLanguage.length - 1,
+                  )
+                : ''}
             </Text>
           </TouchableOpacity>
-          <View style={styles.picker}>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Marital Status
+            </Text>
+          </View>
+          <View style={[styles.picker]}>
             <Picker
               selectedValue={formData.empMS}
               onValueChange={(itemValue, itemIndex) => {
@@ -293,6 +349,20 @@ const EditProfile = () => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Do you have Passport ?
+            </Text>
+          </View>
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empPassportQ}
@@ -310,6 +380,20 @@ const EditProfile = () => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Present Working Department
+            </Text>
+          </View>
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empOccuId}
@@ -318,8 +402,14 @@ const EditProfile = () => {
                 setFormData({...formData, empOccuId: itemValue});
               }}>
               <Picker.Item
-                label="Present Working Department"
-                value=""
+                label={
+                  JSON.parse(globalState.user).empData?.empOccupationModel
+                    ?.occupation
+                    ? JSON.parse(globalState.user).empData?.empOccupationModel
+                        ?.occupation
+                    : 'Select'
+                }
+                value={formData.empOccuId}
                 style={{color: 'gray'}}
               />
               {occupations.map((v, i) => {
@@ -335,13 +425,33 @@ const EditProfile = () => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Present Occupation
+            </Text>
+          </View>
           <View style={styles.picker}>
             <Picker
-              //   selectedValue={formData.empRelocationIntQ}
-              onValueChange={(itemValue, itemIndex) => {}}>
+              selectedValue={formData.empSkill}
+              onValueChange={(itemValue, itemIndex) => {
+                setFormData({...formData, empSkill: itemValue});
+              }}>
               <Picker.Item
-                label="Present Occupation"
-                value=""
+                label={
+                  skills?.filter((v, i) => {
+                    return v?.id == formData?.empSkill;
+                  })[0]?.skill
+                }
+                value={formData.empSkill}
                 style={{color: 'gray'}}
               />
               {skills.map((v, i) => {
@@ -357,6 +467,20 @@ const EditProfile = () => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Past International Migration Experience
+            </Text>
+          </View>
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empInternationMigrationExp}
@@ -367,8 +491,8 @@ const EditProfile = () => {
                 });
               }}>
               <Picker.Item
-                label="Past International Migration Experience"
-                value=""
+                label={formData.empInternationMigrationExp}
+                value={formData.empInternationMigrationExp}
                 style={{color: 'gray'}}
               />
               <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
@@ -376,6 +500,20 @@ const EditProfile = () => {
 
               {/* Add more Picker.Item as needed */}
             </Picker>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Highest Education Qualification
+            </Text>
           </View>
           <View style={styles.picker}>
             <Picker
@@ -397,17 +535,27 @@ const EditProfile = () => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Technical/Vocational Education
+            </Text>
+          </View>
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empTechEdu}
               onValueChange={(itemValue, itemIndex) => {
                 setFormData({...formData, empTechEdu: itemValue});
               }}>
-              <Picker.Item
-                label="Technical/Vocational Education"
-                value=""
-                style={{color: 'gray'}}
-              />
+              <Picker.Item label="Select" value="" style={{color: 'gray'}} />
               {vocationalEduArr.map((v, i) => {
                 return (
                   <Picker.Item label={v} value={v} style={{color: 'gray'}} />
@@ -417,6 +565,20 @@ const EditProfile = () => {
               {/* Add more Picker.Item as needed */}
             </Picker>
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Email
+            </Text>
+          </View>
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -424,51 +586,143 @@ const EditProfile = () => {
               setFormData({...formData, empEmail: text});
             }}
             value={formData?.empEmail}></TextInput>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Aadhar Number
+            </Text>
+          </View>
           <TextInput
             style={styles.input}
-            placeholder="Aadhar Number"
+            placeholder=""
             onChangeText={text => {
               setFormData({...formData, empAadharNo: text});
             }}
             value={formData?.empAadharNo}></TextInput>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Present Monthly Income
+            </Text>
+          </View>
           <TextInput
             style={styles.input}
-            placeholder="Present Monthly Income"
             onChangeText={text => {
               setFormData({...formData, empDailyWage: text});
             }}
             value={formData?.empDailyWage}></TextInput>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Expected Monthly Income
+            </Text>
+          </View>
           <TextInput
             style={styles.input}
-            placeholder="Expected Monthly Income"
             onChangeText={text => {
               setFormData({...formData, empExpectedMonthlyIncome: text});
             }}
             value={formData?.empExpectedMonthlyIncome}></TextInput>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Reference Person Name
+            </Text>
+          </View>
           <TextInput
             style={styles.input}
-            placeholder="Reference Person Name"
             onChangeText={text => {
               setFormData({...formData, empRefName: text});
             }}
             value={formData?.empRefName}></TextInput>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Reference Person Contact
+            </Text>
+          </View>
           <TextInput
             style={styles.input}
-            placeholder="Reference Person Contact"
             onChangeText={text => {
               setFormData({...formData, empRefPhone: text});
             }}
             value={formData?.empRefPhone}></TextInput>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Specialisation
+            </Text>
+          </View>
           <TextInput
-            placeholder="Specialisation*"
             onChangeText={text => {
               setFormData({...formData, empSpecialEdu: text});
             }}
             value={formData?.empSpecialEdu}
             style={[styles.input]}
           />
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Year of highest education qualification
+            </Text>
+          </View>
           <TextInput
-            placeholder="Year of highest education qualification*"
             style={[styles.input]}
             onChangeText={text => {
               setFormData({...formData, empEduYear: text});
@@ -476,17 +730,27 @@ const EditProfile = () => {
             value={formData?.empEduYear}
             keyboardType="numeric"
           />
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              Are you intrested in international migration ?
+            </Text>
+          </View>
           <View style={styles.picker}>
             <Picker
               selectedValue={formData.empRelocationIntQ}
               onValueChange={(itemValue, itemIndex) => {
                 setFormData({...formData, empRelocationIntQ: itemValue});
               }}>
-              <Picker.Item
-                label="Are you intrested in international migration ?"
-                value=""
-                style={{color: 'gray'}}
-              />
+              <Picker.Item label="Select" value="" style={{color: 'gray'}} />
               <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
               <Picker.Item label="No" value="No" style={{color: 'gray'}} />
 
@@ -494,29 +758,53 @@ const EditProfile = () => {
             </Picker>
           </View>
           {formData.empRelocationIntQ == 'Yes' && (
-            <View style={styles.picker}>
-              <Picker
-                selectedValue={formData.empRelocationIntQCountry}
-                onValueChange={(itemValue, itemIndex) => {
-                  setFormData({
-                    ...formData,
-                    empRelocationIntQCountry: itemValue,
-                  });
-                }}>
-                <Picker.Item label="Country" value="" style={{color: 'gray'}} />
-                {countryList?.map((v, i) => {
-                  return (
-                    <Picker.Item
-                      label={v?.name}
-                      value={v.id}
-                      style={{color: 'gray'}}
-                    />
-                  );
-                })}
+            <>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    position: 'relative',
+                    top: 7,
+                    zIndex: 6,
+                    left: 7,
+                    paddingHorizontal: 4,
+                    backgroundColor: 'white',
+                    color: 'black',
+                  }}>
+                  Country
+                </Text>
+              </View>
+              <View style={styles.picker}>
+                <Picker
+                  selectedValue={formData.empRelocationIntQCountry}
+                  onValueChange={(itemValue, itemIndex) => {
+                    setFormData({
+                      ...formData,
+                      empRelocationIntQCountry: itemValue,
+                    });
+                  }}>
+                  <Picker.Item
+                    label={
+                      countryList?.filter((v, i) => {
+                        return v.id == formData?.empRelocationIntQCountry;
+                      })[0]?.name
+                    }
+                    value={formData.empRelocationIntQCountry}
+                    style={{color: 'gray'}}
+                  />
+                  {countryList?.map((v, i) => {
+                    return (
+                      <Picker.Item
+                        label={v?.name}
+                        value={v.id}
+                        style={{color: 'gray'}}
+                      />
+                    );
+                  })}
 
-                {/* Add more Picker.Item as needed */}
-              </Picker>
-            </View>
+                  {/* Add more Picker.Item as needed */}
+                </Picker>
+              </View>
+            </>
           )}
           <View style={styles.nextBtn}>
             <Button title="Edit" onPress={handleSubmit} color="#035292" />
@@ -755,6 +1043,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 18,
     backgroundColor: 'white',
+    zIndex: -1,
   },
   myPic: {
     height: 200,

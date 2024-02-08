@@ -20,8 +20,7 @@ import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 const CandidateDetails2 = ({route}) => {
-  const localUser = route?.params?.localUser
-  const access_token = localUser.access_token;
+  console.log(route.params.step1user.access_token)
   const {globalState, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
     empEmail: '', 
@@ -46,9 +45,10 @@ const CandidateDetails2 = ({route}) => {
         type: result[0].type,
         name: result[0].name,
       });
-      console.log(imageformData)
-      let response = await editProfile(imageformData, access_token);
-      setFormData({...formData, empPhoto: response.data.empData.empPhoto});
+      
+      let response = await registerUserStep2(imageformData, route.params.step1user.access_token);
+      console.log(response)
+      setFormData({...formData, empPhoto: response.empData.empPhoto});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -112,6 +112,7 @@ const CandidateDetails2 = ({route}) => {
     return true
   }
   const handleSubmit = async () => {
+    
     if(formValidation()){
       try {
         let response = await registerUserStep2(
@@ -125,10 +126,10 @@ const CandidateDetails2 = ({route}) => {
             empRefPhone: formData.empRefPhone,
             empAadharNo: formData.empAadharNo,
           },
-          localUser.access_token,
+          route.params.step1user.access_token
         );
         if (response?.msg == 'Data Updated Successfully.') {
-          await AsyncStorage.setItem('user', JSON.stringify(response));
+          await AsyncStorage.setItem('user', JSON.stringify({...response, access_token:route.params.step1user.access_token}));
           setUserData();
         } else {
           console.warn('something went wrong');
@@ -143,7 +144,7 @@ const CandidateDetails2 = ({route}) => {
 
   const handleSkip = async () => {
     
-    await AsyncStorage.setItem('user', JSON.stringify(localUser));
+    await AsyncStorage.setItem('user', route.params.step1user);
     setUserData();
   };
   useEffect(() => {
@@ -163,7 +164,7 @@ const CandidateDetails2 = ({route}) => {
               marginBottom: 20,
               alignItems: 'center',
             }}>
-            {/* <Pressable onPress={pickDocument}>
+            <Pressable onPress={pickDocument}>
               {formData.empPhoto == '' ? (
                 <Image
                   style={{
@@ -171,7 +172,7 @@ const CandidateDetails2 = ({route}) => {
                     width: 100,
                     borderRadius: 50,
                   }}
-                  source={require('../images/circle.png')}
+                  source={require('../images/dummyUserProfile.jpg')}
                 />
               ) : (
                 <Image
@@ -188,7 +189,7 @@ const CandidateDetails2 = ({route}) => {
               <Text style={{color: '#035292', textDecorationLine: 'underline'}}>
                 Add Profile Pic
               </Text>
-            </Pressable> */}
+            </Pressable>
           </View>
           <TextInput
             style={styles.input}
@@ -303,14 +304,16 @@ const CandidateDetails2 = ({route}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <TouchableOpacity
+           <TouchableOpacity
             style={{flexDirection: 'row', justifyContent: 'flex-end'}}
             onPress={handleSkip}>
+              {formData.empPhoto =="" &&
             <Text
               style={{textDecorationLine: 'underline', paddingHorizontal: 10}}>
               Skip
-            </Text>
+            </Text>}
           </TouchableOpacity>
+          
           <TouchableOpacity
             style={{
               width: '50%',

@@ -347,7 +347,7 @@ const CandidateDetailsStep1 = props => {
           });
           setTimeout(() => {
             props.navigation.navigate('CandidateDetails2', {
-              localUser: response,
+              step1user: {...response, access_token:localUser.access_token},
             });
           }, 1500);
           await AsyncStorage.clear();

@@ -1,77 +1,180 @@
-import {StyleSheet, ScrollView, Image, Button, Text, View} from 'react-native';
-import React from 'react';
-import FooterNav from '../components/FooterNav';
-const Notifications = (props) => {
+import {
+  StyleSheet,
+  ScrollView,
+  Image,
+  Button,
+  Text,
+  View,
+  Pressable,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getNotification} from '../services/user.service';
+import moment from 'moment';
+import {useGlobalState} from '../GlobalProvider';
+const Notifications = props => {
+
+  const {globalState, setGlobalState} = useGlobalState();
+  const [showNotifyScreen, setShowNotifyScreen] = useState('Jobs');
+  const [notificationArr, setNotificationArr] = useState(null);
+  const [showLoader, setShowLoader] = useState(true);
+  const getNotificationFunc = async () => {
+    setShowLoader(true);
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getNotification(JSON.parse(user).access_token);
+      if (response.status == 200) {
+        console.log(response.data);
+        setNotificationArr(response.data);
+      } else {
+        console.warn('sdkfj');
+      }
+    } catch (error) {}
+    setShowLoader(false);
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getNotificationFunc();
+    }, []),
+  );
+
   return (
-    <>
-      <ScrollView>
-        <View style={styles.main}>
-          <View>
-            <View style={{flexDirection:"row"}}>
-            <Text style={[styles.newText, styles.borderBottom]}>New</Text>
-            </View>
-            <View style={[styles.navigationBox, styles.darkBackground]}>
-              <Text style={styles.navText}>
-                Rahul Kumar you are shortlisted for the interview at R. C
-                Chandra Sons. Your interview is scheduled at 8 am. All the
-                best!!
-              </Text>
-            </View>
-            <Text style={styles.newText}>Older One</Text>
-            <View style={[styles.navigationBox, styles.lightBackground]}>
-              <Text style={styles.navText}>
-                Rahul Kumar you are shortlisted for the interview at R. C
-                Chandra Sons. Your interview is scheduled at 8 am. All the
-                best!!
-              </Text>
-            </View>
-            <View style={[styles.navigationBox, styles.lightBackground]}>
-              <Text style={styles.navText}>
-                Rahul Kumar you are shortlisted for the interview at R. C
-                Chandra Sons. Your interview is scheduled at 8 am. All the
-                best!!
-              </Text>
-            </View>
-            <View style={[styles.navigationBox, styles.lightBackground]}>
-              <Text style={styles.navText}>
-                Rahul Kumar you are shortlisted for the interview at R. C
-                Chandra Sons. Your interview is scheduled at 8 am. All the
-                best!!
-              </Text>
-            </View>
-            <View style={[styles.navigationBox, styles.lightBackground]}>
-              <Text style={styles.navText}>
-                Rahul Kumar you are shortlisted for the interview at R. C
-                Chandra Sons. Your interview is scheduled at 8 am. All the
-                best!!
-              </Text>
-            </View>
-            <View style={[styles.navigationBox, styles.lightBackground]}>
-              <Text style={styles.navText}>
-                Rahul Kumar you are shortlisted for the interview at R. C
-                Chandra Sons. Your interview is scheduled at 8 am. All the
-                best!!
-              </Text>
-            </View>
-            <View style={[styles.navigationBox, styles.lightBackground]}>
-              <Text style={styles.navText}>
-                Rahul Kumar you are shortlisted for the interview at R. C
-                Chandra Sons. Your interview is scheduled at 8 am. All the
-                best!!
-              </Text>
-            </View>
-            <View style={[styles.navigationBox, styles.lightBackground]}>
-              <Text style={styles.navText}>
-                Rahul Kumar you are shortlisted for the interview at R. C
-                Chandra Sons. Your interview is scheduled at 8 am. All the
-                best!!
-              </Text>
-            </View>
-          </View>
+    <View style={styles.main}>
+      <View>
+        <ScrollView horizontal={true}>
+          <Text
+            style={[
+              styles.navText,
+              showNotifyScreen === 'Jobs'
+                ? {textDecorationLine: 'underline'}
+                : null,
+            ]}
+            onPress={() => setShowNotifyScreen('Jobs')}>
+            Jobs ({notificationArr?.newJobs?.length})
+          </Text>
+          <Text
+            style={[
+              styles.navText,
+              showNotifyScreen === 'Applications'
+                ? {textDecorationLine: 'underline'}
+                : null,
+            ]}
+            onPress={() => setShowNotifyScreen('Applications')}>
+            Applications ({notificationArr?.notifications?.length})
+          </Text>
+          <Text
+            style={[
+              styles.navText,
+              showNotifyScreen === 'Profile'
+                ? {textDecorationLine: 'underline'}
+                : null,
+            ]}
+            onPress={() => setShowNotifyScreen('Profile')}>
+            Profile ({globalState.profileStrength.emptyFields.filter?.((v,i)=>{
+              return(v.message)
+            }).length})
+          </Text>
+          
+        </ScrollView>
+      </View>
+      {showLoader ? (
+        <View
+          style={{
+            height: 400,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size="large" color="#0000ff" />
         </View>
-      </ScrollView>
-      <FooterNav props={props}/>
-    </>
+      ) : (
+        <View style={{marginTop: 16}}>
+          <ScrollView>
+            {showNotifyScreen == 'Jobs' &&
+              notificationArr?.newJobs?.map((v, i) => {
+                return (
+                  <Pressable
+                    onPress={() =>
+                      props.navigation.navigate('Job Details', {jobId: v.id})
+                    }
+                    style={styles.notificationBox}>
+                    <Text style={styles.notificationBoxText}>
+                      {v.fullMessage}
+                    </Text>
+                    <Text
+                      style={{
+                        textAlign: 'right',
+                        color: '#000',
+                        marginTop: 5,
+                        fontWeight: 500,
+                        fontSize: 12,
+                      }}>
+                      {moment(v.created_at).fromNow()} {}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            {showNotifyScreen == 'Applications' &&
+              notificationArr.notifications?.map((v, i) => {
+                return (
+                  <Pressable
+                    onPress={() =>
+                      props.navigation.navigate('Applied Job By Id', {
+                        id: v?.jobApplicationId,
+                      })
+                    }
+                    style={styles.notificationBox}>
+                    <Text style={styles.notificationBoxText}>
+                      {v.fullMessage}
+                    </Text>
+                    <Text
+                      style={{
+                        textAlign: 'right',
+                        color: '#000',
+                        marginTop: 5,
+                        fontWeight: 500,
+                        fontSize: 12,
+                      }}>
+                      {moment(v.created_at).fromNow()} {}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            {showNotifyScreen == 'Profile' &&
+              globalState.profileStrength?.emptyFields?.map((v, i) => {
+                return (
+                  v.message && <Pressable
+                    onPress={() =>
+                      props.navigation.navigate('Improve Profile')
+                    }
+                    style={styles.notificationBox}>
+                    <Text style={styles.notificationBoxText}>{v?.message}</Text>
+                    <Text
+                      style={{
+                        textAlign: 'right',
+                        color: '#000',
+                        marginTop: 5,
+                        fontWeight: 500,
+                        fontSize: 12,
+                      }}>
+                      Build Profile
+                    </Text>
+                  </Pressable>
+                  
+                );
+              })}
+            {/* <View style={[styles.notificationBox, {backgroundColor: 'white'}]}>
+            <Text style={styles.notificationBoxText}>
+              Congratulations !!! Your profile for Product analyst is
+              shortlisted by Hindustan Unilever.
+            </Text>
+          </View> */}
+          </ScrollView>
+        </View>
+      )}
+    </View>
   );
 };
 
@@ -80,78 +183,27 @@ export default Notifications;
 const styles = StyleSheet.create({
   main: {
     backgroundColor: '#fff',
+    flex: 1,
+    padding: 18,
+  },
+  navText: {
+    color: '#000',
+    fontWeight: '500',
+    fontSize: 18,
+    marginRight: 20,
+  },
+  notificationBox: {
+    backgroundColor: '#dfeaf2',
     padding: 10,
-    marginBottom: 60,
+    borderWidth: 0.2,
+    elevation: 2,
+    marginBottom: 20,
   },
-  mainHeading: {
-    color: '#0F0C0C',
-    fontSize: 16,
-    fontWeight: '800',
-    fontFamily: 'Nato Sans',
-  },
-  topNav: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 15,
-    marginLeft: -5,
-    marginBottom: 30,
-  },
-  navigationBox:{
-    
-    borderRadius:5,
-    paddingVertical:15,
-    paddingHorizontal:12,
-    marginVertical:6,
-    borderWidth:1,
-    borderColor:"#B3B3B3"
-  },
-  darkBackground:{
-    backgroundColor:"#E8E7E7"
-  },
-  lightBackground:{
-    backgroundColor:"#F5F5FA",
-  },
-  text: {
+  notificationBoxText: {
     color: '#000',
+    fontWeight: '400',
     fontSize: 14,
-    fontWeight: '400',
-    fontFamily: 'Nato Sans',
+    letterSpacing: 0.5,
+    lineHeight: 19,
   },
-  newText:{
-    marginVertical:10,
-    fontSize: 15,
-    fontWeight: '400',
-    fontFamily: 'Nato Sans',
-    paddingHorizontal:3
-  },
-  borderBottom:{
-    borderBottomWidth:1,
-    borderBottomColor:"#B3B3B3"
-  },
-  noteText: {
-    color: '#EB4343',
-    fontSize: 10,
-    fontWeight: '400',
-    fontFamily: 'Nato Sans',
-  },
-  blueText: {
-    color: '#5F90CA',
-    fontSize: 10,
-    fontWeight: '400',
-    fontFamily: 'Nato Sans',
-  },
-  grayText: {
-    textAlign: 'center',
-    color: '#B3B3B3',
-    fontSize: 10,
-    fontWeight: '400',
-    fontFamily: 'Nato Sans',
-    marginVertical: 20,
-  },
-  navText:{
-    color: '#000',
-    fontSize: 14,
-    fontWeight: '400',
-    fontFamily: 'Nato Sans',
-  }
 });

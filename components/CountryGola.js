@@ -11,13 +11,16 @@ const CountryGola = ({value, props}) => {
         })
       }>
       <View style={{marginRight: 25, marginTop: 20}}>
+        <View style={{borderWidth:.5,borderColor:"gray", borderRadius: 40, }}>
         <Image
           source={{
             uri: `https://overseas.ai/storage/uploads/countryFlag/${value?.countryFlag}`,
           }}
           style={{height: 80, width: 80, borderRadius: 40}}
         />
-        <Text style={styles.countryName}>{value?.name}</Text>
+        </View>
+        
+        <Text numberOfLines={value?.name?.length>13 ? 1: 2} style={[styles.countryName, {width:80, overflow:"hidden"}]}>{value?.name}</Text>
       </View>
     </TouchableOpacity>
   );

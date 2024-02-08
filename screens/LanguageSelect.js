@@ -33,7 +33,7 @@ export default LanguageSelect;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#F5F5FA',
+    backgroundColor: '#fff',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

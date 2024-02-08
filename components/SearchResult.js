@@ -27,6 +27,7 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
       console.log(error);
     }
   };
+  
   const handleApplyJob = async jobId => {
     try {
       let user = await AsyncStorage.getItem('user');

@@ -43,8 +43,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   img: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
+    resizeMode:"contain"
   },
   imgGola: {
     justifyContent: 'center',

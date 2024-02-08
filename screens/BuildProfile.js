@@ -38,9 +38,7 @@ const BuildProfile = () => {
         <View style={styles.profileNav}>
           <View>
           <Image
-              source={{
-                uri: 'https://media.licdn.com/dms/image/D4D35AQFVJViksoztjQ/profile-framedphoto-shrink_100_100/0/1696905508788?e=1705564800&v=beta&t=b3K06TK8ff1K3zJcPX--dUxmkGlVXi_ensN7qk25-o4',
-              }}
+              source={require("../images/dummyUserProfile.jpg")}
               style={{
                 height: 100,
                 width: 100,

@@ -78,10 +78,11 @@ export const registerUserStep1 = async (formData, access_token) => {
   }
 };
 export const registerUserStep2 = async (formData, access_token) => {
-  console.log(formData)
+  console.log("FDG",formData, access_token)
   try {
     const response = await axios.post(BASE_URL+"user-profile-complete-step3", formData ,{
       headers: {
+        'Content-Type': `multipart/form-data`,
         Authorization: `Bearer ${access_token}`
       }
     });
@@ -92,7 +93,6 @@ export const registerUserStep2 = async (formData, access_token) => {
   }
 };
 export const addExperienceStep2 = async (formData, access_token) => {
-  console.log("formData", access_token);
   try {
     const response = await axios.post(BASE_URL+"add-experience-step2", formData,{
       headers: {
@@ -107,7 +107,6 @@ export const addExperienceStep2 = async (formData, access_token) => {
   }
 };
 export const uploadWorkVideo = async (formData, access_token) => {
-  console.log("formData", formData);
   try {
     const response = await axios.post(BASE_URL+"store-work-video", formData,{
       headers: {
@@ -139,6 +138,7 @@ export const submitContactQuery = async (params) => {
   }
 };
 export const editProfile = async (formData, access_token) => {
+  console.log("dfg",formData)
   try {
     const response = await axios.post(BASE_URL+"user-complete-profile-edit" , formData, {
       headers: {
@@ -157,6 +157,21 @@ export const getProfileStrength = async (access_token) => {
   console.log(access_token)
   try {
     const response = await axios.get(BASE_URL+"user-improve-profile", {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+export const getNotification = async (access_token) => {
+  try {
+    const response = await axios.get(BASE_URL+"user-all-notification", {
       headers: {
         Authorization: `Bearer ${access_token}`
       }

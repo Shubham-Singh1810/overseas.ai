@@ -15,6 +15,7 @@ import JobGola from '../components/JobGola';
 import CandidateGola from '../components/CandidateGola';
 import CandidateVideoGola from '../components/CandidateVideoGola';
 import SkillsGola from '../components/SkillsGola';
+import {getNotification} from '../services/user.service';
 import CountryGola from '../components/CountryGola';
 import FooterNav from '../components/FooterNav';
 import SearchResult from '../components/SearchResult';
@@ -45,7 +46,7 @@ const Home = props => {
     }
     return true;
   });
-  const {globalState, translation, setGlobalState} = useGlobalState();
+  const {globalState, translation,notifications, setGlobalState} = useGlobalState();
   const [searchJobKey, setSearchJobKey] = useState('');
   const [searchCounterKey, setSearchCountryKey] = useState('');
   const [occupations, setOccupations] = useState([]);
@@ -54,7 +55,7 @@ const Home = props => {
   const [loaderCandidate, setLoaderCandidate] = useState(true);
   const [loaderCountry, setLoaderCountry] = useState(true);
   const [loaderSearch, setLoaderSearch] = useState(true);
-
+  
   const getOccupationList = async () => {
     setLoaderOccu(true);
     try {
