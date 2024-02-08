@@ -40,7 +40,7 @@ const RightNav = props => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{fontSize: 7, color: '#fff'}}>{globalState.profileStrength.emptyFields.filter?.((v,i)=>{
+              <Text style={{fontSize: 7, color: '#fff'}}>{globalState?.profileStrength?.emptyFields?.filter?.((v,i)=>{
               return(v.message)
             }).length}</Text>
             </View>
