@@ -22,7 +22,7 @@ const JobDetailedScreen = params => {
     } else if (params.route.params.saved) {
       params.navigation.navigate('Saved Jobs');
     } else {
-      params.navigation.navigate('Search Job');
+      params.navigation.navigate('Home');
     }
     return true;
   });

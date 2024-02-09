@@ -13,8 +13,10 @@ import {
 import {useState, useEffect, useRef} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
-const BuildProfile = () => {
-  const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
+import {useGlobalState} from '../GlobalProvider';
+const BuildProfile = props => {
+  const {translation, globalState, setUserData, setGlobalState} =
+    useGlobalState();
   const [showVideoModal, setShowVideoModal] = useState(false);
   const pickMedia = async () => {
     try {
@@ -32,68 +34,219 @@ const BuildProfile = () => {
       }
     }
   };
+  const renderStar = () => {
+    const strength = globalState?.profileStrength?.profileStrength;
+    if (strength <= 20) {
+      return <Image source={require('../images/starIcon.png')} />;
+    } else if (strength > 20 && strength <= 40) {
+      return (
+        <>
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+        </>
+      );
+    } else if (strength > 40 && strength <= 60) {
+      return (
+        <>
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+        </>
+      );
+    } else if (strength > 60 && strength <= 80) {
+      return (
+        <>
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+          <Image source={require('../images/starIcon.png')} />
+        </>
+      );
+    }
+  };
   return (
     <ScrollView style={styles.main}>
       <View>
-        <View style={styles.profileNav}>
-          <View>
-          <Image
-              source={require("../images/dummyUserProfile.jpg")}
-              style={{
-                height: 100,
-                width: 100,
-                borderRadius: 50,
-              }}
-            />
-          </View>
+        <View>
           <View
             style={{
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              marginBottom: 10,
-              marginLeft: 10,
-            }}>
-            <Text style={styles.nameText}>Shubham Singh</Text>
-            <Text style={styles.nameText}>Heavy Developer</Text>
-          </View>
-        </View>
-        <View style={{marginBottom: 5}}>
-          <Text
-            style={[
-              styles.nameText,
-              styles.fontWeight500,
-              {marginTop: 16, marginBottom: -2},
-            ]}>
-            Profile Strength
-          </Text>
-          <View
-            style={{
-              width: '70%',
               flexDirection: 'row',
-              marginBottom: 2,
-              justifyContent: 'flex-end',
+              marginBottom: 15,
+              alignItems: 'center',
             }}>
-            <Text style={[styles.nameText, {color: '#079E3F', fontSize: 12}]}>
-              78%
+            <View>
+              <View>
+                {JSON.parse(globalState?.user)?.empData?.empPhoto == null ? (
+                  <Image
+                    source={require('../images/dummyUserProfile.jpg')}
+                    style={styles.myPic}
+                  />
+                ) : (
+                  <Image
+                    source={{
+                      uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
+                    }}
+                    style={styles.myPic}
+                  />
+                )}
+              </View>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('Edit Profile')}>
+                <Text
+                  style={{
+                    textDecorationLine: 'underline',
+                    color: '#035292',
+                    textAlign: 'center',
+                    marginTop: 8,
+                  }}>
+                  Edit
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{marginLeft: 15}}>
+              <Text style={styles.name}>
+                {JSON.parse(globalState?.user)?.empData?.empName}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: -6,
+                  marginBottom: 3,
+                }}>
+                {renderStar()}
+              </View>
+
+              <Text style={[styles.welderText]}>
+                {
+                  JSON.parse(globalState?.user)?.empData?.empOccupationModel
+                    ?.occupation
+                }
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  //  marginTop:-10
+                }}>
+                <Image
+                  source={require('../images/greenPhoneIcon.png')}
+                  style={{marginRight: 5}}
+                />
+                <Text style={styles.welderText}>
+                  {JSON.parse(globalState?.user)?.empData?.empPhone}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View style={{marginBottom: 5}}>
+            <View
+              style={{
+                width: globalState?.profileStrength?.profileStrength + '%',
+                flexDirection: 'row',
+                marginBottom: 2,
+                justifyContent: 'flex-end',
+              }}>
+              <Text
+                style={[
+                  styles.nameText,
+                  {
+                    color:
+                      globalState?.profileStrength?.profileStrength < 30
+                        ? '#dc3545'
+                        : globalState?.profileStrength?.profileStrength > 70
+                        ? '#079E3F'
+                        : '#007BFF',
+                    fontSize: 12,
+                  },
+                ]}>
+                {globalState?.profileStrength?.profileStrength}%
+              </Text>
+            </View>
+            <View
+              style={{
+                width: '100%',
+                backgroundColor: '#fff',
+                borderWidth: 0.3,
+                height: 5,
+              }}></View>
+            <View
+              style={{
+                backgroundColor:
+                  globalState?.profileStrength?.profileStrength < 30
+                    ? '#dc3545'
+                    : globalState?.profileStrength?.profileStrength > 70
+                    ? '#079E3F'
+                    : '#007BFF',
+                borderRadius: 3,
+                height: 5,
+                width: globalState?.profileStrength?.profileStrength + '%',
+                position: 'relative',
+                bottom: 5,
+              }}></View>
+            <Text
+              style={[
+                styles.nameText,
+                styles.fontWeight500,
+                {marginTop: 5, marginBottom: -5, fontSize: 12},
+              ]}>
+              Profile Strength
             </Text>
           </View>
-          <View
-            style={{
-              width: '100%',
-              backgroundColor: '#ADE9C4',
-              height: 2,
-            }}></View>
-          <View
-            style={{
-              backgroundColor: '#13C756',
-              borderRadius: 3,
-              height: 6,
-              width: '70%',
-              position: 'relative',
-              bottom: 4,
-            }}></View>
         </View>
-        <View style={{marginVertical: 10}}>
+        {globalState.profileStrength?.emptyFields
+          ?.filter((v, i) => !v.complete)
+          .map((v, i) => {
+            return (
+              <Pressable style={styles.notificationBox}>
+                <Text style={styles.notificationBoxText}>{v?.message}</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 10,
+                    justifyContent: 'flex-end',
+                  }}>
+                  <Button
+                    title="Upload"
+                    color="#035292"
+                    onPress={() => props.navigation.navigate(v.type)}
+                  />
+                </View>
+              </Pressable>
+            );
+          })}
+          
+        {globalState.profileStrength?.emptyFields
+          ?.filter((v, i) => v.complete)
+          .map((v, i) => {
+            return (
+              <Pressable style={styles.notificationBox}>
+                <Text style={styles.notificationBoxText}>{v?.message}</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 10,
+                    justifyContent: 'flex-end',
+                  }}>
+                  <Pressable onPress={() => props.navigation.navigate(v.type)}>
+                    <Text style={{color:"#000", fontWeight:"500",fontSize:12, textDecorationLine:"underline"}}>View</Text>
+                  </Pressable>
+                </View>
+              </Pressable>
+            );
+          })}
+
+        {/* <View style={{marginVertical: 10}}>
           <Text style={[styles.nameText, styles.fontWeight500]}>
             Your Introduction Video
           </Text>
@@ -106,7 +259,9 @@ const BuildProfile = () => {
             getting noticed
           </Text>
           <View style={{flexDirection: 'row', marginTop: 8}}>
-            <TouchableOpacity style={styles.btn} onPress={()=>setShowVideoModal(true)}>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => setShowVideoModal(true)}>
               <Text style={styles.btnText}>Upload</Text>
             </TouchableOpacity>
           </View>
@@ -160,7 +315,7 @@ const BuildProfile = () => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
       </View>
       <Modal transparent={true} visible={showVideoModal}>
         <View
@@ -183,15 +338,16 @@ const BuildProfile = () => {
                 alignItems: 'center',
               }}>
               <Text style={styles.nameText}>Upload Video</Text>
-              <Pressable onPress={()=>setShowVideoModal(false)}>
-
-              <Image source={require('../images/close.png')} />
+              <Pressable onPress={() => setShowVideoModal(false)}>
+                <Image source={require('../images/close.png')} />
               </Pressable>
             </View>
 
             <View style={{flexDirection: 'row', marginTop: 10}}>
-              <TouchableOpacity onPress={pickMedia} style={{borderColor:"#035292", borderWidth:1, padding:10}}>
-                <Text >Select File</Text>
+              <TouchableOpacity
+                onPress={pickMedia}
+                style={{borderColor: '#035292', borderWidth: 1, padding: 10}}>
+                <Text>Select File</Text>
               </TouchableOpacity>
             </View>
             <View style={{marginVertical: 10}}>
@@ -224,7 +380,7 @@ const BuildProfile = () => {
                 </Picker>
               </View>
               <View style={{marginTop: 15}}>
-                <Button title="Submit" color="#035292"/>
+                <Button title="Submit" color="#035292" />
               </View>
             </View>
           </View>
@@ -277,5 +433,38 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#1877F2',
     textDecorationLine: 'underline',
+  },
+  myPic: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    resizeMode: 'contain',
+  },
+  name: {
+    fontSize: 22,
+    fontWeight: '500',
+    fontFamily: 'Nato Sans',
+    color: '#000',
+    marginBottom: 5,
+  },
+  welderText: {
+    fontSize: 14,
+    fontWeight: '400',
+    fontFamily: 'Nato Sans',
+    color: '#000',
+  },
+  notificationBox: {
+    // backgroundColor: '#dfeaf2',
+    padding: 10,
+    borderBottomWidth: 0.2,
+    // elevation: 2,
+    marginVertical: 15,
+  },
+  notificationBoxText: {
+    color: '#000',
+    fontWeight: '400',
+    fontSize: 15,
+    letterSpacing: 0.5,
+    lineHeight: 19,
   },
 });

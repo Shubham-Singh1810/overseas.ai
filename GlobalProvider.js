@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {translation} from './Language';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getProfileStrength} from "./services/user.service";
 
 // Step 1: Create a context
 const GlobalStateContext = createContext();
@@ -508,6 +509,7 @@ export const GlobalStateProvider = ({children}) => {
   useEffect(() => {
     setUserData();
   }, []);
+  
   return (
     <GlobalStateContext.Provider
       value={{globalState, setGlobalState, translation, setUserData:setUserData}}>

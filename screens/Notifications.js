@@ -15,7 +15,6 @@ import {getNotification} from '../services/user.service';
 import moment from 'moment';
 import {useGlobalState} from '../GlobalProvider';
 const Notifications = props => {
-
   const {globalState, setGlobalState} = useGlobalState();
   const [showNotifyScreen, setShowNotifyScreen] = useState('Jobs');
   const [notificationArr, setNotificationArr] = useState(null);
@@ -72,11 +71,14 @@ const Notifications = props => {
                 : null,
             ]}
             onPress={() => setShowNotifyScreen('Profile')}>
-            Profile ({globalState.profileStrength.emptyFields.filter?.((v,i)=>{
-              return(v.message)
-            }).length})
+            Profile (
+            {
+              globalState.profileStrength.emptyFields.filter?.((v, i) => {
+                return !v.complete;
+              }).length
+            }
+            )
           </Text>
-          
         </ScrollView>
       </View>
       {showLoader ? (
@@ -145,24 +147,27 @@ const Notifications = props => {
             {showNotifyScreen == 'Profile' &&
               globalState.profileStrength?.emptyFields?.map((v, i) => {
                 return (
-                  v.message && <Pressable
-                    onPress={() =>
-                      props.navigation.navigate('Improve Profile')
-                    }
-                    style={styles.notificationBox}>
-                    <Text style={styles.notificationBoxText}>{v?.message}</Text>
-                    <Text
-                      style={{
-                        textAlign: 'right',
-                        color: '#000',
-                        marginTop: 5,
-                        fontWeight: 500,
-                        fontSize: 12,
-                      }}>
-                      Build Profile
-                    </Text>
-                  </Pressable>
-                  
+                  !v.complete && (
+                    <Pressable
+                      onPress={() =>
+                        props.navigation.navigate('Improve Profile')
+                      }
+                      style={styles.notificationBox}>
+                      <Text style={styles.notificationBoxText}>
+                        {v?.message}
+                      </Text>
+                      <Text
+                        style={{
+                          textAlign: 'right',
+                          color: '#000',
+                          marginTop: 5,
+                          fontWeight: 500,
+                          fontSize: 12,
+                        }}>
+                        Build Profile
+                      </Text>
+                    </Pressable>
+                  )
                 );
               })}
             {/* <View style={[styles.notificationBox, {backgroundColor: 'white'}]}>

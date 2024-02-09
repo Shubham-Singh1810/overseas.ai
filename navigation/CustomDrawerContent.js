@@ -10,6 +10,7 @@ import {
   Share,
 } from 'react-native';
 import Home from '../screens/Home';
+import {getNotification} from '../services/user.service';
 import JobApplied from '../screens/JobApplied';
 import Help from '../screens/Help';
 import {useGlobalState} from '../GlobalProvider';
@@ -19,16 +20,17 @@ import BuildProfile from '../screens/BuildProfile';
 import YourHra from '../screens/YourHra';
 import GetCertificate from '../screens/GetCertificate';
 import NeedMigrationLoan from '../screens/NeedMigrationLoan';
-import React,{useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import FavrouiteJob from '../screens/FavrouiteJob';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import SavedJobs from '../screens/SavedJobs';
 import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
-const CustomDrawerContent = (props) => {
-  console.log(props.navigation.getState())
-  const {navigation} = props
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const CustomDrawerContent = props => {
+  console.log(props.navigation.getState());
+  const {navigation} = props;
   const {globalState, setGlobalState} = useGlobalState();
   const [navItem, setNavItem] = useState([
     {
@@ -122,7 +124,7 @@ const CustomDrawerContent = (props) => {
   ]);
   const [showSubMnu, setShowSubmenu] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  
+
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -175,23 +177,81 @@ const CustomDrawerContent = (props) => {
               <View style={{marginLeft: 15}}>
                 {v.subMenu.map((value, i) => {
                   return (
-                    <View style={selectedScreen == value.title && styles.navBox}>
+                    <View
+                      style={[selectedScreen == value.title && styles.navBox]}>
                       <DrawerItem
                         key={i}
                         label={value.title}
-                        style={{}}
                         onPress={() => {
                           setSelectedScreen(value.title);
-                          setShowSubmenu(false)
+                          setShowSubmenu(false);
                           navigation.navigate(value.name);
                         }}
                       />
+                      {value?.title == 'Application Status' && (
+                        <View
+                          style={{
+                            backgroundColor: '#334B5E',
+                            borderRadius: 7.5,
+                            height: 15,
+                            width: 15,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            position: 'absolute',
+                            right: 19,
+                            top: 20,
+                          }}>
+                          <Text style={{color: 'white', fontSize: 10}}>
+                            {notificationList?.notifications?.length}
+                          </Text>
+                        </View>
+                      )}
                     </View>
                   );
                 })}
               </View>
             )}
           </>
+        );
+      } else if (v.title == 'Improve Profile') {
+        return (
+          <TouchableOpacity>
+            <DrawerItem
+              key={i}
+              label={v.title}
+              labelStyle={{
+                color: '#334B5E',
+                fontSize: 16,
+                fontWeight: '500',
+              }}
+              onPress={() => {
+                setSelectedScreen(v.name);
+                navigation.navigate(v.name);
+              }}
+            />
+            <View
+              style={{
+                backgroundColor: '#334B5E',
+                borderRadius: 7.5,
+                height: 15,
+                width: 15,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                right: 19,
+                top: 20,
+              }}>
+              <Text style={{color: 'white', fontSize: 10}}>
+                {globalState?.profileStrength?.emptyFields?.filter?.(
+                    (v, i) => {
+                      return !v.complete;
+                    },
+                  ).length}
+              </Text>
+            </View>
+          </TouchableOpacity>
         );
       } else if (v.title == 'Switch Language') {
         return (
@@ -214,7 +274,12 @@ const CustomDrawerContent = (props) => {
               </Text>
               <Image
                 source={require('../images/languageSelect.png')}
-                style={{height: 25, marginTop: 5, width: 25, resizeMode:"contain"}}
+                style={{
+                  height: 25,
+                  marginTop: 5,
+                  width: 25,
+                  resizeMode: 'contain',
+                }}
               />
             </View>
           </TouchableOpacity>
@@ -263,12 +328,29 @@ const CustomDrawerContent = (props) => {
       }
     });
   };
- 
+  const [notificationList, setNotificationistList] = useState(null);
+  const getNotificationFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getNotification(JSON.parse(user).access_token);
+      if (response.status == 200) {
+        console.log(response.data);
+        setNotificationistList(response.data);
+      } else {
+        console.warn('sdkfj');
+      }
+    } catch (error) {}
+  };
   useFocusEffect(
     React.useCallback(() => {
-      renderNavItem()
-      setSelectedScreen(props.navigation.getState().routeNames[props.navigation.getState().index])
-    }, [props.navigation.getState()])
+      renderNavItem();
+      getNotificationFunc();
+      setSelectedScreen(
+        props.navigation.getState().routeNames[
+          props.navigation.getState().index
+        ],
+      );
+    }, [props.navigation.getState()]),
   );
   return (
     <>

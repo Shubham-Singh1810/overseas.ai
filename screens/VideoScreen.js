@@ -29,7 +29,20 @@ import {
   uploadIntroVideo,
   deleteIntroVideo,
 } from '../services/userVideo.service';
+import {getProfileStrength, getNotification} from "../services/user.service";
 const VideoScreen = () => {
+  const {translation, globalState, setGlobalState} = useGlobalState();
+  const getProfileStrengthFunc = async() => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getProfileStrength(JSON.parse(user).access_token);
+      if(response?.data.msg=="Some fields are empty" || response?.data.msg=="Profile strength calculated successfully and updated in records"){
+        setGlobalState({...globalState, profileStrength:response?.data});
+      }
+    } catch (error) {
+      console.log("NEW", error)
+    }
+  };
   const [videoToBeDeleted, setvideoToBeDeleted] = useState('');
   const [workVideoToBeDeleted, setWorkVideoToBeDeleted] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -109,6 +122,7 @@ const VideoScreen = () => {
           video: null,
           relatedSkill: 'unKnown',
         });
+        getProfileStrengthFunc()
       }
     } catch (error) {
       console.warn('Something went wrong');
@@ -143,6 +157,7 @@ const VideoScreen = () => {
         });
         getUserIntroVideoList();
         setIntroVideoPopUp(false);
+        getProfileStrengthFunc();
       }
     } catch (error) {
       console.warn('Something went wrong');

@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {saveJobById} from '../services/job.service';
 const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
+  console.log(value)
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const {translation} = useGlobalState();
@@ -105,7 +106,9 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
           <Text style={styles.jobName}>{value?.jobTitle.length>30 ? <>{toTitleCase(value?.jobTitle).substring(0, 30)}...</>: toTitleCase(value?.jobTitle)}</Text>
         </Pressable>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.currencyText}>1400 SAR = 30,123 INR</Text>
+              <Text style={styles.currencyText}>{value?.jobWages} {value?.jobLocationCountry?.currencyName} = {Math.round(
+                value?.jobWages * value?.jobLocationCountry?.currencyValue,
+              )}{' '} INR</Text> 
           <Text style={styles.dateText}>
             {translation.applyBefore} -{' '}
             {value?.jobDeadline ? value?.jobDeadline : 'No Deadline'}
@@ -120,7 +123,9 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
                 marginBottom: 7,
                 marginTop:3
               }}>
-              <Image source={require('../images/locationIcon.png')} />
+              <Image source={{
+              uri: `https://overseas.ai/storage/uploads/countryFlag/${value?.jobLocationCountry?.countryFlag}`,
+            }} style={{height: 20, width: 20}} />
               <Text style={[{marginLeft: 9}, styles.otherDetail]}>
                 {favroite || saved ? value?.jobCountry : value?.country_location}
               </Text>

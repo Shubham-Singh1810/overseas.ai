@@ -22,7 +22,7 @@ import RNRestart from 'react-native-restart';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
 import {useGlobalState} from '../GlobalProvider';
-import {registerUserStep2, editProfile} from '../services/user.service';
+import {registerUserStep2,getProfileStrength, editProfile} from '../services/user.service';
 import DocumentPicker from 'react-native-document-picker';
 import Toast from 'react-native-toast-message';
 const EditProfile = () => {
@@ -119,6 +119,7 @@ const EditProfile = () => {
           visibilityTime: 3000,
         });
         setUserImage(response?.data?.empData?.empPhoto);
+        getProfileStrengthFunc()
       } else {
         Toast.show({
           type: 'error',
@@ -149,6 +150,17 @@ const EditProfile = () => {
       console.log('res', response.skills);
       setSkills(response?.skills);
     } catch (error) {}
+  };
+  const getProfileStrengthFunc = async() => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getProfileStrength(JSON.parse(user).access_token);
+      if(response?.data.msg=="Some fields are empty" || response?.data.msg=="Profile strength calculated successfully and updated in records"){
+        setGlobalState({...globalState, profileStrength:response?.data});
+      }
+    } catch (error) {
+      console.log("NEW", error)
+    }
   };
   useEffect(() => {
     getCountryList();
@@ -194,10 +206,11 @@ const EditProfile = () => {
           position: 'bottom',
           visibilityTime: 3000,
         });
-        // console.log("dsfsf1", response?.data.empData)
+        
         user = JSON.parse(user)
         await AsyncStorage.setItem("user", JSON.stringify({...user, empData:response?.data.empData}))
         setUserData()
+        getProfileStrengthFunc()
       } else {
         Toast.show({
           type: 'error',

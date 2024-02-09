@@ -7,14 +7,31 @@ import {
   Touchable,
   TouchableOpacity,
   Button,
-  Modal
+  Modal,
 } from 'react-native';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useGlobalState} from '../GlobalProvider';
+import {getNotification} from '../services/user.service';
 const RightNav = props => {
+  const [notificationList, setNotificationistList] = useState(null);
+  const getNotificationFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getNotification(JSON.parse(user).access_token);
+      if (response.status == 200) {
+        console.log(response.data);
+        setNotificationistList(response.data);
+      } else {
+        console.warn('sdkfj');
+      }
+    } catch (error) {}
+  };
   const {globalState, setGlobalState} = useGlobalState();
-  const[showModal, setShowModal] = useState(false);
-  
+  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    getNotificationFunc();
+  }, []);
   return (
     <>
       <View style={styles.topNav}>
@@ -33,16 +50,24 @@ const RightNav = props => {
                 position: 'relative',
                 right: 6,
                 top: 8,
-                borderRadius: 6,
-                height: 12,
-                width: 12,
+                borderRadius: 8,
+                height: 16,
+                width: 16,
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{fontSize: 7, color: '#fff'}}>{globalState?.profileStrength?.emptyFields?.filter?.((v,i)=>{
-              return(v.message)
-            }).length}</Text>
+              <Text style={{fontSize: 7, color: '#fff'}}>
+                {' '}
+                {notificationList?.newJobs?.length +
+                  parseInt(notificationList?.notifications?.length) +
+                  globalState?.profileStrength?.emptyFields?.filter?.(
+                    (v, i) => {
+                      return !v.complete;
+                    },
+                  ).length}
+              </Text>
+              <Text></Text>
             </View>
           </Pressable>
           {/* <Pressable
@@ -56,7 +81,13 @@ const RightNav = props => {
         </View>
       </View>
       <Modal transparent={false} visible={showModal} animationType="slide">
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:"rgba(0,0,0,0.5)"}}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
           <View style={styles.main}>
             <View>
               <Text style={styles.languagetext}>
@@ -130,7 +161,7 @@ const styles = StyleSheet.create({
     padding: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius:6
+    borderRadius: 6,
   },
   languagetext: {
     color: '#000',

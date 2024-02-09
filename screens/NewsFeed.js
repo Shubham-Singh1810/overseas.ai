@@ -18,7 +18,7 @@ const NewsFeed = () => {
           style={{
             color: '#333333',
             fontWeight: '500',
-            fontSize: 20,
+            fontSize: 17,
             marginLeft:10
           }}>
           Discover Fresh Feed Delights Now!

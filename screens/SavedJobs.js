@@ -20,11 +20,13 @@ const SavedJobs = props => {
         setSavedList(response?.data?.jobs);
       } else {
         console.log('Something went wrong');
+        setShowLoading(false);
       }
     } catch (error) {
+      setShowLoading(false);
       console.log(error);
     }
-    setShowLoading(false)
+    setShowLoading(false);
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -40,7 +42,7 @@ const SavedJobs = props => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'rgba(0,0,0,0.3)',
+            // backgroundColor: 'rgba(0,0,0,0.3)',
           }}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>

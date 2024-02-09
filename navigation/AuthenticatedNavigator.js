@@ -48,19 +48,6 @@ const Drawer = createDrawerNavigator();
 
 const AuthenticatedNavigator = () => {
   const {translation, globalState, setGlobalState} = useGlobalState();
-  // const getNotificationFunc = async () => {
-    
-  //   let user = await AsyncStorage.getItem('user');
-  //   try {
-  //     let response = await getNotification(JSON.parse(user).access_token);
-  //     if (response.status == 200) {
-  //       setGlobalState({...globalState, notifications:response?.data})  
-  //     } else {
-  //       console.warn('sdkfj');
-  //     }
-  //   } catch (error) {}
-    
-  // };
   const getProfileStrengthFunc = async() => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -72,10 +59,9 @@ const AuthenticatedNavigator = () => {
       console.log("NEW", error)
     }
   };
-
+  
   useEffect(()=>{
     getProfileStrengthFunc();
-    // getNotificationFunc();
   },[])
   return (
     <NavigationContainer>
