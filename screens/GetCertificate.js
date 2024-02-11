@@ -269,29 +269,6 @@ const GetCertificate = props => {
           
             
           </ScrollView>
-        </View>
-        <View style={{flexDirection: 'row',justifyContent:"space-between", marginTop: 20, marginBottom: -15}}>
-          <Pressable
-            style={[
-              {width: '45%'},
-              showHotJob && {elevation: 1, borderRadius: 2},
-            ]}
-            onPress={() => setShowHotJob(!showHotJob)}>
-            <Image
-              source={require('../images/arrowPost.png')}
-              style={{resizeMode: 'contain', width:"100%"}}
-            />
-          </Pressable>
-          <Pressable
-            style={{width: '45%'}}
-            onPress={() => props.navigation.navigate('Feed')}>
-            <Image
-              source={require('../images/searchPost.png')}
-              style={{resizeMode: 'contain', width:"100%"}}
-            />
-          </Pressable>
-        </View>
-        {showHotJob && (
           <View style={{marginTop: 30}}>
             <Text style={styles.heading}>Course Added This Week</Text>
             <ScrollView horizontal={true} style={{marginTop: 10}}>
@@ -350,8 +327,32 @@ const GetCertificate = props => {
                 })}
             </ScrollView>
           </View>
-        )}
+        </View>
+        {/* <View style={{flexDirection: 'row',justifyContent:"space-between", marginTop: 20, marginBottom: -15}}>
+          <Pressable
+            style={[
+              {width: '45%'},
+              showHotJob && {elevation: 1, borderRadius: 2},
+            ]}
+            onPress={() => setShowHotJob(!showHotJob)}>
+            <Image
+              source={require('../images/arrowPost.png')}
+              style={{resizeMode: 'contain', width:"100%"}}
+            />
+          </Pressable>
+          <Pressable
+            style={{width: '45%'}}
+            onPress={() => props.navigation.navigate('Feed')}>
+            <Image
+              source={require('../images/searchPost.png')}
+              style={{resizeMode: 'contain', width:"100%"}}
+            />
+          </Pressable>
+        </View> */}
+        
         <View style={styles.largeBtnGroup}>
+        
+          
           <TouchableOpacity
             style={[styles.largeBtn, styles.bgBlue]}
             onPress={() => props.navigation.navigate('Applied Courses')}>

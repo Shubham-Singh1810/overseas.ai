@@ -1,6 +1,5 @@
 import {StyleSheet,Button, Text, TextInput, View, ScrollView} from 'react-native';
 import React from 'react';
-
 const NeedMigrationLoan = () => {
   return (
     <View style={styles.main}>
@@ -24,7 +23,6 @@ const NeedMigrationLoan = () => {
     </View>
   );
 };
-
 export default NeedMigrationLoan;
 
 const styles = StyleSheet.create({

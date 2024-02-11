@@ -15,7 +15,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {saveJobById} from '../services/job.service';
 const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
-  console.log(value)
   const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const {translation} = useGlobalState();

@@ -285,7 +285,7 @@ const Home = props => {
               </Picker>
             </TouchableOpacity>
           </View>
-          <ScrollView style={{marginBottom: 350}}>
+          <ScrollView>
             {searchJobKey || searchCounterKey ? (
               <View>
                 {loaderSearch ? (

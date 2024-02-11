@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Navigator = () => {
   const {translation, globalState, setGlobalState} = useGlobalState();
+  
   const setUserData = async () => {
     try {
       let user = await AsyncStorage.getItem('user');
@@ -20,7 +21,7 @@ const Navigator = () => {
   }, []);
   return (
     <View style={styles.main}>
-      {globalState?.user ? <AuthenticatedNavigator /> : <LayoutNavigator />}
+      {globalState?.user ? <AuthenticatedNavigator />  : <LayoutNavigator />}
     </View>
   );
 };

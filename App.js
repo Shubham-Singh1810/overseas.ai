@@ -1,5 +1,3 @@
-import {StyleSheet} from 'react-native';
-
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {GlobalStateProvider} from './GlobalProvider';
 import AuthenticatedNavigator from './navigation/AuthenticatedNavigator';
@@ -9,6 +7,7 @@ import VideoInput from './components/VideoInput';
 import { runOnUI } from 'react-native-reanimated';
 import {useState, useEffect}from "react"
 import WelcomeScreen from './screens/Welcome';
+
 const App = () => {
   const Stack = createNativeStackNavigator();
   const[showWelcome, setShowWelcome]=useState(true);
@@ -20,17 +19,14 @@ const App = () => {
   useEffect(()=>{
     hideWelcomme()
   },[])
+  
+  
   return (
     <GlobalStateProvider>
-      {showWelcome ? <WelcomeScreen/>: <Navigator/> }
+      {showWelcome ? <WelcomeScreen/>: <Navigator/> } 
     </GlobalStateProvider>
   );
 };
 
 export default App;
 
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-  },
-});

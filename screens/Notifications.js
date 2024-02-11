@@ -150,7 +150,7 @@ const Notifications = props => {
                   !v.complete && (
                     <Pressable
                       onPress={() =>
-                        props.navigation.navigate('Improve Profile')
+                        props.navigation.navigate(v.type)
                       }
                       style={styles.notificationBox}>
                       <Text style={styles.notificationBoxText}>
@@ -164,7 +164,7 @@ const Notifications = props => {
                           fontWeight: 500,
                           fontSize: 12,
                         }}>
-                        Build Profile
+                       Action
                       </Text>
                     </Pressable>
                   )
