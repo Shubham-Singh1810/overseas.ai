@@ -43,6 +43,7 @@ import JobDetailedScreen from '../screens/JobDetailedScreen';
 import { useEffect } from 'react';
 import {getProfileStrength, getNotification} from "../services/user.service";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ExperienceScreen from '../screens/ExperienceScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -283,6 +284,15 @@ const AuthenticatedNavigator = () => {
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
+        <Drawer.Screen
+          name="My Experience"
+          component={ExperienceScreen}
+          options={({navigation, route}) => ({
+            title: 'My Experience',
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+
         {/* Add more screens as needed */}
       </Drawer.Navigator>
     </NavigationContainer>

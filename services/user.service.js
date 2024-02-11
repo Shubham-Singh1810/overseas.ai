@@ -123,6 +123,7 @@ export const uploadWorkVideo = async (formData, access_token) => {
 };
 
 export const submitContactQuery = async (params) => {
+  console.log(params.formData)
   try {
     const response = await axios.post(BASE_URL+"need-help" , params?.formData, {
       headers: {
@@ -138,7 +139,6 @@ export const submitContactQuery = async (params) => {
   }
 };
 export const editProfile = async (formData, access_token) => {
-  console.log("dfg",formData)
   try {
     const response = await axios.post(BASE_URL+"user-complete-profile-edit" , formData, {
       headers: {

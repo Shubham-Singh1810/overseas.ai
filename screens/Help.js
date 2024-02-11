@@ -7,7 +7,7 @@ import {
   ScrollView,
   TextInput,
   Share,
-  Alert
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useGlobalState} from '../GlobalProvider';
@@ -87,16 +87,21 @@ const Help = props => {
       helpFormData.append('user_contact', formData.user_contact);
       helpFormData.append('help_subject', formData.help_subject);
       helpFormData.append('help_query', formData.help_query);
-      helpFormData.append('help_video', {
-        uri: formData.help_video.uri,
-        type: formData.help_video.type,
-        name: formData.help_video.name,
-      });
-      helpFormData.append('help_audio', {
-        uri: formData.help_audio.uri,
-        type: formData.help_audio.type,
-        name: formData.help_audio.name,
-      });
+      if (formData.help_video != '') {
+        helpFormData.append('help_video', {
+          uri: formData.help_video.uri,
+          type: formData.help_video.type,
+          name: formData.help_video.name,
+        });
+      }
+      if (formData.help_audio != '') {
+        helpFormData.append('help_audio', {
+          uri: formData.help_audio.uri,
+          type: formData.help_audio.type,
+          name: formData.help_audio.name,
+        });
+      }
+
       let response = await submitContactQuery({
         formData: helpFormData,
         access_token: JSON.parse(user).access_token,
@@ -134,7 +139,7 @@ const Help = props => {
       });
     }
   };
-  
+
   return (
     <>
       <View
@@ -174,7 +179,8 @@ const Help = props => {
         <TextInput
           style={styles.inputBox}
           value={formData?.user_contact}
-          editable={false}
+          onChangeText={text => setFormData({...formData, user_contact: text})}
+          // editable={false}
         />
         <TextInput
           style={styles.inputBox}

@@ -16,7 +16,7 @@ const MyDocument = (props) => {
 
   // function to upload EXPERIENCE 
   const uploadExperience= ()=>{
-    console.warn('passport upload EXPERIENCE')
+    props.navigation.navigate("My Experience")
   }
   // function to upload dl 
   const uploadDl= ()=>{
