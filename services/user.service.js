@@ -96,10 +96,40 @@ export const addExperienceStep2 = async (formData, access_token) => {
   try {
     const response = await axios.post(BASE_URL+"add-experience-step2", formData,{
       headers: {
+        'Content-Type': `multipart/form-data`,
         Authorization: `Bearer ${access_token}`
       }
     });
     console.log(response?.data)
+    return response;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+export const editExperienceStepApi = async (formData, access_token) => {
+  console.warn(formData)
+  try {
+    const response = await axios.post(BASE_URL+"edit-experience", formData,{
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    console.log("GRGER",response?.data)
+    return response;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+export const getAllExperience = async ( access_token) => {
+  try {
+    const response = await axios.get(BASE_URL+"experience-list", {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
     return response;
   } catch (error) {
     console.error('Error posting data:', error);

@@ -1493,7 +1493,7 @@ const CandidateDetailsStep1 = props => {
                 alignItems: 'center',
               }}>
               <Text style={{fontWeight: '600', fontSize: 20}}>
-                Select Date Of Birth
+                Select Date Of Joining
               </Text>
               <TouchableOpacity onPress={() => setJoiningCalender(false)}>
                 <Image source={require('../images/close.png')} />
@@ -1542,7 +1542,7 @@ const CandidateDetailsStep1 = props => {
                 alignItems: 'center',
               }}>
               <Text style={{fontWeight: '600', fontSize: 20}}>
-                Select Date Of Birth
+                Select Date Of Exit
               </Text>
               <TouchableOpacity onPress={() => setEndingCalender(false)}>
                 <Image source={require('../images/close.png')} />
