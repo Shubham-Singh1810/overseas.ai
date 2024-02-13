@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import moment from 'moment';
-import DatePicker from 'react-native-modern-datepicker';
 import React, {useEffect, useState} from 'react';
+import DatePicker from 'react-native-modern-datepicker';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import {
@@ -388,7 +388,7 @@ const ExperienceScreen = () => {
                   {v?.certificateImage ==
                   'https://overseas.ai/placeholder/no-image.jpg' ? (
                     <Image
-                      style={{height: 70, width: 70}}
+                      style={{height: 70, width: 70, resizeMode: 'contain'}}
                       source={require('../images/certificatePrev.png')}
                     />
                   ) : (
@@ -416,7 +416,8 @@ const ExperienceScreen = () => {
       </ScrollView>
       <View>
         <Button
-          title="Add more"
+          title="Add more Experience"
+          color="#035292"
           onPress={() => {
             setShowAddExperienceForm(true);
             setAddForm('Add');

@@ -213,3 +213,49 @@ export const getNotification = async (access_token) => {
     throw error;
   }
 };
+// function to add passport
+export const addPassportApi = async (formData, access_token) => {
+  try {
+    const response = await axios.post(BASE_URL+"upload-passport",formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+export const editPassportApi = async (formData, access_token) => {
+  console.log("jhfgsjd", access_token)
+  try {
+    const response = await axios.post(BASE_URL+"passport-edit",formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+export const getPassportDetails = async (access_token) => {
+  try {
+    const response = await axios.get(BASE_URL+"view-passport", {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
