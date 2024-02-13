@@ -92,7 +92,7 @@ const ExperienceScreen = () => {
           stateName: '',
           certificateImage: '',
         });
-        getAllExperience();
+        getExperienceFunc();
         setTimeout(() => {
           setShowAddExperienceForm(false);
         }, 2000);
@@ -164,7 +164,13 @@ const ExperienceScreen = () => {
           stateName: '',
           certificateImage: '',
         });
-        getAllExperience();
+        setEditExtraField({
+          viewState: '',
+          viewCountry: '',
+          viewJobProfile: '',
+          viewOccupation: '',
+        });
+        getExperienceFunc();
         setTimeout(() => {
           setShowAddExperienceForm(false);
         }, 2000);
@@ -250,31 +256,33 @@ const ExperienceScreen = () => {
   };
   const [addForm, setAddForm] = useState('Add');
   const [editExtraField, setEditExtraField] = useState({
-    stateId: '',
-    countryId: '',
-    jobProfileId: '',
-    jobOccupationId: '',
+    viewState: '',
+    viewCountry: '',
+    viewJobProfile: '',
+    viewOccupation: '',
+    certificateImagePrev: '',
   });
   const setInputField = value => {
     console.warn(value.id);
     setAddForm('Edit');
     setEditId(value.id);
     setEditExtraField({
-      stateId: value.stateId,
-      countryId: value.countryId,
-      jobProfileId: value.jobProfileId,
-      jobOccupationId: value.jobOccupationId,
+      viewState: value.stateName,
+      viewCountry: value.countryName,
+      viewJobProfile: value.jobProfile,
+      viewOccupation: value.jobOccupation,
+      certificateImagePrev: value.certificateImage,
     });
     setExperienceForm({
       experinceCompanyName: value.experinceCompanyName,
-      jobProfile: value.jobProfile,
-      jobOccupation: value.jobOccupation,
+      jobProfile: value.jobProfileId,
+      jobOccupation: value.jobOccupationId,
       experienceType: value.experienceType,
       fromDate: value.fromDate,
       toDate: value.toDate,
-      countryName: value.countryName,
-      stateName: value.stateName,
-      certificateImage: value.certificateImage,
+      countryName: value.countryId,
+      stateName: value.stateId,
+      certificateImage: '',
     });
   };
   const emptyField = () => {
@@ -448,13 +456,29 @@ const ExperienceScreen = () => {
             <ScrollView style={{marginTop: 15}}>
               {addForm == 'Edit' ? (
                 <Pressable style={{marginBottom: 15}} onPress={pickDocument}>
-                  <Image
-                    source={require('../images/certificatePrev.png')}
-                    style={{width: '100%', height: 100, resizeMode: 'contain'}}
-                  />
-
+                  {experienceForm.certificateImage != '' ? (
+                    <Image
+                      source={require('../images/certificatePrev.png')}
+                      style={{
+                        width: '100%',
+                        height: 100,
+                        resizeMode: 'contain',
+                      }}
+                    />
+                  ) : (
+                    <Image
+                      style={{
+                        width: '100%',
+                        height: 100,
+                        resizeMode: 'contain',
+                      }}
+                      source={{
+                        uri: editExtraField.certificateImagePrev,
+                      }}
+                    />
+                  )}
                   <View>
-                    {experienceForm.certificateImage == '' ? (
+                    {editExtraField.certificateImagePrev == '' ? (
                       <Text
                         style={{
                           fontSize: 13,
@@ -470,6 +494,7 @@ const ExperienceScreen = () => {
                           flexDirection: 'row',
                           justifyContent: 'center',
                           alignItems: 'center',
+                          marginTop:10
                         }}>
                         <Text
                           style={{
@@ -478,8 +503,9 @@ const ExperienceScreen = () => {
                             textAlign: 'center',
                             color: '#035292',
                             marginEnd: 20,
+                            
                           }}>
-                          Selected
+                          {experienceForm.certificateImage =="" ? "Upload": "Selected"} 
                         </Text>
                         <Pressable
                           onPress={() =>
@@ -555,38 +581,45 @@ const ExperienceScreen = () => {
                   })
                 }
               />
-              {addForm=="Edit" ? <TextInput editable={false} style={styles.input} value={experienceForm.jobProfile}></TextInput>:<View style={styles.picker}>
-                <Picker
-                  selectedValue={experienceForm.jobProfile}
-                  onValueChange={(itemValue, itemIndex) => {
-                    getSkillListByOccuId(itemValue);
-                    setExperienceForm({
-                      ...experienceForm,
-                      jobProfile: itemValue,
-                    });
-                  }}>
-                  <Picker.Item
-                    // label="Select Working Department"
-                    label={
-                      experienceForm?.jobProfile
-                        ? experienceForm.jobProfile
-                        : 'Select Working Department'
-                    }
-                    value={editExtraField.jobProfileId}
-                    style={{color: 'gray'}}
-                  />
-                  {occupations.map((v, i) => {
-                    return (
-                      <Picker.Item
-                        label={v.occupation}
-                        value={v.id}
-                        style={{color: 'gray'}}
-                      />
-                    );
-                  })}
-                </Picker>
-              </View>}
-              
+              {addForm == 'Edit' ? (
+                <TextInput
+                  editable={false}
+                  style={styles.input}
+                  value={editExtraField.viewJobProfile}></TextInput>
+              ) : (
+                <View style={styles.picker}>
+                  <Picker
+                    selectedValue={experienceForm.jobProfile}
+                    onValueChange={(itemValue, itemIndex) => {
+                      getSkillListByOccuId(itemValue);
+                      setExperienceForm({
+                        ...experienceForm,
+                        jobProfile: itemValue,
+                      });
+                    }}>
+                    <Picker.Item
+                      // label="Select Working Department"
+                      label={
+                        experienceForm?.jobProfile
+                          ? experienceForm.jobProfile
+                          : 'Select Working Department'
+                      }
+                      value={editExtraField.jobProfileId}
+                      style={{color: 'gray'}}
+                    />
+                    {occupations.map((v, i) => {
+                      return (
+                        <Picker.Item
+                          label={v.occupation}
+                          value={v.id}
+                          style={{color: 'gray'}}
+                        />
+                      );
+                    })}
+                  </Picker>
+                </View>
+              )}
+
               {experienceForm.jobProfile != '' && (
                 <View style={styles.picker}>
                   <Picker
@@ -599,8 +632,8 @@ const ExperienceScreen = () => {
                     }}>
                     <Picker.Item
                       label={
-                        experienceForm?.jobOccupation
-                          ? experienceForm?.jobOccupation
+                        editExtraField?.viewOccupation
+                          ? editExtraField?.viewOccupation
                           : 'Select Occupation'
                       }
                       value={editExtraField.jobOccupationId}
@@ -618,36 +651,46 @@ const ExperienceScreen = () => {
                   </Picker>
                 </View>
               )}
-              {addForm=="Edit" ? <TextInput editable={false} style={styles.input} value={experienceForm.experienceType=="national" ? "Inside India":"Outside"}></TextInput>:<View style={styles.picker}>
-                <Picker
-                  selectedValue={experienceForm.experienceType}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setExperienceForm({
-                      ...experienceForm,
-                      experienceType: itemValue,
-                    });
-                  }}>
-                  <Picker.Item
-                    label="Experience Type"
-                    value=""
-                    style={{color: 'gray'}}
-                  />
+              {addForm == 'Edit' ? (
+                <TextInput
+                  editable={false}
+                  style={styles.input}
+                  value={
+                    experienceForm.experienceType == 'national'
+                      ? 'Inside India'
+                      : 'Outside'
+                  }></TextInput>
+              ) : (
+                <View style={styles.picker}>
+                  <Picker
+                    selectedValue={experienceForm.experienceType}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setExperienceForm({
+                        ...experienceForm,
+                        experienceType: itemValue,
+                      });
+                    }}>
+                    <Picker.Item
+                      label="Experience Type"
+                      value=""
+                      style={{color: 'gray'}}
+                    />
 
-                  <Picker.Item
-                    label="Inside India"
-                    value="national"
-                    style={{color: 'gray'}}
-                  />
-                  <Picker.Item
-                    label="Outside India"
-                    value="international"
-                    style={{color: 'gray'}}
-                  />
+                    <Picker.Item
+                      label="Inside India"
+                      value="national"
+                      style={{color: 'gray'}}
+                    />
+                    <Picker.Item
+                      label="Outside India"
+                      value="international"
+                      style={{color: 'gray'}}
+                    />
 
-                  {/* Add more Picker.Item as needed */}
-                </Picker>
-              </View>
-}
+                    {/* Add more Picker.Item as needed */}
+                  </Picker>
+                </View>
+              )}
               {experienceForm.experienceType == 'national' && (
                 <View style={styles.picker}>
                   <Picker
@@ -660,11 +703,11 @@ const ExperienceScreen = () => {
                     }}>
                     <Picker.Item
                       label={
-                        experienceForm.stateName
-                          ? experienceForm.stateName
+                        editExtraField.viewState
+                          ? editExtraField.viewState
                           : 'Select state'
                       }
-                      value={editExtraField.stateId}
+                      value={experienceForm.stateId}
                       style={{color: 'gray'}}
                     />
 

@@ -123,7 +123,7 @@ export const editExperienceStepApi = async (formData, access_token) => {
     throw error;
   }
 };
-export const getAllExperience = async ( access_token) => {
+export const getAllExperience = async (access_token) => {
   try {
     const response = await axios.get(BASE_URL+"experience-list", {
       headers: {

@@ -270,7 +270,17 @@ const MyProfile = props => {
                   </Text>
                 </View>
               </Pressable>
-
+              <Pressable
+                onPress={() => props.navigation.navigate('My Experience')}>
+                <View style={styles.navItem}>
+                  <Image
+                    source={require('../images/jobIcon.png')}
+                    resizeMode="contain"
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>Experience</Text>
+                </View>
+              </Pressable>
               <Pressable
                 onPress={() => props.navigation.navigate('Contact Us')}>
                 <View style={styles.navItem}>
