@@ -15,6 +15,8 @@ import {
   addPassportApi,
   getPassportDetails,
   editPassportApi,
+  addCvApi,
+  addCovidCertificateApi
 } from '../services/user.service';
 import Toast from 'react-native-toast-message';
 import {useGlobalState} from '../GlobalProvider';
@@ -42,8 +44,53 @@ const MyDocument = props => {
     });
   };
   // function to upload cv
-  const uploadCv = () => {
-    console.warn('passport upload CV');
+  const uploadCv = async() => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf], // You can specify the types of documents to pick
+      });
+      const formData = new FormData()
+      formData.append("empCV", {
+        uri: result[0].uri,
+        type: result[0].type,
+        name: result[0].name,
+      })
+      let response = await addCvApi(formData, JSON.parse(user).access_token)
+      if(response.data.msg=="CV uploaded successfully."){
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'CV uploaded successfully.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+      if(response.data.msg=="CV already uploaded."){
+        Toast.show({
+          type: 'info', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'CV already uploaded.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        Toast.show({
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'No file Selected',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+        // User canceled the document picker
+      } else {
+        Toast.show({
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'Internal server error',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+    }
   };
 
   // function to upload EXPERIENCE
@@ -53,6 +100,54 @@ const MyDocument = props => {
   // function to upload dl
   const uploadDl = () => {
     console.warn('passport upload dl');
+  };
+  // function to upload covid
+  const uploadCovid = async() => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf], // You can specify the types of documents to pick
+      });
+      const formData = new FormData()
+      formData.append("covidCertificate", {
+        uri: result[0].uri,
+        type: result[0].type,
+        name: result[0].name,
+      })
+      let response = await addCovidCertificateApi(formData, JSON.parse(user).access_token)
+      if(response.data.msg=="Covid certificate uploaded successfully."){
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'Covid certificate uploaded successfully.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+      if(response.data.msg=="Covid certificate already uploaded."){
+        Toast.show({
+          type: 'info', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'Covid certificate already uploaded.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        Toast.show({
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'No file selected',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      } else {
+        Toast.show({
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'Internal server error',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+    }
   };
 
   // Add Passport func
@@ -288,7 +383,7 @@ const MyDocument = props => {
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{translation.passport}</Text>
             <Button title="Upload" onPress={uploadPassport} />
-            <Button title="View/edit" onPress={setPassportEdit} />
+            <Button title="View" onPress={setPassportEdit} />
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{translation.experienceCertificate}</Text>
@@ -304,7 +399,7 @@ const MyDocument = props => {
         </View> */}
           <View style={styles.buttonBox}>
             <Text style={styles.text}>Covid Certificate</Text>
-            <Button title="Upload" onPress={uploadDl} />
+            <Button title="Upload" onPress={uploadCovid} />
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>Education Certificate</Text>
@@ -617,6 +712,7 @@ const MyDocument = props => {
           </View>
         </View>
       </Modal>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 };
