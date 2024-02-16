@@ -245,7 +245,7 @@ const Help = props => {
         <TouchableOpacity style={styles.submitBtn} onPress={sendQuery}>
           <Text style={styles.subBtnText}>Submit</Text>
         </TouchableOpacity>
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
@@ -265,7 +265,7 @@ const Help = props => {
             }}>
             Support?
           </Text>
-        </View>
+        </View> */}
       </ScrollView>
 
       <Toast ref={ref => Toast.setRef(ref)} />

@@ -28,6 +28,8 @@ import SavedJobs from '../screens/SavedJobs';
 import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Welcome from '../screens/Welcome';
+
 const CustomDrawerContent = props => {
   console.log(props.navigation.getState());
   const {navigation} = props;
@@ -244,11 +246,13 @@ const CustomDrawerContent = props => {
                 top: 20,
               }}>
               <Text style={{color: 'white', fontSize: 10}}>
-                {globalState?.profileStrength?.emptyFields?.filter?.(
+                {
+                  globalState?.profileStrength?.emptyFields?.filter?.(
                     (v, i) => {
                       return !v.complete;
                     },
-                  ).length}
+                  ).length
+                }
               </Text>
             </View>
           </TouchableOpacity>
@@ -352,11 +356,13 @@ const CustomDrawerContent = props => {
       );
     }, [props.navigation.getState()]),
   );
+
   return (
     <>
       <DrawerContentScrollView>
         <TouchableOpacity
           onPress={() => {
+            globalState?.profileStrength?.profileStrength && 
             navigation.navigate('MyProfile');
           }}>
           <View
@@ -365,9 +371,9 @@ const CustomDrawerContent = props => {
               <Image
                 source={require('../images/dummyUserProfile.jpg')}
                 style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 20,
+                  height: 50,
+                  width: 50,
+                  borderRadius: 25,
                   marginRight: 10,
                 }}
               />
@@ -377,9 +383,9 @@ const CustomDrawerContent = props => {
                   uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
                 }}
                 style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 20,
+                  height: 50,
+                  width: 50,
+                  borderRadius: 25,
                   marginRight: 10,
                 }}
               />
@@ -389,14 +395,28 @@ const CustomDrawerContent = props => {
               <Text style={styles.userName}>
                 {JSON.parse(globalState?.user)?.empData?.empName}
               </Text>
-              <Text style={{color: '#00111F', fontSize: 11}}>
+              <Text style={{color: '#00111F', fontSize: 12}}>
                 Profile Strength {globalState?.profileStrength?.profileStrength}
                 %
               </Text>
             </View>
           </View>
         </TouchableOpacity>
-
+        <View style={{borderWidth: 0.4, height: 2, marginBottom: 10}}>
+          <View
+            style={{
+              width: globalState?.profileStrength?.profileStrength
+                ? globalState?.profileStrength?.profileStrength + '%'
+                : '0%',
+              backgroundColor:
+                globalState?.profileStrength?.profileStrength < 30
+                  ? '#dc3545'
+                  : globalState?.profileStrength?.profileStrength > 70
+                  ? '#079E3F'
+                  : '#007BFF',
+              height: 1.4,
+            }}></View>
+        </View>
         {renderNavItem()}
         {/* Normal text in the drawer */}
         <Text style={styles.version}>App Version:v1.4.8</Text>
@@ -528,6 +548,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: '700',
     fontFamily: 'Noto Sans',
-    fontSize: 13,
+    fontSize: 16,
+    letterSpacing: 0.5,
   },
 });

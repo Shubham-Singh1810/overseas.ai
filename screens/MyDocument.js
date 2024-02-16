@@ -31,6 +31,7 @@ import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getCountries, getState} from '../services/info.service';
 import MyMultipleSelectPopUp from '../components/MyMultipleSelectPopUp';
+import MyFileViewer from '../components/MyFileViewer';
 const MyDocument = props => {
   const [countryList, setCountryList] = useState([]);
   const getCountryList = async () => {
@@ -562,11 +563,18 @@ const MyDocument = props => {
     document_type: '',
     document_image: '',
   });
+  const [dovViewPopUp, setDovViewPopUp] = useState(true);
+  const callViewDoc = () => {
+    setDovViewPopUp(true);
+    return;
+  };
+
   const pickDocumentOtherDoc = async docType => {
     try {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf], // You can specify the types of documents to pick
       });
+
       let user = await AsyncStorage.getItem('user');
       const formData = new FormData();
       formData.append('document_type', docType);
@@ -583,8 +591,6 @@ const MyDocument = props => {
           text1: 'Document Uploaded Successfully',
           visibilityTime: 3000, // Duration in milliseconds
         });
-        
-        
       } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
@@ -603,6 +609,7 @@ const MyDocument = props => {
     }
   };
   const [showOptionForOtherDoc, setShowOptionForOtherDoc] = useState(false);
+
   return (
     <>
       <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
@@ -623,9 +630,6 @@ const MyDocument = props => {
               </View>
               <Image source={require('../images/rectangle.png')} />
             </View>
-            <Text style={styles.blueText}>
-              {translation.clickEditToMakeChanges}
-            </Text>
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>Custom CV</Text>
@@ -679,23 +683,38 @@ const MyDocument = props => {
               </View>
               <View style={styles.buttonBox}>
                 <Text style={styles.text}>Vocational</Text>
-                <Button title="Upload" onPress={() => pickDocumentOtherDoc('Vocational')} />
+                <Button
+                  title="Upload"
+                  onPress={() => pickDocumentOtherDoc('Vocational')}
+                />
               </View>
               <View style={styles.buttonBox}>
                 <Text style={styles.text}>Computer</Text>
-                <Button title="Upload" onPress={() => pickDocumentOtherDoc('Computer')} />
+                <Button
+                  title="Upload"
+                  onPress={() => pickDocumentOtherDoc('Computer')}
+                />
               </View>
               <View style={styles.buttonBox}>
                 <Text style={styles.text}>Trade Test</Text>
-                <Button title="Upload" onPress={() => pickDocumentOtherDoc('TradeTest')} />
+                <Button
+                  title="Upload"
+                  onPress={() => pickDocumentOtherDoc('TradeTest')}
+                />
               </View>
               <View style={styles.buttonBox}>
                 <Text style={styles.text}>Aadhaar</Text>
-                <Button title="Upload" onPress={() => pickDocumentOtherDoc('Aadhaar')} />
+                <Button
+                  title="Upload"
+                  onPress={() => pickDocumentOtherDoc('Aadhaar')}
+                />
               </View>
               <View style={styles.buttonBox}>
                 <Text style={styles.text}>PAN</Text>
-                <Button title="Upload" onPress={() => pickDocumentOtherDoc('PAN')}  />
+                <Button
+                  title="Upload"
+                  onPress={() => pickDocumentOtherDoc('PAN')}
+                />
               </View>
             </View>
           )}
@@ -1348,7 +1367,7 @@ const MyDocument = props => {
           </View>
         </View>
       </Modal>
-      
+
       <MyMultipleSelectPopUp
         title="Select Licence Category"
         toggle={showLicenceCat}
@@ -1375,7 +1394,12 @@ const MyDocument = props => {
           setDlFormData({...dlFormData, licenceCategory: value})
         }
       />
-
+      <MyFileViewer
+        title="You have Selected"
+        url=""
+        toggle={false}
+        setToggle={setDovViewPopUp}
+      />
       <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
@@ -1438,7 +1462,6 @@ const styles = StyleSheet.create({
   },
   grayText: {
     textAlign: 'center',
-    color: '#B3B3B3',
     fontSize: 12,
     fontWeight: '500',
     fontFamily: 'Nato Sans',

@@ -36,13 +36,51 @@ const RightNav = props => {
     <>
       <View style={styles.topNav}>
         <View style={{flexDirection: 'row'}}>
-          <Pressable
-            onPress={() => props.navigation.navigate('Notifications')}
+          {notificationList?.newJobs?.length +
+                  parseInt(notificationList?.notifications?.length) +
+                  globalState?.profileStrength?.emptyFields?.filter?.(
+                    (v, i) => {
+                      return !v.complete;
+                    },
+                  ).length ? <Pressable
+                  onPress={() => props.navigation.navigate('Notifications')}
+                  style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    marginRight: 0,
+                  }}>
+                  <Image source={require('../images/blackBell.png')} />
+                  <View
+                    style={{
+                      backgroundColor: '#D31416',
+                      position: 'relative',
+                      right: 6,
+                      top: 8,
+                      borderRadius: 8,
+                      height: 16,
+                      width: 16,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text style={{fontSize: 7, color: '#fff'}}>
+                      {' '}
+                      {notificationList?.newJobs?.length +
+                        parseInt(notificationList?.notifications?.length) +
+                        globalState?.profileStrength?.emptyFields?.filter?.(
+                          (v, i) => {
+                            return !v.complete;
+                          },
+                        ).length}
+                    </Text>
+                  </View>
+                </Pressable>:<Pressable
             style={{
               alignItems: 'center',
               flexDirection: 'row',
               marginRight: 0,
-            }}>
+            }}
+            onPress={() => props.navigation.navigate('Notifications')}>
             <Image source={require('../images/blackBell.png')} />
             <View
               style={{
@@ -58,18 +96,13 @@ const RightNav = props => {
                 alignItems: 'center',
               }}>
               <Text style={{fontSize: 7, color: '#fff'}}>
-                {' '}
-                {notificationList?.newJobs?.length +
-                  parseInt(notificationList?.notifications?.length) +
-                  globalState?.profileStrength?.emptyFields?.filter?.(
-                    (v, i) => {
-                      return !v.complete;
-                    },
-                  ).length}
+                0
               </Text>
-              <Text></Text>
+              
             </View>
-          </Pressable>
+          </Pressable>}
+          
+          
           {/* <Pressable
             onPress={() => setShowModal(true)}
             style={{alignItems: 'center', flexDirection: 'row'}}>
