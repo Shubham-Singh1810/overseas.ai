@@ -37,72 +37,69 @@ const RightNav = props => {
       <View style={styles.topNav}>
         <View style={{flexDirection: 'row'}}>
           {notificationList?.newJobs?.length +
-                  parseInt(notificationList?.notifications?.length) +
-                  globalState?.profileStrength?.emptyFields?.filter?.(
-                    (v, i) => {
-                      return !v.complete;
-                    },
-                  ).length ? <Pressable
-                  onPress={() => props.navigation.navigate('Notifications')}
-                  style={{
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    marginRight: 0,
-                  }}>
-                  <Image source={require('../images/blackBell.png')} />
-                  <View
-                    style={{
-                      backgroundColor: '#D31416',
-                      position: 'relative',
-                      right: 6,
-                      top: 8,
-                      borderRadius: 8,
-                      height: 16,
-                      width: 16,
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Text style={{fontSize: 7, color: '#fff'}}>
-                      {' '}
-                      {notificationList?.newJobs?.length +
-                        parseInt(notificationList?.notifications?.length) +
-                        globalState?.profileStrength?.emptyFields?.filter?.(
-                          (v, i) => {
-                            return !v.complete;
-                          },
-                        ).length}
-                    </Text>
-                  </View>
-                </Pressable>:<Pressable
-            style={{
-              alignItems: 'center',
-              flexDirection: 'row',
-              marginRight: 0,
-            }}
-            onPress={() => props.navigation.navigate('Notifications')}>
-            <Image source={require('../images/blackBell.png')} />
-            <View
+          parseInt(notificationList?.notifications?.length) +
+          globalState?.profileStrength?.emptyFields?.filter?.((v, i) => {
+            return !v.complete;
+          }).length ? (
+            <Pressable
               style={{
-                backgroundColor: '#D31416',
-                position: 'relative',
-                right: 6,
-                top: 8,
-                borderRadius: 8,
-                height: 16,
-                width: 16,
-                flexDirection: 'row',
-                justifyContent: 'center',
                 alignItems: 'center',
+                flexDirection: 'row',
+                marginRight: 0,
               }}>
-              <Text style={{fontSize: 7, color: '#fff'}}>
-                0
-              </Text>
-              
-            </View>
-          </Pressable>}
-          
-          
+              <Image source={require('../images/blackBell.png')} />
+              <View
+                style={{
+                  backgroundColor: '#D31416',
+                  position: 'relative',
+                  right: 6,
+                  top: 8,
+                  borderRadius: 8,
+                  height: 16,
+                  width: 16,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={{fontSize: 7, color: '#fff'}}>
+                  {' '}
+                  {notificationList?.newJobs?.length +
+                    parseInt(notificationList?.notifications?.length) +
+                    globalState?.profileStrength?.emptyFields?.filter?.(
+                      (v, i) => {
+                        return !v.complete;
+                      },
+                    ).length}
+                </Text>
+              </View>
+            </Pressable>
+          ) : (
+            <Pressable
+              style={{
+                alignItems: 'center',
+                flexDirection: 'row',
+                marginRight: 0,
+              }}
+              onPress={() => props.navigation.navigate('Notifications')}>
+              <Image source={require('../images/blackBell.png')} />
+              <View
+                style={{
+                  backgroundColor: '#D31416',
+                  position: 'relative',
+                  right: 6,
+                  top: 8,
+                  borderRadius: 8,
+                  height: 16,
+                  width: 16,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={{fontSize: 7, color: '#fff'}}>0</Text>
+              </View>
+            </Pressable>
+          )}
+
           {/* <Pressable
             onPress={() => setShowModal(true)}
             style={{alignItems: 'center', flexDirection: 'row'}}>

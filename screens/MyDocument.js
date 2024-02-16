@@ -10,7 +10,7 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   addPassportApi,
   getPassportDetails,
@@ -22,23 +22,25 @@ import {
   addOtherDoc,
 } from '../services/user.service';
 import Toast from 'react-native-toast-message';
-import {useGlobalState} from '../GlobalProvider';
+import { useGlobalState } from '../GlobalProvider';
 import DocumentUploader from '../components/DocumentUploader';
 import DatePicker from 'react-native-modern-datepicker';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getCountries, getState} from '../services/info.service';
+import { getCountries, getState } from '../services/info.service';
 import MyMultipleSelectPopUp from '../components/MyMultipleSelectPopUp';
 import MyFileViewer from '../components/MyFileViewer';
+import { getAllDocApi } from '../services/user.service';
+import Pdf from 'react-native-pdf';
 const MyDocument = props => {
   const [countryList, setCountryList] = useState([]);
   const getCountryList = async () => {
     try {
       let response = await getCountries();
       setCountryList(response?.countries);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const [stateList, setStateList] = useState([]);
@@ -54,7 +56,7 @@ const MyDocument = props => {
     getCountryList();
     getStateList();
   }, []);
-  const {translation} = useGlobalState();
+  const { translation } = useGlobalState();
   // function to upload passport
   const uploadPassport = () => {
     setShowPassportPopUp(true);
@@ -91,14 +93,14 @@ const MyDocument = props => {
           visibilityTime: 3000, // Duration in milliseconds
         });
       }
-      if (response.data.msg == 'CV already uploaded.') {
-        Toast.show({
-          type: 'info', // 'success', 'error', 'info', or any custom type you define
-          position: 'top',
-          text1: 'CV already uploaded.',
-          visibilityTime: 3000, // Duration in milliseconds
-        });
-      }
+      // if (response.data.msg == 'CV already uploaded.') {
+      //   Toast.show({
+      //     type: 'info', // 'success', 'error', 'info', or any custom type you define
+      //     position: 'top',
+      //     text1: 'CV already uploaded.',
+      //     visibilityTime: 3000, // Duration in milliseconds
+      //   });
+      // }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         Toast.show({
@@ -207,7 +209,7 @@ const MyDocument = props => {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
-      setDlFormData({...dlFormData, licenseImage: result[0]});
+      setDlFormData({ ...dlFormData, licenseImage: result[0] });
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -224,7 +226,7 @@ const MyDocument = props => {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
-      setDlFormData({...dlFormData, licenceBackImage: result[0]});
+      setDlFormData({ ...dlFormData, licenceBackImage: result[0] });
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -377,7 +379,7 @@ const MyDocument = props => {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
-      setPassportForm({...passportForm, frontPage: result[0]});
+      setPassportForm({ ...passportForm, frontPage: result[0] });
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -394,7 +396,7 @@ const MyDocument = props => {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
-      setPassportForm({...passportForm, backPage: result[0]});
+      setPassportForm({ ...passportForm, backPage: result[0] });
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -564,10 +566,6 @@ const MyDocument = props => {
     document_image: '',
   });
   const [dovViewPopUp, setDovViewPopUp] = useState(true);
-  const callViewDoc = () => {
-    setDovViewPopUp(true);
-    return;
-  };
 
   const pickDocumentOtherDoc = async docType => {
     try {
@@ -609,18 +607,29 @@ const MyDocument = props => {
     }
   };
   const [showOptionForOtherDoc, setShowOptionForOtherDoc] = useState(false);
-
+  const [allDocListDetail, setAllDocListDetails] = useState('');
+  const getAllDocList = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getAllDocApi(JSON.parse(user).access_token);
+      setAllDocListDetails(response.data);
+      console.log(response.data.otherDocs);
+    } catch (error) { }
+  };
+  useEffect(() => {
+    getAllDocList();
+  }, []);
   return (
     <>
-      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={styles.main}>
           <Text style={styles.messageText}>
             {translation.saveAllYourImportantDocumentsHere}
           </Text>
-          <View style={{paddingBottom: 6}}>
+          <View style={{ paddingBottom: 6 }}>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{alignItems: 'flex-end', flexDirection: 'row'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View style={{ alignItems: 'flex-end', flexDirection: 'row' }}>
                 <View>
                   <Text style={styles.text}>Overseas CV</Text>
                   <Text style={styles.noteText}>
@@ -633,20 +642,61 @@ const MyDocument = props => {
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>Custom CV</Text>
-            <Button title="Upload" onPress={uploadCv} />
+            {allDocListDetail?.cv?.cv ? (
+              <Pressable
+                onPress={uploadCv}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}>
+                <Pdf
+                  trustAllCerts={false}
+                  source={{ uri: allDocListDetail?.cv?.cv, cache: true }}
+                  onLoadComplete={(numberOfPages, filePath) => {
+                    console.log(`number of pages: ${numberOfPages}`);
+                  }}
+                  onPageChanged={(page, numberOfPages) => {
+                    console.log(`current page: ${page}`);
+                  }}
+                  onError={error => {
+                    console.log(error);
+                  }}
+                  onPressLink={uri => {
+                    console.log(`Link presse: ${uri}`);
+                  }}
+                  style={{ height: 60, width: 40 }}
+                />
+                <Text
+                  style={{ color: '#035292', fontWeight: '500', fontSize: 10 }}>
+                  Update
+                </Text>
+              </Pressable>
+            ) : (
+              <Button title="Upload" onPress={uploadCv} />
+            )}
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{translation.passport}</Text>
-            <Button title="Upload" onPress={uploadPassport} />
-            <Button title="View" onPress={setPassportEdit} />
+            {allDocListDetail?.passportData ? (
+              <Button title="View" onPress={setPassportEdit} />
+            ) : (
+              <Button title="Upload" onPress={uploadPassport} />
+            )}
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{translation.experienceCertificate}</Text>
-            <Button title="Upload" onPress={uploadExperience} />
+            <Button
+              title={
+                allDocListDetail?.experienceList?.length > 0 ? 'View' : 'Upload'
+              }
+              onPress={uploadExperience}
+            />
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{translation.drivingLicense}</Text>
             <Button title="Upload" onPress={uploadDl} />
+
           </View>
           {/* <View style={styles.buttonBox}>
             <Text style={styles.text}>{translation.jobPermit}</Text>
@@ -654,11 +704,77 @@ const MyDocument = props => {
         </View> */}
           <View style={styles.buttonBox}>
             <Text style={styles.text}>Covid Certificate</Text>
-            <Button title="Upload" onPress={uploadCovid} />
+            {allDocListDetail?.covidCertificate?.covidCertificate ? (
+              <Pressable
+                onPress={uploadCv}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}>
+                <Pdf
+                  trustAllCerts={false}
+                  source={{ uri: allDocListDetail?.covidCertificate?.covidCertificate, cache: true }}
+                  onLoadComplete={(numberOfPages, filePath) => {
+                    console.log(`number of pages: ${numberOfPages}`);
+                  }}
+                  onPageChanged={(page, numberOfPages) => {
+                    console.log(`current page: ${page}`);
+                  }}
+                  onError={error => {
+                    console.log(error);
+                  }}
+                  onPressLink={uri => {
+                    console.log(`Link presse: ${uri}`);
+                  }}
+                  style={{ height: 60, width: 40 }}
+                />
+                <Text
+                  style={{ color: '#035292', fontWeight: '500', fontSize: 10 }}>
+                  Update
+                </Text>
+              </Pressable>
+            ) : (
+              <Button title="Upload" onPress={uploadCovid} />
+            )}
+
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>Education Certificate</Text>
-            <Button title="Upload" onPress={uploadEducationCertificate} />
+            {allDocListDetail?.highEduCertificate?.certificate ? (
+              <Pressable
+                onPress={uploadCv}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}>
+                <Pdf
+                  trustAllCerts={false}
+                  source={{ uri: allDocListDetail?.highEduCertificate?.certificate, cache: true }}
+                  onLoadComplete={(numberOfPages, filePath) => {
+                    console.log(`number of pages: ${numberOfPages}`);
+                  }}
+                  onPageChanged={(page, numberOfPages) => {
+                    console.log(`current page: ${page}`);
+                  }}
+                  onError={error => {
+                    console.log(error);
+                  }}
+                  onPressLink={uri => {
+                    console.log(`Link presse: ${uri}`);
+                  }}
+                  style={{ height: 60, width: 40 }}
+                />
+                <Text
+                  style={{ color: '#035292', fontWeight: '500', fontSize: 10 }}>
+                  Update
+                </Text>
+              </Pressable>
+            ) : (
+              <Button title="Upload" onPress={uploadEducationCertificate} />
+            )}
+
           </View>
           <Pressable
             style={styles.buttonBox}
@@ -757,7 +873,7 @@ const MyDocument = props => {
                 alignItems: 'center',
                 marginBottom: 15,
               }}>
-              <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
+              <Text style={{ fontSize: 20, color: 'black', fontWeight: '600' }}>
                 {passportFormType} Passport
               </Text>
 
@@ -768,7 +884,7 @@ const MyDocument = props => {
                 <Image source={require('../images/close.png')} />
               </TouchableOpacity>
             </View>
-            <ScrollView style={{marginTop: 20}}>
+            <ScrollView style={{ marginTop: 20 }}>
               <TextInput
                 placeholder="Enter Passport Number"
                 style={styles.input}
@@ -791,17 +907,17 @@ const MyDocument = props => {
                   <Picker.Item
                     label="Select Passport Category"
                     value=""
-                    style={{color: 'gray'}}
+                    style={{ color: 'gray' }}
                   />
                   <Picker.Item
                     label="ECR"
                     value="ECR"
-                    style={{color: 'gray'}}
+                    style={{ color: 'gray' }}
                   />
                   <Picker.Item
                     label="ECNR"
                     value="ECNR"
-                    style={{color: 'gray'}}
+                    style={{ color: 'gray' }}
                   />
                 </Picker>
               </View>
@@ -810,11 +926,11 @@ const MyDocument = props => {
                 style={styles.input}
                 value={passportForm.placeOfIssue}
                 onChangeText={text =>
-                  setPassportForm({...passportForm, placeOfIssue: text})
+                  setPassportForm({ ...passportForm, placeOfIssue: text })
                 }></TextInput>
               <TouchableOpacity
                 onPress={() => setShowPassportIssueCalender(true)}
-                style={[styles.input, {marginBottom: 15, padding: 17}]}>
+                style={[styles.input, { marginBottom: 15, padding: 17 }]}>
                 <Text>
                   {passportForm.passportIssueDate == ''
                     ? 'Passport Issue Date'
@@ -823,7 +939,7 @@ const MyDocument = props => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setShowPassportExpCalender(true)}
-                style={[styles.input, {marginBottom: 15, padding: 17}]}>
+                style={[styles.input, { marginBottom: 15, padding: 17 }]}>
                 <Text>
                   {passportForm.passportExpDate == ''
                     ? 'Passport Expriry Date'
@@ -851,7 +967,7 @@ const MyDocument = props => {
                   }}>
                   <Image
                     source={require('../images/passportIcon.png')}
-                    style={{height: 120, width: 100}}
+                    style={{ height: 120, width: 100 }}
                   />
                   {passportFormType == 'Add' ? (
                     <Text
@@ -889,7 +1005,7 @@ const MyDocument = props => {
                   }}>
                   <Image
                     source={require('../images/passportIcon.png')}
-                    style={{height: 120, width: 100}}
+                    style={{ height: 120, width: 100 }}
                   />
                   {passportFormType == 'Add' ? (
                     <Text
@@ -950,7 +1066,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{ fontWeight: '600', fontSize: 20 }}>
                 Passport Issue Date
               </Text>
               <TouchableOpacity
@@ -1001,7 +1117,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{ fontWeight: '600', fontSize: 20 }}>
                 Passport Expire Date
               </Text>
               <TouchableOpacity
@@ -1042,7 +1158,7 @@ const MyDocument = props => {
                 alignItems: 'center',
                 marginBottom: 15,
               }}>
-              <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
+              <Text style={{ fontSize: 20, color: 'black', fontWeight: '600' }}>
                 {dlFormType} Driving License
               </Text>
 
@@ -1053,7 +1169,7 @@ const MyDocument = props => {
                 <Image source={require('../images/close.png')} />
               </TouchableOpacity>
             </View>
-            <ScrollView style={{marginTop: 20}}>
+            <ScrollView style={{ marginTop: 20 }}>
               <TextInput
                 placeholder="Enter Licence Number"
                 style={styles.input}
@@ -1076,17 +1192,17 @@ const MyDocument = props => {
                   <Picker.Item
                     label="Select Licence Location"
                     value=""
-                    style={{color: 'gray'}}
+                    style={{ color: 'gray' }}
                   />
                   <Picker.Item
                     label="National"
                     value="national"
-                    style={{color: 'gray'}}
+                    style={{ color: 'gray' }}
                   />
                   <Picker.Item
                     label="International"
                     value="international"
-                    style={{color: 'gray'}}
+                    style={{ color: 'gray' }}
                   />
                 </Picker>
               </View>
@@ -1104,14 +1220,14 @@ const MyDocument = props => {
                     <Picker.Item
                       label="Select Country"
                       value=""
-                      style={{color: 'gray'}}
+                      style={{ color: 'gray' }}
                     />
                     {countryList?.map((v, i) => {
                       return (
                         <Picker.Item
                           label={v?.name}
                           value={v?.id}
-                          style={{color: 'gray'}}
+                          style={{ color: 'gray' }}
                         />
                       );
                     })}
@@ -1131,14 +1247,14 @@ const MyDocument = props => {
                     <Picker.Item
                       label="Select State"
                       value=""
-                      style={{color: 'gray'}}
+                      style={{ color: 'gray' }}
                     />
                     {stateList?.map((v, i) => {
                       return (
                         <Picker.Item
                           label={v?.name}
                           value={v?.id}
-                          style={{color: 'gray'}}
+                          style={{ color: 'gray' }}
                         />
                       );
                     })}
@@ -1147,7 +1263,7 @@ const MyDocument = props => {
               )}
               <TouchableOpacity
                 onPress={() => setShowLicenceCat(true)}
-                style={[styles.input, {marginBottom: 15, padding: 17}]}>
+                style={[styles.input, { marginBottom: 15, padding: 17 }]}>
                 {dlFormData.licenceCategory == '' ? (
                   <Text>Select Licence Category</Text>
                 ) : (
@@ -1160,7 +1276,7 @@ const MyDocument = props => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setShowDlIssueCalender(true)}
-                style={[styles.input, {marginBottom: 15, padding: 17}]}>
+                style={[styles.input, { marginBottom: 15, padding: 17 }]}>
                 <Text>
                   {dlFormData.formDate == ''
                     ? 'Liecence Issue Date'
@@ -1169,7 +1285,7 @@ const MyDocument = props => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setShowDlExpCalender(true)}
-                style={[styles.input, {marginBottom: 15, padding: 17}]}>
+                style={[styles.input, { marginBottom: 15, padding: 17 }]}>
                 <Text>
                   {dlFormData.toDate == ''
                     ? 'Licence Expriry Date'
@@ -1178,7 +1294,7 @@ const MyDocument = props => {
               </TouchableOpacity>
 
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Pressable
                   onPress={pickDocumentForDlFrontImage}
                   style={{
@@ -1193,7 +1309,7 @@ const MyDocument = props => {
                   }}>
                   <Image
                     source={require('../images/dlIcon.png')}
-                    style={{height: 100, width: '100%', resizeMode: 'contain'}}
+                    style={{ height: 100, width: '100%', resizeMode: 'contain' }}
                   />
                   {passportFormType == 'Add' ? (
                     <Text
@@ -1231,7 +1347,7 @@ const MyDocument = props => {
                   }}>
                   <Image
                     source={require('../images/dlIcon.png')}
-                    style={{height: 100, width: '100%', resizeMode: 'contain'}}
+                    style={{ height: 100, width: '100%', resizeMode: 'contain' }}
                   />
                   {passportFormType == 'Add' ? (
                     <Text
@@ -1292,7 +1408,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{ fontWeight: '600', fontSize: 20 }}>
                 Liecence Issue Date
               </Text>
               <TouchableOpacity onPress={() => setShowDlIssueCalender(false)}>
@@ -1342,7 +1458,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{ fontWeight: '600', fontSize: 20 }}>
                 Liecence Expire Date
               </Text>
               <TouchableOpacity onPress={() => setShowDlExpCalender(false)}>
@@ -1378,20 +1494,20 @@ const MyDocument = props => {
             value: 'MCWG',
           },
 
-          {label: 'LMV', value: 'LMV'},
+          { label: 'LMV', value: 'LMV' },
 
-          {label: 'MGV', value: 'MGV'},
+          { label: 'MGV', value: 'MGV' },
 
-          {label: 'TRNS', value: 'TRNS'},
+          { label: 'TRNS', value: 'TRNS' },
           {
             label: 'HMV',
             value: 'HMV',
           },
 
-          {label: 'Other', value: 'Other'},
+          { label: 'Other', value: 'Other' },
         ]}
         callBackFunck={value =>
-          setDlFormData({...dlFormData, licenceCategory: value})
+          setDlFormData({ ...dlFormData, licenceCategory: value })
         }
       />
       <MyFileViewer

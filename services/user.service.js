@@ -352,3 +352,18 @@ export const submitLoanForm = async (formData, access_token) => {
     throw error;
   }
 };
+export const getAllDocApi = async (access_token) => {
+  
+  try {
+    const response = await axios.get(BASE_URL+"get-all-docs-by-user", {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
