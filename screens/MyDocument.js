@@ -562,46 +562,30 @@ const MyDocument = props => {
     document_type: '',
     document_image: '',
   });
-  const pickDocumentOtherDoc = async () => {
+  const pickDocumentOtherDoc = async docType => {
     try {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf], // You can specify the types of documents to pick
       });
-      setFormForOtherDoc({...formForOtherDoc, document_image: result[0]});
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User canceled the document picker
-      } else {
-        console.error('Error while picking a document', err);
-      }
-    }
-  };
-  const uploadOtherDoc = async () => {
-    let user = await AsyncStorage.getItem('user');
-
-    try {
+      let user = await AsyncStorage.getItem('user');
       const formData = new FormData();
-      formData.append('document_type', formForOtherDoc.document_type);
+      formData.append('document_type', docType);
       formData.append('document_image', {
-        uri: formForOtherDoc.document_image.uri,
-        type: formForOtherDoc.document_image.type,
-        name: formForOtherDoc.document_image.name,
+        uri: result[0].uri,
+        type: result[0].type,
+        name: result[0].name,
       });
       let response = await addOtherDoc(formData, JSON.parse(user).access_token);
-      if(response?.data?.msg=="Document uploaded successfully."){
+      if (response?.data?.msg == 'Document uploaded successfully.') {
         Toast.show({
           type: 'success', // 'success', 'error', 'info', or any custom type you define
           position: 'top',
           text1: 'Document Uploaded Successfully',
           visibilityTime: 3000, // Duration in milliseconds
         });
-        setOtherDocPopUp(false);
-        setFormForOtherDoc({
-          document_image:"",
-          document_type:"",
-        })
-      }
-      else{
+        
+        
+      } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           position: 'top',
@@ -609,15 +593,16 @@ const MyDocument = props => {
           visibilityTime: 3000, // Duration in milliseconds
         });
       }
-    } catch (error) {
-      Toast.show({
-        type: 'error', // 'success', 'error', 'info', or any custom type you define
-        position: 'top',
-        text1: 'Internal Server Error',
-        visibilityTime: 3000, // Duration in milliseconds
-      });
+    } catch (err) {
+      // setFormForOtherDoc({...formForOtherDoc, document_image: result[0]});
+      if (DocumentPicker.isCancel(err)) {
+        // User canceled the document picker
+      } else {
+        console.error('Error while picking a document', err);
+      }
     }
   };
+  const [showOptionForOtherDoc, setShowOptionForOtherDoc] = useState(false);
   return (
     <>
       <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
@@ -671,13 +656,56 @@ const MyDocument = props => {
             <Text style={styles.text}>Education Certificate</Text>
             <Button title="Upload" onPress={uploadEducationCertificate} />
           </View>
-          <Text style={styles.grayText}>
-            {translation.allYourDocumentsAreSafeWithUs}
-          </Text>
+          <Pressable
+            style={styles.buttonBox}
+            onPress={() => setShowOptionForOtherDoc(!showOptionForOtherDoc)}>
+            <Text style={styles.text}>Other Documents</Text>
+            {!showOptionForOtherDoc ? (
+              <Image source={require('../images/downArrow.png')} />
+            ) : (
+              <Image source={require('../images/upArrow.png')} />
+            )}
+
+            {/* <Button title="Upload"  /> */}
+          </Pressable>
+          {showOptionForOtherDoc && (
+            <View>
+              <View style={styles.buttonBox}>
+                <Text style={styles.text}>ITI</Text>
+                <Button
+                  title="Upload"
+                  onPress={() => pickDocumentOtherDoc('ITI')}
+                />
+              </View>
+              <View style={styles.buttonBox}>
+                <Text style={styles.text}>Vocational</Text>
+                <Button title="Upload" onPress={() => pickDocumentOtherDoc('Vocational')} />
+              </View>
+              <View style={styles.buttonBox}>
+                <Text style={styles.text}>Computer</Text>
+                <Button title="Upload" onPress={() => pickDocumentOtherDoc('Computer')} />
+              </View>
+              <View style={styles.buttonBox}>
+                <Text style={styles.text}>Trade Test</Text>
+                <Button title="Upload" onPress={() => pickDocumentOtherDoc('TradeTest')} />
+              </View>
+              <View style={styles.buttonBox}>
+                <Text style={styles.text}>Aadhaar</Text>
+                <Button title="Upload" onPress={() => pickDocumentOtherDoc('Aadhaar')} />
+              </View>
+              <View style={styles.buttonBox}>
+                <Text style={styles.text}>PAN</Text>
+                <Button title="Upload" onPress={() => pickDocumentOtherDoc('PAN')}  />
+              </View>
+            </View>
+          )}
         </View>
         {/* <DocumentUploader showPopup={true} name="CV"/> */}
       </ScrollView>
-      <Pressable onPress={() => setOtherDocPopUp(true)}>
+      <Text style={styles.grayText}>
+        {translation.allYourDocumentsAreSafeWithUs}
+      </Text>
+      {/* <Pressable onPress={() => setOtherDocPopUp(true)}>
         <Text
           style={[
             {
@@ -690,7 +718,7 @@ const MyDocument = props => {
           ]}>
           <Text>+ </Text> Add New Document
         </Text>
-      </Pressable>
+      </Pressable> */}
 
       {/* passport upload */}
       <Modal
@@ -1320,95 +1348,7 @@ const MyDocument = props => {
           </View>
         </View>
       </Modal>
-      <Modal transparent={true} visible={otherDocPopUp} animationType="slide">
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#FFF',
-          }}>
-          <View style={styles.modalMain}>
-            <View
-              style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: 15,
-                  width: '100%',
-                }}>
-                <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
-                  Upload Document
-                </Text>
-
-                <TouchableOpacity
-                  onPress={() => {
-                    setOtherDocPopUp(false);
-                  }}>
-                  <Image source={require('../images/close.png')} />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.picker}>
-                <Picker
-                  selectedValue={formForOtherDoc.document_type}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setFormForOtherDoc({
-                      ...formForOtherDoc,
-                      document_type: itemValue,
-                    });
-                  }}>
-                  <Picker.Item
-                    label="Select Document Type"
-                    value="Unknown"
-                    style={{color: 'gray'}}
-                  />
-                  <Picker.Item
-                    label="ITI"
-                    value="ITI"
-                    style={{color: 'gray'}}
-                  />
-                  <Picker.Item
-                    label="Vocational"
-                    value="Vocational"
-                    style={{color: 'gray'}}
-                  />
-                  <Picker.Item
-                    label="Technical"
-                    value="Technical"
-                    style={{color: 'gray'}}
-                  />
-
-                  <Picker.Item
-                    label="Trade Test"
-                    value="Trade Test"
-                    style={{color: 'gray'}}
-                  />
-                  <Picker.Item
-                    label="Adhar"
-                    value="Adhar"
-                    style={{color: 'gray'}}
-                  />
-
-                  {/* Add more Picker.Item as needed */}
-                </Picker>
-              </View>
-              <TouchableOpacity
-                style={styles.fileInput}
-                onPress={pickDocumentOtherDoc}>
-                {formForOtherDoc.document_image == '' ? (
-                  <Text>Select File</Text>
-                ) : (
-                  <Text>{formForOtherDoc.document_image.name}</Text>
-                )}
-              </TouchableOpacity>
-              <View style={{width: '100%'}}>
-                <Button title="Submit" onPress={uploadOtherDoc} />
-              </View>
-            </View>
-          </View>
-        </View>
-        <Toast ref={ref => Toast.setRef(ref)} />
-      </Modal>
+      
       <MyMultipleSelectPopUp
         title="Select Licence Category"
         toggle={showLicenceCat}
