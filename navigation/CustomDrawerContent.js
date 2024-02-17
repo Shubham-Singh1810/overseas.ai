@@ -219,19 +219,34 @@ const CustomDrawerContent = props => {
       } else if (v.title == 'Improve Profile') {
         return (
           <TouchableOpacity>
-            <DrawerItem
-              key={i}
-              label={v.title}
-              labelStyle={{
-                color: '#334B5E',
-                fontSize: 16,
-                fontWeight: '500',
-              }}
-              onPress={() => {
-                setSelectedScreen(v.name);
-                navigation.navigate(v.name);
-              }}
-            />
+            {globalState?.profileStrength?.emptyFields?.filter?.((v, i) => {
+              return !v.complete;
+            }).length ? (
+              <DrawerItem
+                key={i}
+                label={v.title}
+                labelStyle={{
+                  color: '#334B5E',
+                  fontSize: 16,
+                  fontWeight: '500',
+                }}
+                onPress={() => {
+                  setSelectedScreen(v.name);
+                  navigation.navigate(v.name);
+                }}
+              />
+            ) : (
+              <DrawerItem
+                key={i}
+                label={v.title}
+                labelStyle={{
+                  color: '#334B5E',
+                  fontSize: 16,
+                  fontWeight: '500',
+                }}
+                onPress={() => {}}
+              />
+            )}
             <View
               style={{
                 backgroundColor: '#334B5E',
@@ -362,8 +377,8 @@ const CustomDrawerContent = props => {
       <DrawerContentScrollView>
         <TouchableOpacity
           onPress={() => {
-            globalState?.profileStrength?.profileStrength && 
-            navigation.navigate('MyProfile');
+            globalState?.profileStrength?.profileStrength &&
+              navigation.navigate('MyProfile');
           }}>
           <View
             style={{flexDirection: 'row', alignItems: 'center', margin: 10}}>

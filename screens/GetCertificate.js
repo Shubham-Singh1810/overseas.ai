@@ -269,64 +269,71 @@ const GetCertificate = props => {
           
             
           </ScrollView>
-          <View style={{marginTop: 30}}>
-            <Text style={styles.heading}>Course Added This Week</Text>
-            <ScrollView horizontal={true} style={{marginTop: 10}}>
-              {courseList
+          {courseList
                 ?.filter((v, i) => {
                   return !isBefore(
                     new Date(v?.created_at),
                     subWeeks(new Date(), 1),
                   );
-                })
-                .map((v, i) => {
-                  return (
-                    <Pressable
-                      onPress={() =>
-                        props.navigation.navigate(
-                          'Get Course By Id',
-                          (CourseDetails = v),
-                        )
-                      }>
-                      <View style={{marginRight: 10}}>
-                        {v?.course_image !=
-                        'https://overseas.ai/placeholder/course.jpg' ? (
-                          <Image
-                            source={{
-                              uri: v?.course_image,
-                            }}
-                            style={{
-                              height: 100,
-                              width: 150,
-                              borderRadius: 5,
-                              resizeMode: 'contain',
-                              borderWidth: 0.5,
-                              borderColor: 'gray',
-                            }}
-                          />
-                        ) : (
-                          <Image
-                            source={require('../images/hraDummyIcon.png')}
-                            style={{
-                              height: 100,
-                              width: 150,
-                              borderRadius: 5,
-                              resizeMode: 'contain',
-                              borderWidth: 0.5,
-                              borderColor: 'gray',
-                            }}
-                          />
-                        )}
-
-                        <Text style={{textAlign: 'center', color: 'black'}}>
-                          {v?.course_name}
-                        </Text>
-                      </View>
-                    </Pressable>
-                  );
-                })}
-            </ScrollView>
-          </View>
+                }).length > 0 && <View style={{marginTop: 30}}>
+                <Text style={styles.heading}>Course Added Recently</Text>
+                <ScrollView horizontal={true} style={{marginTop: 10}}>
+                  {courseList
+                    ?.filter((v, i) => {
+                      return !isBefore(
+                        new Date(v?.created_at),
+                        subWeeks(new Date(), 1),
+                      );
+                    })
+                    .map((v, i) => {
+                      return (
+                        <Pressable
+                          onPress={() =>
+                            props.navigation.navigate(
+                              'Get Course By Id',
+                              (CourseDetails = v),
+                            )
+                          }>
+                          <View style={{marginRight: 10}}>
+                            {v?.course_image !=
+                            'https://overseas.ai/placeholder/course.jpg' ? (
+                              <Image
+                                source={{
+                                  uri: v?.course_image,
+                                }}
+                                style={{
+                                  height: 100,
+                                  width: 150,
+                                  borderRadius: 5,
+                                  resizeMode: 'contain',
+                                  borderWidth: 0.5,
+                                  borderColor: 'gray',
+                                }}
+                              />
+                            ) : (
+                              <Image
+                                source={require('../images/hraDummyIcon.png')}
+                                style={{
+                                  height: 100,
+                                  width: 150,
+                                  borderRadius: 5,
+                                  resizeMode: 'contain',
+                                  borderWidth: 0.5,
+                                  borderColor: 'gray',
+                                }}
+                              />
+                            )}
+    
+                            <Text style={{textAlign: 'center', color: 'black'}}>
+                              {v?.course_name}
+                            </Text>
+                          </View>
+                        </Pressable>
+                      );
+                    })}
+                </ScrollView>
+              </View>}
+          
         </View>
         {/* <View style={{flexDirection: 'row',justifyContent:"space-between", marginTop: 20, marginBottom: -15}}>
           <Pressable

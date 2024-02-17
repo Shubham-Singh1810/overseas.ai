@@ -147,7 +147,7 @@ const NeedMigrationLoan = () => {
         </View>
         <TextInput
           maxLength={10}
-          keyboardType="number"
+          keyboardType="numeric"
           style={styles.input}
           value={formData.contact}
           onChangeText={text => setFormData({...formData, contact: text})}
@@ -170,7 +170,9 @@ const NeedMigrationLoan = () => {
           maxLength={10}
           style={styles.input}
           value={formData.panNo}
-          onChangeText={text => setFormData({...formData, panNo: text.toUpperCase()})}
+          onChangeText={text =>
+            setFormData({...formData, panNo: text.toUpperCase()})
+          }
         />
         <View style={{flexDirection: 'row'}}>
           <Text
@@ -238,7 +240,7 @@ const NeedMigrationLoan = () => {
             </View>
             <TextInput
               style={styles.input}
-              keyboardType='number'
+              keyboardType="numeric"
               maxLength={10}
               value={formData.loanGuarantorContact}
               onChangeText={text =>
@@ -314,7 +316,7 @@ const NeedMigrationLoan = () => {
             </View>
             <TextInput
               style={styles.input}
-              keyboardType="number"
+              keyboardType="numeric"
               value={formData.prevLoanAmount}
               onChangeText={text =>
                 setFormData({...formData, prevLoanAmount: text})

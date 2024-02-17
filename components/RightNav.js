@@ -42,6 +42,7 @@ const RightNav = props => {
             return !v.complete;
           }).length ? (
             <Pressable
+            onPress={() => props.navigation.navigate('Notifications')}
               style={{
                 alignItems: 'center',
                 flexDirection: 'row',
@@ -80,7 +81,7 @@ const RightNav = props => {
                 flexDirection: 'row',
                 marginRight: 0,
               }}
-              onPress={() => props.navigation.navigate('Notifications')}>
+              >
               <Image source={require('../images/blackBell.png')} />
               <View
                 style={{

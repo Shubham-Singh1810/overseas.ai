@@ -367,3 +367,19 @@ export const getAllDocApi = async (access_token) => {
     throw error;
   }
 };
+export const editDrivingLiecence = async (formData, access_token) => {
+  console.log(formData)
+  try {
+    const response = await axios.post(BASE_URL+"edit-dl-by-user",formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
