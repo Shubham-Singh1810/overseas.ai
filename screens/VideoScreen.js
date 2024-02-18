@@ -29,18 +29,23 @@ import {
   uploadIntroVideo,
   deleteIntroVideo,
 } from '../services/userVideo.service';
-import {getProfileStrength, getNotification} from "../services/user.service";
+import {getProfileStrength, getNotification} from '../services/user.service';
 const VideoScreen = () => {
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const {translation, globalState, setGlobalState} = useGlobalState();
-  const getProfileStrengthFunc = async() => {
+  const getProfileStrengthFunc = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getProfileStrength(JSON.parse(user).access_token);
-      if(response?.data.msg=="Some fields are empty" || response?.data.msg=="Profile strength calculated successfully and updated in records"){
-        setGlobalState({...globalState, profileStrength:response?.data});
+      if (
+        response?.data.msg == 'Some fields are empty' ||
+        response?.data.msg ==
+          'Profile strength calculated successfully and updated in records'
+      ) {
+        setGlobalState({...globalState, profileStrength: response?.data});
       }
     } catch (error) {
-      console.log("NEW", error)
+      console.log('NEW', error);
     }
   };
   const [videoToBeDeleted, setvideoToBeDeleted] = useState('');
@@ -122,7 +127,7 @@ const VideoScreen = () => {
           video: null,
           relatedSkill: 'unKnown',
         });
-        getProfileStrengthFunc()
+        getProfileStrengthFunc();
       }
     } catch (error) {
       console.warn('Something went wrong');
@@ -282,11 +287,14 @@ const VideoScreen = () => {
       Alert.alert(error.message);
     }
   };
+  const [videoPlayUrl, setVideoPlayUrl]=useState("")
   return (
     <>
       <View style={styles.main}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={[styles.title, {color:"#000"}]}>Introductry Videos</Text>
+          <Text style={[styles.title, {color: '#000'}]}>
+            Introductry Videos
+          </Text>
           <Pressable
             onPress={() => setShowModal(true)}
             style={{
@@ -302,113 +310,125 @@ const VideoScreen = () => {
         </View>
 
         <View>
-        <ScrollView horizontal={true} style={{ marginTop: 10 }}>
-  <TouchableOpacity
-    onPress={() => {
-      setIntroVideoPopUp(true);
-      setShowIntroInput(
-        languageKnown.filter(
-          itemA =>
-            !introVideoList?.some(
-              itemB => itemB?.videoLanguage == itemA,
-            ),
-        ),
-      );
-    }}>
-    <View>
-      <Image
-        source={require('../images/rectangle.png')}
-        style={{
-          height: 100,
-          width: 160,
-          borderRadius: 5,
-          marginRight: 10,
-          borderWidth: 1,
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: 40,
-          left: 70,
-          padding: 6,
-          backgroundColor: 'white',
-          borderRadius: 11,
-        }}>
-        <Image
-          source={require('../images/playVideoIcon.png')}
-          style={{ height: 10, width: 10 }}
-        />
-      </View>
-    </View>
-    <Text style={{ textAlign: 'center', marginVertical: 5 }}>
-      Upload Intro Video
-    </Text>
-  </TouchableOpacity>
+          <ScrollView horizontal={true} style={{marginTop: 10}}>
+            <TouchableOpacity
+              onPress={() => {
+                setIntroVideoPopUp(true);
+                setShowIntroInput(
+                  languageKnown.filter(
+                    itemA =>
+                      !introVideoList?.some(
+                        itemB => itemB?.videoLanguage == itemA,
+                      ),
+                  ),
+                );
+              }}>
+              <View>
+                <Image
+                  source={require('../images/rectangle.png')}
+                  style={{
+                    height: 100,
+                    width: 160,
+                    borderRadius: 5,
+                    marginRight: 10,
+                    borderWidth: 1,
+                  }}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    top: 40,
+                    left: 70,
+                    padding: 6,
+                    backgroundColor: 'white',
+                    borderRadius: 11,
+                  }}>
+                  <Image
+                    source={require('../images/playVideoIcon.png')}
+                    style={{height: 10, width: 10}}
+                  />
+                </View>
+              </View>
+              <Text style={{textAlign: 'center', marginVertical: 5}}>
+                Upload Intro Video
+              </Text>
+            </TouchableOpacity>
 
-  {introVideoList?.map((v, i) => {
-    return (
-      <View key={i} style={{ marginRight: 10 }}>
-        <View style={{ position: 'relative' }}>
-          <Video
-            source={{
-              uri: v?.videoUrl,
-            }}
-            style={{
-              height: 100,
-              width: 160,
-              borderRadius: 5,
-              borderWidth: 1,
-            }}
-            controls={true}
-            paused={true}
-            resizeMode="cover"
-          />
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 5,
-              left: 5,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              borderRadius: 5,
-            }}>
-            {/* Additional video controls can be placed here */}
-          </View>
+            {introVideoList?.map((v, i) => {
+              return (
+                <View key={i} style={{marginRight: 10}}>
+                  <View style={{position: 'relative'}}>
+                    {/* <Video
+                      source={{
+                        uri: v?.videoUrl,
+                      }}
+                      style={{
+                        height: 100,
+                        width: 160,
+                        borderRadius: 5,
+                        borderWidth: 1,
+                      }}
+                      controls={true}
+                      paused={true}
+                      resizeMode="cover"
+                    /> */}
+                    <Pressable onPress={()=>{setVideoPlayUrl(v?.videoUrl); setShowVideoPlayer(true)}}>
+                      <Image
+                        style={{
+                          height: 100,
+                          width: 160,
+                          borderRadius: 5,
+                          borderWidth: 1,
+                          resizeMode: 'contain',
+                        }}
+                        source={require('../images/overseas-wrold.gif')}
+                      />
+                    </Pressable>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      paddingRight: 5,
+                      marginVertical: 5,
+                    }}>
+                    <Text style={{color: '#000'}}>{v?.videoLanguage}</Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setIntroActionValue(v), setShowIntroAction(true);
+                      }}>
+                      {/* <Image source={require('../images/delete.png')} /> */}
+                      <Text
+                        style={{
+                          fontWeight: '900',
+                          color: 'black',
+                        }}>
+                        ...
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
+          </ScrollView>
         </View>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingRight: 5,
-            marginVertical: 5,
+            marginTop: 20,
+            paddingTop: 20,
+            borderTopWidth: 1.5,
+            borderColor: 'gray',
           }}>
-          <Text style={{ color: '#000' }}>{v?.videoLanguage}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              setIntroActionValue(v), setShowIntroAction(true);
-            }}>
-            {/* <Image source={require('../images/delete.png')} /> */}
-            <Text
-              style={{
-                fontWeight: '900',
-                color: 'black',
-              }}>
-              ...
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  })}
-</ScrollView>
-        </View>
-        <View style={{marginTop: 20,paddingTop:20, borderTopWidth:1.5,borderColor:"gray"}}>
-          <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-          <Text style={[styles.title, {color:"#000"}]}>Work Videos</Text>
-          <Button title="Upload" color="#035292"onPress={() => setWorkVideoPopUp(true)}/>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={[styles.title, {color: '#000'}]}>Work Videos</Text>
+            <Button
+              title="Upload"
+              color="#035292"
+              onPress={() => setWorkVideoPopUp(true)}
+            />
           </View>
-          
+
           <View>
             {/* <TouchableOpacity onPress={() => setWorkVideoPopUp(true)}>
               <View style={{}}>
@@ -441,11 +461,11 @@ const VideoScreen = () => {
                 </Text>
               </View>
             </TouchableOpacity> */}
-            <ScrollView style={{marginTop: 10, marginBottom:250}}>
+            <ScrollView style={{marginTop: 10, marginBottom: 250}}>
               {workVideoList?.map((v, i) => {
                 return (
-                  <View style={{width: '100%', marginBottom:15}}>
-                    <Video
+                  <View style={{width: '100%', marginBottom: 15}}>
+                    {/* <Video
                       source={{
                         uri: v?.videoUrl,
                       }}
@@ -459,8 +479,19 @@ const VideoScreen = () => {
                       controls={true}
                       resizeMode="cover"
                       paused={true}
-                    />
-
+                    /> */}
+                    <Pressable onPress={()=>{setVideoPlayUrl(v?.videoUrl); setShowVideoPlayer(true)}}>
+                      <Image
+                        style={{
+                          height: 200,
+                        width: '100%',
+                          borderRadius: 5,
+                          borderWidth: 1,
+                          resizeMode: 'contain',
+                        }}
+                        source={require('../images/overseas-wrold.gif')}
+                      />
+                    </Pressable>
                     <View
                       style={{
                         flexDirection: 'row',
@@ -908,6 +939,45 @@ const VideoScreen = () => {
               <Text style={{color: 'black', fontWeight: '600'}}>Delete</Text>
               <Image source={require('../images/delete.png')} />
             </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <Modal transparent={true} visible={showVideoPlayer}>
+        <View
+          style={{
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            alignItems: 'center',
+            flex: 1,
+            padding: 18,
+          }}>
+          <View style={{backgroundColor: 'white', padding: 18, width: 350}}>
+            <Pressable
+              style={{
+                backgroundColor: 'white',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              onPress={() => setShowVideoPlayer(false)}>
+              <Text style={{fontSize: 16, fontWeight: '500', color: 'black'}}>
+                Video Player
+              </Text>
+              <Image source={require('../images/close.png')} />
+            </Pressable>
+            <Video
+              style={{
+                height: 300,
+                width: '100%',
+                marginVertical: 15,
+              }}
+              resizeMode="contain"
+              controls={true}
+              source={
+                {
+                  uri: videoPlayUrl
+                }
+              }></Video>
           </View>
         </View>
       </Modal>

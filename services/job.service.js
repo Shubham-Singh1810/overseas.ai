@@ -104,6 +104,21 @@ export const appliedJobById = async (id, access_token) => {
     throw error;
   }
 };
+
+// get Interview By Id
+export const getInterviewById = async (id, access_token) => {
+  try {
+    const response = await axios.get(BASE_URL + `interview-status-for-emp/`+id, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
 // get favourite job list
 export const favouriteJobList = async (access_token) => {
   console.log("token", access_token)

@@ -3,7 +3,26 @@ import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 const AppliedJob = ({props, value}) => {
   const {translation} = useGlobalState();
-
+  const showStatusMessage =(value)=>{
+    if(value==0){
+      return "Application rejected"
+     }
+     if(value==1){
+      return "Application in progress"
+     }
+     if(value==2){
+      return "Medical and PCC uploaded"
+     }
+     if(value==3){
+      return "Application sent to HR"
+     }
+     if(value==4){
+      return "Visa and Ticket released"
+     }
+     if(value==5){
+      return "Placed"
+     }
+  }
   return (
     <View style={styles.main}>
       <View>
@@ -78,7 +97,7 @@ const AppliedJob = ({props, value}) => {
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.countryText}>Status : </Text>
-            <Text style={styles.textGreen}>Applicatin sent to HRA</Text>
+            <Text style={value?.interviewStatus==0? {color:"red"}: styles.textGreen}>{showStatusMessage(value?.interviewStatus)}</Text>
           </View>
           <TouchableOpacity
             onPress={() =>

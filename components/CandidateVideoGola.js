@@ -30,49 +30,46 @@ const CandidateVideoGola = ({value, index}) => {
           {value?.empName}
         </Text>
       </Pressable>
-      <Modal transparent={false} visible={showVideoPlayer}>
+      <Modal transparent={true} visible={showVideoPlayer}>
         <View
           style={{
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            alignItems: 'center',
             flex: 1,
-            backgroundColor: '#FFF',
-            padding: 18,
+            padding:18,
+            
           }}>
-          <Pressable
-            style={{
-              backgroundColor: 'white',
-              flexDirection: 'row',
-              alignItems: 'center',
-              
-            }}
-            onPress={() => setShowVideoPlayer(false)}>
-            <Image source={require('../images/backIcon.png')} />
-            <Text
+          <View style={{backgroundColor:"white",padding: 18,width:350}}>
+            <Pressable
               style={{
-                textDecorationLine: 'underline',
-                color: '#035292',
-                fontWeight: '700',
-              }}>
-              Back
+                backgroundColor: 'white',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent:"space-between"
+              }}
+              onPress={() => setShowVideoPlayer(false)}>
+                <Text style={{fontSize: 16,fontWeight:"500", color: 'black'}}>
+              You are listing to {value?.empName} 
             </Text>
-          </Pressable>
-          <Video
-            style={{
-              height: 300,
-              width: '100%',
-              marginVertical:15,
+              <Image source={require('../images/close.png')} />
               
-            }}
-            resizeMode="contain"
-            controls={true}
-            source={{
-              uri: value?.beforeDepartureVideo
-                ? value?.beforeDepartureVideo
-                : value?.afterDepartureVideo,
-            }}></Video>
-          <Text style={{fontSize: 18, color: 'black'}}>
-            You are listing to {value?.empName} who has been successfully placed
-            through our portal
-          </Text>
+            </Pressable>
+            <Video
+              style={{
+                height: 300,
+                width: '100%',
+                marginVertical: 15,
+              }}
+              resizeMode="contain"
+              controls={true}
+              source={{
+                uri: value?.beforeDepartureVideo
+                  ? value?.beforeDepartureVideo
+                  : value?.afterDepartureVideo,
+              }}></Video>
+            
+          </View>
         </View>
       </Modal>
     </>
