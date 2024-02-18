@@ -20,7 +20,6 @@ const JobApplied = props => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await appliedJobList(JSON.parse(user).access_token);
-      console.log(response.data)
       setAppliedJobListArr(response?.data?.jobs)
     } catch (error) {}
   };

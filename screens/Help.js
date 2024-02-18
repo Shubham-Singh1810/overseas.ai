@@ -180,7 +180,9 @@ const Help = props => {
           style={styles.inputBox}
           value={formData?.user_contact}
           onChangeText={text => setFormData({...formData, user_contact: text})}
-          // editable={false}
+          placeholder='Enter your contact number*'
+          keyboardType='numeric'
+          maxLength={13}
         />
         <TextInput
           style={styles.inputBox}
@@ -190,7 +192,7 @@ const Help = props => {
         />
         <TextInput
           style={styles.inputBox}
-          placeholder="Write your query here"
+          placeholder="Write your query here*"
           value={formData.help_query}
           multiline={true}
           numberOfLines={5}
