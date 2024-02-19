@@ -489,7 +489,7 @@ const VideoScreen = () => {
                           borderWidth: 1,
                           resizeMode:"stretch",
                         }}
-                        source={require('../images/introVideoThum.png')}
+                        source={require('../images/workVideoThum.png')}
                       />
                     </Pressable>
                     <View

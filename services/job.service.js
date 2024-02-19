@@ -119,6 +119,7 @@ export const getInterviewById = async (id, access_token) => {
     throw error;
   }
 };
+
 // get favourite job list
 export const favouriteJobList = async (access_token) => {
   console.log("token", access_token)
@@ -153,6 +154,37 @@ export const  savedJobList = async (access_token) => {
   try {
     const response = await axios.get(BASE_URL + `user-saved-job-list`, {
       headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+export const uploadSignedDocForCaution = async (formData, access_token) => {
+  console.log(formData)
+  try {
+    const response = await axios.post(BASE_URL + `upload-signed-offer-letter`,formData, {
+      headers: {
+      'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+export const uploadMedicalForInterview = async (formData, access_token) => {
+  console.log(formData)
+  try {
+    const response = await axios.post(BASE_URL + `upload-docs-by-user`,formData, {
+      headers: {
+      'Content-Type': `multipart/form-data`,
         Authorization: `Bearer ${access_token}`
       }
     });
