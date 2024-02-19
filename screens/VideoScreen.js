@@ -379,9 +379,9 @@ const VideoScreen = () => {
                           width: 160,
                           borderRadius: 5,
                           borderWidth: 1,
-                          resizeMode: 'contain',
+                          // resizeMode: 'contain',
                         }}
-                        source={require('../images/overseas-wrold.gif')}
+                        source={require('../images/introVideoThum.png')}
                       />
                     </Pressable>
                   </View>
@@ -487,9 +487,9 @@ const VideoScreen = () => {
                         width: '100%',
                           borderRadius: 5,
                           borderWidth: 1,
-                          resizeMode: 'contain',
+                          resizeMode:"stretch",
                         }}
-                        source={require('../images/overseas-wrold.gif')}
+                        source={require('../images/introVideoThum.png')}
                       />
                     </Pressable>
                     <View

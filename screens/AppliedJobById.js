@@ -6,6 +6,7 @@ import {
   View,
   Button,
   Pressable,
+  PermissionsAndroid,
 } from 'react-native';
 import Pdf from 'react-native-pdf';
 import {useState, useEffect} from 'react';
@@ -37,6 +38,25 @@ const AppliedJobById = props => {
   }, [props?.route?.params?.id]);
   const [showInterviewPopUp, setShowInterviewPopUp] = useState(false);
   const [showOfferLetterPopUp, setShowOfferLetterPopUp] = useState(false);
+  const handleFileDownload = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Storage Permission',
+          message: 'App needs access to your storage to save files.',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.warn('Storage permission granted');
+      } else {
+        console.warn('Storage permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
   return (
     <View style={styles.main}>
       <View style={{marginTop: 0}}>
@@ -365,27 +385,95 @@ const AppliedJobById = props => {
                 source={require('../images/hraDummyIcon.png')}
               /> */}
               <Pdf
-                  trustAllCerts={false}
-                  source={{uri: interviewJobDetails?.offerLetter_arr?.offerLetter, cache: true}}
-                  onLoadComplete={(numberOfPages, filePath) => {
-                    console.log(`number of pages: ${numberOfPages}`);
-                  }}
-                  onPageChanged={(page, numberOfPages) => {
-                    console.log(`current page: ${page}`);
-                  }}
-                  onError={error => {
-                    console.log(error);
-                  }}
-                  onPressLink={uri => {
-                    console.log(`Link presse: ${uri}`);
-                  }}
-                  style={{height: 450, marginVertical: 15, width: '100%'}}
-                />
+                trustAllCerts={false}
+                source={{
+                  uri: interviewJobDetails?.offerLetter_arr?.offerLetter,
+                  cache: true,
+                }}
+                onLoadComplete={(numberOfPages, filePath) => {
+                  console.log(`number of pages: ${numberOfPages}`);
+                }}
+                onPageChanged={(page, numberOfPages) => {
+                  console.log(`current page: ${page}`);
+                }}
+                onError={error => {
+                  console.log(error);
+                }}
+                onPressLink={uri => {
+                  console.log(`Link presse: ${uri}`);
+                }}
+                style={{height: 450, marginVertical: 15, width: '100%'}}
+              />
               <View>
-                <Button
-                  title="Download"
-                  onPress={() => console.warn('Download the  Offer Letter')}
-                />
+                <Button title="Download" onPress={() => handleFileDownload()} />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      {/* upload signed offer letter */}
+      <Modal transparent={true} visible={true} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              borderRadius: 5,
+              width: 340,
+              padding: 16,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}>
+              <Text style={{color: 'black', fontSize: 18, fontWeight: '500'}}>
+                Upload Signed Offer Letter
+              </Text>
+              <Pressable onPress={() => setShowOfferLetterPopUp(false)}>
+                <Image source={require('../images/close.png')} />
+              </Pressable>
+            </View>
+            <View>
+              <Image
+                style={{height: 250, marginVertical: 15, width: '100%'}}
+                source={require('../images/upiUrl.jpeg')}
+              />
+              
+              <View style={{flexDirection:"row",marginVertical: 10, justifyContent:"space-between"}}>
+              <Text style={{color:"black"}}>Caution Amount :100</Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: 'white',
+                  fontWeight: '500',
+                  textAlign: 'center',
+                  backgroundColor:"#035292",
+                  borderWidth:1,
+                  paddingHorizontal:5,
+                  borderRadius:2
+                }}>
+                Pay Now
+              </Text>
+              </View>
+              
+              <View style={{borderTopWidth: 1, paddingVertical: 16}}>
+                <Pressable style={{borderWidth:1,borderColor:"gray", padding:14, marginBottom:16, borderRadius:8}}>
+                  <Text>Select Payment Screensort</Text>
+                </Pressable>
+                <Pressable style={{borderWidth:1,borderColor:"gray", padding:14,  borderRadius:8}}>
+                  <Text>Select Signed Offer Letter</Text>
+                </Pressable>
+              </View>
+              <View>
+                <Button title="Upload" onPress={() => handleFileDownload()} />
               </View>
             </View>
           </View>
