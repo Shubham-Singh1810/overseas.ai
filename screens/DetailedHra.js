@@ -10,7 +10,7 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {getJobByHra} from '../services/hra.service';
 import WebView from 'react-native-webview';
 import {useFocusEffect} from '@react-navigation/native';

@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Pressable,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {
   verifyOtpForLogin,
@@ -18,6 +18,7 @@ import {
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import {useFocusEffect} from '@react-navigation/native';
 const Otp = props => {
   const {params} = props.route;
   const [tempUser, setTempUser] = useState(params ? params.tempUser : null);
@@ -135,9 +136,11 @@ const Otp = props => {
       setLoading(false);
     } catch (error) {}
   };
-  useEffect(() => {
-    startTimer();
-  }, [timer]);
+  useFocusEffect(
+    React.useCallback(() => {
+      startTimer();
+    }, [timer]),
+  );
   return (
     <View style={styles.main}>
       <View>

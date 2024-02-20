@@ -1,11 +1,12 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useEffect, useState} from 'react';
+import React,{useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import {getOccupations, getJobByDepartment, getJobByCountry} from '../services/job.service';
 import FooterNav from '../components/FooterNav';
 import SearchResult from '../components/SearchResult';
 import Toast from 'react-native-toast-message';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import {useFocusEffect} from '@react-navigation/native';
 const JobsByCountry = (props) => {
   const route = useRoute();
   useAndroidBackHandler(() => {
@@ -17,12 +18,16 @@ const JobsByCountry = (props) => {
   const getJobsByCountryFunc = async () => {
     try {
       let response = await getJobByCountry(countryId);
-      setJobList(response?.data?.jobs?.data);
+      setJobList(response?.data?.jobs);
     } catch (error) {}
   };
-  useEffect(() => {
-    getJobsByCountryFunc();
-  }, [countryId]);
+  useFocusEffect(
+    React.useCallback(() => {
+      getJobsByCountryFunc();
+    }, [countryId]),
+  );
+  
+  
   return (
     <>
       <ScrollView style={{flex:1, backgroundColor:"#fff"}}>

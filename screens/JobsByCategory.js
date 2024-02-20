@@ -1,5 +1,6 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useEffect, useState} from 'react';
+import React,{useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
 import {getOccupations, getJobByDepartment} from '../services/job.service';
 import FooterNav from '../components/FooterNav';
@@ -17,12 +18,15 @@ const JobsByCategory = props => {
   const getJobsByDetartmentFunc = async () => {
     try {
       let response = await getJobByDepartment(departmentId);
-      setJobList(response?.data?.jobs?.data);
+      setJobList(response?.data?.jobs);
     } catch (error) {}
   };
-  useEffect(() => {
-    getJobsByDetartmentFunc();
-  }, [departmentId]);
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      getJobsByDetartmentFunc();
+    }, [departmentId]),
+  );
   return (
     <>
       <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>

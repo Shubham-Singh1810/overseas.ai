@@ -12,7 +12,7 @@ import {
   ActivityIndicator,
   Share,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import Video from 'react-native-video';
 import {getOccupations} from '../services/info.service';

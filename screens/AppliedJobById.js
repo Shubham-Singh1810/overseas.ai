@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import Pdf from 'react-native-pdf';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   appliedJobById,
   getInterviewById,
@@ -37,6 +37,7 @@ const AppliedJobById = props => {
     try {
       let response = await getInterviewById(id, JSON.parse(user).access_token);
       setInterviewJobDetails(response.data);
+      console.log(response?.data);
     } catch (error) {
       console.log(error);
     }
@@ -49,25 +50,24 @@ const AppliedJobById = props => {
   );
   const [showInterviewPopUp, setShowInterviewPopUp] = useState(false);
   const [showOfferLetterPopUp, setShowOfferLetterPopUp] = useState(false);
-  const handleFileDownload = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        {
-          title: 'Storage Permission',
-          message: 'App needs access to your storage to save files.',
-          buttonPositive: 'OK',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.warn('Storage permission granted');
-      } else {
-        console.warn('Storage permission denied');
-      }
-    } catch (err) {
-      console.warn(err);
-    }
+  const handleFileDownload = async value => {
+    Linking.openURL(value)
+      .then(supported => {
+        if (!supported) {
+          console.warn(`Cannot handle URL: ${value}`);
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
   };
+  const handleGoogleMeet = async value =>{
+    Linking.openURL(value)
+      .then(supported => {
+        if (!supported) {
+          console.warn(`Cannot handle URL: ${value}`);
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
+  }
   const [showDocUploader, setShowDocUploader] = useState(false);
   const [uploadSignedDoc, setUploadSignedDoc] = useState({
     cautionMoneyScreensort: '',
@@ -351,12 +351,16 @@ const AppliedJobById = props => {
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
-        {interviewJobDetails?.data?.status == 0 &&
+        {interviewJobDetails?.data?.status == 0 && interviewJobDetails?.data?.stageStepCount == 1 &&
           appliedJobDetails?.interviewStatus == 0 && (
+            <>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <View style={[styles.highlight, {backgroundColor: 'red'}]}></View>
               <Text style={{color: 'red'}}>Application Rejected</Text>
             </View>
+            <View style={styles.grayDot}></View>
+            <View style={styles.grayDot}></View>
+            </>
           )}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View
@@ -403,11 +407,17 @@ const AppliedJobById = props => {
         <View style={styles.grayDot}></View>
         {interviewJobDetails?.InterviewStage2?.afterInterviewStatus == 0 &&
           appliedJobDetails?.interviewStatus == 0 &&
-          interviewJobDetails?.data?.status == 0 && (
+          interviewJobDetails?.data?.status == 0 &&
+          interviewJobDetails?.data?.stageStepCount == 2 &&
+           (
+            <>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <View style={[styles.highlight, {backgroundColor: 'red'}]}></View>
-              <Text style={{color: 'red'}}>Application Rejected</Text>
+              <Text style={{color: 'red'}}>Rejected in interview</Text>
             </View>
+            <View style={styles.grayDot}></View>
+            <View style={styles.grayDot}></View>
+            </>
           )}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View
@@ -433,7 +443,11 @@ const AppliedJobById = props => {
           </Text>
           {interviewJobDetails?.data?.offerLatterSent == 1 && (
             <Pressable
-              onPress={() => setShowOfferLetterPopUp(true)}
+              onPress={() =>
+                handleFileDownload(
+                  interviewJobDetails?.offerLetter_arr?.offerLetter,
+                )
+              }
               style={{
                 borderWidth: 1,
                 flexDirection: 'row',
@@ -479,8 +493,8 @@ const AppliedJobById = props => {
               <Text style={{color: 'black'}}>Upload</Text>
             </Pressable>
           ) : (
-            interviewJobDetails?.data?.cautionMoneyStatus != 2 && interviewJobDetails?.data?.offerLatterSent!=0 &&
-             (
+            interviewJobDetails?.data?.cautionMoneyStatus != 2 &&
+            interviewJobDetails?.data?.offerLatterSent != 0 && (
               <Pressable
                 onPress={() => setShowPaymentPopUp(true)}
                 style={{
@@ -543,6 +557,17 @@ const AppliedJobById = props => {
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
+        {interviewJobDetails?.data?.stageStepCount == 4 &&
+          interviewJobDetails?.data?.status == 0 && (
+            <>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={[styles.highlight, {backgroundColor: 'red'}]}></View>
+              <Text style={{color: 'red'}}>Visa Application Rejected</Text>
+            </View>
+            <View style={styles.grayDot}></View>
+            <View style={styles.grayDot}></View>
+            </>
+          )}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View
             style={[
@@ -559,13 +584,15 @@ const AppliedJobById = props => {
                 interviewJobDetails?.data?.stage5 == 1 &&
                 styles.textGreen,
             ]}>
-            Visa and Ticket Relised
+            Visa Relised
           </Text>
           {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
             interviewJobDetails?.data?.stageStepCount == 5 &&
             interviewJobDetails?.data?.stage5 == 1 && (
               <Pressable
-                onPress={() => setShowOfferLetterPopUp(true)}
+                onPress={() =>
+                  handleFileDownload(interviewJobDetails?.InterviewStage4?.visa)
+                }
                 style={{
                   borderWidth: 1,
                   flexDirection: 'row',
@@ -582,6 +609,55 @@ const AppliedJobById = props => {
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={[
+              styles.highlight,
+              interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+                interviewJobDetails?.data?.stageStepCount == 5 &&
+                interviewJobDetails?.data?.stage5 == 1 &&
+                interviewJobDetails?.InterviewStage4?.ticket !=
+                  '/placeholder/no-doc-found.jpg' &&
+                styles.backgroundColorGreen,
+            ]}></View>
+          <Text
+            style={[
+              interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+                interviewJobDetails?.data?.stageStepCount == 5 &&
+                interviewJobDetails?.data?.stage5 == 1 &&
+                interviewJobDetails?.InterviewStage4?.ticket !=
+                  '/placeholder/no-doc-found.jpg' &&
+                styles.textGreen,
+            ]}>
+            Ticket Relised
+          </Text>
+          {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+            interviewJobDetails?.data?.stageStepCount == 5 &&
+            interviewJobDetails?.data?.stage5 == 1 &&
+            interviewJobDetails?.InterviewStage4?.ticket !=
+              '/placeholder/no-doc-found.jpg' && (
+              <Pressable
+                onPress={() =>
+                  handleFileDownload(
+                    interviewJobDetails?.InterviewStage4?.ticket,
+                  )
+                }
+                style={{
+                  borderWidth: 1,
+                  flexDirection: 'row',
+                  marginLeft: 10,
+                  paddingHorizontal: 2,
+                  borderRadius: 3,
+                  backgroundColor: '#F1F7FF',
+                  alignItems: 'center',
+                }}>
+                <Text style={{color: 'black'}}>View</Text>
+              </Pressable>
+            )}
+        </View>
+        <View style={styles.grayDot}></View>
+        <View style={styles.grayDot}></View>
+
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View style={styles.highlight}></View>
           <Text>Apply for caution money</Text>
         </View>
@@ -592,6 +668,24 @@ const AppliedJobById = props => {
           <Text>Caution Money Repay</Text>
         </View>
       </View>
+      {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+        interviewJobDetails?.data?.stageStepCount == 5 &&
+        interviewJobDetails?.data?.stage5 == 1 &&
+        interviewJobDetails?.InterviewStage4?.ticket !=
+          '/placeholder/no-doc-found.jpg' && (
+          <View>
+            <Text
+              style={{
+                color: 'green',
+                fontSize: 18,
+                fontWeight: '600',
+                marginVertical: 20,
+                textAlign: 'center',
+              }}>
+              Congratulations! {'\n'} You can fly to achieve your dream.
+            </Text>
+          </View>
+        )}
       {/* interview details popup */}
       <Modal
         transparent={true}
@@ -658,11 +752,11 @@ const AppliedJobById = props => {
                   </Text>
                 </View>
               ) : (
-                <Text style={{color: 'black', fontSize: 15, marginBottom: 3}}>
+                <View style={{ marginBottom: 3}}>
                   {interviewJobDetails?.interviewModeData?.googleMeetLink
-                    ? interviewJobDetails?.interviewModeData?.googleMeetLink
-                    : 'Meeting Link will be updated soon.'}
-                </Text>
+                    ? <Pressable onPress={()=>handleGoogleMeet(interviewJobDetails?.interviewModeData?.googleMeetLink)}><Text style={{color: 'black', fontSize: 15,}}>Join Now</Text></Pressable> 
+                    : <Text style={{color: 'black', fontSize: 15,}}>Meeting Link will be updated soon.</Text> }
+                </View>
               )}
             </View>
           </View>
@@ -728,7 +822,14 @@ const AppliedJobById = props => {
                 style={{height: 450, marginVertical: 15, width: '100%'}}
               />
               <View>
-                <Button title="Download" onPress={() => handleFileDownload()} />
+                <Button
+                  title="Download"
+                  onPress={() =>
+                    handleFileDownload(
+                      interviewJobDetails?.offerLetter_arr?.offerLetter,
+                    )
+                  }
+                />
               </View>
             </View>
           </View>

@@ -9,7 +9,8 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import {Gif} from 'react-native-gif';
 import axios from 'axios';
 import JobGola from '../components/JobGola';
 import CandidateGola from '../components/CandidateGola';
@@ -46,7 +47,8 @@ const Home = props => {
     }
     return true;
   });
-  const {globalState, translation,notifications, setGlobalState} = useGlobalState();
+  const {globalState, translation, notifications, setGlobalState} =
+    useGlobalState();
   const [searchJobKey, setSearchJobKey] = useState('');
   const [searchCounterKey, setSearchCountryKey] = useState('');
   const [occupations, setOccupations] = useState([]);
@@ -55,7 +57,7 @@ const Home = props => {
   const [loaderCandidate, setLoaderCandidate] = useState(true);
   const [loaderCountry, setLoaderCountry] = useState(true);
   const [loaderSearch, setLoaderSearch] = useState(true);
-  
+
   const getOccupationList = async () => {
     setLoaderOccu(true);
     try {
@@ -84,7 +86,7 @@ const Home = props => {
     } catch (error) {
       console.log(error);
     }
-    
+
     setLoaderSearch(false);
   };
 
@@ -205,292 +207,306 @@ const Home = props => {
   );
   // logic to build a dynamic feed end
   return (
-    <View style={{backgroundColor: '#fff', flex: 1}}>
-      <View>
-        <View style={styles.main}>
-          <View style={styles.messageGroup}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.greetText}>{translation.hello},</Text>
-                  <Text style={[styles.nameText, {marginLeft: 5}]}>
-                    {JSON.parse(globalState?.user)?.user?.name.split(' ')[0]}
-                  </Text>
-                </View>
-                <Text style={{color: '#000'}}>Search your dream job!</Text>
-              </View>
-
-              <Pressable
-                // onPress={() => setShowModal(true)}
-                style={{
-                  backgroundColor: '#035292',
-                  padding: 8,
-                  elevation: 10,
-                  borderRadius: 3,
-                }}>
-                <Text style={{color: 'white', fontWeight: '500'}}>
-                  Video Tutorial
-                </Text>
-              </Pressable>
-            </View>
-          </View>
+    
+      
+        <View style={{backgroundColor: '#fff', flex: 1}}>
           <View>
-            <TouchableOpacity style={styles.input}>
-              <Picker
-                selectedValue={searchJobKey}
-                onValueChange={(itemValue, itemIndex) => {
-                  searchJob(itemValue, searchCounterKey);
-                }}>
-                <Picker.Item
-                  label="Select an occupation"
-                  value={null}
-                  style={{color: 'gray'}}
-                />
-                {occupations?.map((v, i) => {
-                  return (
-                    <Picker.Item
-                      label={v.occupation}
-                      value={v.id}
-                      style={{color: 'gray'}}
-                    />
-                  );
-                })}
-              </Picker>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.input}>
-              <Picker
-                selectedValue={searchCounterKey}
-                onValueChange={(itemValue, itemIndex) => {
-                  searchJob(searchJobKey, itemValue);
-                }}>
-                <Picker.Item
-                  label="Select country name"
-                  value={null}
-                  style={{color: 'gray'}}
-                />
-                {countries?.map((v, i) => {
-                  return (
-                    <Picker.Item
-                      label={v.name}
-                      value={v.id}
-                      style={{color: 'gray'}}
-                    />
-                  );
-                })}
-              </Picker>
-            </TouchableOpacity>
-          </View>
-          <ScrollView style={{marginBottom:350}}>
-            {searchJobKey || searchCounterKey ? (
-              <View>
-                {loaderSearch ? (
-                  <View
+            <View style={styles.main}>
+              <View style={styles.messageGroup}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={styles.greetText}>{translation.hello},</Text>
+                      <Text style={[styles.nameText, {marginLeft: 5}]}>
+                        {
+                          JSON.parse(globalState?.user)?.user?.name.split(
+                            ' ',
+                          )[0]
+                        }
+                      </Text>
+                    </View>
+                    <Text style={{color: '#000'}}>Search your dream job!</Text>
+                  </View>
+
+                  <Pressable
+                    // onPress={() => setShowModal(true)}
                     style={{
-                      flex: 1,
-                      height: 300,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      backgroundColor: '#035292',
+                      padding: 8,
+                      elevation: 10,
+                      borderRadius: 3,
                     }}>
-                    <ActivityIndicator />
+                    <Text style={{color: 'white', fontWeight: '500'}}>
+                      Video Tutorial
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View>
+                <TouchableOpacity style={styles.input}>
+                  <Picker
+                    selectedValue={searchJobKey}
+                    onValueChange={(itemValue, itemIndex) => {
+                      searchJob(itemValue, searchCounterKey);
+                    }}>
+                    <Picker.Item
+                      label="Select an occupation"
+                      value={null}
+                      style={{color: 'gray'}}
+                    />
+                    {occupations?.map((v, i) => {
+                      return (
+                        <Picker.Item
+                          label={v.occupation}
+                          value={v.id}
+                          style={{color: 'gray'}}
+                        />
+                      );
+                    })}
+                  </Picker>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.input}>
+                  <Picker
+                    selectedValue={searchCounterKey}
+                    onValueChange={(itemValue, itemIndex) => {
+                      searchJob(searchJobKey, itemValue);
+                    }}>
+                    <Picker.Item
+                      label="Select country name"
+                      value={null}
+                      style={{color: 'gray'}}
+                    />
+                    {countries?.map((v, i) => {
+                      return (
+                        <Picker.Item
+                          label={v.name}
+                          value={v.id}
+                          style={{color: 'gray'}}
+                        />
+                      );
+                    })}
+                  </Picker>
+                </TouchableOpacity>
+              </View>
+              <ScrollView style={{marginBottom: 350}}>
+                {searchJobKey || searchCounterKey ? (
+                  <View>
+                    {loaderSearch ? (
+                      <View
+                        style={{
+                          flex: 1,
+                          height: 300,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <ActivityIndicator />
+                      </View>
+                    ) : (
+                      <View>
+                        <Text
+                          style={{fontSize: 18, marginTop: 15, color: '#000'}}>
+                          Search results : {jobList.length}
+                        </Text>
+                        {jobList.length == 0 ? (
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              height: 300,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 20,
+                                color: 'maroon',
+                                paddingHorizontal: 20,
+                                textAlign: 'center',
+                              }}>
+                              Opps! No result found for this combination
+                            </Text>
+                          </View>
+                        ) : (
+                          <View style={{marginTop: 20}}>
+                            {jobList?.map((value, i) => {
+                              return (
+                                <SearchResult value={value} props={props} />
+                              );
+                            })}
+                          </View>
+                        )}
+                      </View>
+                    )}
                   </View>
                 ) : (
-                  <View>
-                    <Text style={{fontSize: 18, marginTop: 15, color: '#000'}}>
-                      Search results : {jobList.length}
-                    </Text>
-                    {jobList.length == 0 ? (
-                      <View
+                  <View style={{marginTop: 20}}>
+                    <View style={styles.jobsList}>
+                      <Text style={styles.heading}>
+                        {translation.jobsYouCanGet}
+                      </Text>
+                      <ScrollView horizontal={true}>
+                        {loaderOccu ? (
+                          <View
+                            style={{
+                              height: 130,
+                              width: 100,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}>
+                            <ActivityIndicator />
+                          </View>
+                        ) : (
+                          occupations?.map((v, i) => {
+                            return <JobGola value={v} key={i} props={props} />;
+                          })
+                        )}
+                      </ScrollView>
+                    </View>
+                    <View style={styles.jobsList}>
+                      <Text style={styles.heading}>
+                        {translation.countriesWhereYouCanApply}
+                      </Text>
+                      <ScrollView horizontal={true}>
+                        {loaderCountry ? (
+                          <View
+                            style={{
+                              height: 130,
+                              width: 100,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}>
+                            <ActivityIndicator />
+                          </View>
+                        ) : (
+                          countries?.map((v, i) => {
+                            return (
+                              <CountryGola props={props} value={v} key={i} />
+                            );
+                          })
+                        )}
+                      </ScrollView>
+                    </View>
+                    <View style={{paddingVertical: 20, borderTopWidth: 1}}>
+                      <Text
                         style={{
-                          flexDirection: 'row',
-                          height: 300,
-                          justifyContent: 'center',
-                          alignItems: 'center',
+                          color: '#333333',
+                          fontWeight: '500',
+                          fontSize: 20,
+                          textAlign: 'center',
                         }}>
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            color: 'maroon',
-                            paddingHorizontal: 20,
-                            textAlign: 'center',
-                          }}>
-                          Opps! No result found for this combination
-                        </Text>
-                      </View>
-                    ) : (
-                      <View style={{marginTop: 20}}>
-                        {jobList?.map((value, i) => {
-                          return <SearchResult value={value} props={props} />;
-                        })}
-                      </View>
-                    )}
+                        Discover Fresh Feed Delights Now!
+                      </Text>
+                    </View>
+                    {dynamicFeedArr?.map((v, i) => {
+                      if (v?.dataType == 'hra') {
+                        return (
+                          <View>
+                            <HraGolaFeed value={v} key={i} props={props} />
+                          </View>
+                        );
+                      }
+                      if (v?.dataType == 'job') {
+                        return (
+                          <View>
+                            <Text
+                              style={{
+                                position: 'relative',
+                                zIndex: 1,
+                                padding: 5,
+                                marginLeft: 8,
+                                top: 12,
+                                backgroundColor: 'maroon',
+                                fontSize: 10,
+                                color: '#fff',
+                                borderRadius: 4,
+                                width: 60,
+                                textAlign: 'center',
+                              }}>
+                              Job Alert
+                            </Text>
+                            <SearchResult value={v} props={props} />
+                          </View>
+                        );
+                      }
+                      if (v?.dataType == 'news') {
+                        return <NewsFeedComponent value={v} key={i} />;
+                      }
+                      if (v?.dataType == 'course') {
+                        return (
+                          <View>
+                            <Text
+                              style={{
+                                position: 'relative',
+                                zIndex: 1,
+                                padding: 5,
+                                marginLeft: 8,
+                                top: 40,
+                                backgroundColor: '#28a745',
+                                fontSize: 10,
+                                color: '#fff',
+                                borderRadius: 4,
+                                width: 80,
+                                textAlign: 'center',
+                              }}>
+                              Get Certified
+                            </Text>
+                            <CourseGola value={v} props={props} />
+                          </View>
+                        );
+                      }
+                      if (v?.dataType == 'institute') {
+                        return (
+                          <View>
+                            <InstituteFeedGola value={v} props={props} />
+                          </View>
+                        );
+                      }
+                    })}
+                    <View style={styles.jobsList}>
+                      <Text style={styles.heading}>
+                        {translation.hereFromOther}
+                      </Text>
+                      <ScrollView horizontal={true}>
+                        {loaderCandidate ? (
+                          <View
+                            style={{
+                              height: 130,
+                              width: 100,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}>
+                            <ActivityIndicator />
+                          </View>
+                        ) : (
+                          <>
+                            {homeData?.afterDepartureVideos.map((v, i) => {
+                              return <CandidateVideoGola value={v} index={i} />;
+                            })}
+                            {homeData?.beforeDepartureVideo.map((v, i) => {
+                              return <CandidateVideoGola value={v} index={i} />;
+                            })}
+                          </>
+                        )}
+                      </ScrollView>
+                    </View>
                   </View>
                 )}
-              </View>
-            ) : (
-              <View style={{marginTop: 20}}>
-                <View style={styles.jobsList}>
-                  <Text style={styles.heading}>
-                    {translation.jobsYouCanGet}
-                  </Text>
-                  <ScrollView horizontal={true}>
-                    {loaderOccu ? (
-                      <View
-                        style={{
-                          height: 130,
-                          width: 100,
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                        <ActivityIndicator />
-                      </View>
-                    ) : (
-                      occupations?.map((v, i) => {
-                        return <JobGola value={v} key={i} props={props} />;
-                      })
-                    )}
-                  </ScrollView>
-                </View>
-                <View style={styles.jobsList}>
-                  <Text style={styles.heading}>
-                    {translation.countriesWhereYouCanApply}
-                  </Text>
-                  <ScrollView horizontal={true}>
-                    {loaderCountry ? (
-                      <View
-                        style={{
-                          height: 130,
-                          width: 100,
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                        <ActivityIndicator />
-                      </View>
-                    ) : (
-                      countries?.map((v, i) => {
-                        return <CountryGola props={props} value={v} key={i} />;
-                      })
-                    )}
-                  </ScrollView>
-                </View>
-                <View style={{paddingVertical: 20, borderTopWidth: 1}}>
-                  <Text
-                    style={{
-                      color: '#333333',
-                      fontWeight: '500',
-                      fontSize: 20,
-                      textAlign: 'center',
-                    }}>
-                    Discover Fresh Feed Delights Now!
-                  </Text>
-                </View>
-                {dynamicFeedArr?.map((v, i) => {
-                  if (v?.dataType == 'hra') {
-                    return (
-                      <View>
-                        <HraGolaFeed value={v} key={i} props={props} />
-                      </View>
-                    );
-                  }
-                  if (v?.dataType == 'job') {
-                    return (
-                      <View>
-                        <Text
-                          style={{
-                            position: 'relative',
-                            zIndex: 1,
-                            padding: 5,
-                            marginLeft: 8,
-                            top: 12,
-                            backgroundColor: 'maroon',
-                            fontSize: 10,
-                            color: '#fff',
-                            borderRadius: 4,
-                            width: 60,
-                            textAlign: 'center',
-                          }}>
-                          Job Alert
-                        </Text>
-                        <SearchResult value={v} props={props} />
-                      </View>
-                    );
-                  }
-                  if (v?.dataType == 'news') {
-                    return <NewsFeedComponent value={v} key={i} />;
-                  }
-                  if (v?.dataType == 'course') {
-                    return (
-                      <View>
-                        <Text
-                          style={{
-                            position: 'relative',
-                            zIndex: 1,
-                            padding: 5,
-                            marginLeft: 8,
-                            top: 40,
-                            backgroundColor: '#28a745',
-                            fontSize: 10,
-                            color: '#fff',
-                            borderRadius: 4,
-                            width: 80,
-                            textAlign: 'center',
-                          }}>
-                          Get Certified
-                        </Text>
-                        <CourseGola value={v} props={props} />
-                      </View>
-                    );
-                  }
-                  if (v?.dataType == 'institute') {
-                    return (
-                      <View>
-                        <InstituteFeedGola value={v} props={props} />
-                      </View>
-                    );
-                  }
-                })}
-                <View style={styles.jobsList}>
-                  <Text style={styles.heading}>
-                    {translation.hereFromOther}
-                  </Text>
-                  <ScrollView horizontal={true}>
-                    {loaderCandidate ? (
-                      <View
-                        style={{
-                          height: 130,
-                          width: 100,
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                        <ActivityIndicator />
-                      </View>
-                    ) : (
-                      <>
-                        {homeData?.afterDepartureVideos.map((v, i) => {
-                          return <CandidateVideoGola value={v} index={i} />;
-                        })}
-                        {homeData?.beforeDepartureVideo.map((v, i) => {
-                          return <CandidateVideoGola value={v} index={i} />;
-                        })}
-                      </>
-                    )}
-                  </ScrollView>
-                </View>
-              </View>
-            )}
-          </ScrollView>
+              </ScrollView>
+            </View>
+          </View>
+          <Toast ref={ref => Toast.setRef(ref)} />
         </View>
-      </View>
-      <Toast ref={ref => Toast.setRef(ref)} />
-    </View>
+      
+      
+    
   );
 };
 

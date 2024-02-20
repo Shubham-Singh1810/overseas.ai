@@ -9,7 +9,7 @@ import {
   Share
 } from 'react-native';
 import React from 'react';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {getJobById, applyJobApi} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';

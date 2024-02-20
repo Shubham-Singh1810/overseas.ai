@@ -9,7 +9,7 @@ import {
   Pressable,
   ActivityIndicator
 } from 'react-native';
-import React,{useEffect, useState} from 'react';
+import React,{useState} from 'react';
 import FavJobComponent from '../components/FavJobComponent';
 import {ScrollView} from 'react-native-gesture-handler';
 import {favouriteJobList} from '../services/job.service';

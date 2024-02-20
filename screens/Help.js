@@ -9,7 +9,7 @@ import {
   Share,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 import FooterNav from '../components/FooterNav';
 import {TouchableOpacity} from 'react-native-gesture-handler';

@@ -11,7 +11,7 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   addPassportApi,
   getPassportDetails,
@@ -36,6 +36,7 @@ import MyMultipleSelectPopUp from '../components/MyMultipleSelectPopUp';
 import MyFileViewer from '../components/MyFileViewer';
 import {getAllDocApi} from '../services/user.service';
 import Pdf from 'react-native-pdf';
+import {useFocusEffect} from '@react-navigation/native';
 const MyDocument = props => {
   const [countryList, setCountryList] = useState([]);
   const getCountryList = async () => {
@@ -54,10 +55,13 @@ const MyDocument = props => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getCountryList();
-    getStateList();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getCountryList();
+      getStateList();
+    }, []),
+  );
+ 
   const {translation} = useGlobalState();
   // function to upload passport
   const uploadPassport = () => {
@@ -622,9 +626,11 @@ const MyDocument = props => {
       console.log(response.data.otherDocs.docs);
     } catch (error) {}
   };
-  useEffect(() => {
-    getAllDocList();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getAllDocList();
+    }, []),
+  );
   const setEditInputForDl = value => {
     console.warn(value);
     setShowDlForm(true);

@@ -7,7 +7,7 @@ import {
   Button,
   View,
 } from 'react-native';
-import React, {useState,useEffect} from 'react';
+import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import AppliedJob from '../components/AppliedJob';
 import {appliedJobList} from "../services/job.service"

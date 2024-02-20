@@ -20,7 +20,7 @@ import BuildProfile from '../screens/BuildProfile';
 import YourHra from '../screens/YourHra';
 import GetCertificate from '../screens/GetCertificate';
 import NeedMigrationLoan from '../screens/NeedMigrationLoan';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import FavrouiteJob from '../screens/FavrouiteJob';
 import {useFocusEffect} from '@react-navigation/native';
@@ -28,10 +28,8 @@ import SavedJobs from '../screens/SavedJobs';
 import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Welcome from '../screens/Welcome';
 
 const CustomDrawerContent = props => {
-  console.log(props.navigation.getState());
   const {navigation} = props;
   const {globalState, setGlobalState} = useGlobalState();
   const [navItem, setNavItem] = useState([

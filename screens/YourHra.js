@@ -9,7 +9,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {getHraList} from '../services/hra.service';
 import {TextInput} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';

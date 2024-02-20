@@ -9,10 +9,11 @@ import {
   Button,
   Modal,
 } from 'react-native';
-import {useEffect, useState} from 'react';
+import React,{useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useGlobalState} from '../GlobalProvider';
 import {getNotification} from '../services/user.service';
+import {useFocusEffect} from '@react-navigation/native';
 const RightNav = props => {
   const [notificationList, setNotificationistList] = useState(null);
   const getNotificationFunc = async () => {
@@ -29,9 +30,12 @@ const RightNav = props => {
   };
   const {globalState, setGlobalState} = useGlobalState();
   const [showModal, setShowModal] = useState(false);
-  useEffect(() => {
-    getNotificationFunc();
-  }, []);
+ 
+  useFocusEffect(
+    React.useCallback(() => {
+      getNotificationFunc();
+    }, []),
+  );
   return (
     <>
       <View style={styles.topNav}>

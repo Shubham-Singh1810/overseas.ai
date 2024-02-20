@@ -1,5 +1,5 @@
 import {StyleSheet,Modal, ScrollView, Pressable, Text, View, ActivityIndicator} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import JobApplied from './JobApplied';
 import SearchResult from '../components/SearchResult';
 import FooterNav from '../components/FooterNav';

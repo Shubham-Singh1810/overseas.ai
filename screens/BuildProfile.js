@@ -10,7 +10,7 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import {useState, useEffect, useRef} from 'react';
+import {useState, useRef} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import {useGlobalState} from '../GlobalProvider';

@@ -11,7 +11,7 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import {getCountries} from '../services/info.service';
@@ -19,6 +19,7 @@ import {registerUserStep2, editProfile} from '../services/user.service';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import {useFocusEffect} from '@react-navigation/native';
 const CandidateDetails2 = ({route}) => {
   console.log(route.params.step1user.access_token)
   const {globalState, setGlobalState} = useGlobalState();
@@ -143,13 +144,14 @@ const CandidateDetails2 = ({route}) => {
   };
 
   const handleSkip = async () => {
-    
     await AsyncStorage.setItem('user', route.params.step1user);
     setUserData();
   };
-  useEffect(() => {
-    getCountryList();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getCountryList();
+    }, []),
+  );
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
       <View style={styles.main}>

@@ -12,10 +12,11 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import DatePicker from 'react-native-modern-datepicker';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
+import {useFocusEffect} from '@react-navigation/native';
 import {
   getAllExperience,
   editExperienceStepApi,
@@ -234,12 +235,15 @@ const ExperienceScreen = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getOccupationList();
+  useFocusEffect(
+    React.useCallback(() => {
+      getOccupationList();
     getStateList();
     getCountryList();
     getExperienceFunc();
-  }, []);
+    }, []),
+  );
+  
   const pickDocument = async () => {
     try {
       const result = await DocumentPicker.pick({

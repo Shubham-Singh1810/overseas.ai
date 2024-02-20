@@ -10,7 +10,7 @@ import {
   Modal,
   Button,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   getOccupations,
   getSkillsByOccuId,
@@ -22,9 +22,14 @@ import RNRestart from 'react-native-restart';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
 import {useGlobalState} from '../GlobalProvider';
-import {registerUserStep2,getProfileStrength, editProfile} from '../services/user.service';
+import {
+  registerUserStep2,
+  getProfileStrength,
+  editProfile,
+} from '../services/user.service';
 import DocumentPicker from 'react-native-document-picker';
 import Toast from 'react-native-toast-message';
+import {useFocusEffect} from '@react-navigation/native';
 const EditProfile = () => {
   const [occupations, setOccupations] = useState([]);
   const getOccupationList = async () => {
@@ -55,7 +60,8 @@ const EditProfile = () => {
       setCountryList(response?.countries);
     } catch (error) {}
   };
-  const {translation, globalState,setUserData, setGlobalState} = useGlobalState();
+  const {translation, globalState, setUserData, setGlobalState} =
+    useGlobalState();
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [formData, setFormData] = useState({
     empOccuId: '',
@@ -119,7 +125,7 @@ const EditProfile = () => {
           visibilityTime: 3000,
         });
         setUserImage(response?.data?.empData?.empPhoto);
-        getProfileStrengthFunc()
+        getProfileStrengthFunc();
       } else {
         Toast.show({
           type: 'error',
@@ -151,54 +157,58 @@ const EditProfile = () => {
       setSkills(response?.skills);
     } catch (error) {}
   };
-  const getProfileStrengthFunc = async() => {
+  const getProfileStrengthFunc = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getProfileStrength(JSON.parse(user).access_token);
-      if(response?.data.msg=="Some fields are empty" || response?.data.msg=="Profile strength calculated successfully and updated in records"){
-        setGlobalState({...globalState, profileStrength:response?.data});
+      if (
+        response?.data.msg == 'Some fields are empty' ||
+        response?.data.msg ==
+          'Profile strength calculated successfully and updated in records'
+      ) {
+        setGlobalState({...globalState, profileStrength: response?.data});
       }
     } catch (error) {
-      console.log("NEW", error)
+      console.log('NEW', error);
     }
   };
-  useEffect(() => {
-    getCountryList();
-    getOccupationList();
-    setFormData({
-      empOccuId: JSON.parse(globalState.user)?.empData?.empOccuId,
-      empSkill: JSON.parse(globalState.user).empData.empSkill,
-      empEdu: JSON.parse(globalState.user).empData.empEdu,
-      empEduYear: JSON.parse(globalState.user).empData.empEduYear,
-      empTechEdu: JSON.parse(globalState.user).empData.empTechEdu,
-      empSpecialEdu: JSON.parse(globalState.user).empData.empSpecialEdu,
-      empPassportQ: JSON.parse(globalState.user).empData.empPassportQ,
-      empMS: JSON.parse(globalState.user).empData.empMS,
-      empInternationMigrationExp: JSON.parse(globalState.user).empData
-        .empInternationMigrationExp,
-      empWhatsapp: JSON.parse(globalState.user).empData.empWhatsapp,
-      empEmail: JSON.parse(globalState.user).empData.empEmail,
-      empDailyWage: JSON.parse(globalState.user).empData.empDailyWage,
-      empExpectedMonthlyIncome: JSON.parse(globalState.user).empData
-        .empExpectedMonthlyIncome,
-      empRelocationIntQ: JSON.parse(globalState.user).empData.empRelocationIntQ,
-      empRelocationIntQCountry: JSON.parse(globalState.user).empData
-        .empRelocationIntQCountry,
-      empAadharNo: JSON.parse(globalState.user).empData.empAadharNo,
-      empLanguage: JSON.parse(globalState.user).empData.empLanguage,
-      empRefName: JSON.parse(globalState.user).empData.empRefName,
-      empRefPhone: JSON.parse(globalState.user).empData.empRefPhone,
-    });
-    getSkillListByOccuId(JSON.parse(globalState.user).empData.empOccuId);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getCountryList();
+      getOccupationList();
+      setFormData({
+        empOccuId: JSON.parse(globalState.user)?.empData?.empOccuId,
+        empSkill: JSON.parse(globalState.user).empData.empSkill,
+        empEdu: JSON.parse(globalState.user).empData.empEdu,
+        empEduYear: JSON.parse(globalState.user).empData.empEduYear,
+        empTechEdu: JSON.parse(globalState.user).empData.empTechEdu,
+        empSpecialEdu: JSON.parse(globalState.user).empData.empSpecialEdu,
+        empPassportQ: JSON.parse(globalState.user).empData.empPassportQ,
+        empMS: JSON.parse(globalState.user).empData.empMS,
+        empInternationMigrationExp: JSON.parse(globalState.user).empData
+          .empInternationMigrationExp,
+        empWhatsapp: JSON.parse(globalState.user).empData.empWhatsapp,
+        empEmail: JSON.parse(globalState.user).empData.empEmail,
+        empDailyWage: JSON.parse(globalState.user).empData.empDailyWage,
+        empExpectedMonthlyIncome: JSON.parse(globalState.user).empData
+          .empExpectedMonthlyIncome,
+        empRelocationIntQ: JSON.parse(globalState.user).empData
+          .empRelocationIntQ,
+        empRelocationIntQCountry: JSON.parse(globalState.user).empData
+          .empRelocationIntQCountry,
+        empAadharNo: JSON.parse(globalState.user).empData.empAadharNo,
+        empLanguage: JSON.parse(globalState.user).empData.empLanguage,
+        empRefName: JSON.parse(globalState.user).empData.empRefName,
+        empRefPhone: JSON.parse(globalState.user).empData.empRefPhone,
+      });
+      getSkillListByOccuId(JSON.parse(globalState.user).empData.empOccuId);
+    }, []),
+  );
 
   const handleSubmit = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
-      let response = await editProfile(
-        formData,
-        JSON.parse(user).access_token,
-      );
+      let response = await editProfile(formData, JSON.parse(user).access_token);
       if (response?.data?.msg == 'User profile updated successfully') {
         Toast.show({
           type: 'success',
@@ -206,11 +216,14 @@ const EditProfile = () => {
           position: 'bottom',
           visibilityTime: 3000,
         });
-        
-        user = JSON.parse(user)
-        await AsyncStorage.setItem("user", JSON.stringify({...user, empData:response?.data.empData}))
-        setUserData()
-        getProfileStrengthFunc()
+
+        user = JSON.parse(user);
+        await AsyncStorage.setItem(
+          'user',
+          JSON.stringify({...user, empData: response?.data.empData}),
+        );
+        setUserData();
+        getProfileStrengthFunc();
       } else {
         Toast.show({
           type: 'error',

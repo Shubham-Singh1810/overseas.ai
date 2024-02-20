@@ -11,7 +11,7 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import {useState, useEffect} from 'react';
+import React,{useState} from 'react';
 import moment from 'moment';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-modern-datepicker';
@@ -25,13 +25,11 @@ import {
 } from '../services/info.service';
 import {registerUserStep1, addExperienceStep2} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DocumentPicker from 'react-native-document-picker';
+import {useFocusEffect} from '@react-navigation/native';
 const CandidateDetailsStep1 = props => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [experienceMsgText, setShowExperinceMsgText] = useState(
     'Do you have past experience ?',
   );
-  const [showWhatsappInput, setShowWhatsappInput] = useState(false);
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showCalender, setShowCalender] = useState(false);
   const [showJoiningCalender, setJoiningCalender] = useState(false);
@@ -131,12 +129,15 @@ const CandidateDetailsStep1 = props => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getOccupationList();
+  useFocusEffect(
+    React.useCallback(() => {
+      getOccupationList();
     getLocalUser();
     getCountryList();
     getStateList();
-  }, []);
+    }, []),
+  );
+  
   const [formDataError, setFormDataError] = useState({
     empDob: '',
     empGender: '',
