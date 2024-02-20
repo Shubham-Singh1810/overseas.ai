@@ -270,6 +270,7 @@ const VideoScreen = (props) => {
           visibilityTime: 3000, // Duration in milliseconds
         });
         getUserWorkVideoList();
+        getProfileStrengthFunc()
       }
     } catch (error) {
       console.warn('Something went wrong');
@@ -294,6 +295,7 @@ const VideoScreen = (props) => {
         getUserIntroVideoList();
         setShowDeleteConfirmPop(false);
         setvideoToBeDeleted('');
+        getProfileStrengthFunc()
         Toast.show({
           type: 'success', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',

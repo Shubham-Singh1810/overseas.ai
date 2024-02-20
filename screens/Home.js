@@ -15,7 +15,7 @@ import CandidateVideoGola from '../components/CandidateVideoGola';
 import CountryGola from '../components/CountryGola';
 import SearchResult from '../components/SearchResult';
 import {useGlobalState} from '../GlobalProvider';
-import {getCountries, getHomeData} from '../services/info.service';
+import {getCountries,getCountriesForJobs, getHomeData} from '../services/info.service';
 import Toast from 'react-native-toast-message';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -62,7 +62,7 @@ const Home = props => {
   const getCountryList = async () => {
     setLoaderCountry(true);
     try {
-      let response = await getCountries();
+      let response = await getCountriesForJobs();
       setCountries(response?.countries);
     } catch (error) {}
     setLoaderCountry(false);

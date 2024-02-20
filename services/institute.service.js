@@ -50,6 +50,8 @@ export const getCourseList = async access_token => {
     throw error;
   }
 };
+
+
 export const searchForCourse = async (params) => {
   console.log("params", params)
   try {

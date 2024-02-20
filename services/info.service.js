@@ -61,6 +61,15 @@ export const getCountries = async data => {
   }
 };
 
+export const getCountriesForJobs = async data => {
+  try {
+    const response = await axios.get(BASE_URL + 'country-list-for-jobs');
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
 // Function to get video list/contries/occupation(job title)/skills/topprofile
 export const getHomeData = async data => {
   try {
