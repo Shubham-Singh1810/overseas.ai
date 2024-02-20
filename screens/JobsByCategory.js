@@ -10,7 +10,7 @@ import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const JobsByCategory = props => {
   const route = useRoute();
   useAndroidBackHandler(() => {
-    props.navigation.navigate('Search Job');
+    props.navigation.navigate('Home');
     return true;
   });
   const {departmentId, departmentName} = route.params;

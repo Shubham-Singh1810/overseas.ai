@@ -22,7 +22,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import DocumentPicker from 'react-native-document-picker';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const AppliedJobById = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Applied Job") 
+    return true;
+  });
   const [appliedJobDetails, setAppliedJobDetails] = useState();
   const getAppliedJobById = async id => {
     let user = await AsyncStorage.getItem('user');

@@ -224,7 +224,7 @@ const BuildProfile = props => {
                   <Button
                     title="Upload"
                     color="#035292"
-                    onPress={() => props.navigation.navigate(v.type)}
+                    onPress={() => props.navigation.navigate(v.type, {backTo: "Improve Profile"})}
                   />
                 </View>
               </Pressable>

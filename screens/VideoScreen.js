@@ -33,8 +33,14 @@ import {getProfileStrength, getNotification} from '../services/user.service';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const VideoScreen = (props) => {
   useAndroidBackHandler(() => {
-    props.navigation.navigate("Home") 
-    return true;
+    if(props?.route?.params?.backTo){
+      props.navigation.navigate(props?.route?.params?.backTo) 
+      return true;
+    }
+    else{
+      props.navigation.navigate("Home") 
+      return true;
+    } 
   });
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const {translation, globalState, setGlobalState} = useGlobalState();

@@ -10,7 +10,7 @@ import {useFocusEffect} from '@react-navigation/native';
 const JobsByCountry = (props) => {
   const route = useRoute();
   useAndroidBackHandler(() => {
-    props.navigation.navigate('Search Job');
+    props.navigation.navigate('Home');
     return true;
   });
   const {countryId, countryName} = route.params;
