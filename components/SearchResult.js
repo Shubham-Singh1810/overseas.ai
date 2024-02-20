@@ -8,26 +8,15 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
-import {getJobById, applyJobApi} from '../services/job.service';
+import {applyJobApi} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {saveJobById} from '../services/job.service';
 const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
-  const [showDetails, setShowDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const {translation} = useGlobalState();
-  const [moreDetails, setMoreDetails] = useState(null);
-  const getJobByIdFunc = async () => {
-    try {
-      let response = await getJobById(value?.id);
-      setMoreDetails(response.data.jobs);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
   const handleApplyJob = async jobId => {
     try {
       let user = await AsyncStorage.getItem('user');
@@ -93,21 +82,35 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
       return inputString;
     }
   }
-  useEffect(() => {
-    getJobByIdFunc();
-  }, []);
+  console.log(value?.JobPrimaryId)
   return (
     <>
       <View style={styles.main}>
-        <Pressable style={styles.navTop} onPress={() =>
-                props.navigation.navigate('Job Details', {jobId: value.id, saved:saved, favroite:favroite})
-              }>
-          <Text style={styles.jobName}>{value?.jobTitle.length>30 ? <>{toTitleCase(value?.jobTitle).substring(0, 30)}...</>: toTitleCase(value?.jobTitle)}</Text>
+        <Pressable
+          style={styles.navTop}
+          onPress={() =>
+            props.navigation.navigate('Job Details', {
+              jobId: saved? value?.JobPrimaryId : value.id,
+              saved: saved,
+              favroite: favroite,
+            })
+          }>
+          <Text style={styles.jobName}>
+            {value?.jobTitle.length > 30 ? (
+              <>{toTitleCase(value?.jobTitle).substring(0, 30)}...</>
+            ) : (
+              toTitleCase(value?.jobTitle)
+            )}
+          </Text>
         </Pressable>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.currencyText}>{value?.jobWages} {value?.jobLocationCountry?.currencyName} = {Math.round(
-                value?.jobWages * value?.jobLocationCountry?.currencyValue,
-              )}{' '} INR</Text> 
+          <Text style={styles.currencyText}>
+            {value?.jobWages} {value?.jobLocationCountry?.currencyName} ={' '}
+            {Math.round(
+              value?.jobWages * value?.jobLocationCountry?.currencyValue,
+            )}{' '}
+            INR
+          </Text>
           <Text style={styles.dateText}>
             {translation.applyBefore} -{' '}
             {value?.jobDeadline ? value?.jobDeadline : 'No Deadline'}
@@ -120,13 +123,18 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginBottom: 7,
-                marginTop:3
+                marginTop: 3,
               }}>
-              <Image source={{
-              uri: `https://overseas.ai/storage/uploads/countryFlag/${value?.jobLocationCountry?.countryFlag}`,
-            }} style={{height: 20, width: 20}} />
+              <Image
+                source={{
+                  uri: `https://overseas.ai/storage/uploads/countryFlag/${value?.jobLocationCountry?.countryFlag}`,
+                }}
+                style={{height: 20, width: 20}}
+              />
               <Text style={[{marginLeft: 9}, styles.otherDetail]}>
-                {favroite || saved ? value?.jobCountry : value?.country_location}
+                {favroite || saved
+                  ? value?.jobCountry
+                  : value?.country_location}
               </Text>
             </View>
             <Text style={styles.countryName}>
@@ -171,9 +179,9 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
                     padding: 5,
                     borderRadius: 12,
                     backgroundColor: '#fff',
-                    height:15,
-                    width:15,
-                    resizeMode:"contain"
+                    height: 15,
+                    width: 15,
+                    resizeMode: 'contain',
                   }}
                   source={require('../images/starIcon.png')}
                 />
@@ -186,7 +194,7 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop: favroite ? -35 : -20
+            marginTop: favroite ? -35 : -20,
           }}>
           <View
             style={{
@@ -200,15 +208,17 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
             <Text
               style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
               onPress={() =>
-                props.navigation.navigate('Job Details', {jobId: value.id, saved:saved, favroite:favroite})
+                props.navigation.navigate('Job Details', {
+                  jobId: saved? value?.JobPrimaryId : value.id,
+                  saved: saved,
+                  favroite: favroite,
+                })
               }>
               {translation.readDetails}
             </Text>
           </View>
           <View>
-            
-            <View
-             >
+            <View>
               <TouchableOpacity
                 onPress={() =>
                   handleSaveJob(saved ? value?.JobPrimaryId : value?.id)
@@ -326,7 +336,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'Noto Sans',
     color: '#000',
-    marginBottom:2
+    marginBottom: 2,
   },
   messageText: {
     fontSize: 12,

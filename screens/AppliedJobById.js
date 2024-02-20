@@ -11,10 +11,16 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import Pdf from 'react-native-pdf';
-import {useState, useEffect} from 'react';
-import {appliedJobById, getInterviewById, uploadSignedDocForCaution , uploadMedicalForInterview} from '../services/job.service';
+import React, {useState, useEffect} from 'react';
+import {
+  appliedJobById,
+  getInterviewById,
+  uploadSignedDocForCaution,
+  uploadMedicalForInterview,
+} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+import {useFocusEffect} from '@react-navigation/native';
 import DocumentPicker from 'react-native-document-picker';
 const AppliedJobById = props => {
   const [appliedJobDetails, setAppliedJobDetails] = useState();
@@ -35,10 +41,12 @@ const AppliedJobById = props => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getAppliedJobById(props?.route?.params?.id);
-    getInterviewDetails(props?.route?.params?.id);
-  }, [props?.route?.params?.id]);
+  useFocusEffect(
+    React.useCallback(() => {
+      getAppliedJobById(props?.route?.params?.id);
+      getInterviewDetails(props?.route?.params?.id);
+    }, [props?.route?.params?.id]),
+  );
   const [showInterviewPopUp, setShowInterviewPopUp] = useState(false);
   const [showOfferLetterPopUp, setShowOfferLetterPopUp] = useState(false);
   const handleFileDownload = async () => {
@@ -60,7 +68,7 @@ const AppliedJobById = props => {
       console.warn(err);
     }
   };
-  const [showDocUploader,setShowDocUploader]=useState(false)
+  const [showDocUploader, setShowDocUploader] = useState(false);
   const [uploadSignedDoc, setUploadSignedDoc] = useState({
     cautionMoneyScreensort: '',
     signedOfferLatter: '',
@@ -100,25 +108,34 @@ const AppliedJobById = props => {
     let user = await AsyncStorage.getItem('user');
     try {
       const formData = new FormData();
-      formData.append("cautionMoneyScreenshot", {
+      formData.append('cautionMoneyScreenshot', {
         uri: uploadSignedDoc.cautionMoneyScreensort.uri,
         type: uploadSignedDoc.cautionMoneyScreensort.type,
         name: uploadSignedDoc.cautionMoneyScreensort.name,
-      })
-      formData.append("signedOfferLatter", {
+      });
+      formData.append('signedOfferLatter', {
         uri: uploadSignedDoc.signedOfferLatter.uri,
         type: uploadSignedDoc.signedOfferLatter.type,
         name: uploadSignedDoc.signedOfferLatter.name,
-      })
-      formData.append("interviewId", interviewJobDetails?.InterviewStage2?.intTblId);
-      if(uploadSignedDoc.signedOfferLatter && uploadSignedDoc.cautionMoneyScreensort){
-        let response = await uploadSignedDocForCaution(formData, JSON.parse(user).access_token);
-        if(response?.data.message=="Documents added successfully."){
+      });
+      formData.append(
+        'interviewId',
+        interviewJobDetails?.InterviewStage2?.intTblId,
+      );
+      if (
+        uploadSignedDoc.signedOfferLatter &&
+        uploadSignedDoc.cautionMoneyScreensort
+      ) {
+        let response = await uploadSignedDocForCaution(
+          formData,
+          JSON.parse(user).access_token,
+        );
+        if (response?.data.message == 'Documents added successfully.') {
           setShowDocUploader(false);
           setUploadSignedDoc({
             cautionMoneyScreensort: '',
             signedOfferLatter: '',
-          })
+          });
           Toast.show({
             type: 'success', // 'success', 'error', 'info', or any custom type you define
             position: 'top',
@@ -126,8 +143,7 @@ const AppliedJobById = props => {
             visibilityTime: 3000, // Duration in milliseconds
           });
           getInterviewDetails(props?.route?.params?.id);
-        }
-        else{
+        } else {
           Toast.show({
             type: 'error', // 'success', 'error', 'info', or any custom type you define
             position: 'top',
@@ -135,7 +151,7 @@ const AppliedJobById = props => {
             visibilityTime: 3000, // Duration in milliseconds
           });
         }
-      }else{
+      } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           position: 'top',
@@ -143,7 +159,6 @@ const AppliedJobById = props => {
           visibilityTime: 3000, // Duration in milliseconds
         });
       }
-      
     } catch (error) {
       Toast.show({
         type: 'error', // 'success', 'error', 'info', or any custom type you define
@@ -153,12 +168,12 @@ const AppliedJobById = props => {
       });
     }
   };
-  const [showPaymentPopUp, setShowPaymentPopUp]=useState(false);
-  const [showMedicalPopUp, setShowMedicalPopUp]=useState(false);
-  const [medicalPccForm, setMedicalPccForm]=useState({
-    medicalReport:"",
-    ppc:""
-  })
+  const [showPaymentPopUp, setShowPaymentPopUp] = useState(false);
+  const [showMedicalPopUp, setShowMedicalPopUp] = useState(false);
+  const [medicalPccForm, setMedicalPccForm] = useState({
+    medicalReport: '',
+    ppc: '',
+  });
   const pickDocumentForMedical = async () => {
     try {
       const result = await DocumentPicker.pick({
@@ -194,25 +209,31 @@ const AppliedJobById = props => {
     let user = await AsyncStorage.getItem('user');
     try {
       const formData = new FormData();
-      formData.append("medicalReport", {
+      formData.append('medicalReport', {
         uri: medicalPccForm.medicalReport.uri,
         type: medicalPccForm.medicalReport.type,
         name: medicalPccForm.medicalReport.name,
-      })
-      formData.append("ppc", {
+      });
+      formData.append('ppc', {
         uri: medicalPccForm.ppc.uri,
         type: medicalPccForm.ppc.type,
         name: medicalPccForm.ppc.name,
-      })
-      formData.append("interviewId", interviewJobDetails?.InterviewStage2?.intTblId);
-      if(medicalPccForm.medicalReport){
-        let response = await uploadMedicalForInterview(formData, JSON.parse(user).access_token);
-        if(response?.data.message=="Data updated successfully"){
+      });
+      formData.append(
+        'interviewId',
+        interviewJobDetails?.InterviewStage2?.intTblId,
+      );
+      if (medicalPccForm.medicalReport) {
+        let response = await uploadMedicalForInterview(
+          formData,
+          JSON.parse(user).access_token,
+        );
+        if (response?.data.message == 'Data updated successfully') {
           setShowMedicalPopUp(false);
           setMedicalPccForm({
-            medicalReport:"",
-            ppc:""
-          })
+            medicalReport: '',
+            ppc: '',
+          });
           Toast.show({
             type: 'success', // 'success', 'error', 'info', or any custom type you define
             position: 'top',
@@ -220,8 +241,7 @@ const AppliedJobById = props => {
             visibilityTime: 3000, // Duration in milliseconds
           });
           getInterviewDetails(props?.route?.params?.id);
-        }
-        else{
+        } else {
           Toast.show({
             type: 'error', // 'success', 'error', 'info', or any custom type you define
             position: 'top',
@@ -229,7 +249,7 @@ const AppliedJobById = props => {
             visibilityTime: 3000, // Duration in milliseconds
           });
         }
-      }else{
+      } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           position: 'top',
@@ -237,7 +257,6 @@ const AppliedJobById = props => {
           visibilityTime: 3000, // Duration in milliseconds
         });
       }
-      
     } catch (error) {
       Toast.show({
         type: 'error', // 'success', 'error', 'info', or any custom type you define
@@ -410,11 +429,10 @@ const AppliedJobById = props => {
               // appliedJobDetails?.interviewStatus == 1 &&
               styles.textGreen
             }>
-            Selected 
+            Selected
           </Text>
           {interviewJobDetails?.data?.offerLatterSent == 1 && (
             <Pressable
-              
               onPress={() => setShowOfferLetterPopUp(true)}
               style={{
                 borderWidth: 1,
@@ -431,11 +449,23 @@ const AppliedJobById = props => {
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
-        <Pressable  style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View style={[styles.highlight, (interviewJobDetails?.data?.offerLatterSent == 1) && styles.backgroundColorGreen]}></View>
-          <Text style={(interviewJobDetails?.data?.offerLatterSent == 1) && styles.textGreen}>Signed Offer Letter</Text>
-          {(interviewJobDetails?.data?.offerLatterSent == 1 && interviewJobDetails?.data?.cautionMoneyStatus == 0) ?
-           <Pressable
+        <Pressable style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={[
+              styles.highlight,
+              interviewJobDetails?.data?.offerLatterSent == 1 &&
+                styles.backgroundColorGreen,
+            ]}></View>
+          <Text
+            style={
+              interviewJobDetails?.data?.offerLatterSent == 1 &&
+              styles.textGreen
+            }>
+            Signed Offer Letter
+          </Text>
+          {interviewJobDetails?.data?.offerLatterSent == 1 &&
+          interviewJobDetails?.data?.cautionMoneyStatus == 0 ? (
+            <Pressable
               onPress={() => setShowDocUploader(true)}
               style={{
                 borderWidth: 1,
@@ -447,73 +477,106 @@ const AppliedJobById = props => {
                 alignItems: 'center',
               }}>
               <Text style={{color: 'black'}}>Upload</Text>
-            </Pressable> : 
-            interviewJobDetails?.data?.cautionMoneyStatus != 2 && <Pressable
-              onPress={() => setShowPaymentPopUp(true)}
-              style={{
-                borderWidth: 1,
-                flexDirection: 'row',
-                marginLeft: 10,
-                paddingHorizontal: 2,
-                borderRadius: 3,
-                backgroundColor: '#F1F7FF',
-                alignItems: 'center',
-              }}>
-              <Text style={{color: 'black'}}>View</Text>
-              <Image
-                source={require('../images/infoIcon.png')}
-                style={{
-                  height: 14,
-                  width: 14,
-                  resizeMode: 'contain',
-                  marginLeft: 5,
-                }}
-              />
             </Pressable>
-            }
+          ) : (
+            interviewJobDetails?.data?.cautionMoneyStatus != 2 && (
+              <Pressable
+                onPress={() => setShowPaymentPopUp(true)}
+                style={{
+                  borderWidth: 1,
+                  flexDirection: 'row',
+                  marginLeft: 10,
+                  paddingHorizontal: 2,
+                  borderRadius: 3,
+                  backgroundColor: '#F1F7FF',
+                  alignItems: 'center',
+                }}>
+                <Text style={{color: 'black'}}>View</Text>
+                <Image
+                  source={require('../images/infoIcon.png')}
+                  style={{
+                    height: 14,
+                    width: 14,
+                    resizeMode: 'contain',
+                    marginLeft: 5,
+                  }}
+                />
+              </Pressable>
+            )
+          )}
         </Pressable>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
-        
+
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View style={[styles.highlight, interviewJobDetails?.data?.cautionMoneyStatus == 2 && styles.backgroundColorGreen]}></View>
-          <Text style={[ interviewJobDetails?.data?.cautionMoneyStatus == 2 && styles.textGreen]}>Medical And PCC</Text> 
-          {interviewJobDetails?.data?.cautionMoneyStatus == 2 && interviewJobDetails?.data?.stageStepCount==3 && interviewJobDetails?.data?.stage4==0 && <Pressable
-              onPress={() => setShowMedicalPopUp(true)}
-              style={{
-                borderWidth: 1,
-                flexDirection: 'row',
-                marginLeft: 10,
-                paddingHorizontal: 2,
-                borderRadius: 3,
-                backgroundColor: '#F1F7FF',
-                alignItems: 'center',
-              }}>
-              <Text style={{color: 'black'}}>Upload</Text>
-            </Pressable>}
-          
+          <View
+            style={[
+              styles.highlight,
+              interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+                styles.backgroundColorGreen,
+            ]}></View>
+          <Text
+            style={[
+              interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+                styles.textGreen,
+            ]}>
+            Medical And PCC
+          </Text>
+          {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+            interviewJobDetails?.data?.stageStepCount == 3 &&
+            interviewJobDetails?.data?.stage4 == 0 && (
+              <Pressable
+                onPress={() => setShowMedicalPopUp(true)}
+                style={{
+                  borderWidth: 1,
+                  flexDirection: 'row',
+                  marginLeft: 10,
+                  paddingHorizontal: 2,
+                  borderRadius: 3,
+                  backgroundColor: '#F1F7FF',
+                  alignItems: 'center',
+                }}>
+                <Text style={{color: 'black'}}>Upload</Text>
+              </Pressable>
+            )}
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View style={[styles.highlight, (interviewJobDetails?.data?.cautionMoneyStatus == 2 && interviewJobDetails?.data?.stageStepCount==5 && interviewJobDetails?.data?.stage5==1) && styles.backgroundColorGreen]}></View>
-          <Text style={[(interviewJobDetails?.data?.cautionMoneyStatus == 2 && interviewJobDetails?.data?.stageStepCount==5 && interviewJobDetails?.data?.stage5==1) && styles.textGreen ]}>Visa and Ticket Relised</Text>
-          {(interviewJobDetails?.data?.cautionMoneyStatus == 2 && interviewJobDetails?.data?.stageStepCount==5 && interviewJobDetails?.data?.stage5==1) && (
-            <Pressable
-              
-              onPress={() => setShowOfferLetterPopUp(true)}
-              style={{
-                borderWidth: 1,
-                flexDirection: 'row',
-                marginLeft: 10,
-                paddingHorizontal: 2,
-                borderRadius: 3,
-                backgroundColor: '#F1F7FF',
-                alignItems: 'center',
-              }}>
-              <Text style={{color: 'black'}}>View</Text>
-            </Pressable>
-          )}
+          <View
+            style={[
+              styles.highlight,
+              interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+                interviewJobDetails?.data?.stageStepCount == 5 &&
+                interviewJobDetails?.data?.stage5 == 1 &&
+                styles.backgroundColorGreen,
+            ]}></View>
+          <Text
+            style={[
+              interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+                interviewJobDetails?.data?.stageStepCount == 5 &&
+                interviewJobDetails?.data?.stage5 == 1 &&
+                styles.textGreen,
+            ]}>
+            Visa and Ticket Relised
+          </Text>
+          {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
+            interviewJobDetails?.data?.stageStepCount == 5 &&
+            interviewJobDetails?.data?.stage5 == 1 && (
+              <Pressable
+                onPress={() => setShowOfferLetterPopUp(true)}
+                style={{
+                  borderWidth: 1,
+                  flexDirection: 'row',
+                  marginLeft: 10,
+                  paddingHorizontal: 2,
+                  borderRadius: 3,
+                  backgroundColor: '#F1F7FF',
+                  alignItems: 'center',
+                }}>
+                <Text style={{color: 'black'}}>View</Text>
+              </Pressable>
+            )}
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
@@ -701,7 +764,11 @@ const AppliedJobById = props => {
               </Pressable>
             </View>
             <View>
-              <Text style={{color:"green", fontWeight:"600"}}> <Text style={{color:"black"}}>Note</Text> : You will get your caution back once you get placed successfully.</Text>
+              <Text style={{color: 'green', fontWeight: '600'}}>
+                {' '}
+                <Text style={{color: 'black'}}>Note</Text> : You will get your
+                caution back once you get placed successfully.
+              </Text>
               <Image
                 style={{height: 250, marginVertical: 15, width: '100%'}}
                 source={require('../images/upiUrl.jpeg')}
@@ -746,7 +813,11 @@ const AppliedJobById = props => {
                     marginBottom: 16,
                     borderRadius: 8,
                   }}>
-                  <Text>{uploadSignedDoc?.cautionMoneyScreensort ==""? "Select Payment Screensort":"Selected"} </Text>
+                  <Text>
+                    {uploadSignedDoc?.cautionMoneyScreensort == ''
+                      ? 'Select Payment Screensort'
+                      : 'Selected'}{' '}
+                  </Text>
                 </Pressable>
                 <Pressable
                   onPress={pickDocumentForSignedOffer}
@@ -756,17 +827,27 @@ const AppliedJobById = props => {
                     padding: 14,
                     borderRadius: 8,
                   }}>
-                  <Text>{uploadSignedDoc.signedOfferLatter==""? "Select Signed Offer Letter": "Selected"}</Text>
+                  <Text>
+                    {uploadSignedDoc.signedOfferLatter == ''
+                      ? 'Select Signed Offer Letter'
+                      : 'Selected'}
+                  </Text>
                 </Pressable>
               </View>
               <View>
-                <Button title="Upload" onPress={() => handleUploadSignedDocuments()} />
+                <Button
+                  title="Upload"
+                  onPress={() => handleUploadSignedDocuments()}
+                />
               </View>
             </View>
           </View>
         </View>
       </Modal>
-      <Modal transparent={true} visible={showPaymentPopUp} animationType="slide">
+      <Modal
+        transparent={true}
+        visible={showPaymentPopUp}
+        animationType="slide">
         <View
           style={{
             flex: 1,
@@ -796,25 +877,58 @@ const AppliedJobById = props => {
               </Pressable>
             </View>
             <View>
-              
-            
-
               <View
                 style={{
-                 
                   paddingVertical: 16,
                 }}>
-                  {interviewJobDetails?.data?.cautionMoneyStatus==1 && <Text style={{color:"#ffc107", backgroundColor:"gray",padding:6,textAlign:"center",borderRadius:4, fontSize:16}}>Waiting for Admin Approval</Text>}
-                  {interviewJobDetails?.data?.cautionMoneyStatus==-1 && <Text style={{color:"red", backgroundColor:"#000",padding:6,textAlign:"center",borderRadius:4, fontSize:16}}>Payment marked as Rejected</Text>}
-                  {interviewJobDetails?.data?.cautionMoneyStatus==2 && <Text style={{color:"green",padding:6,textAlign:"center",borderRadius:4, fontSize:16}}>Payment marked as Successful !</Text>}
+                {interviewJobDetails?.data?.cautionMoneyStatus == 1 && (
+                  <Text
+                    style={{
+                      color: '#ffc107',
+                      backgroundColor: 'gray',
+                      padding: 6,
+                      textAlign: 'center',
+                      borderRadius: 4,
+                      fontSize: 16,
+                    }}>
+                    Waiting for Admin Approval
+                  </Text>
+                )}
+                {interviewJobDetails?.data?.cautionMoneyStatus == -1 && (
+                  <Text
+                    style={{
+                      color: 'red',
+                      backgroundColor: '#000',
+                      padding: 6,
+                      textAlign: 'center',
+                      borderRadius: 4,
+                      fontSize: 16,
+                    }}>
+                    Payment marked as Rejected
+                  </Text>
+                )}
+                {interviewJobDetails?.data?.cautionMoneyStatus == 2 && (
+                  <Text
+                    style={{
+                      color: 'green',
+                      padding: 6,
+                      textAlign: 'center',
+                      borderRadius: 4,
+                      fontSize: 16,
+                    }}>
+                    Payment marked as Successful !
+                  </Text>
+                )}
               </View>
-              
             </View>
           </View>
         </View>
       </Modal>
       {/* upload signed offer letter */}
-      <Modal transparent={true} visible={showMedicalPopUp} animationType="slide">
+      <Modal
+        transparent={true}
+        visible={showMedicalPopUp}
+        animationType="slide">
         <View
           style={{
             flex: 1,
@@ -846,9 +960,17 @@ const AppliedJobById = props => {
             <View>
               <View
                 style={{
-                paddingVertical: 16,
+                  paddingVertical: 16,
                 }}>
-                  <Text style={{color:"#000",margin:4, fontSize:12, fontWeight:"500"}}>Medical*</Text>
+                <Text
+                  style={{
+                    color: '#000',
+                    margin: 4,
+                    fontSize: 12,
+                    fontWeight: '500',
+                  }}>
+                  Medical*
+                </Text>
                 <Pressable
                   onPress={pickDocumentForMedical}
                   style={{
@@ -858,9 +980,21 @@ const AppliedJobById = props => {
                     marginBottom: 16,
                     borderRadius: 8,
                   }}>
-                  <Text>{medicalPccForm?.medicalReport ==""? "Select Medical":"Selected"} </Text>
+                  <Text>
+                    {medicalPccForm?.medicalReport == ''
+                      ? 'Select Medical'
+                      : 'Selected'}{' '}
+                  </Text>
                 </Pressable>
-                <Text style={{color:"#000",margin:4, fontSize:12, fontWeight:"500"}}>PCC if applicable</Text>
+                <Text
+                  style={{
+                    color: '#000',
+                    margin: 4,
+                    fontSize: 12,
+                    fontWeight: '500',
+                  }}>
+                  PCC if applicable
+                </Text>
                 <Pressable
                   onPress={pickDocumentForPCC}
                   style={{
@@ -869,11 +1003,16 @@ const AppliedJobById = props => {
                     padding: 14,
                     borderRadius: 8,
                   }}>
-                  <Text>{medicalPccForm?.ppc ==""? "Select PCC": "Selected"}</Text>
+                  <Text>
+                    {medicalPccForm?.ppc == '' ? 'Select PCC' : 'Selected'}
+                  </Text>
                 </Pressable>
               </View>
               <View>
-                <Button title="Upload" onPress={() => handleUploadMedicalPcc()} />
+                <Button
+                  title="Upload"
+                  onPress={() => handleUploadMedicalPcc()}
+                />
               </View>
             </View>
           </View>

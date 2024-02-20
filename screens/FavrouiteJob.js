@@ -9,13 +9,14 @@ import {
   Pressable,
   ActivityIndicator
 } from 'react-native';
-import {useEffect, useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import FavJobComponent from '../components/FavJobComponent';
 import {ScrollView} from 'react-native-gesture-handler';
 import {favouriteJobList} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchResult from '../components/SearchResult';
 import Toast from 'react-native-toast-message';
+import {useFocusEffect} from '@react-navigation/native';
 const FavrouiteJob = (props) => {
   const [showLoader, setShowLoader] = useState(true);
   
@@ -30,9 +31,12 @@ const FavrouiteJob = (props) => {
     } catch (error) {}
     setShowLoader(false)
   };
-  useEffect(() => {
-    getFavouriteJobs();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.warn("hello")
+      getFavouriteJobs();
+    }, []),
+  );
   return (
     <View style={styles.main}>
       

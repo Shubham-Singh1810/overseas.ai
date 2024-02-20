@@ -30,7 +30,7 @@ import {
   deleteIntroVideo,
 } from '../services/userVideo.service';
 import {getProfileStrength, getNotification} from '../services/user.service';
-const VideoScreen = () => {
+const VideoScreen = (props) => {
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const {translation, globalState, setGlobalState} = useGlobalState();
   const getProfileStrengthFunc = async () => {
@@ -55,7 +55,7 @@ const VideoScreen = () => {
   const [workActionValue, setWorkActionValue] = useState(null);
   const [formData, setFormData] = useState({
     video: null,
-    relatedSkill: 'unKnown',
+    relatedSkill: '',
   });
   const [introformData, setIntroFormData] = useState({
     video: null,
@@ -102,35 +102,59 @@ const VideoScreen = () => {
   const handleWorkVideoUpload = async () => {
     setShowLoading(true);
     let user = await AsyncStorage.getItem('user');
-    const videoFormData = new FormData();
-    videoFormData.append('video', {
-      uri: formData.video.uri,
-      type: formData.video.type,
-      name: formData.video.name,
-    });
-    videoFormData.append('relatedSkill', formData.relatedSkill);
-    try {
-      let response = await uploadWorkVideo(
-        videoFormData,
-        JSON.parse(user).access_token,
-      );
-      if (response?.data?.msg == 'Video Added Successfully.') {
+
+    if (formData.relatedSkill && formData.video) {
+      const videoFormData = new FormData();
+      videoFormData.append('video', {
+        uri: formData.video.uri,
+        type: formData.video.type,
+        name: formData.video.name,
+      });
+      videoFormData.append('relatedSkill', formData.relatedSkill);
+      try {
+        let response = await uploadWorkVideo(
+          videoFormData,
+          JSON.parse(user).access_token,
+        );
+        if (response?.data?.msg == 'Video Added Successfully.') {
+          Toast.show({
+            type: 'success', // 'success', 'error', 'info', or any custom type you define
+            // position: 'top',
+            text1: 'Video Added Successfully.',
+            visibilityTime: 3000, // Duration in milliseconds
+          });
+          setWorkVideoPopUp(false);
+          getUserWorkVideoList();
+          setFormData({
+            video: null,
+            relatedSkill: '',
+          });
+          getProfileStrengthFunc();
+        } else {
+          Toast.show({
+            type: 'error', // 'success', 'error', 'info', or any custom type you define
+            // position: 'top',
+            text1: 'Something went wrong',
+            visibilityTime: 3000, // Duration in milliseconds
+          });
+          setWorkVideoPopUp(false);
+        }
+      } catch (error) {
         Toast.show({
-          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
-          text1: 'Video Added Successfully.',
+          text1: 'Internal server error',
           visibilityTime: 3000, // Duration in milliseconds
         });
         setWorkVideoPopUp(false);
-        getUserWorkVideoList();
-        setFormData({
-          video: null,
-          relatedSkill: 'unKnown',
-        });
-        getProfileStrengthFunc();
       }
-    } catch (error) {
-      console.warn('Something went wrong');
+    } else {
+      Toast.show({
+        type: 'error', // 'success', 'error', 'info', or any custom type you define
+        // position: 'top',
+        text1: 'Both fields are required',
+        visibilityTime: 3000, // Duration in milliseconds
+      });
     }
     setShowLoading(false);
   };
@@ -144,28 +168,51 @@ const VideoScreen = () => {
       name: introformData.video.name,
     });
     videoFormData.append('videoLanguage', introformData.videoLanguage);
-    try {
-      let response = await uploadIntroVideo(
-        videoFormData,
-        JSON.parse(user).access_token,
-      );
-      if (response?.data?.msg == 'Video Added Successfully.') {
+    if (introformData.video && introformData.videoLanguage) {
+      try {
+        let response = await uploadIntroVideo(
+          videoFormData,
+          JSON.parse(user).access_token,
+        );
+        if (response?.data?.msg == 'Video Added Successfully.') {
+          Toast.show({
+            type: 'success', // 'success', 'error', 'info', or any custom type you define
+            // position: 'top',
+            text1: 'Video Added Successfully.',
+            visibilityTime: 3000, // Duration in milliseconds
+          });
+          setIntroFormData({
+            video: null,
+            videoLanguage: '',
+          });
+          getUserIntroVideoList();
+          setIntroVideoPopUp(false);
+          getProfileStrengthFunc();
+        } else {
+          Toast.show({
+            type: 'error', // 'success', 'error', 'info', or any custom type you define
+            // position: 'top',
+            text1: 'Something went wrong',
+            visibilityTime: 3000, // Duration in milliseconds
+          });
+          setIntroVideoPopUp(false);
+        }
+      } catch (error) {
         Toast.show({
-          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
-          text1: 'Video Added Successfully.',
+          text1: 'Internal server error',
           visibilityTime: 3000, // Duration in milliseconds
         });
-        setIntroFormData({
-          video: null,
-          videoLanguage: '',
-        });
-        getUserIntroVideoList();
         setIntroVideoPopUp(false);
-        getProfileStrengthFunc();
       }
-    } catch (error) {
-      console.warn('Something went wrong');
+    } else {
+      Toast.show({
+        type: 'error', // 'success', 'error', 'info', or any custom type you define
+        // position: 'top',
+        text1: 'Both fields are required',
+        visibilityTime: 3000, // Duration in milliseconds
+      });
     }
     setShowLoading(false);
   };
@@ -287,7 +334,7 @@ const VideoScreen = () => {
       Alert.alert(error.message);
     }
   };
-  const [videoPlayUrl, setVideoPlayUrl]=useState("")
+  const [videoPlayUrl, setVideoPlayUrl] = useState('');
   return (
     <>
       <View style={styles.main}>
@@ -372,7 +419,11 @@ const VideoScreen = () => {
                       paused={true}
                       resizeMode="cover"
                     /> */}
-                    <Pressable onPress={()=>{setVideoPlayUrl(v?.videoUrl); setShowVideoPlayer(true)}}>
+                    <Pressable
+                      onPress={() => {
+                        setVideoPlayUrl(v?.videoUrl);
+                        setShowVideoPlayer(true);
+                      }}>
                       <Image
                         style={{
                           height: 100,
@@ -480,14 +531,18 @@ const VideoScreen = () => {
                       resizeMode="cover"
                       paused={true}
                     /> */}
-                    <Pressable onPress={()=>{setVideoPlayUrl(v?.videoUrl); setShowVideoPlayer(true)}}>
+                    <Pressable
+                      onPress={() => {
+                        setVideoPlayUrl(v?.videoUrl);
+                        setShowVideoPlayer(true);
+                      }}>
                       <Image
                         style={{
                           height: 200,
-                        width: '100%',
+                          width: '100%',
                           borderRadius: 5,
                           borderWidth: 1,
-                          resizeMode:"stretch",
+                          resizeMode: 'stretch',
                         }}
                         source={require('../images/workVideoThum.png')}
                       />
@@ -692,10 +747,14 @@ const VideoScreen = () => {
                 />
               </View>
             ) : (
-              <Text>
-                You have already uploaded all the introduction video in
-                different languages.
-              </Text>
+              <View>
+                <Text>
+                  You have already uploaded all the introduction video in
+                  different languages. {'\n'}
+                </Text>
+                <Text style={{fontWeight:"600", marginBottom:10}}>Edit Known language to add more intro video</Text>
+                <Button title='Edit Profile' onPress={()=>{props.navigation.navigate('Edit Profile');}}/>
+              </View>
             )}
           </View>
         </View>
@@ -973,11 +1032,9 @@ const VideoScreen = () => {
               }}
               resizeMode="contain"
               controls={true}
-              source={
-                {
-                  uri: videoPlayUrl
-                }
-              }></Video>
+              source={{
+                uri: videoPlayUrl,
+              }}></Video>
           </View>
         </View>
       </Modal>
