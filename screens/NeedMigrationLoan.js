@@ -11,7 +11,12 @@ import React, {useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
 import {submitLoanForm} from '../services/user.service';
-const NeedMigrationLoan = () => {
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
+const NeedMigrationLoan = (props) => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const [formData, setFormData] = useState({
     name: '',
     contact: '',

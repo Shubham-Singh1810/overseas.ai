@@ -4,7 +4,12 @@ import NewsFeedComponent from '../components/NewsFeedComponent';
 import Typewriter from 'react-native-typewriter';
 import {newsData} from '../services/migrating_workers (2) (1)';
 import {useGlobalState} from '../GlobalProvider';
-const NewsFeed = () => {
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
+const NewsFeed = (props) => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   return (
     <ScrollView style={{backgroundColor:"#fff", padding:16}}>
       <View style={{paddingBottom: 10, borderBottomWidth: 1, flexDirection:"row", alignItems:"center"}}>

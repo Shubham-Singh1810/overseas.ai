@@ -21,7 +21,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CountryGola from '../components/CountryGola';
 import {isBefore, subWeeks} from 'date-fns';
 import CourseGola from '../components/CourseGola';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const GetCertificate = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const [instituteList, setInstituteList] = useState([]);
   const [showCourseLoader, setShowCourseLoader]=useState(false);
   const [showInstituteLoader, setShowInstituteLoader]=useState(false);

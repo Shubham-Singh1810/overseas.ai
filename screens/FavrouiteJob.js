@@ -17,7 +17,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchResult from '../components/SearchResult';
 import Toast from 'react-native-toast-message';
 import {useFocusEffect} from '@react-navigation/native';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const FavrouiteJob = (props) => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const [showLoader, setShowLoader] = useState(true);
   
   const [favouriteJobListArr, setFavouriteJobListArr] = useState([]);
@@ -33,7 +38,6 @@ const FavrouiteJob = (props) => {
   };
   useFocusEffect(
     React.useCallback(() => {
-      console.warn("hello")
       getFavouriteJobs();
     }, []),
   );

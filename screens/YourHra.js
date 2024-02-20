@@ -14,7 +14,12 @@ import {getHraList} from '../services/hra.service';
 import {TextInput} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
 import {useFocusEffect} from '@react-navigation/native';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const YourHra = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const [showModal, setShowModal] = useState(false);
   const [hraList, setHraList] = useState([]);
   const getHraFunc = async () => {

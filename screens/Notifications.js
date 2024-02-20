@@ -14,7 +14,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getNotification} from '../services/user.service';
 import moment from 'moment';
 import {useGlobalState} from '../GlobalProvider';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const Notifications = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const {globalState, setGlobalState} = useGlobalState();
   const [showNotifyScreen, setShowNotifyScreen] = useState('Jobs');
   const [notificationArr, setNotificationArr] = useState(null);

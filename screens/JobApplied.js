@@ -13,7 +13,12 @@ import AppliedJob from '../components/AppliedJob';
 import {appliedJobList} from "../services/job.service"
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const JobApplied = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const[appliedJobListArr, setAppliedJobListArr]=useState([])
   const {translation} = useGlobalState();
   const getAppliedJobList = async () => {

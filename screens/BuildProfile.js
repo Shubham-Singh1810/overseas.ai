@@ -14,7 +14,12 @@ import {useState, useRef} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import {useGlobalState} from '../GlobalProvider';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const BuildProfile = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const {translation, globalState, setUserData, setGlobalState} =
     useGlobalState();
   const [showVideoModal, setShowVideoModal] = useState(false);

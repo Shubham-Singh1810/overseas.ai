@@ -17,7 +17,6 @@ import SearchResult from '../components/SearchResult';
 import {useGlobalState} from '../GlobalProvider';
 import {getCountries,getCountriesForJobs, getHomeData} from '../services/info.service';
 import Toast from 'react-native-toast-message';
-import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getInstituteList, getCourseList} from '../services/institute.service';
 import {
@@ -32,11 +31,14 @@ import NewsFeedComponent from '../components/NewsFeedComponent';
 import HraGolaFeed from '../components/HraGolaFeed';
 import CourseGola from '../components/CourseGola';
 import InstituteFeedGola from '../components/InstituteFeedGola';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const Home = props => {
   useAndroidBackHandler(() => {
     if (searchJobKey || searchCounterKey) {
       setSearchCountryKey('');
       setSearchJobKey('');
+    }else{ 
+      return false;
     }
     return true;
   });

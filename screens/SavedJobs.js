@@ -8,7 +8,13 @@ import {savedJobList} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const SavedJobs = props => {
+
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const [showLoading, setShowLoading] = useState(false)
   const [savedList, setSavedList] = useState([]);
   const getListOfSavedJobs = async () => {

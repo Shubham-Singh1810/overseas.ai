@@ -19,7 +19,12 @@ import {submitContactQuery} from '../services/user.service';
 import Toast from 'react-native-toast-message';
 import {pick} from 'react-native-document-picker';
 import DocumentPicker from 'react-native-document-picker';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const Help = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate("Home") 
+    return true;
+  });
   const {globalState} = useGlobalState();
   const [formData, setFormData] = useState({
     user_contact: JSON.parse(globalState?.user)?.empData?.empPhone,
