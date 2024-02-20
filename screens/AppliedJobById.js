@@ -479,7 +479,8 @@ const AppliedJobById = props => {
               <Text style={{color: 'black'}}>Upload</Text>
             </Pressable>
           ) : (
-            interviewJobDetails?.data?.cautionMoneyStatus != 2 && (
+            interviewJobDetails?.data?.cautionMoneyStatus != 2 && interviewJobDetails?.data?.offerLatterSent!=0 &&
+             (
               <Pressable
                 onPress={() => setShowPaymentPopUp(true)}
                 style={{
