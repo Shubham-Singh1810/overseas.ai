@@ -219,9 +219,7 @@ const CustomDrawerContent = props => {
       } else if (v.title == 'Improve Profile') {
         return (
           <TouchableOpacity>
-            {globalState?.profileStrength?.emptyFields?.filter?.((v, i) => {
-              return !v.complete;
-            }).length ? (
+            {globalState?.profileStrength? (
               <DrawerItem
                 key={i}
                 label={v.title}
