@@ -10,15 +10,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
-import {Gif} from 'react-native-gif';
-import axios from 'axios';
 import JobGola from '../components/JobGola';
-import CandidateGola from '../components/CandidateGola';
 import CandidateVideoGola from '../components/CandidateVideoGola';
-import SkillsGola from '../components/SkillsGola';
-import {getNotification} from '../services/user.service';
 import CountryGola from '../components/CountryGola';
-import FooterNav from '../components/FooterNav';
 import SearchResult from '../components/SearchResult';
 import {useGlobalState} from '../GlobalProvider';
 import {getCountries, getHomeData} from '../services/info.service';
@@ -28,7 +22,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getInstituteList, getCourseList} from '../services/institute.service';
 import {
   getOccupations,
-  getJobByDepartment,
   getSearchResult,
 } from '../services/job.service';
 import {Picker} from '@react-native-picker/picker';
@@ -335,7 +328,7 @@ const Home = props => {
                           <View style={{marginTop: 20}}>
                             {jobList?.map((value, i) => {
                               return (
-                                <SearchResult value={value} props={props} />
+                                <SearchResult backTo="Home" value={value} props={props} />
                               );
                             })}
                           </View>
@@ -431,7 +424,7 @@ const Home = props => {
                               }}>
                               Job Alert
                             </Text>
-                            <SearchResult value={v} props={props} />
+                            <SearchResult backTo="Home" value={v} props={props} />
                           </View>
                         );
                       }

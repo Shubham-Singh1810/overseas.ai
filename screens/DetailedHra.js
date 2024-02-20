@@ -332,7 +332,7 @@ const DetailedHra = props => {
               </View>
               <View style={{paddingBottom: 200}}>
                 {hraJobList?.map((v, i) => {
-                  return <SearchResult value={v} props={props}/>;
+                  return <SearchResult backTo="Your HRA" value={v} props={props}/>;
                 })}
               </View>
             </View>

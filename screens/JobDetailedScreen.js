@@ -17,13 +17,12 @@ import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import Toast from 'react-native-toast-message';
 const JobDetailedScreen = params => {
   useAndroidBackHandler(() => {
-    if (params.route.params.favroite) {
-      params.navigation.navigate('Favourite Job');
-    } else if (params.route.params.saved) {
-      params.navigation.navigate('Saved Jobs');
-    } else {
-      params.navigation.navigate('Home');
-    }
+    params.navigation.navigate(params.route.params.backTo,
+      {countryName:params?.route?.params?.countryName,
+      departmentName:params.route.params.departmentName,
+      departmentId:params?.route?.params?.departmentId,
+      countryId:params?.route?.params?.countryId,
+    });
     return true;
   });
   const [details, setDetails] = useState(null);
@@ -73,7 +72,6 @@ const JobDetailedScreen = params => {
       getJobByIdFunc();
     }, [paramsJobId]),
   );
-
   function toTitleCase(inputString) {
     if (inputString && typeof inputString === 'string') {
       let words = inputString.split(' ');

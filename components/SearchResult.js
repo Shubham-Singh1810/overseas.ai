@@ -14,7 +14,7 @@ import {applyJobApi} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {saveJobById} from '../services/job.service';
-const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
+const SearchResult = ({value,countryId,countryName,hraId, getListOfSavedJobs, saved, favroite, props , backTo,departmentName, departmentId}) => {
   const [showModal, setShowModal] = useState(false);
   const {translation} = useGlobalState();
   const handleApplyJob = async jobId => {
@@ -82,7 +82,6 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
       return inputString;
     }
   }
-  console.log(value?.JobPrimaryId)
   return (
     <>
       <View style={styles.main}>
@@ -93,6 +92,12 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
               jobId: saved? value?.JobPrimaryId : value.id,
               saved: saved,
               favroite: favroite,
+              backTo:backTo,
+              countryId:countryId,
+              countryName:countryName,
+              departmentName:departmentName,
+               departmentId:departmentId,
+               hraId:hraId
             })
           }>
           <Text style={styles.jobName}>
@@ -209,9 +214,11 @@ const SearchResult = ({value, getListOfSavedJobs, saved, favroite, props}) => {
               style={{marginLeft: 13, color: '#5F90CA', fontSize: 12}}
               onPress={() =>
                 props.navigation.navigate('Job Details', {
-                  jobId: saved? value?.JobPrimaryId : value.id,
-                  saved: saved,
-                  favroite: favroite,
+                  jobId: saved? value?.JobPrimaryId : value.id, backTo:backTo,countryId:countryId,
+                  countryName:countryName,
+                  departmentName:departmentName,
+                   departmentId:departmentId,
+                   hraId:hraId
                 })
               }>
               {translation.readDetails}

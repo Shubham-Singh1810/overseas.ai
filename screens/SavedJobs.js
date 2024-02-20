@@ -70,7 +70,7 @@ const SavedJobs = props => {
             </Pressable>
           </View>
           {savedList?.length==0 ? <View style={{height:500, justifyContent:"center", alignItems:"center"}}><Text style={{fontSize:22}}>You haven't saved any job yet !!!</Text></View> :savedList?.map((v, i) => {
-            return <SearchResult getListOfSavedJobs={getListOfSavedJobs} saved={true} props={props} value={v} />;
+            return <SearchResult backTo="Saved Jobs" getListOfSavedJobs={getListOfSavedJobs} saved={true} props={props} value={v} />;
           })}
         </View>
       </ScrollView>

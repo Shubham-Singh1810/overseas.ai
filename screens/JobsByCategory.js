@@ -35,7 +35,7 @@ const JobsByCategory = props => {
             Occupation: <Text style={{color: '#000'}}>{departmentName}</Text>
           </Text>
           {jobList?.map((value, i) => {
-            return <SearchResult value={value} props={props} />;
+            return <SearchResult value={value} props={props} backTo="Jobs By Department" departmentName={departmentName} departmentId={departmentId}/>;
           })}
         </View>
       </ScrollView>

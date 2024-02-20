@@ -312,6 +312,7 @@ const AppliedJobById = props => {
               onPress={() => {
                 props.navigation.navigate('Job Details', {
                   jobId: appliedJobDetails.mainJobId,
+                  backTo:"Applied Job"
                 });
               }}
             />

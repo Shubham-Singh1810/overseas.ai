@@ -99,7 +99,7 @@ const Notifications = props => {
                 return (
                   <Pressable
                     onPress={() =>
-                      props.navigation.navigate('Job Details', {jobId: v.id})
+                      props.navigation.navigate('Job Details', {jobId: v.id, backTo:"Notifications"})
                     }
                     style={styles.notificationBox}>
                     <Text style={styles.notificationBoxText}>

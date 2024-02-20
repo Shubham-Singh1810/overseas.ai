@@ -63,7 +63,7 @@ const FavrouiteJob = (props) => {
         </View>
         
         {showLoader? <ActivityIndicator size="large" color="#0000ff" style={{marginTop:200}}/>: favouriteJobListArr?.map((v, i) => {
-          return <SearchResult favroite={true} props={props} value={v}/>
+          return <SearchResult backTo="Favourite Job" favroite={true} props={props} value={v}/>
         })}
         
       </ScrollView>

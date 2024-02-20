@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import {getOccupations, getJobByDepartment, getJobByCountry} from '../services/job.service';
 import FooterNav from '../components/FooterNav';
@@ -26,8 +26,6 @@ const JobsByCountry = (props) => {
       getJobsByCountryFunc();
     }, [countryId]),
   );
-  
-  
   return (
     <>
       <ScrollView style={{flex:1, backgroundColor:"#fff"}}>
@@ -35,7 +33,7 @@ const JobsByCountry = (props) => {
           <Text style={{fontSize:18,  marginBottom:15}}>Location: <Text style={{color:"#000"}}>{countryName}</Text></Text>
           {jobList?.map((value, i) => {
             return (
-              <SearchResult value={value} props={props}/>
+              <SearchResult  backTo="Jobs By Country" value={value} props={props} countryId={countryId} countryName={countryName}/>
             );
           })}
         </View>
