@@ -5,7 +5,7 @@ import {
   View,
   Pressable,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import SkillsGola from '../components/SkillsGola';
@@ -24,15 +24,19 @@ import CourseGola from '../components/CourseGola';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const GetCertificate = props => {
   useAndroidBackHandler(() => {
-    props.navigation.navigate("Home") 
-    return true;
+    if (searchInstitute) {
+      setSearchInstitute('');
+      return true;
+    } else {
+      props.navigation.navigate('Home');
+      return true;
+    }
   });
   const [instituteList, setInstituteList] = useState([]);
-  const [showCourseLoader, setShowCourseLoader]=useState(false);
-  const [showInstituteLoader, setShowInstituteLoader]=useState(false);
-  const [showSearchLoader, setShowSearchLoader]=useState(false);
+  const [showCourseLoader, setShowCourseLoader] = useState(false);
+  const [showInstituteLoader, setShowInstituteLoader] = useState(false);
+  const [showSearchLoader, setShowSearchLoader] = useState(false);
   const [courseList, setCourseList] = useState([]);
-  const [showHotJob, setShowHotJob] = useState(false);
   const [searchInstitute, setSearchInstitute] = useState('');
   const getInstituteListFunc = async () => {
     setShowInstituteLoader(true);
@@ -48,7 +52,7 @@ const GetCertificate = props => {
     setShowInstituteLoader(false);
   };
   const getCourseListFunc = async () => {
-    setShowCourseLoader(true)
+    setShowCourseLoader(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getCourseList(JSON.parse(user).access_token);
@@ -58,11 +62,11 @@ const GetCertificate = props => {
     } catch (error) {
       console.log('Something went wrong');
     }
-    setShowCourseLoader(false)
+    setShowCourseLoader(false);
   };
   const [searchResult, setSearchResult] = useState([]);
   const getSearchResultForCourseFunc = async id => {
-    setShowSearchLoader(true)
+    setShowSearchLoader(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await searchForCourse({
@@ -73,7 +77,7 @@ const GetCertificate = props => {
     } catch (error) {
       console.log(error);
     }
-    setShowSearchLoader(false)
+    setShowSearchLoader(false);
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -150,12 +154,22 @@ const GetCertificate = props => {
               Search Result : {searchResult?.length}
             </Text>
             <View style={{marginTop: 15}}>
-              {showSearchLoader ? <View style={{height:100,width:100, flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
-            <ActivityIndicator/>
-            </View> :searchResult?.map((v, i) => {
-                return <CourseGola value={v} props={props} />;
-              })}
-              
+              {showSearchLoader ? (
+                <View
+                  style={{
+                    height: 100,
+                    width: 100,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <ActivityIndicator />
+                </View>
+              ) : (
+                searchResult?.map((v, i) => {
+                  return <CourseGola value={v} props={props} backTo="Get Certificate"/>;
+                })
+              )}
             </View>
           </View>
         )}
@@ -163,79 +177,32 @@ const GetCertificate = props => {
         <View style={{marginTop: 20}}>
           <Text style={styles.heading}>Top Institutes</Text>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
-            {showInstituteLoader ? <View style={{height:100,width:100, flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
-            <ActivityIndicator/>
-            </View> : 
-            instituteList?.map((v, i) => {
-              return (
-                <Pressable
-                  onPress={() =>
-                    props.navigation.navigate(
-                      'Get Institute By Id',
-                      (instituteDetails = v),
-                    )
-                  }
-                  style={{marginRight: 10}}>
-                  {v?.profileImage ? (
-                    <Image
-                      source={{
-                        uri: v?.profileImageUrl,
-                      }}
-                      style={{
-                        height: 100,
-                        width: 150,
-                        borderRadius: 5,
-                        resizeMode: 'contain',
-                        borderWidth: 0.5,
-                        borderColor: 'gray',
-                      }}
-                    />
-                  ) : (
-                    <Image
-                      source={require('../images/hraDummyIcon.png')}
-                      style={{
-                        height: 100,
-                        width: 150,
-                        borderRadius: 5,
-                        resizeMode: 'contain',
-
-                        borderWidth: 0.5,
-                        borderColor: 'gray',
-                      }}
-                    />
-                  )}
-                  <Text style={{textAlign: 'center', color: 'black'}}>
-                    {v?.instituteName?.length > 20 ? (
-                      <>{v?.instituteName?.substring(0, 20)}...</>
-                    ) : (
-                      v?.instituteName
-                    )}
-                  </Text>
-                </Pressable>
-              );
-            })}  
-          </ScrollView>
-        </View>
-        <View style={{marginTop: 30}}>
-          <Text style={styles.heading}>Top Courses</Text>
-          <ScrollView horizontal={true} style={{marginTop: 10}}>
-            {showCourseLoader ? <View style={{height:100,width:100, flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
-            <ActivityIndicator/>
-            </View>: courseList?.map((v, i) => {
-              return (
-                <Pressable
-                  onPress={() =>
-                    props.navigation.navigate(
-                      'Get Course By Id',
-                      (CourseDetails = v),
-                    )
-                  }>
-                  <View style={{marginRight: 10}}>
-                    {v?.course_image !=
-                    'https://overseas.ai/placeholder/course.jpg' ? (
+            {showInstituteLoader ? (
+              <View
+                style={{
+                  height: 100,
+                  width: 100,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <ActivityIndicator />
+              </View>
+            ) : (
+              instituteList?.map((v, i) => {
+                return (
+                  <Pressable
+                    onPress={() =>
+                      props.navigation.navigate(
+                        'Get Institute By Id',
+                        (instituteDetails = v),
+                      )
+                    }
+                    style={{marginRight: 10}}>
+                    {v?.profileImage ? (
                       <Image
                         source={{
-                          uri: v?.course_image,
+                          uri: v?.profileImageUrl,
                         }}
                         style={{
                           height: 100,
@@ -254,91 +221,157 @@ const GetCertificate = props => {
                           width: 150,
                           borderRadius: 5,
                           resizeMode: 'contain',
+
                           borderWidth: 0.5,
                           borderColor: 'gray',
                         }}
                       />
                     )}
-
                     <Text style={{textAlign: 'center', color: 'black'}}>
-                      {v?.course_name?.length > 20 ? (
-                        <>{v?.course_name?.substring(0, 20)}...</>
+                      {v?.instituteName?.length > 20 ? (
+                        <>{v?.instituteName?.substring(0, 20)}...</>
                       ) : (
-                        v?.course_name
+                        v?.instituteName
                       )}
                     </Text>
-                  </View>
-                </Pressable>
-              );
-            })}
-          
-            
+                  </Pressable>
+                );
+              })
+            )}
           </ScrollView>
-          {courseList
-                ?.filter((v, i) => {
-                  return !isBefore(
-                    new Date(v?.created_at),
-                    subWeeks(new Date(), 1),
-                  );
-                }).length > 0 && <View style={{marginTop: 30}}>
-                <Text style={styles.heading}>Course Added Recently</Text>
-                <ScrollView horizontal={true} style={{marginTop: 10}}>
-                  {courseList
-                    ?.filter((v, i) => {
-                      return !isBefore(
-                        new Date(v?.created_at),
-                        subWeeks(new Date(), 1),
-                      );
-                    })
-                    .map((v, i) => {
-                      return (
-                        <Pressable
-                          onPress={() =>
-                            props.navigation.navigate(
-                              'Get Course By Id',
-                              (CourseDetails = v),
-                            )
-                          }>
-                          <View style={{marginRight: 10}}>
-                            {v?.course_image !=
-                            'https://overseas.ai/placeholder/course.jpg' ? (
-                              <Image
-                                source={{
-                                  uri: v?.course_image,
-                                }}
-                                style={{
-                                  height: 100,
-                                  width: 150,
-                                  borderRadius: 5,
-                                  resizeMode: 'contain',
-                                  borderWidth: 0.5,
-                                  borderColor: 'gray',
-                                }}
-                              />
-                            ) : (
-                              <Image
-                                source={require('../images/hraDummyIcon.png')}
-                                style={{
-                                  height: 100,
-                                  width: 150,
-                                  borderRadius: 5,
-                                  resizeMode: 'contain',
-                                  borderWidth: 0.5,
-                                  borderColor: 'gray',
-                                }}
-                              />
-                            )}
-    
-                            <Text style={{textAlign: 'center', color: 'black'}}>
-                              {v?.course_name}
-                            </Text>
-                          </View>
-                        </Pressable>
-                      );
-                    })}
-                </ScrollView>
-              </View>}
-          
+        </View>
+        <View style={{marginTop: 30}}>
+          <Text style={styles.heading}>Top Courses</Text>
+          <ScrollView horizontal={true} style={{marginTop: 10}}>
+            {showCourseLoader ? (
+              <View
+                style={{
+                  height: 100,
+                  width: 100,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <ActivityIndicator />
+              </View>
+            ) : (
+              courseList?.map((v, i) => {
+                return (
+                  <Pressable
+                    onPress={() =>
+                      props.navigation.navigate(
+                        'Get Course By Id',
+                        {
+                          CourseDetails: v,
+                          backTo: "Get Certificate"
+                        }
+                      )
+                    }>
+                    <View style={{marginRight: 10}}>
+                      {v?.course_image !=
+                      'https://overseas.ai/placeholder/course.jpg' ? (
+                        <Image
+                          source={{
+                            uri: v?.course_image,
+                          }}
+                          style={{
+                            height: 100,
+                            width: 150,
+                            borderRadius: 5,
+                            resizeMode: 'contain',
+                            borderWidth: 0.5,
+                            borderColor: 'gray',
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          source={require('../images/hraDummyIcon.png')}
+                          style={{
+                            height: 100,
+                            width: 150,
+                            borderRadius: 5,
+                            resizeMode: 'contain',
+                            borderWidth: 0.5,
+                            borderColor: 'gray',
+                          }}
+                        />
+                      )}
+
+                      <Text style={{textAlign: 'center', color: 'black'}}>
+                        {v?.course_name?.length > 20 ? (
+                          <>{v?.course_name?.substring(0, 20)}...</>
+                        ) : (
+                          v?.course_name
+                        )}
+                      </Text>
+                    </View>
+                  </Pressable>
+                );
+              })
+            )}
+          </ScrollView>
+          {courseList?.filter((v, i) => {
+            return !isBefore(new Date(v?.created_at), subWeeks(new Date(), 1));
+          }).length > 0 && (
+            <View style={{marginTop: 30}}>
+              <Text style={styles.heading}>Course Added Recently</Text>
+              <ScrollView horizontal={true} style={{marginTop: 10}}>
+                {courseList
+                  ?.filter((v, i) => {
+                    return !isBefore(
+                      new Date(v?.created_at),
+                      subWeeks(new Date(), 1),
+                    );
+                  })
+                  .map((v, i) => {
+                    return (
+                      <Pressable
+                        onPress={() =>
+                          props.navigation.navigate(
+                            'Get Course By Id',
+                            (CourseDetails = v),
+                          )
+                        }>
+                        <View style={{marginRight: 10}}>
+                          {v?.course_image !=
+                          'https://overseas.ai/placeholder/course.jpg' ? (
+                            <Image
+                              source={{
+                                uri: v?.course_image,
+                              }}
+                              style={{
+                                height: 100,
+                                width: 150,
+                                borderRadius: 5,
+                                resizeMode: 'contain',
+                                borderWidth: 0.5,
+                                borderColor: 'gray',
+                              }}
+                            />
+                          ) : (
+                            <Image
+                              source={require('../images/hraDummyIcon.png')}
+                              style={{
+                                height: 100,
+                                width: 150,
+                                borderRadius: 5,
+                                resizeMode: 'contain',
+                                borderWidth: 0.5,
+                                borderColor: 'gray',
+                              }}
+                            />
+                          )}
+
+                          <Text style={{textAlign: 'center', color: 'black'}}>
+                            {v?.course_name}
+                          </Text>
+                        </View>
+                      </Pressable>
+                    );
+                  })}
+              </ScrollView>
+            </View>
+          )}
         </View>
         {/* <View style={{flexDirection: 'row',justifyContent:"space-between", marginTop: 20, marginBottom: -15}}>
           <Pressable
@@ -361,13 +394,11 @@ const GetCertificate = props => {
             />
           </Pressable>
         </View> */}
-        
+
         <View style={styles.largeBtnGroup}>
-        
-          
           <TouchableOpacity
             style={[styles.largeBtn, styles.bgBlue]}
-            onPress={() => props.navigation.navigate('Applied Courses')}>
+            onPress={() => props.navigation.navigate('Applied Courses',{backTo:"Get Certificate"})}>
             <Text style={styles.largeBtnText}>Applied Course</Text>
             <Image source={require('../images/rightArrow.png')} />
           </TouchableOpacity>
@@ -375,8 +406,7 @@ const GetCertificate = props => {
             style={[styles.largeBtn, styles.bgGreen]}
             onPress={() => props.navigation.navigate('My Certificates')}>
             <Text style={styles.largeBtnText}>My Certificate</Text>
-            <Image source={require('../images/rightArrow.png')} 
-            />
+            <Image source={require('../images/rightArrow.png')} />
           </TouchableOpacity>
         </View>
       </ScrollView>

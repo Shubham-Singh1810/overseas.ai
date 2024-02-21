@@ -5,7 +5,17 @@ import {getListOfAppliedCourse} from "../services/institute.service";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CountryGola from '../components/CountryGola';
 import CourseGola from '../components/CourseGola';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const AppliedCourseList = props => {
+  useAndroidBackHandler(() => {
+    if(props?.route?.params.backTo){
+      props.navigation.navigate(props?.route?.params.backTo);
+      return true;
+    }else{
+      props.navigation.navigate("Home") 
+      return true;
+    }
+  });
   const[appliedCourse, setAppliedCourse]=useState([])
   const getAppliedCourseList = async() => {
     let user = await AsyncStorage.getItem('user');
@@ -29,7 +39,7 @@ const AppliedCourseList = props => {
       <ScrollView>
         {appliedCourse?.map((v, i)=>{
           return(
-            <CourseGola value={v} props={props} isApplied={true}/>
+            <CourseGola value={v} props={props} isApplied={true} backTo="Applied Courses"/>
           )
         })}
       </ScrollView>

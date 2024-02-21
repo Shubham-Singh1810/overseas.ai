@@ -37,7 +37,18 @@ import MyFileViewer from '../components/MyFileViewer';
 import {getAllDocApi} from '../services/user.service';
 import Pdf from 'react-native-pdf';
 import {useFocusEffect} from '@react-navigation/native';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const MyDocument = props => {
+  useAndroidBackHandler(() => {
+    if(props?.route?.params?.backTo){
+      props.navigation.navigate(props?.route?.params.backTo);
+      return true;
+    }else{
+      props.navigation.navigate("MyProfile") 
+      return true;
+    }
+    
+  });
   const [countryList, setCountryList] = useState([]);
   const getCountryList = async () => {
     try {
@@ -186,7 +197,7 @@ const MyDocument = props => {
 
   // function to upload EXPERIENCE
   const uploadExperience = () => {
-    props.navigation.navigate('My Experience');
+    props.navigation.navigate('My Experience', {backTo:"My Documents"});
   };
   // function to upload dl
   const [showDlPopUp, setShowDlPopUp] = useState(false);

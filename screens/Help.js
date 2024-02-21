@@ -22,8 +22,13 @@ import DocumentPicker from 'react-native-document-picker';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const Help = props => {
   useAndroidBackHandler(() => {
-    props.navigation.navigate("Home") 
-    return true;
+    if(props?.route?.params?.backTo){
+      props.navigation.navigate(props?.route?.params.backTo);
+      return true;
+    }else{
+      props.navigation.navigate("MyProfile") 
+      return true;
+    }
   });
   const {globalState} = useGlobalState();
   const [formData, setFormData] = useState({

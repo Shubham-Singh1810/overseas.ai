@@ -12,8 +12,13 @@ import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const SavedJobs = props => {
 
   useAndroidBackHandler(() => {
-    props.navigation.navigate("Home") 
-    return true;
+    if(props?.route?.params?.backTo){
+      props.navigation.navigate(props?.route?.params.backTo);
+      return true;
+    }else{
+      props.navigation.navigate("Home") 
+      return true;
+    }
   });
   const [showLoading, setShowLoading] = useState(false)
   const [savedList, setSavedList] = useState([]);

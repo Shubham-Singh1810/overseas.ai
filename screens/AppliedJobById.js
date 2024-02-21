@@ -25,8 +25,13 @@ import DocumentPicker from 'react-native-document-picker';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const AppliedJobById = props => {
   useAndroidBackHandler(() => {
-    props.navigation.navigate("Applied Job") 
-    return true;
+    if(props?.route?.params?.backTo){
+      props.navigation.navigate(props?.route?.params.backTo);
+      return true;
+    }else{
+      props.navigation.navigate("Applied Job") 
+      return true;
+    } 
   });
   const [appliedJobDetails, setAppliedJobDetails] = useState();
   const getAppliedJobById = async id => {

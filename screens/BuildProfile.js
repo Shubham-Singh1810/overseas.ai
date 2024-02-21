@@ -106,7 +106,7 @@ const BuildProfile = props => {
                 )}
               </View>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('Edit Profile')}>
+                onPress={() => props.navigation.navigate('Edit Profile',{backTo:"Improve Profile"})}>
                 <Text
                   style={{
                     textDecorationLine: 'underline',
@@ -243,7 +243,7 @@ const BuildProfile = props => {
                     marginTop: 10,
                     justifyContent: 'flex-end',
                   }}>
-                  <Pressable onPress={() => props.navigation.navigate(v.type)}>
+                  <Pressable onPress={() => props.navigation.navigate(v.type, {backTo: "Improve Profile"})}>
                     <Text style={{color:"#000", fontWeight:"500",fontSize:12, textDecorationLine:"underline"}}>View</Text>
                   </Pressable>
                 </View>

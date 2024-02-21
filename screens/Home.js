@@ -202,8 +202,6 @@ const Home = props => {
   );
   // logic to build a dynamic feed end
   return (
-    
-      
         <View style={{backgroundColor: '#fff', flex: 1}}>
           <View>
             <View style={styles.main}>
@@ -452,7 +450,7 @@ const Home = props => {
                               }}>
                               Get Certified
                             </Text>
-                            <CourseGola value={v} props={props} />
+                            <CourseGola value={v} props={props} backTo="Home"/>
                           </View>
                         );
                       }

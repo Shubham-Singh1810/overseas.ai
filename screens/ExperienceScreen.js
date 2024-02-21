@@ -31,7 +31,17 @@ import {
   getDistrict,
 } from '../services/info.service';
 
-const ExperienceScreen = () => {
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
+const ExperienceScreen = (props) => {
+  useAndroidBackHandler(() => {
+    if(props?.route?.params?.backTo){
+      props.navigation.navigate(props?.route?.params.backTo);
+      return true;
+    }else{
+      props.navigation.navigate("MyProfile") 
+      return true;
+    }
+  });
   const [showJoiningCalender, setJoiningCalender] = useState(false);
   const [showEndingCalender, setEndingCalender] = useState(false);
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);

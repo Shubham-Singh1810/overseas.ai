@@ -149,7 +149,7 @@ const GetInstituteById = props => {
         </View>
         <View style={{paddingBottom: 10}}>
         {courseList?.map((v, i) => {
-          return <CourseGola value={v} props={props}/>;
+          return <CourseGola value={v} props={props} backTo="Get Certificate"/>;
         })}
         </View>
         

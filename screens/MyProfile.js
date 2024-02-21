@@ -11,12 +11,10 @@ import {
   Button
 } from 'react-native';
 import React, {useState} from 'react';
-import FooterNav from '../components/FooterNav';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyProfile = props => {
   const {translation, globalState, setGlobalState} = useGlobalState();
-  console.log(JSON.parse(globalState?.user)?.empData?.empPhoto);
   const handleLogOut = async () => {
     try {
       await AsyncStorage.removeItem('user');
@@ -94,7 +92,7 @@ const MyProfile = props => {
                 )}
               </View>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('Edit Profile')}>
+                onPress={() => props.navigation.navigate('Edit Profile', {backTo:"MyProfile"})}>
                 <Text
                   style={{
                     textDecorationLine: 'underline',
@@ -210,7 +208,7 @@ const MyProfile = props => {
               </View> */}
 
               <Pressable
-                onPress={() => props.navigation.navigate('Applied Courses')}>
+                onPress={() => props.navigation.navigate('Applied Courses',{backTo:"MyProfile"})}>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -224,7 +222,7 @@ const MyProfile = props => {
               </Pressable>
 
               <Pressable
-                onPress={() => props.navigation.navigate('Applied Job')}>
+                onPress={() => props.navigation.navigate('Applied Job',{backTo:"MyProfile"})}>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -235,7 +233,7 @@ const MyProfile = props => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('My Documents')}>
+                onPress={() => props.navigation.navigate('My Documents',{backTo:"MyProfile"})}>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -247,7 +245,7 @@ const MyProfile = props => {
               </Pressable>
 
               <Pressable
-                onPress={() => props.navigation.navigate('Saved Jobs')}>
+                onPress={() => props.navigation.navigate('Saved Jobs',{backTo:"MyProfile"})}>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -258,7 +256,7 @@ const MyProfile = props => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('Notifications')}>
+                onPress={() => props.navigation.navigate('Notifications',{backTo:"MyProfile"})}>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -271,7 +269,7 @@ const MyProfile = props => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('My Experience')}>
+                onPress={() => props.navigation.navigate('My Experience',{backTo:"MyProfile"})}>
                 <View style={styles.navItem}>
                   <Image
                     source={require('../images/jobIcon.png')}
@@ -282,7 +280,7 @@ const MyProfile = props => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('Contact Us')}>
+                onPress={() => props.navigation.navigate('Contact Us',{backTo:"MyProfile"})}>
                 <View style={styles.navItem}>
                   <Image
                     source={require('../images/helpIcon.png')}

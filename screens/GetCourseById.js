@@ -4,16 +4,16 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {applyCourse} from '../services/institute.service';
 import WebView from 'react-native-webview';
+import {useFocusEffect} from '@react-navigation/native';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import { ScrollView } from 'react-native-gesture-handler';
-
-  
 const GetCourseById = props => {
   useAndroidBackHandler(() => {
-    props.navigation.navigate('Get Certificate');
+    props.navigation.navigate(props?.route?.params.backTo);
     return true;
   });
-  const courseDetails = props?.route?.params;
+  const[courseDetails, setCourseDetails]=useState(props?.route?.params?.CourseDetails)
+  // const courseDetails = props?.route?.params;
   const [showWebsite, setShowWebsite] = useState(false);
   const handleApplyCourse = async id => {
     let user = await AsyncStorage.getItem('user');
@@ -48,6 +48,11 @@ const GetCourseById = props => {
       });
     }
   };
+  useFocusEffect(
+    React.useCallback(() => {
+      setCourseDetails(props?.route?.params?.CourseDetails);
+    }, [props?.route?.params]),
+  );
   return (
     <ScrollView style={styles.main}>
        <View >

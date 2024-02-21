@@ -3,8 +3,7 @@ import React from 'react';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {applyCourse} from '../services/institute.service';
-const CourseGola = ({value, props, isApplied}) => {
-  console.log(props)
+const CourseGola = ({value, props, isApplied, backTo}) => {
   const handleApplyCourse = async id => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -131,7 +130,10 @@ const CourseGola = ({value, props, isApplied}) => {
             onPress={() =>
               props.navigation.navigate(
                 'Get Course By Id',
-                (CourseDetails = value),
+                {
+                  CourseDetails: value,
+                  backTo: backTo
+                }
               )
             }>
             Learn More

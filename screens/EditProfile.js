@@ -30,7 +30,12 @@ import {
 import DocumentPicker from 'react-native-document-picker';
 import Toast from 'react-native-toast-message';
 import {useFocusEffect} from '@react-navigation/native';
-const EditProfile = () => {
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
+const EditProfile = (props) => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate(props?.route?.params.backTo);
+    return true;
+  });
   const [occupations, setOccupations] = useState([]);
   const getOccupationList = async () => {
     try {

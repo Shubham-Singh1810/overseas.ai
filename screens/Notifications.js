@@ -17,8 +17,13 @@ import {useGlobalState} from '../GlobalProvider';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const Notifications = props => {
   useAndroidBackHandler(() => {
-    props.navigation.navigate("Home") 
-    return true;
+    if(props?.route?.params?.backTo){
+      props.navigation.navigate(props?.route?.params.backTo);
+      return true;
+    }else{
+      props.navigation.navigate("MyProfile") 
+      return true;
+    }
   });
   const {globalState, setGlobalState} = useGlobalState();
   const [showNotifyScreen, setShowNotifyScreen] = useState('Jobs');
@@ -130,6 +135,7 @@ const Notifications = props => {
                     onPress={() =>
                       props.navigation.navigate('Applied Job By Id', {
                         id: v?.jobApplicationId,
+                        backTo:"Notifications"
                       })
                     }
                     style={styles.notificationBox}>
@@ -155,7 +161,7 @@ const Notifications = props => {
                   !v.complete && (
                     <Pressable
                       onPress={() =>
-                        props.navigation.navigate(v.type)
+                        props.navigation.navigate(v.type, {backTo:"Notifications"})
                       }
                       style={styles.notificationBox}>
                       <Text style={styles.notificationBoxText}>
@@ -175,12 +181,6 @@ const Notifications = props => {
                   )
                 );
               })}
-            {/* <View style={[styles.notificationBox, {backgroundColor: 'white'}]}>
-            <Text style={styles.notificationBoxText}>
-              Congratulations !!! Your profile for Product analyst is
-              shortlisted by Hindustan Unilever.
-            </Text>
-          </View> */}
           </ScrollView>
         </View>
       )}

@@ -1,7 +1,11 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const MyCertificate = props => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate('Get Certificate');
+    return true;
+  });
   return (
     <View style={styles.main}>
       <Text style={styles.nameText}>
