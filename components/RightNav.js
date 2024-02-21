@@ -4,10 +4,6 @@ import {
   Text,
   View,
   Pressable,
-  Touchable,
-  TouchableOpacity,
-  Button,
-  Modal,
 } from 'react-native';
 import React,{useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,8 +25,6 @@ const RightNav = props => {
     } catch (error) {}
   };
   const {globalState, setGlobalState} = useGlobalState();
-  const [showModal, setShowModal] = useState(false);
- 
   useFocusEffect(
     React.useCallback(() => {
       getNotificationFunc();
@@ -87,88 +81,10 @@ const RightNav = props => {
               }}
               >
               <Image source={require('../images/blackBell.png')} />
-              <View
-                style={{
-                  backgroundColor: '#D31416',
-                  position: 'relative',
-                  right: 6,
-                  top: 8,
-                  borderRadius: 8,
-                  height: 16,
-                  width: 16,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={{fontSize: 7, color: '#fff'}}>0</Text>
-              </View>
             </Pressable>
           )}
-
-          {/* <Pressable
-            onPress={() => setShowModal(true)}
-            style={{alignItems: 'center', flexDirection: 'row'}}>
-            <Image
-              source={require('../images/language.jpeg')}
-              style={{height: 30, width: 30, borderRadius: 10}}
-            />
-          </Pressable> */}
         </View>
       </View>
-      <Modal transparent={false} visible={showModal} animationType="slide">
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0,0,0.5)',
-          }}>
-          <View style={styles.main}>
-            <View>
-              <Text style={styles.languagetext}>
-                Please select your language
-              </Text>
-              <Text style={styles.languagetext}>कृपया अपनी भाषा चुनें</Text>
-              <Text style={styles.languagetext}>আপনার ভাষা নির্বাচন করুন</Text>
-            </View>
-            <View style={{marginTop: 20}}>
-              <TouchableOpacity
-                style={styles.selectBox}
-                onPress={() => {
-                  setShowModal(false);
-                  setGlobalState({...globalState, selectedLanguage: 'english'});
-                }}>
-                <Text style={styles.textCenter}>English</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.selectBox}
-                onPress={() => {
-                  setShowModal(false);
-                  setGlobalState({...globalState, selectedLanguage: 'hindi'});
-                }}>
-                <Text style={styles.textCenter}>हिंदी </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.selectBox}
-                onPress={() => {
-                  setShowModal(false);
-                  setGlobalState({...globalState, selectedLanguage: 'bangla'});
-                }}>
-                <Text style={styles.textCenter}>বাংলা</Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                width: 250,
-                marginTop: -15,
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-              }}>
-              <Button title="Close" onPress={() => setShowModal(false)} />
-            </View>
-          </View>
-        </View>
-      </Modal>
     </>
   );
 };
