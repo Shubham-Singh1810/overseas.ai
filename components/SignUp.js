@@ -14,7 +14,7 @@ import {getApiData, postApiData, signUp} from '../services/user.service';
 const SignUp = props => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const {translation} = useGlobalState();
+  const {newTranslation,translation} = useGlobalState();
   const [formData, setFormData] = useState({
     name: '',
     mobile_no: '',
@@ -33,14 +33,14 @@ const SignUp = props => {
 
     // Validate Name
     if (formData.name.trim() == '') {
-      newErrors.name = 'Name is a required field';
+      newErrors.name = newTranslation?.nameIsARequiredField;
       valid = false;
     } else {
       newErrors.mobile_no = '';
     }
     // Validate mobile_no length
     if (formData.mobile_no.trim().length != 10) {
-      newErrors.mobile_no = 'Mobile no. must be of 10 digit';
+      newErrors.mobile_no = newTranslation?.mobileNumberMustBeOf10Digit;
       valid = false;
     } else {
       newErrors.mobile_no = '';
@@ -48,7 +48,7 @@ const SignUp = props => {
 
     // Validate password
     if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = newTranslation?.passwordMustBeAtLeast6Characters;
       valid = false;
     } else {
       newErrors.password = '';
@@ -56,12 +56,11 @@ const SignUp = props => {
 
     // Validate confirm password
     if (formData.confirmPassword != formData.password) {
-      newErrors.confirmPassword = 'Confirm Password does not match';
+      newErrors.confirmPassword = newTranslation?.confirmPasswordDoesNotMatch;
       valid = false;
     } else {
       newErrors.confirmPassword = '';
     }
-
     setErrors(newErrors);
     return valid;
   };
@@ -74,46 +73,41 @@ const SignUp = props => {
         } else {
           Toast.show({
             type: 'error', 
-            text1: 'User alredy registered',
+            text1: newTranslation?.userAlredyRegistered,
             visibilityTime: 3000, 
           });
         }
       } catch (error) {
         Toast.show({
           type: 'error', 
-          text1: 'Something went wrong',
+          text1: newTranslation?.somethingWentWrong,
           visibilityTime: 3000, 
         });
       }
-    } else {
-      Toast.show({
-        type: 'error', 
-        text1: 'Form validation failed',
-        visibilityTime: 3000,
-      });
     }
   };
 
   return (
     <View style={styles.authMain}>
       <View style={styles.main}>
-        <Text style={styles.heading}>{translation.createNewAccount}</Text>
+        <Text style={styles.heading}>{newTranslation.createNewAccount}</Text>
         <View>
           <TextInput
-            placeholder={translation.name}
+            placeholder={newTranslation.name}
             style={styles.input}
             onChangeText={text => setFormData({...formData, name: text})}
           />
           <Text style={styles.errorMessage}>{errors.name}</Text>
           <TextInput
-            placeholder={translation.mobileNumber}
+            placeholder={newTranslation.mobileNumber}
             style={styles.input}
+            keyboardType='numeric'
             onChangeText={text => setFormData({...formData, mobile_no: text})}
           />
           <Text style={styles.errorMessage}>{errors.mobile_no}</Text>
           <TextInput
             secureTextEntry={showPassword}
-            placeholder={translation.enterPassword}
+            placeholder={newTranslation.enterPassword}
             style={styles.input}
             onChangeText={text => setFormData({...formData, password: text})}
           />
@@ -139,7 +133,7 @@ const SignUp = props => {
           <Text style={styles.errorMessage}>{errors.password}</Text>
           <TextInput
             secureTextEntry={showConfirmPassword}
-            placeholder={translation.reEnterPassword}
+            placeholder={newTranslation.reEnterPassword}
             style={styles.input}
             onChangeText={text =>
               setFormData({...formData, confirmPassword: text})
@@ -166,7 +160,7 @@ const SignUp = props => {
           </View>
           <Text style={styles.errorMessage}>{errors.confirmPassword}</Text>
           <Pressable style={styles.btn} onPress={handleSubmit}>
-            <Text style={styles.btnText}>{translation.signUp}</Text>
+            <Text style={styles.btnText}>{newTranslation.signUp}</Text>
           </Pressable>
           <View
             style={{
@@ -175,7 +169,7 @@ const SignUp = props => {
               alignItems: 'center',
               marginTop: 20,
             }}>
-            <Text>Already have an account? </Text>
+            <Text>{newTranslation?.alreadyHaveAnAccount}</Text>
             <Pressable
               style={{
                 borderBottomColor: '#5F90CA',
@@ -184,7 +178,7 @@ const SignUp = props => {
                 paddingHorizontal: 5,
               }}
               onPress={() => props.navigation.navigate('LoginCom')}>
-              <Text>Login</Text>
+              <Text>{newTranslation?.logIn}</Text>
             </Pressable>
           </View>
         </View>

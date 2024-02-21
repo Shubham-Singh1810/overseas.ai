@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {translation} from './Language';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getProfileStrength} from "./services/user.service";
+import {getProfileStrength} from './services/user.service';
 
 // Step 1: Create a context
 const GlobalStateContext = createContext();
@@ -10,8 +10,8 @@ const GlobalStateContext = createContext();
 export const GlobalStateProvider = ({children}) => {
   const setUserData = async () => {
     try {
-     let localUser = await AsyncStorage.getItem('user');
-      setGlobalState({...globalState, user:localUser});
+      let localUser = await AsyncStorage.getItem('user');
+      setGlobalState({...globalState, user: localUser});
     } catch (error) {
       console.warn('error from global provider');
     }
@@ -21,10 +21,11 @@ export const GlobalStateProvider = ({children}) => {
     // Your initial global state values go here
     selectedLanguage: 'english',
     user: null,
-    profileStrength:null,
-    notifications:null
+    profileStrength: null,
+    notifications: null,
   });
   const [translation, setTranslation] = useState({});
+  const [newTranslation, setNewTranslation] = useState({});
   const setLanguage = () => {
     setTranslation({
       signUp:
@@ -502,17 +503,200 @@ export const GlobalStateProvider = ({children}) => {
           ? 'विवरण पढ़ें'
           : 'বিস্তারিত পড়ুন',
     });
+    setNewTranslation({
+      logIn:
+        globalState.selectedLanguage == 'english'
+          ? 'Log In'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'लॉग इन करें'
+          : 'লগ ইন',
+      logInToYourAccount:
+        globalState.selectedLanguage == 'english'
+          ? 'Log in to your account'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अपने अकाउंट में लॉग इन करें'
+          : 'আপনার অ্যাকাউন্টে লগ ইন করুন',
+      mobileNumber:
+        globalState.selectedLanguage == 'english'
+          ? 'Mobile number'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'मोबाइल नंबर'
+          : 'মোবাইল নম্বর',
+      password:
+        globalState.selectedLanguage == 'english'
+          ? 'Password'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पासवर्ड'
+          : 'পাসওয়ার্ড',
+      logInViaOtpVerification:
+        globalState.selectedLanguage == 'english'
+          ? 'Log In Via OTP Verification'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'ओ टी पी के माध्यम से लॉग इन करें'
+          : 'ও টি পি এর মাধ্যমে লগ ইন করুন',
+      dontHaveAnyAccount:
+        globalState.selectedLanguage == 'english'
+          ? "Don't have any account?"
+          : globalState.selectedLanguage == 'hindi'
+          ? 'कोई खाता नहीं है?'
+          : 'কোনো অ্যাকাউন্ট নেই?',
+      signUp:
+        globalState.selectedLanguage == 'english'
+          ? 'Sign Up'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'साइन अप करें'
+          : 'সাইন আপ করুন',
+      mobileNumberMustBeOf10Digit:
+        globalState.selectedLanguage == 'english'
+          ? 'Mobile number must be of 10 digit'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'मोबाइल नंबर 10 अंक का होना चाहिए'
+          : 'মোবাইল নম্বর 10 সংখ্যার হতে হবে',
+      passwordMustBeAtLeast6Characters:
+        globalState.selectedLanguage == 'english'
+          ? 'Password must be at least 6 characters'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पासवर्ड कम से कम 6 अंकों का होना चाहिए'
+          : 'পাসওয়ার্ড কমপক্ষে 6 অক্ষরের হতে হবে',
+      invalidCredentials:
+        globalState.selectedLanguage == 'english'
+          ? 'Invalid credentials'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अवैध प्रमाणपत्र'
+          : 'অবৈধ শংসাপত্র',
+      phoneNumberNotRegistered:
+        globalState.selectedLanguage == 'english'
+          ? 'Phone number not registered'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'फ़ोन नंबर पंजीकृत नहीं है'
+          : 'ফোন নম্বর নিবন্ধিত নয়',
+      pleaseEnterAValidNumber:
+        globalState.selectedLanguage == 'english'
+          ? 'Phone number not registered'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'कृपया सही अंक दर्ज करें'
+          : 'দয়া করে একটি বৈধ নম্বর লিখুন',
+          createNewAccount:
+        globalState.selectedLanguage == 'english'
+          ? 'Create new account'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'नया खाता बनाएँ'
+          : 'নতুন অ্যাকাউন্ট তৈরি করুন',
+          name:
+        globalState.selectedLanguage == 'english'
+          ? 'Name'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'नाम'
+          : 'নাম',
+          password:
+        globalState.selectedLanguage == 'english'
+          ? 'Password'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पासवर्ड'
+          : 'পাসওয়ার্ড',
+      enterPassword:
+        globalState.selectedLanguage == 'english'
+          ? 'Enter Password'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पास वर्ड दर्ज करें'
+          : 'পাসওয়ার্ড লিখুন',
+          reEnterPassword:
+        globalState.selectedLanguage == 'english'
+          ? 'Re Enter Password'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पासवर्ड फिर से दर्ज करें'
+          : 'পাসওয়ার্ড পুনরায় লিখুন',
+          alreadyHaveAnAccount:
+          globalState.selectedLanguage == 'english'
+          ? 'Already have an account ?'
+          : globalState.selectedLanguage == 'hindi'
+          ? "क्या आपके पास पहले से एक खाता मौजूद है ?"
+          : 'আপনার কি একাউন্ট তৈরী আছে ?',
+          nameIsARequiredField:
+          globalState.selectedLanguage == 'english'
+          ? 'Name is a required field'
+          : globalState.selectedLanguage == 'hindi'
+          ? "नाम एक आवश्यक फ़ील्ड है"
+          : 'নাম একটি প্রয়োজনীয় ক্ষেত্র',
+          confirmPasswordDoesNotMatch:
+          globalState.selectedLanguage == 'english'
+          ? 'Confirm Password does not match'
+          : globalState.selectedLanguage == 'hindi'
+          ? "पासवर्ड पुष्टि नहीं मिल रहा है "
+          : 'নিশ্চিত পাসওয়ার্ড মিলছে না',
+          userAlredyRegistered:
+          globalState.selectedLanguage == 'english'
+          ? 'User alredy registered'
+          : globalState.selectedLanguage == 'hindi'
+          ? "यह खता पहले से ही है"
+          : 'আপনার একাউন্ট তৌরি আছে',
+          somethingWentWrong:
+          globalState.selectedLanguage == 'english'
+          ? 'Something went wrong'
+          : globalState.selectedLanguage == 'hindi'
+          ? "कुछ गलत है"
+          : 'কিছু ভুল হয়েছে',
+          wrongOtp:
+          globalState.selectedLanguage == 'english'
+          ? 'Wrong OTP'
+          : globalState.selectedLanguage == 'hindi'
+          ? "ओ टी पी गलत है"
+          : 'ও টি পি ভুল হয়েছে',
+          otpResendSuccessfully:
+          globalState.selectedLanguage == 'english'
+          ? 'OTP resend successfully'
+          : globalState.selectedLanguage == 'hindi'
+          ? "ओ टी पी सफलतापूर्वक दोबारा भेजा गया"
+          : 'ও টি পি পুনরায় পাঠানো হয়েছে',
+          enterOTP:
+          globalState.selectedLanguage == 'english'
+          ? 'Enter OTP'
+          : globalState.selectedLanguage == 'hindi'
+          ? "ओ टी पी दर्ज करें"
+          : 'ও টি পি লিখুন',
+          timesUp:
+          globalState.selectedLanguage == 'english'
+          ? 'Times up'
+          : globalState.selectedLanguage == 'hindi'
+          ? "समय पूर्ण हुआ"
+          : 'সময় শেষ',
+          didntgetOTP:
+          globalState.selectedLanguage == 'english'
+          ? 'Didn’t get OTP?'
+          : globalState.selectedLanguage == 'hindi'
+          ? "ओ टी पी नहीं मिला?"
+          : 'ও টি পি পাননি?',
+          resendOTP:
+          globalState.selectedLanguage == 'english'
+          ? 'Resend OTP'
+          : globalState.selectedLanguage == 'hindi'
+          ? "ओ टी पी नहीं मिला?"
+          : 'ও টি পি আবার পাঠান',
+          verifyOTP:
+          globalState.selectedLanguage == 'english'
+          ? 'Verify OTP'
+          : globalState.selectedLanguage == 'hindi'
+          ? "ओ टी पी सत्यापित करें"
+          : 'ও টি পি যাচাই করুন',
+    });
   };
+
   useEffect(() => {
     setLanguage();
   }, [globalState]);
   useEffect(() => {
     setUserData();
   }, []);
-  
+
   return (
     <GlobalStateContext.Provider
-      value={{globalState, setGlobalState, translation, setUserData:setUserData}}>
+      value={{
+        globalState,
+        setGlobalState,
+        translation,
+        newTranslation,
+        setUserData: setUserData,
+      }}>
       {children}
     </GlobalStateContext.Provider>
   );

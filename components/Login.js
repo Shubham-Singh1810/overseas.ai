@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = props => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const {translation, globalState, setGlobalState} = useGlobalState();
+  const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
     empPhone: '',
     password: '',
@@ -32,7 +32,7 @@ const Login = props => {
 
     // Validate mobile_no length
     if (formData.empPhone.trim().length != 10) {
-      newErrors.empPhone = 'Mobile no. must be of 10 digit';
+      newErrors.empPhone = newTranslation?.mobileNumberMustBeOf10Digit;
       valid = false;
     } else {
       newErrors.empPhone = '';
@@ -40,7 +40,7 @@ const Login = props => {
 
     // Validate password
     if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = newTranslation?.passwordMustBeAtLeast6Characters;
       valid = false;
     } else {
       newErrors.password = '';
@@ -65,8 +65,6 @@ const Login = props => {
       setLoading(true);
       try {
         let response = await loginUsingPassword(formData);
-        console.log(response.data);
-
         if (response.data.access_token) {
           if (response.data.user.second_step == '0') {
             await AsyncStorage.setItem(
@@ -84,7 +82,7 @@ const Login = props => {
           Toast.show({
             type: 'error', // 'success', 'error', 'info', or any custom type you define
             // position: 'top',
-            text1: 'Invalid credentials',
+            text1: newTranslation?.invalidCredentials,
             visibilityTime: 3000, // Duration in milliseconds
           });
           setLoading(false);
@@ -92,15 +90,7 @@ const Login = props => {
       } catch (error) {
         setLoading(false);
       }
-    } else {
-      // Form is invalid, do something (e.g., display an error message)
-      Toast.show({
-        type: 'error', // 'success', 'error', 'info', or any custom type you define
-        // position: 'top',
-        text1: 'Form validation failed',
-        visibilityTime: 3000, // Duration in milliseconds
-      });
-    }
+    } 
   };
   function isValidIndianMobileNumber(mobileNumber) {
     // Regular expression for Indian mobile numbers
@@ -111,9 +101,7 @@ const Login = props => {
   }
   const storeDataInLocal = async tempPhone => {
     try {
-      // Store phone number and OTP in local storage
       await AsyncStorage.setItem('tempPhone', tempPhone);
-      console.log('Data stored successfully!');
     } catch (error) {
       console.error('Error storing data:', error);
     }
@@ -122,7 +110,7 @@ const Login = props => {
     const newErrors = {...errors};
     // Validate mobile_no length
     if (formData.empPhone.trim().length != 10) {
-      newErrors.empPhone = 'Mobile no. must be of 10 digit';
+      newErrors.empPhone = newTranslation.mobileNumberMustBeOf10Digit;
       setErrors(newErrors);
     } else {
       if (isValidIndianMobileNumber(formData.empPhone)) {
@@ -137,7 +125,7 @@ const Login = props => {
             Toast.show({
               type: 'error', // 'success', 'error', 'info', or any custom type you define
               position: 'top',
-              text1: 'Phone number not registered',
+              text1:newTranslation?.phoneNumberNotRegistered,
               visibilityTime: 3000, // Duration in milliseconds
             });
           }
@@ -145,7 +133,7 @@ const Login = props => {
           Alert('Something Went Wrong');
         }
       } else {
-        newErrors.empPhone = 'Please enter a valid number';
+        newErrors.empPhone = newTranslation?.pleaseEnterAValidNumber;
         setErrors(newErrors);
       }
     }
@@ -153,17 +141,17 @@ const Login = props => {
   return (
     <View style={styles.authMain}>
       <View style={styles.main}>
-        <Text style={styles.heading}>{translation.LogInToYourAccount}</Text>
+        <Text style={styles.heading}>{newTranslation.logInToYourAccount}</Text>
         <View>
           <TextInput
-            placeholder={translation.mobileNumber}
+            placeholder={newTranslation.mobileNumber}
             style={styles.input}
             onChangeText={text => setFormData({...formData, empPhone: text})}
             value={formData.empPhone}
           />
           <Text style={styles.errorMessage}>{errors.empPhone}</Text>
           <TextInput
-            placeholder={translation.password}
+            placeholder={newTranslation.password}
             style={styles.input}
             onChangeText={text => setFormData({...formData, password: text})}
             value={formData.password}
@@ -187,7 +175,7 @@ const Login = props => {
               
             </Pressable>
           </View>
-          <Text style={styles.errorMessage}>{errors.password}</Text>
+          <Text style={[styles.errorMessage, {marginTop:-20, marginBottom:20}]}>{errors.password}</Text>
           {loading ? (
             <ActivityIndicator size="large" color="gray" />
           ) : (
@@ -197,11 +185,11 @@ const Login = props => {
                 {translation.forgetPassword}?
               </Text> */}
                 <Text style={[styles.sendOtp]} onPress={handleRouteToOtp}>
-                  Login via OTP verification
+                {newTranslation.logInViaOtpVerification}
                 </Text>
               </View>
               <Pressable style={styles.btn} onPress={handleSubmit}>
-                <Text style={styles.btnText}>{translation.logIn}</Text>
+                <Text style={styles.btnText}>{newTranslation.logIn}</Text>
               </Pressable>
               <View
                 style={{
@@ -210,7 +198,7 @@ const Login = props => {
                   alignItems: 'center',
                   marginTop: 20,
                 }}>
-                <Text>Don't have any account?</Text>
+                <Text>{newTranslation.dontHaveAnyAccount}</Text>
                 <Pressable
                   style={{
                     borderBottomColor: '#5F90CA',
@@ -219,7 +207,7 @@ const Login = props => {
                     paddingHorizontal: 5,
                   }}
                   onPress={() => props.navigation.navigate('SignUpCom')}>
-                  <Text>Sign Up</Text>
+                  <Text>{newTranslation.signUp}</Text>
                 </Pressable>
               </View>
             </View>

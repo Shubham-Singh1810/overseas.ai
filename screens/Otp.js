@@ -1,5 +1,4 @@
 import {
-  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -8,7 +7,6 @@ import {
   Pressable,
 } from 'react-native';
 import React, {useState} from 'react';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {
   verifyOtpForLogin,
   loginUsingOtp,
@@ -22,7 +20,7 @@ import {useFocusEffect} from '@react-navigation/native';
 const Otp = props => {
   const {params} = props.route;
   const [tempUser, setTempUser] = useState(params ? params.tempUser : null);
-  const {translation, globalState, setGlobalState} = useGlobalState();
+  const {newTranslation, globalState, setGlobalState} = useGlobalState();
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(30);
   const startTimer = () => {
@@ -53,7 +51,6 @@ const Otp = props => {
           otp: otp,
         });
         if (response.data.access_token) {
-          
           await AsyncStorage.setItem('signUpUser', JSON.stringify(response.data));
           props.navigation.navigate("CandidateDetails1")
         } else {
@@ -61,7 +58,7 @@ const Otp = props => {
           Toast.show({
             type: 'error', // 'success', 'error', 'info', or any custom type you define
             // position: 'top',
-            text1: 'Wrong OTP',
+            text1: newTranslation?.wrongOtp,
             visibilityTime: 3000, // Duration in milliseconds
           });
         }
@@ -87,7 +84,7 @@ const Otp = props => {
           setLoading(false);
           Toast.show({
             type: 'error', 
-            text1: 'Wrong OTP',
+            text1: newTranslation?.wrongOtp,
             visibilityTime: 3000,
           });
         }
@@ -97,7 +94,7 @@ const Otp = props => {
       Toast.show({
         type: 'error',
         // position: 'top',
-        text1: 'Something went wrong',
+        text1: newTranslation?.somethingWentWrong,
         visibilityTime: 3000,
       });
     }
@@ -112,7 +109,7 @@ const Otp = props => {
           Toast.show({
             type: 'success',
             // position: 'top',
-            text1: 'OTP resend successfully',
+            text1: newTranslation?.otpResendSuccessfully,
             visibilityTime: 3000,
           });
           setTimer(30);
@@ -126,7 +123,7 @@ const Otp = props => {
           Toast.show({
             type: 'success',
             // position: 'top',
-            text1: 'OTP resend successfully',
+            text1: newTranslation?.otpResendSuccessfully,
             visibilityTime: 3000,
           });
           setTimer(30);
@@ -144,23 +141,11 @@ const Otp = props => {
   return (
     <View style={styles.main}>
       <View>
-        <Text style={styles.heading}>Enter OTP</Text>
+        <Text style={styles.heading}>{newTranslation?.enterOTP}</Text>
       </View>
       {loading ? (
         <ActivityIndicator size="large" color="gray" />
       ) : (
-        // <OTPInputView
-        //   style={{width: '90%', height: 70, color: 'red'}}
-        //   pinCount={6}
-        //   // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-        //   // onCodeChanged = {code => { this.setState({code})}}
-        //   autoFocusOnLoad
-        //   codeInputFieldStyle={{color: 'black'}}
-        //   codeInputHighlightStyle={{borderColor: 'black'}}
-        //   onCodeFilled={code => {
-        //     verifyOtp(code);
-        //   }}
-        // />
         <TextInput onChangeText={(text)=>{
           if(text.length===6){
             verifyOtp(text);
@@ -172,17 +157,17 @@ const Otp = props => {
 
       <Text style={[styles.timerText, styles.textCenter]}>
         {timer == 0 ? (
-          <Text style={{color: 'red'}}>Times up</Text>
+          <Text style={{color: 'red'}}>{newTranslation?.timesUp}</Text>
         ) : (
           <Text>{timer} sec</Text>
         )}
       </Text>
       {timer == 0 && (
         <View style={styles.optionGroup}>
-          <Text style={styles.timerText}>Didn’t get OTP?</Text>
+          <Text style={styles.timerText}>{newTranslation?.didntgetOTP}</Text>
           <Pressable onPress={resendOtp}>
             <Text style={[styles.timerText, styles.borderBottom]}>
-              Resend OTP
+              {newTranslation?.resendOTP}
             </Text>
           </Pressable>
         </View>
