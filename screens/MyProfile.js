@@ -10,16 +10,24 @@ import {
   Modal,
   Button
 } from 'react-native';
+import {loginOut} from "../services/user.service"
 import React, {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyProfile = props => {
   const {translation, globalState, setGlobalState} = useGlobalState();
   const handleLogOut = async () => {
+    let user = await AsyncStorage.getItem('user');
     try {
-      await AsyncStorage.removeItem('user');
-      setGlobalState({...globalState, user: null});
-      setShowLogOutPopUp(false)
+      let response = await loginOut(JSON.parse(user).access_token)
+      if(response?.data?.logout=="success"){
+        await AsyncStorage.removeItem('user');
+        setGlobalState({...globalState, user: null});
+        setShowLogOutPopUp(false)
+      }else{
+        console.warn("Something went wrong")
+      }
+      
     } catch (error) {
       console.error('Error removing user data from AsyncStorage:', error);
     }

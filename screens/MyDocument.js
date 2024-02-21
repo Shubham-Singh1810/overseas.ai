@@ -73,7 +73,7 @@ const MyDocument = props => {
     }, []),
   );
  
-  const {translation} = useGlobalState();
+  const {translation, newTranslation} = useGlobalState();
   // function to upload passport
   const uploadPassport = () => {
     setShowPassportPopUp(true);
@@ -756,7 +756,7 @@ const MyDocument = props => {
       <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
         <View style={styles.main}>
           <Text style={styles.messageText}>
-            {translation.saveAllYourImportantDocumentsHere}
+            {newTranslation?.saveAllYourImportantDocumentsHere}
           </Text>
           <View style={{paddingBottom: 6}}>
             {/* <View
@@ -773,7 +773,7 @@ const MyDocument = props => {
             </View> */}
           </View>
           <View style={styles.buttonBox}>
-            <Text style={styles.text}>Custom CV</Text>
+            <Text style={styles.text}>{newTranslation?.customCV}</Text>
             {allDocListDetail?.cv?.cv ? (
               <Pressable
                 onPress={uploadCv}
@@ -801,40 +801,40 @@ const MyDocument = props => {
                 />
                 <Text
                   style={{color: '#035292', fontWeight: '500', fontSize: 10}}>
-                  Update
+                  {newTranslation?.update}
                 </Text>
               </Pressable>
             ) : (
-              <Button title="Upload" onPress={uploadCv} />
+              <Button title={newTranslation?.upload} onPress={uploadCv} />
             )}
           </View>
           <View style={styles.buttonBox}>
-            <Text style={styles.text}>{translation.passport}</Text>
+            <Text style={styles.text}>{newTranslation?.passport}</Text>
             {allDocListDetail?.passportData ? (
-              <Button title="View" onPress={setPassportEdit} />
+              <Button title={newTranslation?.view} onPress={setPassportEdit} />
             ) : (
-              <Button title="Upload" onPress={uploadPassport} />
+              <Button title={newTranslation?.upload} onPress={uploadPassport} />
             )}
           </View>
           <View style={styles.buttonBox}>
-            <Text style={styles.text}>{translation.experienceCertificate}</Text>
+            <Text style={styles.text}>{newTranslation?.experienceCertificate}</Text>
             <Button
               title={
-                allDocListDetail?.experienceList?.length > 0 ? 'View' : 'Upload'
+                allDocListDetail?.experienceList?.length > 0 ? newTranslation?.view : newTranslation?.upload
               }
               onPress={uploadExperience}
             />
           </View>
           <View style={styles.buttonBox}>
-            <Text style={styles.text}>{translation.drivingLicense}</Text>
-            <Button title="View" onPress={uploadDl} />
+            <Text style={styles.text}>{newTranslation?.drivingLicense}</Text>
+            <Button title={newTranslation?.view} onPress={uploadDl} />
           </View>
           {/* <View style={styles.buttonBox}>
             <Text style={styles.text}>{translation.jobPermit}</Text>
             <Button title={translation.uploadNow}/>
         </View> */}
           <View style={styles.buttonBox}>
-            <Text style={styles.text}>Covid Certificate</Text>
+            <Text style={styles.text}>{newTranslation?.covidCertificate}</Text>
             {allDocListDetail?.covidCertificate?.covidCertificate ? (
               <Pressable
                 onPress={uploadCv}
@@ -865,15 +865,15 @@ const MyDocument = props => {
                 />
                 <Text
                   style={{color: '#035292', fontWeight: '500', fontSize: 10}}>
-                  Update
+                  {newTranslation?.update}
                 </Text>
               </Pressable>
             ) : (
-              <Button title="Upload" onPress={uploadCovid} />
+              <Button title={newTranslation?.upload} onPress={uploadCovid} />
             )}
           </View>
           <View style={styles.buttonBox}>
-            <Text style={styles.text}>Education Certificate</Text>
+            <Text style={styles.text}>{newTranslation?.educationCertificate}</Text>
             {allDocListDetail?.highEduCertificate?.certificate ? (
               <Pressable
                 onPress={uploadCv}
@@ -904,17 +904,17 @@ const MyDocument = props => {
                 />
                 <Text
                   style={{color: '#035292', fontWeight: '500', fontSize: 10}}>
-                  Update
+                  {newTranslation?.update}
                 </Text>
               </Pressable>
             ) : (
-              <Button title="Upload" onPress={uploadEducationCertificate} />
+              <Button title={newTranslation?.upload} onPress={uploadEducationCertificate} />
             )}
           </View>
           <Pressable
             style={styles.buttonBox}
             onPress={() => setShowOptionForOtherDoc(!showOptionForOtherDoc)}>
-            <Text style={styles.text}>Other Documents</Text>
+            <Text style={styles.text}>{newTranslation?.otherDocuments}</Text>
             {!showOptionForOtherDoc ? (
               <Image source={require('../images/downArrow.png')} />
             ) : (
@@ -950,18 +950,18 @@ const MyDocument = props => {
                           fontWeight: '500',
                           fontSize: 10,
                         }}>
-                        Update
+                        {newTranslation?.update}
                       </Text>
                     </Pressable>
                   </View>
                 );
               })}
-              {otherDocArr?.filter(item => !allDocListDetail?.otherDocs?.docs.map(item => item.document_type).includes(item)).map((v, i) => {
+              {otherDocArr?.filter(item => !allDocListDetail?.otherDocs?.docs?.map(item => item.document_type).includes(item))?.map((v, i) => {
                 return (
                   <View style={styles.buttonBox}>
                     <Text style={styles.text}>{v}</Text>
                     <Button
-                      title="Upload"
+                      title={newTranslation?.upload}
                       onPress={() => pickDocumentOtherDoc(v)}
                     />
                   </View>
@@ -1006,7 +1006,7 @@ const MyDocument = props => {
             </View>
             <ScrollView style={{marginTop: 20}}>
               <TextInput
-                placeholder="Enter Passport Number"
+                placeholder={newTranslation?.enterPassportNumber}
                 style={styles.input}
                 value={passportForm.passportNumber}
                 onChangeText={text =>
@@ -1042,7 +1042,7 @@ const MyDocument = props => {
                 </Picker>
               </View>
               <TextInput
-                placeholder="Place of Issue"
+                placeholder={newTranslation?.placeOfIssue}
                 style={styles.input}
                 value={passportForm.placeOfIssue}
                 onChangeText={text =>

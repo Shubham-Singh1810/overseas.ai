@@ -678,6 +678,165 @@ export const GlobalStateProvider = ({children}) => {
           : globalState.selectedLanguage == 'hindi'
           ? "ओ टी पी सत्यापित करें"
           : 'ও টি পি যাচাই করুন',
+          ourAdvisorIsJustACallAway:
+          globalState.selectedLanguage == 'english'
+          ? "Our advisor is just a call away"
+          : globalState.selectedLanguage == 'hindi'
+          ? "हमारा सलाहकार बस एक कॉल की दूरी पर है"
+          : 'আমাদের উপদেষ্টা মাত্র একটি কল দূরে',
+          available24X7forYourQuires:
+          globalState.selectedLanguage == 'english'
+          ? "Available 24X7 for your quires"
+          : globalState.selectedLanguage == 'hindi'
+          ? "हम आपके सवालों का जवाब 24 घंटे देने के लिए तैयार हैं"
+          : "আপনাদের প্রশ্নের উত্তর দেওয়ার জন্য ২৪ ঘন্টা প্রস্তুত",
+          haveAQueryLetsSolveThis:
+          globalState.selectedLanguage == 'english'
+          ? "Have a query? Let’s Solve this"
+          : globalState.selectedLanguage == 'hindi'
+          ? "कोई प्रश्न है? आइए इसे हल करें"
+          : "আপনার কি কিছু জানার আছে? এর সমাধান করা যাক",
+          subject:
+          globalState.selectedLanguage == 'english'
+          ? "Subject"
+          : globalState.selectedLanguage == 'hindi'
+          ? "विषय"
+          : "বিষয়",
+          writeyourqueryhere:
+          globalState.selectedLanguage == 'english'
+          ? "Write your query here*"
+          : globalState.selectedLanguage == 'hindi'
+          ? "अपना प्रश्न यहाँ लिखें"
+          : "আপনার প্রশ্ন এখানে লিখুন",
+          selected:
+          globalState.selectedLanguage == 'english'
+          ? "Selected"
+          : globalState.selectedLanguage == 'hindi'
+          ? "चयनित"
+          : "নির্বাচিত",
+          uploadVideo:
+          globalState.selectedLanguage == 'english'
+          ? "Upload Video"
+          : globalState.selectedLanguage == 'hindi'
+          ? "विडियो अॅॅपलोड "
+          : "ভিডিও আপলোড",
+          audioVideo:
+          globalState.selectedLanguage == 'english'
+          ? "Audio Upload"
+          : globalState.selectedLanguage == 'hindi'
+          ? "ऑडियो अपलोड"
+          : "অডিও আপলোড",
+          submit:
+          globalState.selectedLanguage == 'english'
+          ? "Submit"
+          : globalState.selectedLanguage == 'hindi'
+          ? "जमा करे"
+          : "জমা করুন",
+          subjectisrequiredfield:
+          globalState.selectedLanguage == 'english'
+          ? 'Subject is required field'
+          : globalState.selectedLanguage == 'hindi'
+          ? "विषय आवश्यक फ़ील्ड है"
+          : "বিষয় প্রয়োজনীয় ক্ষেত্র", 
+          queryIsRequiredField:
+          globalState.selectedLanguage == 'english'
+          ? 'Query is required field'
+          : globalState.selectedLanguage == 'hindi'
+          ? "प्रश्न आवश्यक फ़ील्ड है"
+          : "অনুসন্ধান প্রয়োজনীয় ক্ষেত্র", 
+          Helprequestsubmittedsuccessfully:
+          globalState.selectedLanguage == 'english'
+          ? 'Help request submitted successfully!'
+          : globalState.selectedLanguage == 'hindi'
+          ? "सहायता अनुरोध सफलतापूर्वक सबमिट किया गया"
+          : "সাহায্যের অনুরোধ সফলভাবে জমা দেওয়া হয়েছে",
+          Ourteammemberwillgetbacktoyousoon:
+          globalState.selectedLanguage == 'english'
+          ? 'Our team member will get back to you soon.'
+          : globalState.selectedLanguage == 'hindi'
+          ? "सहायता अनुरोध सफलतापूर्वक सबमिट किया गया"
+          : "আমাদের উপদেষ্টা শীঘ্রই আপনার সঙ্গে যোগাযোগ করবেন",
+          saveAllYourImportantDocumentsHere:
+        globalState.selectedLanguage == 'english'
+          ? 'Save all your important documents here'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अपने सभी महत्वपूर्ण दस्तावेज़ यहां सहेजें'
+          : 'এখানে আপনার সমস্ত গুরুত্বপূর্ণ নথি সংরক্ষণ করুন', 
+          customCV:
+          globalState.selectedLanguage == 'english'
+          ? "Custom CV"
+          : globalState.selectedLanguage == 'hindi'
+          ? "स्वनिर्धारित सीवी"
+          : "নিজের তৈরী সিভি", 
+          covidCertificate:
+          globalState.selectedLanguage == 'english'
+          ? "Covid Certificate"
+          : globalState.selectedLanguage == 'hindi'
+          ? "कोविड प्रमाणपत्र"
+          : "কোভিড প্রমানপত্র",
+          educationCertificate:
+          globalState.selectedLanguage == 'english'
+          ? "Education Certificate"
+          : globalState.selectedLanguage == 'hindi'
+          ? "शिक्षा का प्रमाण पत्र"
+          : "শিক্ষা প্রমানপত্র",
+          otherDocuments: 
+          globalState.selectedLanguage == 'english'
+          ? "Other Documents"
+          : globalState.selectedLanguage == 'hindi'
+          ? "अन्य प्रमाणपत्र"
+          : "অন্যান্য নথিপত্র",
+          passport:
+        globalState.selectedLanguage == 'english'
+          ? 'Passport'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पासपोर्ट'
+          : 'পাসপোর্ট',
+        experienceCertificate:
+        globalState.selectedLanguage == 'english'
+          ? 'Experience Certificate'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अनुभव प्रमाण पत्र'
+          : 'অভিজ্ঞতা প্রমানপত্র',
+          drivingLicense:
+        globalState.selectedLanguage == 'english'
+          ? 'Driving License'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'ड्राइविंग लाइसेंस'
+          : 'ড্রাইভিং লাইসেন্স',
+
+          enterPassportNumber:
+          globalState.selectedLanguage == 'english'
+          ? 'Enter Passport Number'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पासपोर्ट नंबर दर्ज करें'
+          : 'পাসপোর্ট নম্বর লিখুন',
+        
+          placeOfIssue:
+          globalState.selectedLanguage == 'english'
+          ? 'Enter Passport Number'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अवहेदन का स्थान'
+          : 'আবেদনের জায়গা',
+          upload:
+          globalState.selectedLanguage == 'english'
+          ? 'Upload'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अपलोड'
+          : 'আপলোড',
+          view:
+          globalState.selectedLanguage == 'english'
+          ? 'View'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'देखिये'
+          : 'দেখুন',
+          update:
+          globalState.selectedLanguage == 'english'
+          ? 'Update'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अपडेट'
+          : 'আপডেট',
+
     });
   };
 

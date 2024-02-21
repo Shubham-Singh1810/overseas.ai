@@ -78,7 +78,6 @@ export const registerUserStep1 = async (formData, access_token) => {
   }
 };
 export const registerUserStep2 = async (formData, access_token) => {
-  console.log("FDG",formData, access_token)
   try {
     const response = await axios.post(BASE_URL+"user-profile-complete-step3", formData ,{
       headers: {
@@ -373,6 +372,21 @@ export const editDrivingLiecence = async (formData, access_token) => {
     const response = await axios.post(BASE_URL+"edit-dl-by-user",formData, {
       headers: {
         'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+export const loginOut = async (access_token) => {
+  try {
+    const response = await axios.post(BASE_URL+"logout-app" , {}, {
+      headers: {
         Authorization: `Bearer ${access_token}`
       }
     });

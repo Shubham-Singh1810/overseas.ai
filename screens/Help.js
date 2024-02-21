@@ -30,7 +30,7 @@ const Help = props => {
       return true;
     }
   });
-  const {globalState} = useGlobalState();
+  const {globalState, newTranslation} = useGlobalState();
   const [formData, setFormData] = useState({
     user_contact: JSON.parse(globalState?.user)?.empData?.empPhone,
     help_subject: '',
@@ -78,7 +78,7 @@ const Help = props => {
       Toast.show({
         type: 'error', // 'success', 'error', 'info', or any custom type you define
         // position: 'top',
-        text1: 'Subject is required field',
+        text1: newTranslation?.subjectisrequiredfield,
         visibilityTime: 3000, // Duration in milliseconds
       });
       return;
@@ -87,7 +87,7 @@ const Help = props => {
       Toast.show({
         type: 'error', // 'success', 'error', 'info', or any custom type you define
         // position: 'top',
-        text1: 'Query is required field',
+        text1: newTranslation?.queryIsRequiredField,
         visibilityTime: 3000, // Duration in milliseconds
       });
       return;
@@ -128,15 +128,15 @@ const Help = props => {
         Toast.show({
           type: 'success', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
-          text1: 'Help request submitted successfully!',
-          text2: 'Our team member will get back to you soon.',
+          text1: newTranslation?.Helprequestsubmittedsuccessfully,
+          text2: newTranslation?.Ourteammemberwillgetbacktoyousoon,
           visibilityTime: 3000, // Duration in milliseconds
         });
       } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
-          text1: 'Something went wrong',
+          text1: newTranslation.somethingWentWrong,
           visibilityTime: 3000, // Duration in milliseconds
         });
       }
@@ -144,7 +144,7 @@ const Help = props => {
       Toast.show({
         type: 'error', // 'success', 'error', 'info', or any custom type you define
         // position: 'top',
-        text1: 'Something went wrong',
+        text1: newTranslation.somethingWentWrong,
         visibilityTime: 3000, // Duration in milliseconds
       });
     }
@@ -160,10 +160,7 @@ const Help = props => {
           borderBottomRightRadius: 20,
           borderBottomLeftRadius: 20,
         }}>
-        {/* <Pressable onPress={() => props.navigation.navigate('Feed')} style={{flexDirection:"row", alignItems:"center", marginBottom:10}}>
-            <Text style={{color:"white", textDecorationLine:"underline"}}>&#x2190; Back</Text>
-          </Pressable> */}
-        <Text style={styles.headingText}>Our advisor is just a call away</Text>
+        <Text style={styles.headingText}>{newTranslation?.ourAdvisorIsJustACallAway}</Text>
         <View
           style={{
             flexDirection: 'row',
@@ -180,29 +177,29 @@ const Help = props => {
           </View>
           <View style={{marginLeft: 10}}>
             <Text style={styles.phoneNumberText}>1800 890 4788</Text>
-            <Text style={styles.text}>Available 24X7 for your quires</Text>
+            <Text style={[styles.text, {width:"80%"}]}>{newTranslation?.available24X7forYourQuires}</Text>
           </View>
         </View>
       </View>
       <ScrollView style={styles.main}>
-        <Text style={styles.blackText}>Have a query? Let’s Solve this</Text>
+        <Text style={styles.blackText}>{newTranslation?.haveAQueryLetsSolveThis}</Text>
         <TextInput
           style={styles.inputBox}
           value={formData?.user_contact}
           onChangeText={text => setFormData({...formData, user_contact: text})}
-          placeholder='Enter your contact number*'
+          placeholder={newTranslation?.mobileNumber+"*"}
           keyboardType='numeric'
           maxLength={13}
         />
         <TextInput
           style={styles.inputBox}
-          placeholder="Subject*"
+          placeholder={newTranslation?.subject+"*"}
           value={formData.help_subject}
           onChangeText={text => setFormData({...formData, help_subject: text})}
         />
         <TextInput
           style={styles.inputBox}
-          placeholder="Write your query here*"
+          placeholder={newTranslation?.writeyourqueryhere+"*"} 
           value={formData.help_query}
           multiline={true}
           numberOfLines={5}
@@ -231,7 +228,7 @@ const Help = props => {
             </View>
 
             <Text style={styles.btnText}>
-              {formData.help_video != '' ? 'Selected' : 'Upload Video'}
+              {formData.help_video != '' ? newTranslation?.selected : newTranslation?.uploadVideo}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -250,12 +247,12 @@ const Help = props => {
             </View>
 
             <Text style={styles.btnText}>
-              {formData.help_audio != '' ? 'Selected' : 'Upload Audio'}
+              {formData.help_audio != '' ? newTranslation?.selected : newTranslation?.audioVideo}
             </Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.submitBtn} onPress={sendQuery}>
-          <Text style={styles.subBtnText}>Submit</Text>
+          <Text style={styles.subBtnText}>{newTranslation?.submit}</Text>
         </TouchableOpacity>
         {/* <View
           style={{
