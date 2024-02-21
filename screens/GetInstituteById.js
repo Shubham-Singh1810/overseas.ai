@@ -7,6 +7,7 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
+  ActivityIndicator,
   Modal,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -26,7 +27,9 @@ const GetInstituteById = props => {
   const {params} = props.route;
   const [showWebsite, setShowWebsite] = useState(false);
   const [courseList, setCourseList] = useState([]);
+  const [loading, setLoading]=useState(true)
   const getCourseByInstituteFunc = async instId => {
+    setLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getCourseByInstitute({
@@ -35,10 +38,12 @@ const GetInstituteById = props => {
       });
       if (response?.msg == 'Courses retrieved successfully!') {
         setCourseList(response?.data);
+        setLoading(false)
       }
     } catch (error) {
       console.log('Something went wrong');
     }
+    setLoading(false)
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -47,7 +52,6 @@ const GetInstituteById = props => {
   );
   return (
     <View style={styles.main}>
-      
       <View style={[styles.flex, {alignItems: 'center'}]}>
         <View style={{marginRight: 15}}>
           {params?.profileImage != null ? (
@@ -142,6 +146,9 @@ const GetInstituteById = props => {
             </View>
           </View>
         </View>
+        {loading ?<View style={{height:300, flexDirection:"row", justifyContent:"center",alignItems:"center"}}>
+          <ActivityIndicator/>
+        </View> :<>
         <View style={{marginVertical: 20}}>
           <Text style={[styles.hraName]}>
             Course provided by Institute : <Text>{courseList?.length}</Text>
@@ -151,7 +158,7 @@ const GetInstituteById = props => {
         {courseList?.map((v, i) => {
           return <CourseGola value={v} props={props} backTo="Get Certificate"/>;
         })}
-        </View>
+        </View></>}
         
       </ScrollView>
 

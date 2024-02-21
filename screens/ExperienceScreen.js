@@ -42,6 +42,7 @@ const ExperienceScreen = (props) => {
       return true;
     }
   });
+  const[loading,setLoading]=useState(false)
   const [showJoiningCalender, setJoiningCalender] = useState(false);
   const [showEndingCalender, setEndingCalender] = useState(false);
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
@@ -235,14 +236,16 @@ const ExperienceScreen = (props) => {
   };
   const [experienceList, setExperinceList] = useState([]);
   const getExperienceFunc = async () => {
+    setLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getAllExperience(JSON.parse(user).access_token);
       if (response?.data?.data) {
         setExperinceList(response?.data?.data);
+        setLoading(false)
       }
     } catch (error) {
-      console.log(error);
+      setLoading(false)
     }
   };
   useFocusEffect(
@@ -906,6 +909,9 @@ const ExperienceScreen = (props) => {
             />
           </View>
         </View>
+      </Modal>
+      <Modal transparent={true} visible={loading} animationType="slide">
+        <View style={{backgroundColor: 'rgba(0,0,0,0.1)', flex: 1}}></View>
       </Modal>
     </View>
   );

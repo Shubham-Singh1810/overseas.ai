@@ -6,8 +6,8 @@ import {
   View,
   Button,
   Pressable,
-  PermissionsAndroid,
   Linking,
+  ActivityIndicator,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import Pdf from 'react-native-pdf';
@@ -25,14 +25,15 @@ import DocumentPicker from 'react-native-document-picker';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const AppliedJobById = props => {
   useAndroidBackHandler(() => {
-    if(props?.route?.params?.backTo){
+    if (props?.route?.params?.backTo) {
       props.navigation.navigate(props?.route?.params.backTo);
       return true;
-    }else{
-      props.navigation.navigate("Applied Job") 
+    } else {
+      props.navigation.navigate('Applied Job');
       return true;
-    } 
+    }
   });
+  const [loading, showLoading] = useState(true);
   const [appliedJobDetails, setAppliedJobDetails] = useState();
   const getAppliedJobById = async id => {
     let user = await AsyncStorage.getItem('user');
@@ -43,11 +44,13 @@ const AppliedJobById = props => {
   };
   const [interviewJobDetails, setInterviewJobDetails] = useState();
   const getInterviewDetails = async id => {
+    showLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getInterviewById(id, JSON.parse(user).access_token);
       setInterviewJobDetails(response.data);
       console.log(response?.data);
+      showLoading(false)
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +72,7 @@ const AppliedJobById = props => {
       })
       .catch(err => console.error('An error occurred', err));
   };
-  const handleGoogleMeet = async value =>{
+  const handleGoogleMeet = async value => {
     Linking.openURL(value)
       .then(supported => {
         if (!supported) {
@@ -77,7 +80,7 @@ const AppliedJobById = props => {
         }
       })
       .catch(err => console.error('An error occurred', err));
-  }
+  };
   const [showDocUploader, setShowDocUploader] = useState(false);
   const [uploadSignedDoc, setUploadSignedDoc] = useState({
     cautionMoneyScreensort: '',
@@ -322,7 +325,7 @@ const AppliedJobById = props => {
               onPress={() => {
                 props.navigation.navigate('Job Details', {
                   jobId: appliedJobDetails.mainJobId,
-                  backTo:"Applied Job"
+                  backTo: 'Applied Job',
                 });
               }}
             />
@@ -362,15 +365,17 @@ const AppliedJobById = props => {
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
-        {interviewJobDetails?.data?.status == 0 && interviewJobDetails?.data?.stageStepCount == 1 &&
+        {interviewJobDetails?.data?.status == 0 &&
+          interviewJobDetails?.data?.stageStepCount == 1 &&
           appliedJobDetails?.interviewStatus == 0 && (
             <>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={[styles.highlight, {backgroundColor: 'red'}]}></View>
-              <Text style={{color: 'red'}}>Application Rejected</Text>
-            </View>
-            <View style={styles.grayDot}></View>
-            <View style={styles.grayDot}></View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={[styles.highlight, {backgroundColor: 'red'}]}></View>
+                <Text style={{color: 'red'}}>Application Rejected</Text>
+              </View>
+              <View style={styles.grayDot}></View>
+              <View style={styles.grayDot}></View>
             </>
           )}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -419,15 +424,15 @@ const AppliedJobById = props => {
         {interviewJobDetails?.InterviewStage2?.afterInterviewStatus == 0 &&
           appliedJobDetails?.interviewStatus == 0 &&
           interviewJobDetails?.data?.status == 0 &&
-          interviewJobDetails?.data?.stageStepCount == 2 &&
-           (
+          interviewJobDetails?.data?.stageStepCount == 2 && (
             <>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={[styles.highlight, {backgroundColor: 'red'}]}></View>
-              <Text style={{color: 'red'}}>Rejected in interview</Text>
-            </View>
-            <View style={styles.grayDot}></View>
-            <View style={styles.grayDot}></View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={[styles.highlight, {backgroundColor: 'red'}]}></View>
+                <Text style={{color: 'red'}}>Rejected in interview</Text>
+              </View>
+              <View style={styles.grayDot}></View>
+              <View style={styles.grayDot}></View>
             </>
           )}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -571,12 +576,13 @@ const AppliedJobById = props => {
         {interviewJobDetails?.data?.stageStepCount == 4 &&
           interviewJobDetails?.data?.status == 0 && (
             <>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={[styles.highlight, {backgroundColor: 'red'}]}></View>
-              <Text style={{color: 'red'}}>Visa Application Rejected</Text>
-            </View>
-            <View style={styles.grayDot}></View>
-            <View style={styles.grayDot}></View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={[styles.highlight, {backgroundColor: 'red'}]}></View>
+                <Text style={{color: 'red'}}>Visa Application Rejected</Text>
+              </View>
+              <View style={styles.grayDot}></View>
+              <View style={styles.grayDot}></View>
             </>
           )}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -763,10 +769,24 @@ const AppliedJobById = props => {
                   </Text>
                 </View>
               ) : (
-                <View style={{ marginBottom: 3}}>
-                  {interviewJobDetails?.interviewModeData?.googleMeetLink
-                    ? <Pressable onPress={()=>handleGoogleMeet(interviewJobDetails?.interviewModeData?.googleMeetLink)}><Text style={{color: 'black', fontSize: 15,}}>Join Now</Text></Pressable> 
-                    : <Text style={{color: 'black', fontSize: 15,}}>Meeting Link will be updated soon.</Text> }
+                <View style={{marginBottom: 3}}>
+                  {interviewJobDetails?.interviewModeData?.googleMeetLink ? (
+                    <Pressable
+                      onPress={() =>
+                        handleGoogleMeet(
+                          interviewJobDetails?.interviewModeData
+                            ?.googleMeetLink,
+                        )
+                      }>
+                      <Text style={{color: 'black', fontSize: 15}}>
+                        Join Now
+                      </Text>
+                    </Pressable>
+                  ) : (
+                    <Text style={{color: 'black', fontSize: 15}}>
+                      Meeting Link will be updated soon.
+                    </Text>
+                  )}
                 </View>
               )}
             </View>
@@ -1130,6 +1150,9 @@ const AppliedJobById = props => {
             </View>
           </View>
         </View>
+      </Modal>
+      <Modal transparent={true} visible={loading} animationType="slide">
+        <View style={{backgroundColor: 'rgba(0,0,0,0.1)', flex: 1}}></View>
       </Modal>
       <Toast ref={ref => Toast.setRef(ref)} />
     </View>

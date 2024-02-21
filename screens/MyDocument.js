@@ -9,7 +9,6 @@ import {
   Button,
   TextInput,
   Pressable,
-  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import {
@@ -49,6 +48,7 @@ const MyDocument = props => {
     }
     
   });
+  const[loading,setLoading]=useState(false)
   const [countryList, setCountryList] = useState([]);
   const getCountryList = async () => {
     try {
@@ -630,12 +630,14 @@ const MyDocument = props => {
   const [showOptionForOtherDoc, setShowOptionForOtherDoc] = useState(false);
   const [allDocListDetail, setAllDocListDetails] = useState('');
   const getAllDocList = async () => {
+    setLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getAllDocApi(JSON.parse(user).access_token);
       setAllDocListDetails(response.data);
-      console.log(response.data.otherDocs.docs);
+      setLoading(false)
     } catch (error) {}
+    setLoading(false)
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -1857,6 +1859,9 @@ const MyDocument = props => {
         toggle={false}
         setToggle={setDovViewPopUp}
       />
+      <Modal transparent={true} visible={loading} animationType="slide">
+        <View style={{backgroundColor: 'rgba(0,0,0,0.1)', flex: 1}}></View>
+      </Modal>
       <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );

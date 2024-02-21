@@ -1,4 +1,4 @@
-import {StyleSheet, ScrollView, Text, View} from 'react-native';
+import {StyleSheet, ScrollView, Text, View, ActivityIndicator} from 'react-native';
 import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {getListOfAppliedCourse} from "../services/institute.service";
@@ -16,15 +16,19 @@ const AppliedCourseList = props => {
       return true;
     }
   });
+  const[loading,setLoading]=useState(true)
   const[appliedCourse, setAppliedCourse]=useState([])
   const getAppliedCourseList = async() => {
+    setLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getListOfAppliedCourse(JSON.parse(user).access_token);
       if(response.msg=="Applied courses list retrieved successfully!"){
         setAppliedCourse(response.applied_courses);
+        setLoading(false)
       }
     } catch (error) {}
+    setLoading(false)
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -37,7 +41,7 @@ const AppliedCourseList = props => {
         List of course you have applied earlier.
       </Text>
       <ScrollView>
-        {appliedCourse?.map((v, i)=>{
+        {loading? <View style={{height:500, justifyContent:"center", alignItems:"center"}}><ActivityIndicator size="large"/></View>: appliedCourse?.map((v, i)=>{
           return(
             <CourseGola value={v} props={props} isApplied={true} backTo="Applied Courses"/>
           )

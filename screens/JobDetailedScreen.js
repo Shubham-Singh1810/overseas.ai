@@ -6,7 +6,8 @@ import {
   ScrollView,
   Pressable,
   Button,
-  Share
+  Share,
+  Modal
 } from 'react-native';
 import React from 'react';
 import {useState} from 'react';
@@ -26,6 +27,7 @@ const JobDetailedScreen = params => {
     return true;
   });
   const [details, setDetails] = useState(null);
+  const[loading,setLoading]=useState(true)
   const [showFacility, setShowFacility] = useState(false);
   const [showReqDoc, setShowReqDoc] = useState(false);
   const paramsJobId = params?.route?.params?.jobId;
@@ -60,9 +62,11 @@ const JobDetailedScreen = params => {
     }
   };
   const getJobByIdFunc = async () => {
+    setLoading(true)
     try {
       let response = await getJobById(paramsJobId);
       setDetails(response.data.jobs);
+      setLoading(false)
     } catch (error) {
       console.log(error);
     }
@@ -502,6 +506,9 @@ const JobDetailedScreen = params => {
           )}
         </View>
       </ScrollView>
+      <Modal transparent={true} visible={loading} animationType="slide">
+        <View style={{backgroundColor: 'rgba(0,0,0,0.1)', flex: 1}}></View>
+      </Modal>
       <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );

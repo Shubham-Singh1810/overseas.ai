@@ -1,38 +1,39 @@
 import {
   StyleSheet,
   Text,
-  Image,
   ScrollView,
-  Modal,
-  Button,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import AppliedJob from '../components/AppliedJob';
-import {appliedJobList} from "../services/job.service"
+import {appliedJobList} from '../services/job.service';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const JobApplied = props => {
   useAndroidBackHandler(() => {
-    if(props?.route?.params?.backTo){
+    if (props?.route?.params?.backTo) {
       props.navigation.navigate(props?.route?.params.backTo);
       return true;
-    }else{
-      props.navigation.navigate("Home") 
+    } else {
+      props.navigation.navigate('Home');
       return true;
     }
-    
   });
-  const[appliedJobListArr, setAppliedJobListArr]=useState([])
+  const[loading,setLoading]=useState(true)
+  const [appliedJobListArr, setAppliedJobListArr] = useState([]);
   const {translation} = useGlobalState();
   const getAppliedJobList = async () => {
+    setLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await appliedJobList(JSON.parse(user).access_token);
-      setAppliedJobListArr(response?.data?.jobs)
+      setAppliedJobListArr(response?.data?.jobs);
+      setLoading(false)
     } catch (error) {}
+    setLoading(false)
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -41,17 +42,27 @@ const JobApplied = props => {
   );
   return (
     <>
-      <ScrollView style={{flex:1, backgroundColor:"white"}}>
+      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
         <View style={styles.main}>
           <Text style={styles.messageText}>
             {translation.checkUpdatesOnYourApplication}
           </Text>
           <View>
-            {appliedJobListArr?.map((v, i)=>{
-              return(
-                <AppliedJob props={props} value={v}/>
-              )
-            })}
+            {loading ?
+          <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 500,
+            width: '100%',
+          }}>
+          <ActivityIndicator size="small" color="#0000ff" />
+        </View>:appliedJobListArr?.map((v, i) => {
+              return <AppliedJob props={props} value={v} />;
+            })  
+          }
+            
             
           </View>
         </View>

@@ -31,17 +31,20 @@ import {
 } from '../services/userVideo.service';
 import {getProfileStrength, getNotification} from '../services/user.service';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
-const VideoScreen = (props) => {
+const VideoScreen = props => {
   useAndroidBackHandler(() => {
-    if(props?.route?.params?.backTo){
-      props.navigation.navigate(props?.route?.params?.backTo) 
+    if (props?.route?.params?.backTo) {
+      props.navigation.navigate(props?.route?.params?.backTo);
+      return true;
+    } else {
+      props.navigation.navigate('Home');
       return true;
     }
-    else{
-      props.navigation.navigate("Home") 
-      return true;
-    } 
   });
+  const [showLoadingForIntroLoading, setShowLoadingForIntroLoading] =
+    useState(true);
+  const [showLoadingForWorkLoading, setShowLoadingForWorkLoading] =
+    useState(true);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const {translation, globalState, setGlobalState} = useGlobalState();
   const getProfileStrengthFunc = async () => {
@@ -229,21 +232,26 @@ const VideoScreen = (props) => {
   };
   const [workVideoList, setWorkVideoList] = useState([]);
   const getUserWorkVideoList = async () => {
+    setShowLoadingForWorkLoading(true)
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getWorkVideo(JSON.parse(user).access_token);
       setWorkVideoList(response?.data?.videos);
       getUserIntroVideoList();
+      setShowLoadingForWorkLoading(false)
     } catch (error) {}
+    setShowLoadingForWorkLoading(false)
   };
   const [introVideoList, setIntroVideoList] = useState([]);
   const [showIntroInput, setShowIntroInput] = useState([]);
   const getUserIntroVideoList = async () => {
+    setShowLoadingForIntroLoading(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getIntroVideo(JSON.parse(user).access_token);
       if (response?.data?.msg == 'List of all introduction videos.') {
         setIntroVideoList(response?.data?.videos);
+        setShowLoadingForIntroLoading(false);
       }
     } catch (error) {
       Toast.show({
@@ -252,6 +260,7 @@ const VideoScreen = (props) => {
         visibilityTime: 3000,
       });
     }
+    setShowLoadingForIntroLoading(false);
   };
   const [occuListArr, setOccuListArr] = useState([]);
   const [showDeleteWorkVideoConfirmPop, setShowDeleteWorkVideoConfirmPop] =
@@ -281,7 +290,7 @@ const VideoScreen = (props) => {
           visibilityTime: 3000, // Duration in milliseconds
         });
         getUserWorkVideoList();
-        getProfileStrengthFunc()
+        getProfileStrengthFunc();
       }
     } catch (error) {
       console.warn('Something went wrong');
@@ -306,7 +315,7 @@ const VideoScreen = (props) => {
         getUserIntroVideoList();
         setShowDeleteConfirmPop(false);
         setvideoToBeDeleted('');
-        getProfileStrengthFunc()
+        getProfileStrengthFunc();
         Toast.show({
           type: 'success', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
@@ -414,11 +423,23 @@ const VideoScreen = (props) => {
               </Text>
             </TouchableOpacity>
 
-            {introVideoList?.map((v, i) => {
-              return (
-                <View key={i} style={{marginRight: 10}}>
-                  <View style={{position: 'relative'}}>
-                    {/* <Video
+            {showLoadingForIntroLoading ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 100,
+                  width: 160,
+                }}>
+                <ActivityIndicator size="small" color="#0000ff" />
+              </View>
+            ) : (
+              introVideoList?.map((v, i) => {
+                return (
+                  <View key={i} style={{marginRight: 10}}>
+                    <View style={{position: 'relative'}}>
+                      {/* <Video
                       source={{
                         uri: v?.videoUrl,
                       }}
@@ -432,49 +453,50 @@ const VideoScreen = (props) => {
                       paused={true}
                       resizeMode="cover"
                     /> */}
-                    <Pressable
-                      onPress={() => {
-                        setVideoPlayUrl(v?.videoUrl);
-                        setShowVideoPlayer(true);
-                      }}>
-                      <Image
-                        style={{
-                          height: 100,
-                          width: 160,
-                          borderRadius: 5,
-                          borderWidth: 1,
-                          // resizeMode: 'contain',
-                        }}
-                        source={require('../images/introVideoThum.png')}
-                      />
-                    </Pressable>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      paddingRight: 5,
-                      marginVertical: 5,
-                    }}>
-                    <Text style={{color: '#000'}}>{v?.videoLanguage}</Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setIntroActionValue(v), setShowIntroAction(true);
-                      }}>
-                      {/* <Image source={require('../images/delete.png')} /> */}
-                      <Text
-                        style={{
-                          fontWeight: '900',
-                          color: 'black',
+                      <Pressable
+                        onPress={() => {
+                          setVideoPlayUrl(v?.videoUrl);
+                          setShowVideoPlayer(true);
                         }}>
-                        ...
-                      </Text>
-                    </TouchableOpacity>
+                        <Image
+                          style={{
+                            height: 100,
+                            width: 160,
+                            borderRadius: 5,
+                            borderWidth: 1,
+                            // resizeMode: 'contain',
+                          }}
+                          source={require('../images/introVideoThum.png')}
+                        />
+                      </Pressable>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingRight: 5,
+                        marginVertical: 5,
+                      }}>
+                      <Text style={{color: '#000'}}>{v?.videoLanguage}</Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setIntroActionValue(v), setShowIntroAction(true);
+                        }}>
+                        {/* <Image source={require('../images/delete.png')} /> */}
+                        <Text
+                          style={{
+                            fontWeight: '900',
+                            color: 'black',
+                          }}>
+                          ...
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              );
-            })}
+                );
+              })
+            )}
           </ScrollView>
         </View>
         <View
@@ -526,7 +548,16 @@ const VideoScreen = (props) => {
               </View>
             </TouchableOpacity> */}
             <ScrollView style={{marginTop: 10, marginBottom: 250}}>
-              {workVideoList?.map((v, i) => {
+              {showLoadingForWorkLoading?<View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 200,
+                  width: '100%'
+                }}>
+                <ActivityIndicator size="small" color="#0000ff" />
+              </View> : workVideoList?.map((v, i) => {
                 return (
                   <View style={{width: '100%', marginBottom: 15}}>
                     {/* <Video
@@ -765,8 +796,15 @@ const VideoScreen = (props) => {
                   You have already uploaded all the introduction video in
                   different languages. {'\n'}
                 </Text>
-                <Text style={{fontWeight:"600", marginBottom:10}}>Edit Known language to add more intro video</Text>
-                <Button title='Edit Profile' onPress={()=>{props.navigation.navigate('Edit Profile');}}/>
+                <Text style={{fontWeight: '600', marginBottom: 10}}>
+                  Edit Known language to add more intro video
+                </Text>
+                <Button
+                  title="Edit Profile"
+                  onPress={() => {
+                    props.navigation.navigate('Edit Profile');
+                  }}
+                />
               </View>
             )}
           </View>
