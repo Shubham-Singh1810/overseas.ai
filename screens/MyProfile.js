@@ -15,7 +15,7 @@ import React, {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyProfile = props => {
-  const {translation, globalState, setGlobalState} = useGlobalState();
+  const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
   const handleLogOut = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -108,7 +108,7 @@ const MyProfile = props => {
                     textAlign: 'center',
                     marginTop: 8,
                   }}>
-                  Edit
+                  {newTranslation?.edit}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -199,7 +199,7 @@ const MyProfile = props => {
                 styles.fontWeight500,
                 {marginTop: 5, marginBottom: -5, fontSize: 12},
               ]}>
-              Profile Strength
+              {newTranslation?.profileStrength}
             </Text>
           </View>
         </View>
@@ -284,7 +284,7 @@ const MyProfile = props => {
                     resizeMode="contain"
                     style={{height: 20, width: 20, marginRight: 10}}
                   />
-                  <Text style={styles.navText}>Experience</Text>
+                  <Text style={styles.navText}>{newTranslation.experience}</Text>
                 </View>
               </Pressable>
               <Pressable
@@ -335,7 +335,7 @@ const MyProfile = props => {
                 marginBottom: 18,
               }}>
               <Text style={[styles.nameText]}>
-                Are you sure you want to logout ?{'\n'}
+                {newTranslation?.areYouSureYouWantToLogout} ?{'\n'}
               </Text>
             </View>
             <View
@@ -345,15 +345,17 @@ const MyProfile = props => {
                 justifyContent: 'space-between',
               }}>
               <View style={{width: '45%'}}>
+
+                
                 <Button
-                  title="No"
+                  title={newTranslation?.no}
                   onPress={()=>setShowLogOutPopUp(false)}
                   color="#28a745"
                 />
               </View>
               <View style={{width: '45%'}}>
                 <Button
-                  title="Yes"
+                  title={newTranslation?.yes}
                   onPress={handleLogOut}
                   color="#dc3545"
                 />

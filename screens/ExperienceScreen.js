@@ -32,6 +32,7 @@ import {
 } from '../services/info.service';
 
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import { useGlobalState } from '../GlobalProvider'
 const ExperienceScreen = (props) => {
   useAndroidBackHandler(() => {
     if(props?.route?.params?.backTo){
@@ -42,6 +43,7 @@ const ExperienceScreen = (props) => {
       return true;
     }
   });
+  const {newTranslation} = useGlobalState()
   const[loading,setLoading]=useState(false)
   const [showJoiningCalender, setJoiningCalender] = useState(false);
   const [showEndingCalender, setEndingCalender] = useState(false);
@@ -325,7 +327,7 @@ const ExperienceScreen = (props) => {
           alignItems: 'center',
         }}>
         <Text style={styles.cardText}>
-          Experince Count : {experienceList?.length}
+          {newTranslation?.experinceCount} : {experienceList?.length}
         </Text>
         {/* <View style={{marginEnd:10}}>
         <Button title="ADD MORE"  />
@@ -354,11 +356,11 @@ const ExperienceScreen = (props) => {
                     {v?.experinceCompanyName}
                   </Text>
                   <Text style={styles.cardText}>
-                    Department :{' '}
+                    {newTranslation?.department} :{' '}
                     <Text style={{fontWeight: '400'}}>{v?.jobProfile}</Text>
                   </Text>
                   <Text style={styles.cardText}>
-                    Occupation :{' '}
+                    {newTranslation?.occupation} :{' '}
                     <Text style={{fontWeight: '400'}}>{v?.jobOccupation}</Text>
                   </Text>
                 </View>
@@ -372,7 +374,7 @@ const ExperienceScreen = (props) => {
                 }}>
                 <View>
                   <Text style={styles.cardText}>
-                    Experience Type :{' '}
+                    {newTranslation?.experienceType} :{' '}
                     <Text style={{fontWeight: '400'}}>
                       {v?.experienceType &&
                         v?.experienceType.charAt(0).toUpperCase() +
@@ -380,14 +382,14 @@ const ExperienceScreen = (props) => {
                     </Text>
                   </Text>
                   <Text style={styles.cardText}>
-                    Location :{' '}
+                    {newTranslation?.location} :{' '}
                     <Text style={{fontWeight: '400'}}>
                       {v?.countryName && v?.countryName}{' '}
                       {v?.stateName && v?.stateName}
                     </Text>
                   </Text>
                   <Text style={styles.cardText}>
-                    Duration :{' '}
+                    {newTranslation?.duration} :{' '}
                     <Text style={{fontWeight: '400'}}>
                       {v?.durationMonth && v.durationMonth > 12
                         ? `${Math.floor(v.durationMonth / 12)} year${
@@ -423,7 +425,7 @@ const ExperienceScreen = (props) => {
                       setShowAddExperienceForm(true);
                       setInputField(v);
                     }}>
-                    Edit
+                    {newTranslation?.edit}
                   </Text>
                 </View>
               </View>
@@ -433,7 +435,7 @@ const ExperienceScreen = (props) => {
       </ScrollView>
       <View>
         <Button
-          title="Add more Experience"
+          title={newTranslation?.addMoreExperience}
           color="#035292"
           onPress={() => {
             setShowAddExperienceForm(true);
@@ -504,7 +506,7 @@ const ExperienceScreen = (props) => {
                           textAlign: 'center',
                           color: '#035292',
                         }}>
-                        Upload Certificate
+                        {newTranslation?.uploadCertificate}
                       </Text>
                     ) : (
                       <View
@@ -523,7 +525,7 @@ const ExperienceScreen = (props) => {
                             marginEnd: 20,
                             
                           }}>
-                          {experienceForm.certificateImage =="" ? "Upload": "Selected"} 
+                          {experienceForm.certificateImage =="" ? newTranslation?.upload: newTranslation?.selected} 
                         </Text>
                         <Pressable
                           onPress={() =>
@@ -554,7 +556,7 @@ const ExperienceScreen = (props) => {
                           textAlign: 'center',
                           color: '#035292',
                         }}>
-                        Upload Certificate
+                        {newTranslation?.uploadCertificate}
                       </Text>
                     ) : (
                       <View
@@ -571,7 +573,7 @@ const ExperienceScreen = (props) => {
                             color: '#035292',
                             marginEnd: 20,
                           }}>
-                          Selected
+                          {newTranslation?.selected}
                         </Text>
                         <Pressable
                           onPress={() =>
@@ -588,7 +590,7 @@ const ExperienceScreen = (props) => {
                 </Pressable>
               )}
               <TextInput
-                placeholder="Company Name"
+                placeholder={newTranslation?.companyName}
                 style={styles.input}
                 value={experienceForm.experinceCompanyName}
                 editable={addForm == 'Edit' ? false : true}
@@ -620,7 +622,7 @@ const ExperienceScreen = (props) => {
                       label={
                         experienceForm?.jobProfile
                           ? experienceForm.jobProfile
-                          : 'Select Working Department'
+                          : newTranslation?.selectOccupation
                       }
                       value={editExtraField.jobProfileId}
                       style={{color: 'gray'}}
@@ -652,7 +654,7 @@ const ExperienceScreen = (props) => {
                       label={
                         editExtraField?.viewOccupation
                           ? editExtraField?.viewOccupation
-                          : 'Select Occupation'
+                          : newTranslation?.selectSkill
                       }
                       value={editExtraField.jobOccupationId}
                       style={{color: 'gray'}}
@@ -689,7 +691,7 @@ const ExperienceScreen = (props) => {
                       });
                     }}>
                     <Picker.Item
-                      label="Experience Type"
+                      label={newTranslation?.experienceType}
                       value=""
                       style={{color: 'gray'}}
                     />
@@ -789,7 +791,7 @@ const ExperienceScreen = (props) => {
                     <Text>
                       {experienceForm.fromDate != ''
                         ? experienceForm.fromDate
-                        : 'Joining Date'}
+                        : newTranslation?.joiningDate}
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -798,16 +800,16 @@ const ExperienceScreen = (props) => {
                     <Text>
                       {experienceForm.toDate != ''
                         ? experienceForm.toDate
-                        : 'Ending Date'}
+                        : newTranslation?.endingDate}
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </ScrollView>
             {addForm == 'Edit' ? (
-              <Button title="Edit" color="#035292" onPress={editExperience} />
+              <Button title={newTranslation?.edit} color="#035292" onPress={editExperience} />
             ) : (
-              <Button title="Save" color="#035292" onPress={addExperience} />
+              <Button title={newTranslation?.save} color="#035292" onPress={addExperience} />
             )}
           </View>
         </View>

@@ -224,7 +224,7 @@ export const GlobalStateProvider = ({children}) => {
         globalState.selectedLanguage == 'english'
           ? 'Applied on'
           : globalState.selectedLanguage == 'hindi'
-          ? 'पर लागू'
+          ? 'अप्लाई हुआ '
           : 'প্রয়োগ করা হয়েছে',
       status:
         globalState.selectedLanguage == 'english'
@@ -392,7 +392,7 @@ export const GlobalStateProvider = ({children}) => {
         globalState.selectedLanguage == 'english'
           ? 'Courses Applied'
           : globalState.selectedLanguage == 'hindi'
-          ? 'लागू पाठ्यक्रम'
+          ? 'एप्लाइड  पाठ्यक्रम'
           : 'কোর্স প্রয়োগ করা হয়েছে',
       myDocuments:
         globalState.selectedLanguage == 'english'
@@ -404,7 +404,7 @@ export const GlobalStateProvider = ({children}) => {
         globalState.selectedLanguage == 'english'
           ? 'Saved Jobs'
           : globalState.selectedLanguage == 'hindi'
-          ? 'नौकरियाँ बचाई गईं'
+          ? 'सेव नौकरियाँ'
           : 'সেভ করা চাকরি',
       notifications:
         globalState.selectedLanguage == 'english'
@@ -1002,7 +1002,7 @@ export const GlobalStateProvider = ({children}) => {
         globalState.selectedLanguage == 'english'
           ? 'Applied'
           : globalState.selectedLanguage == 'hindi'
-          ? 'लागू हो गया'
+          ? 'एप्लाइड हो गया'
           : 'প্রয়োগ করা হয়েছে',
       apply:
         globalState.selectedLanguage == 'english'
@@ -1235,7 +1235,7 @@ export const GlobalStateProvider = ({children}) => {
         globalState.selectedLanguage == 'english'
           ? 'Select Occupation'
           : globalState.selectedLanguage == 'hindi'
-          ? 'व्यवसाय चुनें'
+          ? 'विभाग चुनें'
           : 'পেশা নির্বাচন করুন',
       selectCountry:
         globalState.selectedLanguage == 'english'
@@ -1293,7 +1293,7 @@ export const GlobalStateProvider = ({children}) => {
         globalState.selectedLanguage == 'english'
           ? 'Language Known'
           : globalState.selectedLanguage == 'hindi'
-          ? 'वासा चुनिए'
+          ? 'भाषा चुनिए'
           : 'ভাষা জ্ঞান',
 
       maritalStatus:
@@ -1438,7 +1438,111 @@ export const GlobalStateProvider = ({children}) => {
             : globalState.selectedLanguage == 'hindi'
             ? 'अकेला'
             : 'একক',
+            experience:
+        globalState.selectedLanguage == 'english'
+          ? 'Experience'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अनुभव'
+          : 'অভিজ্ঞতা',
+          profileStrength:
+        globalState.selectedLanguage == 'english'
+          ? 'profile Strength'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'प्रोफाइल शक्ति'
+          : 'প্রোফাইল ক্ষমতা',
+          edit:
+        globalState.selectedLanguage == 'english'
+          ? 'Edit'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'संपादन'
+          : 'সম্পাদনা',
+          listofcourseyouhaveappliedearlier:
+        globalState.selectedLanguage == 'english'
+          ? 'List of course you have applied earlier.'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'आपके द्वारा पहले आवेदन किए गए पाठ्यक्रम की सूची।'
+          : 'আপনার আগের আবেদন করা কোর্সের লিস্ট.',
+          
+          
+          
       // edit profile translation end
+      // experience  translation start
+      addMoreExperience:
+        globalState.selectedLanguage == 'english'
+          ? 'Add More Experience'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'और अनुभव जोड़े'
+          : 'আরও অভিজ্ঞতা যোগ করুন',
+          experinceCount:
+        globalState.selectedLanguage == 'english'
+          ? 'Experince Count'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अनुभव की संख्या'
+          : 'অভিজ্ঞতার সংখ্যা',
+          department:
+        globalState.selectedLanguage == 'english'
+          ? 'Department'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'विभाग'
+          : 'বিভাগ',
+          occupation:
+        globalState.selectedLanguage == 'english'
+          ? 'Occupation'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'व्यवसाय'
+          : 'ব্যবসা',
+          experienceType:
+        globalState.selectedLanguage == 'english'
+          ? 'Experience Type'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अनुभव का प्रकार'
+          : 'অভিজ্ঞতার ধরন',
+          location:
+        globalState.selectedLanguage == 'english'
+          ? 'Location'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'स्थान'
+          : 'অবস্থান',
+          uploadCertificate:
+        globalState.selectedLanguage == 'english'
+          ? 'Upload Certificate'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'प्रमाणपत्र अपलोड करें'
+          : 'সার্টিফিকেট আপলোড করুন',
+          companyName:
+          globalState.selectedLanguage == 'english'
+            ? 'Company Name'
+            : globalState.selectedLanguage == 'hindi'
+            ? 'कंपनी का नाम'
+            : 'কোমপানির নাম',
+            joiningDate:
+          globalState.selectedLanguage == 'english'
+            ? 'Joining Date'
+            : globalState.selectedLanguage == 'hindi'
+            ? 'जोइनिंग डेट'
+            : 'যোগদান তারিখ',
+            endingDate:
+          globalState.selectedLanguage == 'english'
+            ? 'Ending Date'
+            : globalState.selectedLanguage == 'hindi'
+            ? 'एंडिंग डेट'
+            : 'শেষ তারিখ',
+            selectSkill:
+          globalState.selectedLanguage == 'english'
+            ? 'Select Skill'
+            : globalState.selectedLanguage == 'hindi'
+            ? 'कौशल चुनें'
+            : 'দক্ষতা নির্বাচন করুন',
+      // experience  translation end
+      // logout popup  translation start
+      areYouSureYouWantToLogout:
+          globalState.selectedLanguage == 'english'
+            ? 'Are you sure you want to logout'
+            : globalState.selectedLanguage == 'hindi'
+            ? 'क्या आप लॉग आउट करना चाहते हैं'
+            : 'আপনি লগ আউট করতে চান',
+      // logout popup  translation end
+
     });
   };
 

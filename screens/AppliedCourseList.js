@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CountryGola from '../components/CountryGola';
 import CourseGola from '../components/CourseGola';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import { useGlobalState } from '../GlobalProvider';
 const AppliedCourseList = props => {
   useAndroidBackHandler(() => {
     if(props?.route?.params.backTo){
@@ -16,6 +17,7 @@ const AppliedCourseList = props => {
       return true;
     }
   });
+  const {newTranslation} = useGlobalState()
   const[loading,setLoading]=useState(true)
   const[appliedCourse, setAppliedCourse]=useState([])
   const getAppliedCourseList = async() => {
@@ -38,7 +40,7 @@ const AppliedCourseList = props => {
   return (
     <View style={styles.main}>
       <Text style={styles.hraName}>
-        List of course you have applied earlier.
+        {newTranslation.listofcourseyouhaveappliedearlier}
       </Text>
       <ScrollView>
         {loading? <View style={{height:500, justifyContent:"center", alignItems:"center"}}><ActivityIndicator size="large"/></View>: appliedCourse?.map((v, i)=>{
