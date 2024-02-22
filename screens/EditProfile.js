@@ -838,7 +838,7 @@ const EditProfile = (props) => {
             </>
           )}
           <View style={styles.nextBtn}>
-            <Button title="Edit" onPress={handleSubmit} color="#035292" />
+            <Button title="Save" onPress={handleSubmit} color="#035292" />
           </View>
         </View>
       </View>

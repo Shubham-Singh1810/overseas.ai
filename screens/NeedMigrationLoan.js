@@ -12,11 +12,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
 import {submitLoanForm} from '../services/user.service';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import {useGlobalState} from '../GlobalProvider';
 const NeedMigrationLoan = (props) => {
   useAndroidBackHandler(() => {
     props.navigation.navigate("Home") 
     return true;
   });
+  const {newTranslation} = useGlobalState()
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
@@ -28,6 +30,7 @@ const NeedMigrationLoan = (props) => {
     prevLoanQ: '',
     prevLoanAmount: '',
     prevLoanProvider: '',
+    loanAmount:''
   });
   const handleSubmit = async () => {
     if (
@@ -114,7 +117,7 @@ const NeedMigrationLoan = (props) => {
           fontWeight: '500',
           fontSize: 17,
         }}>
-        Initiate migration loan application.
+        {newTranslation?.initiateMigrationLoanApplication}
       </Text>
       <ScrollView style={{marginVertical: 20}}>
         <View style={{flexDirection: 'row'}}>
@@ -128,7 +131,7 @@ const NeedMigrationLoan = (props) => {
               backgroundColor: 'white',
               color: 'black',
             }}>
-            Applicant Name
+            {newTranslation?.applicantName}
           </Text>
         </View>
         <TextInput
@@ -147,7 +150,7 @@ const NeedMigrationLoan = (props) => {
               backgroundColor: 'white',
               color: 'black',
             }}>
-            Contact Number
+            {newTranslation?.contactNumber}
           </Text>
         </View>
         <TextInput
@@ -168,7 +171,7 @@ const NeedMigrationLoan = (props) => {
               backgroundColor: 'white',
               color: 'black',
             }}>
-            PAN Numer
+            {newTranslation?.panNumber}
           </Text>
         </View>
         <TextInput
@@ -190,7 +193,31 @@ const NeedMigrationLoan = (props) => {
               backgroundColor: 'white',
               color: 'black',
             }}>
-            Do you have loan guarantor
+            {newTranslation?.loanAmount}
+          </Text>
+        </View>
+        <TextInput
+          maxLength={10}
+          style={styles.input}
+          value={formData.loanAmount}
+          keyboardType='numeric'
+          onChangeText={text =>
+            setFormData({...formData, loanAmount: text})
+          }
+        />
+        
+        <View style={{flexDirection: 'row'}}>
+          <Text
+            style={{
+              position: 'relative',
+              top: 7,
+              zIndex: 1,
+              left: 7,
+              paddingHorizontal: 4,
+              backgroundColor: 'white',
+              color: 'black',
+            }}>
+            {newTranslation?.doYouHaveLoanGuarantor}
           </Text>
         </View>
         <View style={[styles.picker]}>
@@ -199,9 +226,9 @@ const NeedMigrationLoan = (props) => {
             onValueChange={(itemValue, itemIndex) => {
               setFormData({...formData, loanGuarantorQ: itemValue});
             }}>
-            <Picker.Item label="Select" value="" style={{color: 'gray'}} />
-            <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
-            <Picker.Item label="No" value="No" style={{color: 'gray'}} />
+            <Picker.Item label={newTranslation?.select} value="" style={{color: 'gray'}} />
+            <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
+            <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
 
             {/* Add more Picker.Item as needed */}
           </Picker>
@@ -219,7 +246,7 @@ const NeedMigrationLoan = (props) => {
                   backgroundColor: 'white',
                   color: 'black',
                 }}>
-                Guarantor Name
+                {newTranslation?.guarantorName}
               </Text>
             </View>
             <TextInput
@@ -240,7 +267,7 @@ const NeedMigrationLoan = (props) => {
                   backgroundColor: 'white',
                   color: 'black',
                 }}>
-                Guarantor Contact Number
+                {newTranslation?.guarantorContactNumber}
               </Text>
             </View>
             <TextInput
@@ -263,7 +290,7 @@ const NeedMigrationLoan = (props) => {
                   backgroundColor: 'white',
                   color: 'black',
                 }}>
-                Guarantor Occupation
+                {newTranslation?.guarantorOccupation}
               </Text>
             </View>
             <TextInput
@@ -287,7 +314,7 @@ const NeedMigrationLoan = (props) => {
               backgroundColor: 'white',
               color: 'black',
             }}>
-            Do you have Prior Loan Records?
+            {newTranslation?.doYouhavePrioLoanRecords}
           </Text>
         </View>
         <View style={[styles.picker]}>
@@ -296,9 +323,9 @@ const NeedMigrationLoan = (props) => {
             onValueChange={(itemValue, itemIndex) => {
               setFormData({...formData, prevLoanQ: itemValue});
             }}>
-            <Picker.Item label="Select" value="" style={{color: 'gray'}} />
-            <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
-            <Picker.Item label="No" value="No" style={{color: 'gray'}} />
+            <Picker.Item label={newTranslation?.select} value="" style={{color: 'gray'}} />
+            <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
+            <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
 
             {/* Add more Picker.Item as needed */}
           </Picker>
@@ -316,7 +343,7 @@ const NeedMigrationLoan = (props) => {
                   backgroundColor: 'white',
                   color: 'black',
                 }}>
-                Loan Amount
+                {newTranslation?.loanAmount}
               </Text>
             </View>
             <TextInput
@@ -338,7 +365,7 @@ const NeedMigrationLoan = (props) => {
                   backgroundColor: 'white',
                   color: 'black',
                 }}>
-                Loan Provider
+                {newTranslation?.loanProvider}
               </Text>
             </View>
             <TextInput
@@ -351,7 +378,7 @@ const NeedMigrationLoan = (props) => {
           </View>
         )}
 
-        <Button title="Submit" color="#035292" onPress={handleSubmit} />
+        <Button title={newTranslation?.submit} color="#035292" onPress={handleSubmit} />
       </ScrollView>
       <Toast ref={ref => Toast.setRef(ref)} />
     </View>

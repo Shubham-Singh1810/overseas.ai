@@ -22,6 +22,8 @@ import CountryGola from '../components/CountryGola';
 import {isBefore, subWeeks} from 'date-fns';
 import CourseGola from '../components/CourseGola';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import {useGlobalState} from '../GlobalProvider';
+import Toast from 'react-native-toast-message';
 const GetCertificate = props => {
   useAndroidBackHandler(() => {
     if (searchInstitute) {
@@ -32,6 +34,7 @@ const GetCertificate = props => {
       return true;
     }
   });
+  const {newTranslation} = useGlobalState()
   const [instituteList, setInstituteList] = useState([]);
   const [showCourseLoader, setShowCourseLoader] = useState(false);
   const [showInstituteLoader, setShowInstituteLoader] = useState(false);
@@ -96,10 +99,9 @@ const GetCertificate = props => {
           }}>
           <View>
             <Text style={styles.greetText}>
-              Looking for job opportunity {'\n'}
-              overseas?
+              {newTranslation?.upgradeYourSkill}
             </Text>
-            <Text style={styles.nameText}>Get Certified</Text>
+            <Text style={styles.nameText}>{newTranslation?.getCertified}</Text>
           </View>
           <Pressable
             // onPress={() => setShowModal(true)}
@@ -132,7 +134,7 @@ const GetCertificate = props => {
                 getSearchResultForCourseFunc(itemValue);
               }}>
               <Picker.Item
-                label="Select Institute"
+                label={newTranslation?.searchInstitute}
                 value=""
                 style={{color: 'gray'}}
               />
@@ -151,7 +153,7 @@ const GetCertificate = props => {
         {searchInstitute != '' && (
           <View style={{marginTop: 10}}>
             <Text style={styles.nameText}>
-              Search Result : {searchResult?.length}
+              {newTranslation?.searchResults} : {searchResult?.length}
             </Text>
             <View style={{marginTop: 15}}>
               {showSearchLoader ? (
@@ -175,7 +177,7 @@ const GetCertificate = props => {
         )}
 
         <View style={{marginTop: 20}}>
-          <Text style={styles.heading}>Top Institutes</Text>
+          <Text style={styles.heading}>{newTranslation?.topInstitute}</Text>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
             {showInstituteLoader ? (
               <View
@@ -241,7 +243,7 @@ const GetCertificate = props => {
           </ScrollView>
         </View>
         <View style={{marginTop: 30}}>
-          <Text style={styles.heading}>Top Courses</Text>
+          <Text style={styles.heading}>{newTranslation?.topCourses}</Text>
           <ScrollView horizontal={true} style={{marginTop: 10}}>
             {showCourseLoader ? (
               <View
@@ -314,7 +316,7 @@ const GetCertificate = props => {
             return !isBefore(new Date(v?.created_at), subWeeks(new Date(), 1));
           }).length > 0 && (
             <View style={{marginTop: 30}}>
-              <Text style={styles.heading}>Course Added Recently</Text>
+              <Text style={styles.heading}>{newTranslation?.courseAddedThisWeek}</Text>
               <ScrollView horizontal={true} style={{marginTop: 10}}>
                 {courseList
                   ?.filter((v, i) => {
@@ -399,17 +401,18 @@ const GetCertificate = props => {
           <TouchableOpacity
             style={[styles.largeBtn, styles.bgBlue]}
             onPress={() => props.navigation.navigate('Applied Courses',{backTo:"Get Certificate"})}>
-            <Text style={styles.largeBtnText}>Applied Course</Text>
+            <Text style={styles.largeBtnText}>{newTranslation?.appliedCourse}</Text>
             <Image source={require('../images/rightArrow.png')} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.largeBtn, styles.bgGreen]}
             onPress={() => props.navigation.navigate('My Certificates')}>
-            <Text style={styles.largeBtnText}>My Certificate</Text>
+            <Text style={styles.largeBtnText}>{newTranslation?.myCertificate}</Text>
             <Image source={require('../images/rightArrow.png')} />
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </View>
   );
 };
@@ -421,6 +424,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     paddingVertical: 20,
+    flex:1
   },
   topNav: {
     flexDirection: 'row',

@@ -10,6 +10,7 @@ const NewsFeed = (props) => {
     props.navigation.navigate("Home") 
     return true;
   });
+  const {newTranslation} = useGlobalState()
   return (
     <ScrollView style={{backgroundColor:"#fff", padding:16}}>
       <View style={{paddingBottom: 10, borderBottomWidth: 1, flexDirection:"row", alignItems:"center"}}>
@@ -21,7 +22,7 @@ const NewsFeed = (props) => {
             fontSize: 17,
             marginLeft:10
           }}>
-          Discover Fresh Feed Delights Now!
+          {newTranslation?.discoverFreshFeedDelightsNow}
         </Text>
       </View>
       {newsData.map((v, i) => {

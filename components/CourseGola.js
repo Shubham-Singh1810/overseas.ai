@@ -3,6 +3,7 @@ import React from 'react';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {applyCourse} from '../services/institute.service';
+import {useGlobalState} from '../GlobalProvider';
 const CourseGola = ({value, props, isApplied, backTo}) => {
   const handleApplyCourse = async id => {
     let user = await AsyncStorage.getItem('user');
@@ -37,9 +38,9 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
       });
     }
   };
+  const {newTranslation} = useGlobalState();
   return (
     <View style={styles.main}>
-      
       <Text
         style={{
           textAlign: 'right',
@@ -47,7 +48,7 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
           fontSize: 12,
           marginVertical: 3,
         }}>
-        Submit Till : {value?.submission_date}
+        {newTranslation?.submitTill} : {value?.submission_date}
       </Text>
       <View
         style={{
@@ -85,13 +86,13 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
         <View style={{marginLeft: 15}}>
           <Text style={[styles.listText]}>{value?.course_name}</Text>
           <Text style={[styles.listText]}>
-            Duration : {value?.course_duration}
+            {newTranslation?.duration} : {value?.course_duration}
           </Text>
           <Text style={[styles.listText]}>
-            Exam Mode : {value?.assessment_type}
+            {newTranslation?.examMode} : {value?.assessment_type}
           </Text>
           <Text style={[styles.listText]}>
-            Course Type : {value?.course_type}
+            {newTranslation.courseType} : {value?.course_type}
           </Text>
         </View>
       </View>
@@ -103,20 +104,30 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
           marginVertical: 5,
         }}>
         {isApplied ? (
-          <Text style={{paddingHorizontal:10, borderWidth:0.5, color:"#000", borderRadius:4}}>
-            {value?.status==0 && "Applied"}
-            {value?.status==1 && "Selected"}
-            {value?.status==-1 && "Rejected"}
-            {value?.status==2 && "In Progress"}
-            {value?.status==3 && "Completed"}
+          <Text
+            style={{
+              paddingHorizontal: 10,
+              borderWidth: 0.5,
+              color: '#000',
+              borderRadius: 4,
+            }}>
+            {value?.status == 0 && newTranslation?.applied}
+            {value?.status == 1 && newTranslation?.selected}
+            {value?.status == -1 && newTranslation?.rejected}
+            {value?.status == 2 && newTranslation?.inProgress}
+            {value?.status == 3 && newTranslation?.completed}
           </Text>
         ) : (
           <Pressable style={{width: '40%'}}>
             <Button
-              title= {value?.appliedStatus ? "Applied": 'Apply'}
-              color= {value?.appliedStatus ? "#13C756": "#035292"}
-              style={{width: '50%'}}
+              title={
+                value?.appliedStatus
+                  ? newTranslation?.applied
+                  : newTranslation?.apply
+              }
               onPress={() => handleApplyCourse(value?.id)}
+              color={value?.appliedStatus ? '#13C756' : '#035292'}
+              style={{width: '50%'}}
             />
           </Pressable>
         )}
@@ -128,19 +139,15 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
               styles.clientLink,
             ]}
             onPress={() =>
-              props.navigation.navigate(
-                'Get Course By Id',
-                {
-                  CourseDetails: value,
-                  backTo: backTo
-                }
-              )
+              props.navigation.navigate('Get Course By Id', {
+                CourseDetails: value,
+                backTo: backTo,
+              })
             }>
-            Learn More
+            {newTranslation?.learnMore}
           </Text>
         </Pressable>
       </View>
-      
     </View>
   );
 };

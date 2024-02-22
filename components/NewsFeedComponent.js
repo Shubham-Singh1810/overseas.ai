@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useState} from 'react';
 import {WebView} from 'react-native-webview';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-const NewsFeedComponent = ({value}) => {
+consNewsFeedComponent = ({value}) => {
   const [showFullArticle, setShowFullArticle] = useState(false);
   return (
     <>

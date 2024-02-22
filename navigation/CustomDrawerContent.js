@@ -31,22 +31,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomDrawerContent = props => {
   const {navigation} = props;
-  const {globalState, setGlobalState} = useGlobalState();
+  const {globalState,newTranslation, setGlobalState} = useGlobalState();
   const [navItem, setNavItem] = useState([
     {
       title: 'Home',
+      translation:newTranslation?.home,
       component: Home,
       name: 'Home',
       subMenu: [],
     },
     {
       title: 'Upload Video',
+      translation:newTranslation?.home,
       component: VideoInput,
       name: 'Upload Video',
       subMenu: [],
     },
     {
       title: 'Improve Profile',
+      translation:newTranslation?.home,
       component: BuildProfile,
       name: 'Improve Profile',
       subMenu: [],
@@ -56,16 +59,19 @@ const CustomDrawerContent = props => {
       subMenu: [
         {
           title: 'Favourite Job',
+          translation:newTranslation?.home,
           component: FavrouiteJob,
           name: 'Favourite Job',
         },
         {
           title: 'Saved Job',
+          translation:newTranslation?.home,
           component: SavedJobs,
           name: 'Saved Jobs',
         },
         {
           title: 'Application Status',
+          translation:newTranslation?.home,
           component: JobApplied,
           name: 'Applied Job',
         },
@@ -73,12 +79,14 @@ const CustomDrawerContent = props => {
     },
     {
       title: 'Your HRA',
+      translation:newTranslation?.home,
       component: YourHra,
       name: 'Your HRA',
       subMenu: [],
     },
     {
       title: 'News Feed',
+      translation:newTranslation?.home,
       component: NewsFeed,
       name: 'News Feed',
       subMenu: [],
@@ -86,18 +94,21 @@ const CustomDrawerContent = props => {
 
     {
       title: 'Get Certificate',
+      translation:newTranslation?.home,
       component: GetCertificate,
       name: 'Get Certificate',
       subMenu: [],
     },
     {
       title: 'Apply Medical Test',
+      translation:newTranslation?.home,
       component: MedicalTest,
       name: 'Apply Medical Test',
       subMenu: [],
     },
     {
       title: 'Apply PCC',
+      translation:newTranslation?.home,
       component: ApplyPcc,
       name: 'Apply PCC',
       subMenu: [],
@@ -105,18 +116,22 @@ const CustomDrawerContent = props => {
 
     {
       title: 'Need Migration Loan',
+      translation:newTranslation?.home,
       component: NeedMigrationLoan,
       name: 'Need Migration Loan',
       subMenu: [],
     },
     {
       title: 'Switch Language',
+      translation:newTranslation?.home,
     },
     {
       title: 'Share with friends',
+      translation:newTranslation?.home,
     },
     {
       title: 'Contact Us',
+      translation:newTranslation?.home,
       component: Help,
       name: 'Contact Us',
       subMenu: [],
@@ -164,7 +179,7 @@ const CustomDrawerContent = props => {
                     fontWeight: '500',
                     marginVertical: 10,
                   }}>
-                  {v.title}
+                  {v?.title}
                 </Text>
                 {showSubMnu ? (
                   <Image source={require('../images/upArrow.png')} />
@@ -327,7 +342,7 @@ const CustomDrawerContent = props => {
           <View style={selectedScreen == v?.title && styles.navBox}>
             <DrawerItem
               key={i}
-              label={v.title}
+              label={v?.title}
               labelStyle={{
                 color: '#334B5E',
                 fontSize: 16,
@@ -367,7 +382,12 @@ const CustomDrawerContent = props => {
       );
     }, [props.navigation.getState()]),
   );
-
+  useFocusEffect(
+    React.useCallback(() => {
+      renderNavItem();
+    }, [globalState?.selectedLanguage]),
+  );
+  
   return (
     <>
       <DrawerContentScrollView>
