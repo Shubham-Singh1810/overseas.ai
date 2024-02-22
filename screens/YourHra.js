@@ -15,12 +15,14 @@ import {TextInput} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
 import {useFocusEffect} from '@react-navigation/native';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import {useGlobalState} from '../GlobalProvider.js'
 const YourHra = props => {
   useAndroidBackHandler(() => {
     props.navigation.navigate("Home") 
     return true;
   });
   const [showModal, setShowModal] = useState(false);
+  const {newTranslation} = useGlobalState()
   const [hraList, setHraList] = useState([]);
   const getHraFunc = async () => {
     setShowLoader(true)
@@ -147,7 +149,7 @@ const YourHra = props => {
           justifyContent: 'space-between',
         }}>
         <TextInput
-          placeholder="Search By Name"
+          placeholder={newTranslation?.searchByName}
           value={searchKey}
           style={styles.input}
           onChangeText={text => {
@@ -158,7 +160,7 @@ const YourHra = props => {
         <TouchableOpacity
           style={styles.sortOption}
           onPress={() => setShowModal(!showModal)}>
-          <Text style={{color: 'white'}}>Sort By</Text>
+          <Text style={{color: 'white'}}>{newTranslation?.sortBy}</Text>
           <Image source={require('../images/whiteDownArrow.png')} />
         </TouchableOpacity>
       </View>
@@ -197,8 +199,8 @@ const YourHra = props => {
                     setRatingOrd(ratingOrd == 'asc' ? 'desc' : 'asc');
                   }}>
                   <Text style={{fontWeight: '500'}}>
-                    Rating :{' '}
-                    {ratingOrd == 'asc' ? 'High To Low' : 'Low To High'}
+                    {newTranslation?.rating} :{' '}
+                    {ratingOrd == 'asc' ? newTranslation?.highToLow : newTranslation?.lowToHigh}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -220,10 +222,10 @@ const YourHra = props => {
                     setSinceOrd(sinceOrd == 'asc' ? 'desc' : 'asc');
                   }}>
                   <Text style={{fontWeight: '500'}}>
-                    Since :{' '}
+                    {newTranslation?.since} :{' '}
                     {sinceOrd == 'asc'
-                      ? 'Newest To Oldest'
-                      : 'Oldest To Newest'}
+                      ? newTranslation?.newestToOldest
+                      : newTranslation?.oldestToNewest}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -245,7 +247,7 @@ const YourHra = props => {
                     setNameOrd(nameOrd == 'asc' ? 'desc' : 'asc');
                   }}>
                   <Text style={{fontWeight: '500'}}>
-                    Name : {nameOrd == 'asc' ? 'Z To A' : 'A To Z'}
+                    {newTranslation?.name} : {nameOrd == 'asc' ? 'Z To A' : 'A To Z'}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -257,7 +259,7 @@ const YourHra = props => {
         <ScrollView>
           {searchKey && (
             <Text style={styles.searchKey}>
-              Showing resultes for : {searchKey}
+              {newTranslation?.showingResultesFor} : {searchKey}
             </Text>
           )}
           {showLoader ? (
@@ -310,7 +312,7 @@ const YourHra = props => {
                       <View>
                         <Text style={styles.name}>{v?.cmpName}</Text>
                         <Text style={styles.experience}>
-                          Since {v?.cmpWorkingFrom}
+                          {newTranslation?.since} {v?.cmpWorkingFrom}
                         </Text>
                         <View style={{flexDirection: 'row', marginTop: -3}}>
                           {renderStars(v?.cmpRating)}

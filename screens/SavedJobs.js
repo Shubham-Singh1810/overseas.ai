@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import { useGlobalState } from '../GlobalProvider';
 const SavedJobs = props => {
 
   useAndroidBackHandler(() => {
@@ -20,6 +21,7 @@ const SavedJobs = props => {
       return true;
     }
   });
+  const {newTranslation} = useGlobalState()
   const [showLoading, setShowLoading] = useState(false)
   const [savedList, setSavedList] = useState([]);
   const getListOfSavedJobs = async () => {
@@ -66,7 +68,7 @@ const SavedJobs = props => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={styles.messageText}>Jobs you have saved earlier</Text>
+            <Text style={styles.messageText}>{newTranslation?.jobsYouHaveSavedEarlier}</Text>
             <Pressable
               // onPress={() => setShowModal(true)}
               style={{

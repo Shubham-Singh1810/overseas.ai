@@ -16,7 +16,7 @@ import Toast from 'react-native-toast-message';
 import {saveJobById} from '../services/job.service';
 const SearchResult = ({value,countryId,countryName,hraId, getListOfSavedJobs, saved, favroite, props , backTo,departmentName, departmentId}) => {
   const [showModal, setShowModal] = useState(false);
-  const {translation} = useGlobalState();
+  const {translation, newTranslation} = useGlobalState();
   const handleApplyJob = async jobId => {
     try {
       let user = await AsyncStorage.getItem('user');
@@ -117,7 +117,7 @@ const SearchResult = ({value,countryId,countryName,hraId, getListOfSavedJobs, sa
             INR
           </Text>
           <Text style={styles.dateText}>
-            {translation.applyBefore} -{' '}
+            {newTranslation.applyBefore} -{' '}
             {value?.jobDeadline ? value?.jobDeadline : 'No Deadline'}
           </Text>
         </View>
@@ -144,15 +144,15 @@ const SearchResult = ({value,countryId,countryName,hraId, getListOfSavedJobs, sa
             </View>
             <Text style={styles.countryName}>
               {/* {translation.experience} - 3 {translation.years} */}
-              Age Limit : {value.jobAgeLimit}
+              {newTranslation?.ageLimit} : {value.jobAgeLimit}
             </Text>
             <Text style={styles.countryName}>
               {/* {translation.experience} - 3 {translation.years} */}
-              Passport Type : {value.passportType}
+              {newTranslation?.passportType} : {value.passportType}
             </Text>
             <Text style={styles.countryName}>
               {/* {translation.experience} - 3 {translation.years} */}
-              Experie Type : {value.jobExpTypeReq}
+              {newTranslation?.experieceType} : {value.jobExpTypeReq}
             </Text>
           </View>
           <View style={{marginTop: 'auto', paddingBottom: 15}}>
@@ -207,7 +207,7 @@ const SearchResult = ({value,countryId,countryName,hraId, getListOfSavedJobs, sa
               alignItems: 'center',
             }}>
             <Button
-              title={translation.applyNow}
+              title={newTranslation.applyNow}
               onPress={() => handleApplyJob(value?.id)}
             />
             <Text

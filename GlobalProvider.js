@@ -915,19 +915,19 @@ export const GlobalStateProvider = ({children}) => {
           : globalState.selectedLanguage == 'hindi'
           ? 'उधार की राशि'
           : 'ঋণের পরিমাণ',
-          yes:
+      yes:
         globalState.selectedLanguage == 'english'
           ? 'Yes'
           : globalState.selectedLanguage == 'hindi'
           ? 'हाँ'
           : 'হ্যাঁ',
-          no:
+      no:
         globalState.selectedLanguage == 'english'
           ? 'No'
           : globalState.selectedLanguage == 'hindi'
           ? 'नहीं'
           : 'না',
-          select:
+      select:
         globalState.selectedLanguage == 'english'
           ? 'Select'
           : globalState.selectedLanguage == 'hindi'
@@ -948,125 +948,282 @@ export const GlobalStateProvider = ({children}) => {
           : globalState.selectedLanguage == 'hindi'
           ? 'अपने कौशल को उन्नत करें'
           : 'আপনার দক্ষতা আপগ্রেড',
-          getCertified:
+      getCertified:
         globalState.selectedLanguage == 'english'
           ? 'Get Certified'
           : globalState.selectedLanguage == 'hindi'
           ? 'सर्टिफिकेट प्राप्त करें'
           : 'সার্টিফিকেট পান',
-          searchInstitute:
+      searchInstitute:
         globalState.selectedLanguage == 'english'
           ? 'Search Institute'
           : globalState.selectedLanguage == 'hindi'
           ? 'संस्थान खोजें'
           : 'ইনস্টিটিউট অনুসন্ধান করুন ',
-          topInstitute:
+      topInstitute:
         globalState.selectedLanguage == 'english'
           ? 'Top Institute'
           : globalState.selectedLanguage == 'hindi'
           ? 'शीर्ष संस्थान'
           : 'শীর্ষ ইনস্টিটিউট',
-          topCourses:
+      topCourses:
         globalState.selectedLanguage == 'english'
           ? 'Top Courses'
           : globalState.selectedLanguage == 'hindi'
           ? 'शीर्ष कोर्स'
           : 'শীর্ষ কোর্স',
-          searchResults:
+      searchResults:
         globalState.selectedLanguage == 'english'
           ? 'Search Results'
           : globalState.selectedLanguage == 'hindi'
           ? 'खोज के परिणाम'
           : 'অনুসন্ধানের ফলাফল',
-          courseAddedThisWeek:
+      courseAddedThisWeek:
         globalState.selectedLanguage == 'english'
           ? 'Course Added This Week'
           : globalState.selectedLanguage == 'hindi'
           ? 'इस सप्ताह के कोर्स'
           : 'এই সপ্তাহের কোর্স',
 
-          appliedCourse:
-          globalState.selectedLanguage == 'english'
-            ? 'Applied Course'
-            : globalState.selectedLanguage == 'hindi'
-            ? 'एप्लाइड कोर्स'
-            : 'আবেদন করা কোর্স',
+      appliedCourse:
+        globalState.selectedLanguage == 'english'
+          ? 'Applied Course'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'एप्लाइड कोर्स'
+          : 'আবেদন করা কোর্স',
 
-            myCertificate:
-            globalState.selectedLanguage == 'english'
-              ? 'My Certificate'
-              : globalState.selectedLanguage == 'hindi'
-              ? 'मेरा प्रमाणपत्र'
-              : 'আমার সার্টিফিকেট',
-              applied:
-            globalState.selectedLanguage == 'english'
-              ? 'Applied'
-              : globalState.selectedLanguage == 'hindi'
-              ? 'लागू हो गया'
-              : 'প্রয়োগ করা হয়েছে',
-              apply:
-            globalState.selectedLanguage == 'english'
-              ? 'Apply'
-              : globalState.selectedLanguage == 'hindi'
-              ? 'आवेदन करे'
-              : 'আবেদন করুন',
-              rejected:
-            globalState.selectedLanguage == 'english'
-              ? 'Rejected'
-              : globalState.selectedLanguage == 'hindi'
-              ? 'अस्वीकृत'
-              : 'খারিজ',
-              inProgress:
-            globalState.selectedLanguage == 'english'
-              ? 'In Progress'
-              : globalState.selectedLanguage == 'hindi'
-              ? 'प्रगति पर है'
-              : 'চলছে',
-              completed:
-              globalState.selectedLanguage == 'english'
-                ? 'Completed'
-                : globalState.selectedLanguage == 'hindi'
-                ? 'समाप्त हो गया '
-                : 'সম্পন্ন হয়েছে ',
-                learnMore:
-              globalState.selectedLanguage == 'english'
-                ? 'Learn More'
-                : globalState.selectedLanguage == 'hindi'
-                ? 'और अधिक जानें'
-                : 'আরও জানুন',
-                submitTill:
-              globalState.selectedLanguage == 'english'
-                ? 'Submit Till'
-                : globalState.selectedLanguage == 'hindi'
-                ? 'कब तक जमा करें'
-                : 'জমা দেওয়ার শেষ তারিখ',
-                duration:
-              globalState.selectedLanguage == 'english'
-                ? 'Duration'
-                : globalState.selectedLanguage == 'hindi'
-                ? 'अवधि'
-                : 'সময়কাল',
-                examMode:
-              globalState.selectedLanguage == 'english'
-                ? 'Exam Mode'
-                : globalState.selectedLanguage == 'hindi'
-                ? 'परीक्षा का मध्यम'
-                : 'পরীক্ষার মাধ্যম',
-                courseType:
-              globalState.selectedLanguage == 'english'
-                ? 'Course Type'
-                : globalState.selectedLanguage == 'hindi'
-                ? 'कोर्स का प्रकार'
-                : 'কোর্সের ধরন',
-                learnMore:
-              globalState.selectedLanguage == 'english'
-                ? 'Learn More'
-                : globalState.selectedLanguage == 'hindi'
-                ? 'और अधिक जानें'
-                : 'আরও জানুন',
-                
-                
+      myCertificate:
+        globalState.selectedLanguage == 'english'
+          ? 'My Certificate'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'मेरा प्रमाणपत्र'
+          : 'আমার সার্টিফিকেট',
+      applied:
+        globalState.selectedLanguage == 'english'
+          ? 'Applied'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'लागू हो गया'
+          : 'প্রয়োগ করা হয়েছে',
+      apply:
+        globalState.selectedLanguage == 'english'
+          ? 'Apply'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'आवेदन करे'
+          : 'আবেদন করুন',
+      rejected:
+        globalState.selectedLanguage == 'english'
+          ? 'Rejected'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अस्वीकृत'
+          : 'খারিজ',
+      inProgress:
+        globalState.selectedLanguage == 'english'
+          ? 'In Progress'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'प्रगति पर है'
+          : 'চলছে',
+      completed:
+        globalState.selectedLanguage == 'english'
+          ? 'Completed'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'समाप्त हो गया '
+          : 'সম্পন্ন হয়েছে ',
+      learnMore:
+        globalState.selectedLanguage == 'english'
+          ? 'Learn More'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'और अधिक जानें'
+          : 'আরও জানুন',
+      submitTill:
+        globalState.selectedLanguage == 'english'
+          ? 'Submit Till'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'कब तक जमा करें'
+          : 'জমা দেওয়ার শেষ তারিখ',
+      duration:
+        globalState.selectedLanguage == 'english'
+          ? 'Duration'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अवधि'
+          : 'সময়কাল',
+      examMode:
+        globalState.selectedLanguage == 'english'
+          ? 'Exam Mode'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'परीक्षा का मध्यम'
+          : 'পরীক্ষার মাধ্যম',
+      courseType:
+        globalState.selectedLanguage == 'english'
+          ? 'Course Type'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'कोर्स का प्रकार'
+          : 'কোর্সের ধরন',
+      learnMore:
+        globalState.selectedLanguage == 'english'
+          ? 'Learn More'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'और अधिक जानें'
+          : 'আরও জানুন',
       // translation of get certificate end
+
+      // translation of your HRA stsrt
+      searchByName:
+        globalState.selectedLanguage == 'english'
+          ? 'Search By Name'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'नाम से खोजें'
+          : 'নাম দ্বারা খুঁজুন',
+      sortBy:
+        globalState.selectedLanguage == 'english'
+          ? 'Sort By'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'क्रमबद्ध करें'
+          : 'ক্রমানুসার',
+      rating:
+        globalState.selectedLanguage == 'english'
+          ? 'Rating'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'रेटिंग'
+          : 'রেটিং',
+      since:
+        globalState.selectedLanguage == 'english'
+          ? 'Since'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'तब से'
+          : 'থেকে',
+      lowToHigh:
+        globalState.selectedLanguage == 'english'
+          ? 'Low To High'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'कम से ज्यादा'
+          : 'কম থেকে বেশি',
+      highToLow:
+        globalState.selectedLanguage == 'english'
+          ? 'High To Low'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'ज्यादा से कम '
+          : 'বেশি থেকে কম',
+      oldestToNewest:
+        globalState.selectedLanguage == 'english'
+          ? 'Oldest To Newest'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पुराने से नवीनतम'
+          : 'পুরানো থেকে নতুন',
+      newestToOldest:
+        globalState.selectedLanguage == 'english'
+          ? 'Newest To Oldest'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'नवीनतम से पुराने'
+          : 'নতুন থেকে পুরানো',
+      showingResultesFor:
+        globalState.selectedLanguage == 'english'
+          ? 'Showing resultes for'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'परिणाम है'
+          : 'ফলাফল দেখানোর জন্য',
+      // translation of your HRA end
+      // translation of fav job Start
+      handPickedJobsForYou:
+        globalState.selectedLanguage == 'english'
+          ? 'Hand picked jobs for you'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'आपके लिए चुनी गई नौकरियाँ'
+          : 'আপনার জন্য বাছাই করা কাজ',
+      // translation of job card start
+      applyBefore:
+      globalState.selectedLanguage == 'english'
+        ? 'Apply Before'
+        : globalState.selectedLanguage == 'hindi'
+        ? 'अंतिम आवेदन तिथि'
+        : 'আবেদনের শেষ তারিখ',
+        applyNow:
+        globalState.selectedLanguage == 'english'
+          ? 'Apply Now'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अभी अप्लाई करें'
+          : 'আবেদন করুন',
+          ageLimit:
+        globalState.selectedLanguage == 'english'
+          ? 'Age Limit'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'आयु सीमा'
+          : 'বয়স সীমা',
+          experieceType:
+        globalState.selectedLanguage == 'english'
+          ? 'Experiece Type'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अनुभव का प्रकार'
+          : 'অভিজ্ঞতার ধরন',
+          passportType:
+        globalState.selectedLanguage == 'english'
+          ? 'Passport Type'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पासपोर्ट का प्रकार'
+          : 'পাসপোর্টের ধরন',
+          jobsYouHaveSavedEarlier:
+        globalState.selectedLanguage == 'english'
+          ? 'Jobs you have saved earlier'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'जो नौकरियाँ आपने पहले सेव की हैं'
+          : 'আপনার সংরক্ষণ করা কাজের লিস্ট',
+      // translation of job card end
+
+      // translation of job APPLIED card end
+      appliedOn:
+        globalState.selectedLanguage == 'english'
+          ? 'Applied on'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'आवेदन तिथि'
+          : 'আবেদনের তারিখ',
+          status:
+        globalState.selectedLanguage == 'english'
+          ? 'Status'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'स्थिति'
+          : 'স্ট্যাটাস',
+          view:
+        globalState.selectedLanguage == 'english'
+          ? 'View'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'देखिये'
+          : 'দেখুন',
+          applicationRejected:
+        globalState.selectedLanguage == 'english'
+          ? 'Application Rejected'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'आवेदन अस्वीकृत'
+          : 'আবেদন প্রত্যাখ্যান হয়েছে',
+          applicationInProgress:
+        globalState.selectedLanguage == 'english'
+          ? 'Application In Progress'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'आवेदन प्रगति पर है'
+          : 'আবেদন প্রক্রিয়াধীন রয়েছে',
+          medicalAndPccUploaded:
+        globalState.selectedLanguage == 'english'
+          ? 'Medical and PCC uploaded'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'मेडिकल एवं पीसीसी अपलोड किया गया'
+          : 'মেডিকেল এবং পিসিসি আপলোড করা হয়েছে',
+          applicationSentToHr:
+        globalState.selectedLanguage == 'english'
+          ? 'Application sent to HR'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'एचआर को आवेदन भेजा गया'
+          : 'HR-এর কাছে আবেদন পাঠানো হয়েছে',
+          visaAndTicketReleased:
+        globalState.selectedLanguage == 'english'
+          ? 'Visa and Ticket released'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'वीज़ा और टिकट जारी हो गया'
+          : 'ভিসা ও টিকিট প্রকাশ হয়েছে',
+          placed:
+        globalState.selectedLanguage == 'english'
+          ? 'Placed'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'सफलतापूर्बक चयनित'
+          : 'সফলভাবে সম্পুর্ন্ন হয়েছে',
+      // translation of job APPLIED card end
     });
   };
 

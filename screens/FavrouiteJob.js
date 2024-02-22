@@ -18,13 +18,14 @@ import SearchResult from '../components/SearchResult';
 import Toast from 'react-native-toast-message';
 import {useFocusEffect} from '@react-navigation/native';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import { useGlobalState } from '../GlobalProvider';
 const FavrouiteJob = (props) => {
   useAndroidBackHandler(() => {
     props.navigation.navigate("Home") 
     return true;
   });
   const [showLoader, setShowLoader] = useState(true);
-  
+  const {newTranslation} = useGlobalState()
   const [favouriteJobListArr, setFavouriteJobListArr] = useState([]);
   const getFavouriteJobs = async () => {
     setShowLoader(true)
@@ -43,7 +44,6 @@ const FavrouiteJob = (props) => {
   );
   return (
     <View style={styles.main}>
-      
       <ScrollView>
         <View
           style={{
@@ -51,7 +51,7 @@ const FavrouiteJob = (props) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <Text style={styles.messageText}>Hand picked jobs for you</Text>
+          <Text style={styles.messageText}>{newTranslation?.handPickedJobsForYou}</Text>
           <Pressable
             // onPress={() => setShowModal(true)}
             style={{

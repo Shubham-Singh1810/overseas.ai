@@ -2,25 +2,25 @@ import {StyleSheet, Text, Image, View, TouchableOpacity, Pressable} from 'react-
 import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 const AppliedJob = ({props, value}) => {
-  const {translation} = useGlobalState();
+  const {translation, newTranslation} = useGlobalState();
   const showStatusMessage =(value)=>{
     if(value==0){
-      return "Application rejected"
+      return newTranslation?.applicationRejected
      }
      if(value==1){
-      return "Application in progress"
+      return newTranslation?.applicationInProgress
      }
      if(value==2){
-      return "Medical and PCC uploaded"
+      return newTranslation?.medicalAndPccUploaded
      }
      if(value==3){
-      return "Application sent to HR"
+      return newTranslation?.applicationSentToHr
      }
      if(value==4){
-      return "Visa and Ticket released"
+      return newTranslation?.visaAndTicketReleased
      }
      if(value==5){
-      return "Placed"
+      return newTranslation?.placed
      }
   }
   return (
@@ -43,7 +43,7 @@ const AppliedJob = ({props, value}) => {
             )}
           </Text>
           <Text style={styles.date}>
-            {translation.appliedOn} - {value?.appliedOn}
+            {newTranslation.appliedOn} - {value?.appliedOn}
           </Text>
         </Pressable>
         <View
@@ -96,7 +96,7 @@ const AppliedJob = ({props, value}) => {
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.countryText}>Status : </Text>
+            <Text style={styles.countryText}>{newTranslation?.status} : </Text>
             <Text style={value?.interviewStatus==0? {color:"red"}: styles.textGreen}>{showStatusMessage(value?.interviewStatus)}</Text>
           </View>
           <TouchableOpacity
@@ -111,7 +111,7 @@ const AppliedJob = ({props, value}) => {
                 paddingHorizontal: 5,
                 paddingVertical: 2,
               }}>
-              View
+              {newTranslation?.view}
             </Text>
           </TouchableOpacity>
         </View>
