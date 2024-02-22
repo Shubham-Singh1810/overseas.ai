@@ -1414,6 +1414,30 @@ export const GlobalStateProvider = ({children}) => {
           : globalState.selectedLanguage == 'hindi'
           ? 'देश की प्राथमिकता'
           : 'কোন কোন দেশে যেতে ইচ্ছুক ',
+          editProfilePic:
+        globalState.selectedLanguage == 'english'
+          ? 'Edit Profile Pic'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'प्रोफ़ाइल चित्र संपादित करें'
+          : 'প্রোফাইল ছবি সম্পাদনা করুন',
+          save:
+        globalState.selectedLanguage == 'english'
+          ? 'Save'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'सेव'
+          : 'সেভ',
+          married:
+          globalState.selectedLanguage == 'english'
+            ? 'Married'
+            : globalState.selectedLanguage == 'hindi'
+            ? 'विवाहित'
+            : 'বিবাহিত',
+            single:
+          globalState.selectedLanguage == 'english'
+            ? 'Single'
+            : globalState.selectedLanguage == 'hindi'
+            ? 'अकेला'
+            : 'একক',
       // edit profile translation end
     });
   };

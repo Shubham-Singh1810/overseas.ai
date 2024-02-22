@@ -279,7 +279,7 @@ const EditProfile = (props) => {
                 marginTop: 5,
                 textDecorationLine: 'underline',
               }}>
-              Edit Profile Pic
+              {newTranslation?.editProfilePic}
             </Text>
           </Pressable>
           {/* <View style={{marginLeft: 15}}>
@@ -362,17 +362,17 @@ const EditProfile = (props) => {
                 setFormData({...formData, empMS: itemValue});
               }}>
               <Picker.Item
-                label="Marital Status"
+                label={newTranslation?.maritalStatus}
                 value=""
                 style={{color: 'gray'}}
               />
               <Picker.Item
-                label="Married"
+                label={newTranslation?.married}
                 value="Married"
                 style={{color: 'gray'}}
               />
               <Picker.Item
-                label="Single"
+                label={newTranslation?.single}
                 value="Unmarried"
                 style={{color: 'gray'}}
               />
@@ -438,7 +438,7 @@ const EditProfile = (props) => {
                     ?.occupation
                     ? JSON.parse(globalState.user).empData?.empOccupationModel
                         ?.occupation
-                    : 'Select'
+                    : newTranslation?.select
                 }
                 value={formData.empOccuId}
                 style={{color: 'gray'}}
@@ -608,7 +608,7 @@ const EditProfile = (props) => {
               onValueChange={(itemValue, itemIndex) => {
                 setFormData({...formData, empTechEdu: itemValue});
               }}>
-              <Picker.Item label="Select" value="" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.select} value="" style={{color: 'gray'}} />
               {vocationalEduArr.map((v, i) => {
                 return (
                   <Picker.Item label={v} value={v} style={{color: 'gray'}} />
@@ -634,7 +634,7 @@ const EditProfile = (props) => {
           </View>
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder={newTranslation?.email}
             onChangeText={text => {
               setFormData({...formData, empEmail: text});
             }}
@@ -839,7 +839,7 @@ const EditProfile = (props) => {
             </>
           )}
           <View style={styles.nextBtn}>
-            <Button title="Save" onPress={handleSubmit} color="#035292" />
+            <Button title={newTranslation?.save} onPress={handleSubmit} color="#035292" />
           </View>
         </View>
       </View>
@@ -1032,7 +1032,7 @@ const EditProfile = (props) => {
             </View>
             <View style={{marginHorizontal: 18, marginTop: 10}}>
               <Button
-                title="Save"
+                title={newTranslation?.save}
                 onPress={() => setShowLanguageSelect(false)}
               />
             </View>
