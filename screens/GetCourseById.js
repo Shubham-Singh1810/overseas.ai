@@ -7,11 +7,13 @@ import WebView from 'react-native-webview';
 import {useFocusEffect} from '@react-navigation/native';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useGlobalState } from '../GlobalProvider';
 const GetCourseById = props => {
   useAndroidBackHandler(() => {
     props.navigation.navigate(props?.route?.params.backTo);
     return true;
   });
+  const {newTranslation} = useGlobalState()
   const[courseDetails, setCourseDetails]=useState(props?.route?.params?.CourseDetails)
   // const courseDetails = props?.route?.params;
   const [showWebsite, setShowWebsite] = useState(false);
@@ -64,7 +66,7 @@ const GetCourseById = props => {
             fontSize: 12,
             marginVertical: 3,
           }}>
-          Submit Till : {courseDetails?.submission_date}
+          {newTranslation.submitTill} : {courseDetails?.submission_date}
         </Text>
         <View style={{marginVertical: 15}}>
           {courseDetails?.course_image !=
@@ -100,7 +102,7 @@ const GetCourseById = props => {
                   borderColor: 'green',
                 },
               ]}>
-              Course Fee : {courseDetails?.course_fee} &#8377;
+              {newTranslation?.courseFee} : {courseDetails?.course_fee} &#8377;
             </Text>
           </View>
 
@@ -112,7 +114,7 @@ const GetCourseById = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Duration</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.duration}</Text>
               <Text style={[styles.tableText]}>
                 {courseDetails?.course_duration}
               </Text>
@@ -124,7 +126,7 @@ const GetCourseById = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Exam Mode</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.examMode}</Text>
               <Text style={[styles.tableText]}>
                 {courseDetails?.assessment_type}
               </Text>
@@ -136,7 +138,7 @@ const GetCourseById = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Course Type</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.courseType}</Text>
               <Text style={[styles.tableText]}>
                 {courseDetails?.course_type}
               </Text>
@@ -149,7 +151,7 @@ const GetCourseById = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Eligibility</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.eligibility}</Text>
               <Text style={[styles.tableText]}>
                 {courseDetails?.eligibility}
               </Text>
@@ -161,7 +163,7 @@ const GetCourseById = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Institute</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.institute}</Text>
               <Pressable onPress={()=>setShowWebsite(true)}>
                 <Text
                   style={[styles.tableText, {textDecorationLine: 'underline'}]}>
@@ -175,7 +177,7 @@ const GetCourseById = props => {
                 styles.tableItemPadding,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Total Seats</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.totalSeats}</Text>
               <Text style={[styles.tableText]}>
                 {courseDetails?.total_seats}
               </Text>
@@ -193,16 +195,16 @@ const GetCourseById = props => {
               color: '#000',
               borderRadius: 4,
             }}>
-            {courseDetails?.status == 0 && 'Applied'}
-            {courseDetails?.status == 1 && 'Selected'}
-            {courseDetails?.status == -1 && 'Rejected'}
-            {courseDetails?.status == 2 && 'In Progress'}
-            {courseDetails?.status == 3 && 'Completed'}
+            {courseDetails?.status == 0 && newTranslation?.applied}
+            {courseDetails?.status == 1 && newTranslation?.selected}
+            {courseDetails?.status == -1 && newTranslation?.rejected}
+            {courseDetails?.status == 2 && newTranslation?.inProgress}
+            {courseDetails?.status == 3 && newTranslation?.completed}
           </Text>
         ) : (
           <Pressable style={{width: '100%', marginTop:20, marginBottom: 25}}>
             <Button
-              title={courseDetails?.appliedStatus ? 'Applied' : 'Apply'}
+              title={courseDetails?.appliedStatus ? newTranslation?.applied : newTranslation?.apply}
               color={courseDetails?.appliedStatus ? '#13C756' : '#035292'}
               style={{width: '50%'}}
               onPress={() => handleApplyCourse(courseDetails?.id)}

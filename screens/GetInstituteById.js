@@ -18,6 +18,7 @@ import {getCourseByInstitute} from '../services/institute.service';
 import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import { useGlobalState } from '../GlobalProvider';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const GetInstituteById = props => {
   useAndroidBackHandler(() => {
@@ -25,6 +26,7 @@ const GetInstituteById = props => {
     return true;
   });
   const {params} = props.route;
+  const {newTranslation} = useGlobalState();
   const [showWebsite, setShowWebsite] = useState(false);
   const [courseList, setCourseList] = useState([]);
   const [loading, setLoading]=useState(true)
@@ -91,7 +93,7 @@ const GetInstituteById = props => {
                 marginVertical: 5,
                 color: '#035292',
               }}>
-              Vist Website
+              {newTranslation?.visitWebsite}
             </Text>
           </Pressable>}
           
@@ -107,7 +109,7 @@ const GetInstituteById = props => {
           </View>
           <Text style={styles.countryName}>{params?.email}</Text>
           <View style={[styles.flex, {alignItems: 'center'}]}>
-            <Text style={styles.lightText}>Since {params?.insSince}</Text>
+            <Text style={styles.lightText}> {newTranslation?.since} {params?.insSince}</Text>
           </View>
         </View>
       </View>
@@ -122,7 +124,7 @@ const GetInstituteById = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Address</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.address}</Text>
               <Text style={[styles.tableText]}>{params?.insAddress}</Text>
             </View>
             <View
@@ -132,7 +134,7 @@ const GetInstituteById = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Affliated By</Text>
+              <Text style={[styles.tableText]}> {newTranslation?.affliatedBy}</Text>
               <Text style={[styles.tableText]}>{params?.affilatedBy}</Text>
             </View>
             <View
@@ -141,7 +143,7 @@ const GetInstituteById = props => {
                 styles.tableItemPadding,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Registration No.</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.registrationNumber}</Text>
               <Text style={[styles.tableText]}>{params?.insRegNo}</Text>
             </View>
           </View>
@@ -151,7 +153,7 @@ const GetInstituteById = props => {
         </View> :<>
         <View style={{marginVertical: 20}}>
           <Text style={[styles.hraName]}>
-            Course provided by Institute : <Text>{courseList?.length}</Text>
+            {newTranslation?.courseProvidedByInstitute} : <Text>{courseList?.length}</Text>
           </Text>
         </View>
         <View style={{paddingBottom: 10}}>

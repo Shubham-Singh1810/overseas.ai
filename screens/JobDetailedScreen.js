@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useState} from 'react';
+import { useGlobalState } from '../GlobalProvider';
 import {useFocusEffect} from '@react-navigation/native';
 import {getJobById, applyJobApi} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,6 +27,7 @@ const JobDetailedScreen = params => {
     });
     return true;
   });
+  const {newTranslation} = useGlobalState()
   const [details, setDetails] = useState(null);
   const[loading,setLoading]=useState(true)
   const [showFacility, setShowFacility] = useState(false);
@@ -116,7 +118,7 @@ const JobDetailedScreen = params => {
             fontSize: 12,
             margin: 3,
           }}>
-          Apply before : {details?.jobDeadline}
+          {newTranslation?.applyBefore} : {details?.jobDeadline}
         </Text>
         <Image
           style={{

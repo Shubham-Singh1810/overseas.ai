@@ -1050,7 +1050,7 @@ export const GlobalStateProvider = ({children}) => {
         globalState.selectedLanguage == 'english'
           ? 'Exam Mode'
           : globalState.selectedLanguage == 'hindi'
-          ? 'परीक्षा का मध्यम'
+          ? 'परीक्षा का माध्यम'
           : 'পরীক্ষার মাধ্যম',
       courseType:
         globalState.selectedLanguage == 'english'
@@ -1419,7 +1419,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Edit Profile Pic'
           : globalState.selectedLanguage == 'hindi'
           ? 'प्रोफ़ाइल चित्र संपादित करें'
-          : 'প্রোফাইল ছবি সম্পাদনা করুন',
+          : 'প্রোফাইল ছবি পরিবর্তন করুন',
           save:
         globalState.selectedLanguage == 'english'
           ? 'Save'
@@ -1434,10 +1434,10 @@ export const GlobalStateProvider = ({children}) => {
             : 'বিবাহিত',
             single:
           globalState.selectedLanguage == 'english'
-            ? 'Single'
+            ? 'Unmarried'
             : globalState.selectedLanguage == 'hindi'
-            ? 'अकेला'
-            : 'একক',
+            ? 'अबहिता'
+            : 'অবিবাহিত',
             experience:
         globalState.selectedLanguage == 'english'
           ? 'Experience'
@@ -1455,7 +1455,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Edit'
           : globalState.selectedLanguage == 'hindi'
           ? 'संपादन'
-          : 'সম্পাদনা',
+          : 'পরিবর্তন করুন',
           listofcourseyouhaveappliedearlier:
         globalState.selectedLanguage == 'english'
           ? 'List of course you have applied earlier.'
@@ -1514,7 +1514,7 @@ export const GlobalStateProvider = ({children}) => {
             ? 'Company Name'
             : globalState.selectedLanguage == 'hindi'
             ? 'कंपनी का नाम'
-            : 'কোমপানির নাম',
+            : 'সংস্থার নাম',
             joiningDate:
           globalState.selectedLanguage == 'english'
             ? 'Joining Date'
@@ -1543,6 +1543,214 @@ export const GlobalStateProvider = ({children}) => {
             : 'আপনি লগ আউট করতে চান',
       // logout popup  translation end
 
+      // video translation start
+      introductoryVideo:
+          globalState.selectedLanguage == 'english'
+            ? 'Introductory Video'
+            : globalState.selectedLanguage == 'hindi'
+            ? 'परिचयात्मक वीडियो'
+            : 'পরিচিতিমূলক ভিডিও',
+            uploadIntroVideo:
+            globalState.selectedLanguage == 'english'
+              ? 'Upload Intro Video'
+              : globalState.selectedLanguage == 'hindi'
+              ? 'परिचय वीडियो अपलोड करें'
+              : 'ইন্ট্রো ভিডিও আপলোড করুন',
+              workVideo:
+            globalState.selectedLanguage == 'english'
+              ? 'Work Videos'
+              : globalState.selectedLanguage == 'hindi'
+              ? 'कार्य वीडियो'
+              : 'কাজের ভিডিও',
+              chooseVideoFile:
+            globalState.selectedLanguage == 'english'
+              ? 'Choose Video File'
+              : globalState.selectedLanguage == 'hindi'
+              ? 'वीडियो फ़ाइल चुनें'
+              : 'ভিডিও ফাইল নির্বাচন করুন',
+              // checked by sahid
+              uploadWorkVideo:
+            globalState.selectedLanguage == 'english'
+              ? 'Upload Work Video'
+              : globalState.selectedLanguage == 'hindi'
+              ? 'कार्य वीडियो अपलोड करें'
+              : 'কাজের ভিডিও আপলোড করুন',
+              myWorkVideo:
+              globalState.selectedLanguage == 'english'
+                ? 'My Work Video'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'मेरा कार्य वीडियो'
+                : 'আমার কাজের ভিডিও',
+                share:
+              globalState.selectedLanguage == 'english'
+                ? 'Share'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'शेयर'
+                : 'শেয়ার',
+                areYouSureWantToDeleteThisVideo:
+              globalState.selectedLanguage == 'english'
+                ? 'Are you sure want to delete this video?'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'क्या आप वाकई इस वीडियो को हटाना चाहते हैं?'
+                : 'আপনি কি এই ভিডিওটি মুছতে চান?',
+                delete:
+              globalState.selectedLanguage == 'english'
+                ? 'Delete'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'डिलीट'
+                : 'ডিলিট',
+      // video translation end
+
+      // job Id translation start
+
+applyBefore:
+        globalState.selectedLanguage == 'english'
+          ? 'Apply Before'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पहले आवेदन करें'
+          : 'আগে আবেদন করুন',
+      // job Id translation end
+
+      // institute translation start
+      address:
+      globalState.selectedLanguage == 'english'
+          ? 'Address'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पता'
+          : 'ঠিকানা',
+          visitWebsite:
+      globalState.selectedLanguage == 'english'
+          ? 'Visit Website'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'बेवसाइट देखें'
+          : 'ওয়েবসাইট',
+          affliatedBy:
+      globalState.selectedLanguage == 'english'
+          ? 'Affliated By'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'संबंधन'
+          : 'অধিভুক্তি',
+          registrationNumber:
+      globalState.selectedLanguage == 'english'
+          ? 'Registration Number'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पंजीकरण संख्या'
+          : 'নিবন্ধন নম্বর',
+          courseProvidedByInstitute:
+      globalState.selectedLanguage == 'english'
+          ? 'Course Provided By Institute'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'संस्थान द्वारा प्रदान किया जाने वाला पाठ्यक्रम'
+          : 'ইনস্টিটিউট দ্বারা প্রদত্ত কোর্স',
+      // institute translation end
+
+      // hra translation start
+      follow:
+      globalState.selectedLanguage == 'english'
+          ? 'Follow'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'फॉलो'
+          : 'ফলো',
+          unfollow:
+      globalState.selectedLanguage == 'english'
+          ? 'Unfollow'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अनफॉलो'
+          : 'উন্ফল্লও',
+          followers:
+      globalState.selectedLanguage == 'english'
+          ? 'Followers'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'फोल्लोवेर्स'
+          : 'ফলোয়ার্স',
+          countryPresence:
+      globalState.selectedLanguage == 'english'
+          ? 'Country Presence'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'देश की उपस्थिति'
+          : 'দেশের উপস্থিতি',
+          industriesServed:
+      globalState.selectedLanguage == 'english'
+          ? 'Industries Served'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'उद्योगों की सेवा की'
+          : 'শিল্প পরিবেশিত',
+          numberOfAverageCandidatesPlacedYearly:
+          globalState.selectedLanguage == 'english'
+              ? 'Number of average candidates placed yearly'
+              : globalState.selectedLanguage == 'hindi'
+              ? 'वार्षिक रूप से चयनित औसत उम्मीदवारों की संख्या'
+              : 'বার্ষিক স্থাপন করা গড় প্রার্থীদের সংখ্যা',
+              listOfClientsOfTheHra:
+          globalState.selectedLanguage == 'english'
+              ? 'List of clients of the HRA'
+              : globalState.selectedLanguage == 'hindi'
+              ? 'एचआरए के ग्राहकों की सूची'
+              : 'HRA এর গ্রাহকদের তালিকা',
+              jobsPostedByHra:
+          globalState.selectedLanguage == 'english'
+              ? 'Jobs posted by HRA : '
+              : globalState.selectedLanguage == 'hindi'
+              ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
+              : 'HRA দ্বারা পোস্ট করা চাকরি : ',
+      // hra translation end
+
+      //course by id translation start
+      jobsPostedByHra:
+          globalState.selectedLanguage == 'english'
+              ? 'Jobs posted by HRA : '
+              : globalState.selectedLanguage == 'hindi'
+              ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
+              : 'HRA দ্বারা পোস্ট করা চাকরি : ',
+              jobsPostedByHra:
+          globalState.selectedLanguage == 'english'
+              ? 'Jobs posted by HRA : '
+              : globalState.selectedLanguage == 'hindi'
+              ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
+              : 'HRA দ্বারা পোস্ট করা চাকরি : ',
+              jobsPostedByHra:
+          globalState.selectedLanguage == 'english'
+              ? 'Jobs posted by HRA : '
+              : globalState.selectedLanguage == 'hindi'
+              ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
+              : 'HRA দ্বারা পোস্ট করা চাকরি : ',
+              jobsPostedByHra:
+          globalState.selectedLanguage == 'english'
+              ? 'Jobs posted by HRA : '
+              : globalState.selectedLanguage == 'hindi'
+              ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
+              : 'HRA দ্বারা পোস্ট করা চাকরি : ',
+              jobsPostedByHra:
+          globalState.selectedLanguage == 'english'
+              ? 'Jobs posted by HRA : '
+              : globalState.selectedLanguage == 'hindi'
+              ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
+              : 'HRA দ্বারা পোস্ট করা চাকরি : ',
+            institute:
+              globalState.selectedLanguage == 'english'
+                ? 'Institute'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'संस्थान'
+                : 'ইনস্টিটিউট',
+                totalSeats:
+              globalState.selectedLanguage == 'english'
+                ? 'Total Seats'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'कुल सीटें'
+                : 'মোট আসন',
+                eligibility:
+                globalState.selectedLanguage == 'english'
+                ? 'Eligibility'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'पात्रता'
+                : 'যোগ্যতা',
+                courseFee:
+                globalState.selectedLanguage == 'english'
+                ? 'Course Fee'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'पाठ्यक्रम शुल्क'
+                : 'প্রশিক্ষণ খরচ',
+      //course by id translation end
     });
   };
 

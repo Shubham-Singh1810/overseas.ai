@@ -20,7 +20,7 @@ const BuildProfile = props => {
     props.navigation.navigate("Home") 
     return true;
   });
-  const {translation, globalState, setUserData, setGlobalState} =
+  const {translation,newTranslation, globalState, setUserData, setGlobalState} =
     useGlobalState();
   const [showVideoModal, setShowVideoModal] = useState(false);
   const pickMedia = async () => {
@@ -114,7 +114,7 @@ const BuildProfile = props => {
                     textAlign: 'center',
                     marginTop: 8,
                   }}>
-                  Edit
+                  {newTranslation?.edit}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -205,7 +205,7 @@ const BuildProfile = props => {
                 styles.fontWeight500,
                 {marginTop: 5, marginBottom: -5, fontSize: 12},
               ]}>
-              Profile Strength
+              {newTranslation?.profileStrength}
             </Text>
           </View>
         </View>
@@ -222,7 +222,7 @@ const BuildProfile = props => {
                     justifyContent: 'flex-end',
                   }}>
                   <Button
-                    title="Upload"
+                    title={newTranslation?.upload}
                     color="#035292"
                     onPress={() => props.navigation.navigate(v.type, {backTo: "Improve Profile"})}
                   />
@@ -244,7 +244,7 @@ const BuildProfile = props => {
                     justifyContent: 'flex-end',
                   }}>
                   <Pressable onPress={() => props.navigation.navigate(v.type, {backTo: "Improve Profile"})}>
-                    <Text style={{color:"#000", fontWeight:"500",fontSize:12, textDecorationLine:"underline"}}>View</Text>
+                    <Text style={{color:"#000", fontWeight:"500",fontSize:12, textDecorationLine:"underline"}}>{newTranslation?.view}</Text>
                   </Pressable>
                 </View>
               </Pressable>

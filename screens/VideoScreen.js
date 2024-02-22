@@ -46,7 +46,7 @@ const VideoScreen = props => {
   const [showLoadingForWorkLoading, setShowLoadingForWorkLoading] =
     useState(true);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
-  const {translation, globalState, setGlobalState} = useGlobalState();
+  const {translation, globalState,newTranslation, setGlobalState} = useGlobalState();
   const getProfileStrengthFunc = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -362,7 +362,7 @@ const VideoScreen = props => {
       <View style={styles.main}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={[styles.title, {color: '#000'}]}>
-            Introductry Videos
+            {newTranslation?.introductoryVideo}
           </Text>
           <Pressable
             onPress={() => setShowModal(true)}
@@ -419,7 +419,7 @@ const VideoScreen = props => {
                 </View>
               </View>
               <Text style={{textAlign: 'center', marginVertical: 5}}>
-                Upload Intro Video
+                {newTranslation?.uploadIntroVideo}
               </Text>
             </TouchableOpacity>
 
@@ -507,9 +507,9 @@ const VideoScreen = props => {
             borderColor: 'gray',
           }}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={[styles.title, {color: '#000'}]}>Work Videos</Text>
+            <Text style={[styles.title, {color: '#000'}]}>{newTranslation?.workVideo}</Text>
             <Button
-              title="Upload"
+              title={newTranslation?.upload}
               color="#035292"
               onPress={() => setWorkVideoPopUp(true)}
             />
@@ -679,7 +679,7 @@ const VideoScreen = props => {
                 alignItems: 'center',
                 marginBottom: 18,
               }}>
-              <Text style={styles.nameText}>Upload Work Video</Text>
+              <Text style={styles.nameText}>{newTranslation?.uploadWorkVideo}</Text>
               <Pressable onPress={() => setWorkVideoPopUp(false)}>
                 <Image source={require('../images/close.png')} />
               </Pressable>
@@ -689,7 +689,7 @@ const VideoScreen = props => {
               onPress={pickMediaForWorkVideo}>
               <Text>
                 {formData.video == null
-                  ? 'Choose Video File'
+                  ? newTranslation?.chooseVideoFile
                   : formData.video.name}
               </Text>
             </TouchableOpacity>
@@ -700,8 +700,8 @@ const VideoScreen = props => {
                   setFormData({...formData, relatedSkill: itemValue});
                 }}>
                 <Picker.Item
-                  label="Select Skill"
-                  value="Unknown"
+                  label={newTranslation?.selectSkill}
+                  value=""
                   style={{color: 'gray'}}
                 />
                 {occuListArr?.map((v, i) => {
@@ -718,7 +718,7 @@ const VideoScreen = props => {
               </Picker>
             </View>
             <Button
-              title="Submit"
+              title={newTranslation?.save}
               onPress={handleWorkVideoUpload}
               color="#035292"
             />
@@ -741,7 +741,7 @@ const VideoScreen = props => {
                 alignItems: 'center',
                 marginBottom: 18,
               }}>
-              <Text style={styles.nameText}>Upload Intro Video</Text>
+              <Text style={styles.nameText}>{newTranslation?.uploadIntroVideo}</Text>
               <Pressable onPress={() => setIntroVideoPopUp(false)}>
                 <Image source={require('../images/close.png')} />
               </Pressable>
@@ -753,7 +753,7 @@ const VideoScreen = props => {
                   onPress={pickMediaForIntroVideo}>
                   <Text>
                     {introformData.video == null
-                      ? 'Choose Video File'
+                      ? newTranslation?.chooseVideoFile
                       : introformData.video.name}
                   </Text>
                 </TouchableOpacity>
@@ -767,7 +767,7 @@ const VideoScreen = props => {
                       });
                     }}>
                     <Picker.Item
-                      label="Select Language"
+                      label={newTranslation?.selected}
                       value="Unknown"
                       style={{color: 'gray'}}
                     />
@@ -785,7 +785,7 @@ const VideoScreen = props => {
                   </Picker>
                 </View>
                 <Button
-                  title="Submit"
+                  title={newTranslation?.save}
                   onPress={handleIntroVideoUpload}
                   color="#035292"
                 />
@@ -841,7 +841,7 @@ const VideoScreen = props => {
                 marginBottom: 18,
               }}>
               <Text style={styles.nameText}>
-                Are you sure you want to delete this video ?
+                {newTranslation?.areYouSureWantToDeleteThisVideo}
               </Text>
             </View>
             <View
@@ -852,7 +852,7 @@ const VideoScreen = props => {
               }}>
               <View style={{width: '45%'}}>
                 <Button
-                  title="No"
+                  title={newTranslation?.no}
                   onPress={() => {
                     setShowDeleteConfirmPop(false), setvideoToBeDeleted('');
                   }}
@@ -862,7 +862,7 @@ const VideoScreen = props => {
 
               <View style={{width: '45%'}}>
                 <Button
-                  title="Yes"
+                  title={newTranslation?.yes}
                   // onPress={handleDeleteIntroVideo(videoToBeDeleted)}
                   onPress={() => handleDeleteIntroVideo(videoToBeDeleted)}
                   color="#28a745"
@@ -892,7 +892,7 @@ const VideoScreen = props => {
                 marginBottom: 18,
               }}>
               <Text style={styles.nameText}>
-                Are you sure you want to delete this video ?
+               {newTranslation?.areYouSureWantToDeleteThisVideo}
               </Text>
             </View>
             <View
@@ -903,7 +903,7 @@ const VideoScreen = props => {
               }}>
               <View style={{width: '45%'}}>
                 <Button
-                  title="No"
+                  title={newTranslation?.no}
                   onPress={() => {
                     setShowDeleteWorkVideoConfirmPop(false),
                       setWorkVideoToBeDeleted('');
@@ -914,7 +914,7 @@ const VideoScreen = props => {
 
               <View style={{width: '45%'}}>
                 <Button
-                  title="Yes"
+                  title={newTranslation?.yes}
                   // onPress={handleDeleteIntroVideo(videoToBeDeleted)}
                   onPress={() => handleDeleteVideo(workVideoToBeDeleted)}
                   color="#28a745"
@@ -944,7 +944,7 @@ const VideoScreen = props => {
               <Image source={require('../images/backIcon.png')} />
               <Text
                 style={[{textDecorationLine: 'underline'}, styles.nameText]}>
-                My intro video
+                {newTranslation?.myWorkVideo}
               </Text>
             </Pressable>
             <Pressable
@@ -962,7 +962,7 @@ const VideoScreen = props => {
                 borderRadius: 5,
                 marginVertical: 4,
               }}>
-              <Text style={{color: 'black', fontWeight: '600'}}>Share </Text>
+              <Text style={{color: 'black', fontWeight: '600'}}>{newTranslation?.share} </Text>
               <Image source={require('../images/shareIcon.png')} />
             </Pressable>
             <Pressable
@@ -982,7 +982,7 @@ const VideoScreen = props => {
                 borderRadius: 5,
                 marginVertical: 4,
               }}>
-              <Text style={{color: 'black', fontWeight: '600'}}>Delete</Text>
+              <Text style={{color: 'black', fontWeight: '600'}}>{newTranslation?.delete}</Text>
               <Image source={require('../images/delete.png')} />
             </Pressable>
           </View>
@@ -1008,7 +1008,7 @@ const VideoScreen = props => {
               <Image source={require('../images/backIcon.png')} />
               <Text
                 style={[{textDecorationLine: 'underline'}, styles.nameText]}>
-                My work video
+                {newTranslation?.myWorkVideo}
               </Text>
             </Pressable>
             <Pressable
@@ -1026,7 +1026,7 @@ const VideoScreen = props => {
                 borderRadius: 5,
                 marginVertical: 4,
               }}>
-              <Text style={{color: 'black', fontWeight: '600'}}>Share</Text>
+              <Text style={{color: 'black', fontWeight: '600'}}>{newTranslation?.share}</Text>
               <Image source={require('../images/shareIcon.png')} />
             </Pressable>
             <Pressable
@@ -1046,7 +1046,7 @@ const VideoScreen = props => {
                 borderRadius: 5,
                 marginVertical: 4,
               }}>
-              <Text style={{color: 'black', fontWeight: '600'}}>Delete</Text>
+              <Text style={{color: 'black', fontWeight: '600'}}>{newTranslation?.delete}</Text>
               <Image source={require('../images/delete.png')} />
             </Pressable>
           </View>

@@ -18,6 +18,7 @@ import Toast from 'react-native-toast-message';
 import {getFollowerCount, handleFollow} from '../services/hra.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchResult from '../components/SearchResult';
+import { useGlobalState } from '../GlobalProvider';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const DetailedHra = props => {
   useAndroidBackHandler(() => {
@@ -25,6 +26,7 @@ const DetailedHra = props => {
     return true;
   });
   const {params} = props.route;
+  const {newTranslation}=useGlobalState();
   const [showJobDetails, setShowJobDetails] = useState(false);
   const [showClientName, setShowClientName] = useState(false);
   const [showWebsite, setShowWebsite] = useState(false);
@@ -160,12 +162,12 @@ const DetailedHra = props => {
               <Text style={styles.hraName}>
                 {followDetails?.totalFollowers}
               </Text>
-              <Text style={styles.countryName}>followers</Text>
+              <Text style={styles.countryName}>{newTranslation?.followers}</Text>
             </View>
             <Text style={styles.countryName}>{params?.state_name?.name}</Text>
             <View style={[styles.flex, {alignItems: 'center'}]}>
               <Text style={styles.lightText}>
-                Since {params?.cmpWorkingFrom}
+                {newTranslation?.since} {params?.cmpWorkingFrom}
               </Text>
             </View>
 
@@ -205,13 +207,13 @@ const DetailedHra = props => {
                 ? styles.buttonText
                 : {color: '#035292'},
             ]}>
-            {followDetails?.followStatus ? 'Unfollow' : 'Follow'}
+            {followDetails?.followStatus ? newTranslation?.unfollow : newTranslation?.follow}
           </Text>
         </TouchableOpacity>
         <ScrollView>
           <View style={styles.otherDetailsContainer}>
             <View style={[styles.tableItemPadding, styles.borderBottom]}>
-              <Text style={[styles.tableText]}>Country Presence :</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.countryPresence} :</Text>
               <View style={[styles.flex, {marginTop: 5}]}>
                 {params?.cmpWorkingCountryNames?.map((v, i) => {
                   return (
@@ -242,7 +244,7 @@ const DetailedHra = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={styles.tableText}>Industries Served</Text>
+              <Text style={styles.tableText}>{newTranslation?.industriesServed}</Text>
               <View>
                 <Image
                   source={
@@ -274,8 +276,8 @@ const DetailedHra = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>
-                No. of average candidates {'\n'}placed yearly
+              <Text style={[styles.tableText, {width:280}]}>
+                {newTranslation?.numberOfAverageCandidatesPlacedYearly}
               </Text>
               <Text style={[styles.tableText]}>
                 {params?.cmpYearlyPlacement}
@@ -289,7 +291,7 @@ const DetailedHra = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={styles.tableText}>List of Clients of the HRA</Text>
+              <Text style={styles.tableText}>{newTranslation?.listOfClientsOfTheHra}</Text>
               <View>
                 <Image
                   source={
@@ -327,7 +329,7 @@ const DetailedHra = props => {
             <View>
               <View style={{marginVertical: 30}}>
                 <Text style={[styles.hraName]}>
-                  Jobs posted by HRA : <Text>{hraJobList?.length}</Text>
+                  {newTranslation?.jobsPostedByHra} <Text>{hraJobList?.length}</Text>
                 </Text>
               </View>
               <View style={{paddingBottom: 200}}>
