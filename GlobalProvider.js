@@ -1131,36 +1131,36 @@ export const GlobalStateProvider = ({children}) => {
           : 'আপনার জন্য বাছাই করা কাজ',
       // translation of job card start
       applyBefore:
-      globalState.selectedLanguage == 'english'
-        ? 'Apply Before'
-        : globalState.selectedLanguage == 'hindi'
-        ? 'अंतिम आवेदन तिथि'
-        : 'আবেদনের শেষ তারিখ',
-        applyNow:
+        globalState.selectedLanguage == 'english'
+          ? 'Apply Before'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अंतिम आवेदन तिथि'
+          : 'আবেদনের শেষ তারিখ',
+      applyNow:
         globalState.selectedLanguage == 'english'
           ? 'Apply Now'
           : globalState.selectedLanguage == 'hindi'
           ? 'अभी अप्लाई करें'
           : 'আবেদন করুন',
-          ageLimit:
+      ageLimit:
         globalState.selectedLanguage == 'english'
           ? 'Age Limit'
           : globalState.selectedLanguage == 'hindi'
           ? 'आयु सीमा'
           : 'বয়স সীমা',
-          experieceType:
+      experieceType:
         globalState.selectedLanguage == 'english'
           ? 'Experiece Type'
           : globalState.selectedLanguage == 'hindi'
           ? 'अनुभव का प्रकार'
           : 'অভিজ্ঞতার ধরন',
-          passportType:
+      passportType:
         globalState.selectedLanguage == 'english'
           ? 'Passport Type'
           : globalState.selectedLanguage == 'hindi'
           ? 'पासपोर्ट का प्रकार'
           : 'পাসপোর্টের ধরন',
-          jobsYouHaveSavedEarlier:
+      jobsYouHaveSavedEarlier:
         globalState.selectedLanguage == 'english'
           ? 'Jobs you have saved earlier'
           : globalState.selectedLanguage == 'hindi'
@@ -1175,55 +1175,246 @@ export const GlobalStateProvider = ({children}) => {
           : globalState.selectedLanguage == 'hindi'
           ? 'आवेदन तिथि'
           : 'আবেদনের তারিখ',
-          status:
+      status:
         globalState.selectedLanguage == 'english'
           ? 'Status'
           : globalState.selectedLanguage == 'hindi'
           ? 'स्थिति'
           : 'স্ট্যাটাস',
-          view:
+      view:
         globalState.selectedLanguage == 'english'
           ? 'View'
           : globalState.selectedLanguage == 'hindi'
           ? 'देखिये'
           : 'দেখুন',
-          applicationRejected:
+      applicationRejected:
         globalState.selectedLanguage == 'english'
           ? 'Application Rejected'
           : globalState.selectedLanguage == 'hindi'
           ? 'आवेदन अस्वीकृत'
           : 'আবেদন প্রত্যাখ্যান হয়েছে',
-          applicationInProgress:
+      applicationInProgress:
         globalState.selectedLanguage == 'english'
           ? 'Application In Progress'
           : globalState.selectedLanguage == 'hindi'
           ? 'आवेदन प्रगति पर है'
           : 'আবেদন প্রক্রিয়াধীন রয়েছে',
-          medicalAndPccUploaded:
+      medicalAndPccUploaded:
         globalState.selectedLanguage == 'english'
           ? 'Medical and PCC uploaded'
           : globalState.selectedLanguage == 'hindi'
           ? 'मेडिकल एवं पीसीसी अपलोड किया गया'
           : 'মেডিকেল এবং পিসিসি আপলোড করা হয়েছে',
-          applicationSentToHr:
+      applicationSentToHr:
         globalState.selectedLanguage == 'english'
           ? 'Application sent to HR'
           : globalState.selectedLanguage == 'hindi'
           ? 'एचआर को आवेदन भेजा गया'
           : 'HR-এর কাছে আবেদন পাঠানো হয়েছে',
-          visaAndTicketReleased:
+      visaAndTicketReleased:
         globalState.selectedLanguage == 'english'
           ? 'Visa and Ticket released'
           : globalState.selectedLanguage == 'hindi'
           ? 'वीज़ा और टिकट जारी हो गया'
           : 'ভিসা ও টিকিট প্রকাশ হয়েছে',
-          placed:
+      placed:
         globalState.selectedLanguage == 'english'
           ? 'Placed'
           : globalState.selectedLanguage == 'hindi'
           ? 'सफलतापूर्बक चयनित'
           : 'সফলভাবে সম্পুর্ন্ন হয়েছে',
       // translation of job APPLIED card end
+      // home translation start
+      searchYourDreamJob:
+        globalState.selectedLanguage == 'english'
+          ? 'Search your dream job!'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अपने सपनों की नौकरी खोजें!'
+          : 'আপনার স্বপ্নের কাজ খুঁজুন!',
+      selectOccupation:
+        globalState.selectedLanguage == 'english'
+          ? 'Select Occupation'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'व्यवसाय चुनें'
+          : 'পেশা নির্বাচন করুন',
+      selectCountry:
+        globalState.selectedLanguage == 'english'
+          ? 'Select Country'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'देश का चयन करें'
+          : 'দেশ নির্বাচন করুন',
+      countriesWhereYouCanApply:
+        globalState.selectedLanguage == 'english'
+          ? 'Countries where you can apply'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'वे देश जहां आप आवेदन कर सकते हैं'
+          : 'যেসব দেশে আপনি আবেদন করতে পারবেন',
+      JobOccupationsThatWeOffer:
+        globalState.selectedLanguage == 'english'
+          ? 'Job occupations that we offer'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'नौकरी व्यवसाय जो हम प्रदान करते हैं'
+          : 'আমাদের অফার করা পেশা',
+      OppsNoResultFoundForThisCombination:
+        globalState.selectedLanguage == 'english'
+          ? 'Opps! No result found for this combination'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'इस संयोजन के लिए कोई परिणाम नहीं मिला'
+          : 'এই সংমিশ্রণের জন্য কোন ফলাফল পাওয়া যায়নি',
+      discoverFreshFeedDelightsNow:
+        globalState.selectedLanguage == 'english'
+          ? 'Discover Fresh Feed Delights Now!'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अभी ताजा फ़ीड देखिये'
+          : 'এখন সর্বশেষ ফিড দেখুন',
+      readDetails:
+        globalState.selectedLanguage == 'english'
+          ? 'Read Details'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'विवरण पढ़ें'
+          : 'বিস্তারিত পড়ুন',
+      hideDetails:
+        globalState.selectedLanguage == 'english'
+          ? 'Hide Details'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'विवरण छुपाओ'
+          : 'আড়াল বিস্তারিত',
+      // home translation end
+
+      // edit profile translation start
+      whatsappNumber:
+        globalState.selectedLanguage == 'english'
+          ? 'Whatsapp Number'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'वॉट्स्ऐप नंबर'
+          : 'হোয়াটস্যাপ নম্বর',
+
+      languageKnown:
+        globalState.selectedLanguage == 'english'
+          ? 'Language Known'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'वासा चुनिए'
+          : 'ভাষা জ্ঞান',
+
+      maritalStatus:
+        globalState.selectedLanguage == 'english'
+          ? 'Marital Status'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'वैवाहिक स्थितिें'
+          : 'বৈবাহিক অবস্থা',
+
+      doYouHavePassport:
+        globalState.selectedLanguage == 'english'
+          ? 'Do You Have Passport ?'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'क्या तुम्हारे पास पासपोर्ट है ?'
+          : 'আপনার কি পাসপোর্ট আছে?',
+
+      presentWorkingDepertment:
+        globalState.selectedLanguage == 'english'
+          ? 'Present Working Depertment'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'वर्तमान कार्य विभाग'
+          : 'বর্তমান কাজের বিভাগ',
+
+      presentOccupation:
+        globalState.selectedLanguage == 'english'
+          ? 'Present Occupation'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'वर्तमान व्यवसाय'
+          : 'বর্তমান পেশা',
+
+      pastInternationalMigrationExperience:
+        globalState.selectedLanguage == 'english'
+          ? 'Past International Migration Experience'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पिछला अंतर्राष्ट्रीय प्रवासन अनुभव'
+          : 'বিদেশ যাওয়ার অভিজ্ঞতা',
+
+      highestEducationQualification:
+        globalState.selectedLanguage == 'english'
+          ? 'Highest Education Qualification'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'उच्चतम शिक्षा योग्यता'
+          : 'সর্বোচ্চ শিক্ষাগত যোগ্যতা',
+
+      technicalVocationalEducation:
+        globalState.selectedLanguage == 'english'
+          ? 'Technical / Vocational Education'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'तकनीकी/व्यावसायिक शिक्षा'
+          : 'কারিগরি এবং বৃত্তিমূলক শিক্ষা',
+
+      email:
+        globalState.selectedLanguage == 'english'
+          ? 'Email'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'ईमेल'
+          : 'ইমেইল',
+
+      aadhaNumber:
+        globalState.selectedLanguage == 'english'
+          ? 'Aadhar Number'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'आधार नंबर'
+          : 'আধার নম্বর ',
+
+      presentMonthlyIncome:
+        globalState.selectedLanguage == 'english'
+          ? 'Present Monthly Income'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'वर्तमान मासिक आय'
+          : 'আপনার মাসিক উপার্জন',
+
+      expectedMonthlyIncome:
+        globalState.selectedLanguage == 'english'
+          ? 'Expected Monthly Income'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'अपेक्षित मासिक आय'
+          : 'প্রত্যাশিত মাসিক উপার্জন ',
+
+      referencePersoneName:
+        globalState.selectedLanguage == 'english'
+          ? 'Reference Persone Name'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'संदर्भ व्यक्ति का नाम'
+          : 'রেফারেন্স ব্যক্তির নাম',
+
+      referencePersoneContact:
+        globalState.selectedLanguage == 'english'
+          ? 'Reference Persone Contact'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'संदर्भ व्यक्ति संपर्क'
+          : 'রেফারেন্স ব্যক্তির নম্বর ',
+
+      specialisation:
+        globalState.selectedLanguage == 'english'
+          ? 'Specialisation'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'विशेषज्ञता'
+          : 'বিশেষীকরণ',
+
+      yearOfHighestEducationQualification:
+        globalState.selectedLanguage == 'english'
+          ? 'Year Of Highest Education Qualification'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'उच्चतम शिक्षा योग्यता का वर्ष'
+          : 'সর্বোচ শিক্ষাগত যোগ্যতা পাশের বছর ',
+
+      areYouInterestedInInternationalMigration:
+        globalState.selectedLanguage == 'english'
+          ? 'Are You Interested In International Migration?'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'क्या आप अंतर्राष्ट्रीय प्रवासन में रुचि रखते हैं?'
+          : 'আপনি কি বিদেশে যাওয়ার জন্য আগ্রহী ',
+
+      countryPreference:
+        globalState.selectedLanguage == 'english'
+          ? 'Country Preference'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'देश की प्राथमिकता'
+          : 'কোন কোন দেশে যেতে ইচ্ছুক ',
+      // edit profile translation end
     });
   };
 

@@ -1,7 +1,9 @@
 import {StyleSheet, Image, Text, View, Button} from 'react-native';
 import React from 'react';
-
+import {useGlobalState} from '../GlobalProvider';
 const HraGolaFeed = ({value, props}) => {
+  const {globalState, translation,newTranslation, notifications, setGlobalState} =
+    useGlobalState();
   const renderStars = numRatings => {
     const stars = [];
     for (let i = 0; i < numRatings; i++) {
@@ -62,7 +64,7 @@ const HraGolaFeed = ({value, props}) => {
             <Text style={{color: '#000',width:180, fontSize: 15}}>
             {value?.cmpName}
             </Text>
-            <Button title='View' onPress={() =>
+            <Button title={newTranslation?.view} onPress={() =>
                       props.navigation.navigate(
                         'DetailedHra',
                         (detailedHra = value),
@@ -70,7 +72,7 @@ const HraGolaFeed = ({value, props}) => {
                     }/>
           </View>
           
-          <Text style={styles.experience}>Since {value?.cmpWorkingFrom}</Text>
+          <Text style={styles.experience}>{newTranslation?.since} {value?.cmpWorkingFrom}</Text>
           <View style={{flexDirection: 'row', marginTop: -3}}>
             {renderStars(value?.cmpRating)}
           </View>

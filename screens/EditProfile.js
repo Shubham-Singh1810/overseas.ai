@@ -65,7 +65,7 @@ const EditProfile = (props) => {
       setCountryList(response?.countries);
     } catch (error) {}
   };
-  const {translation, globalState, setUserData, setGlobalState} =
+  const {translation,newTranslation, globalState, setUserData, setGlobalState} =
     useGlobalState();
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [formData, setFormData] = useState({
@@ -304,7 +304,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Whatsapp Number
+             {newTranslation?.whatsappNumber}
             </Text>
           </View>
           <TextInput
@@ -326,7 +326,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Language Known
+              {newTranslation?.languageKnown}
             </Text>
           </View>
           <TouchableOpacity
@@ -352,7 +352,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Marital Status
+              {newTranslation?.maritalStatus}
             </Text>
           </View>
           <View style={[styles.picker]}>
@@ -391,7 +391,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Do you have Passport ?
+              {newTranslation?.doYouHavePassport}
             </Text>
           </View>
           <View style={styles.picker}>
@@ -401,12 +401,12 @@ const EditProfile = (props) => {
                 setFormData({...formData, empPassportQ: itemValue});
               }}>
               <Picker.Item
-                label="Do you have Passport ?"
+                label={newTranslation?.doYouHavePassport}
                 value=""
                 style={{color: 'gray'}}
               />
-              <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
-              <Picker.Item label="No" value="No" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
 
               {/* Add more Picker.Item as needed */}
             </Picker>
@@ -422,7 +422,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Present Working Department
+               {newTranslation?.presentWorkingDepertment}
             </Text>
           </View>
           <View style={styles.picker}>
@@ -467,7 +467,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Present Occupation
+               {newTranslation?.presentOccupation}
             </Text>
           </View>
           <View style={styles.picker}>
@@ -509,7 +509,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Past International Migration Experience
+              {newTranslation?.pastInternationalMigrationExperience}
             </Text>
           </View>
           <View style={styles.picker}>
@@ -526,8 +526,8 @@ const EditProfile = (props) => {
                 value={formData.empInternationMigrationExp}
                 style={{color: 'gray'}}
               />
-              <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
-              <Picker.Item label="No" value="No" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
 
               {/* Add more Picker.Item as needed */}
             </Picker>
@@ -543,7 +543,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Highest Education Qualification
+             {newTranslation?.highestEducationQualification}
             </Text>
           </View>
           <View style={styles.picker}>
@@ -577,7 +577,29 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Technical/Vocational Education
+              {newTranslation?.yearOfHighestEducationQualification}
+            </Text>
+          </View>
+          <TextInput
+            style={[styles.input]}
+            onChangeText={text => {
+              setFormData({...formData, empEduYear: text});
+            }}
+            value={formData?.empEduYear}
+            keyboardType="numeric"
+          />
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                position: 'relative',
+                top: 7,
+                zIndex: 6,
+                left: 7,
+                paddingHorizontal: 4,
+                backgroundColor: 'white',
+                color: 'black',
+              }}>
+              {newTranslation?.technicalVocationalEducation}
             </Text>
           </View>
           <View style={styles.picker}>
@@ -607,7 +629,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Email
+              {newTranslation?.email}
             </Text>
           </View>
           <TextInput
@@ -628,7 +650,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Aadhar Number
+              {newTranslation?.aadhaNumber}
             </Text>
           </View>
           <TextInput
@@ -649,7 +671,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Present Monthly Income
+              {newTranslation?.presentMonthlyIncome}
             </Text>
           </View>
           <TextInput
@@ -669,7 +691,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Expected Monthly Income
+              {newTranslation?.expectedMonthlyIncome}
             </Text>
           </View>
           <TextInput
@@ -689,7 +711,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Reference Person Name
+              {newTranslation?.referencePersoneName}
             </Text>
           </View>
           <TextInput
@@ -709,7 +731,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Reference Person Contact
+              {newTranslation?.referencePersoneContact}
             </Text>
           </View>
           <TextInput
@@ -729,7 +751,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Specialisation
+              {newTranslation?.specialisation}
             </Text>
           </View>
           <TextInput
@@ -739,6 +761,7 @@ const EditProfile = (props) => {
             value={formData?.empSpecialEdu}
             style={[styles.input]}
           />
+          
           <View style={{flexDirection: 'row'}}>
             <Text
               style={{
@@ -750,29 +773,7 @@ const EditProfile = (props) => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              Year of highest education qualification
-            </Text>
-          </View>
-          <TextInput
-            style={[styles.input]}
-            onChangeText={text => {
-              setFormData({...formData, empEduYear: text});
-            }}
-            value={formData?.empEduYear}
-            keyboardType="numeric"
-          />
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={{
-                position: 'relative',
-                top: 7,
-                zIndex: 6,
-                left: 7,
-                paddingHorizontal: 4,
-                backgroundColor: 'white',
-                color: 'black',
-              }}>
-              Are you intrested in international migration ?
+              {newTranslation?.areYouInterestedInInternationalMigration}
             </Text>
           </View>
           <View style={styles.picker}>
@@ -781,9 +782,9 @@ const EditProfile = (props) => {
               onValueChange={(itemValue, itemIndex) => {
                 setFormData({...formData, empRelocationIntQ: itemValue});
               }}>
-              <Picker.Item label="Select" value="" style={{color: 'gray'}} />
-              <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
-              <Picker.Item label="No" value="No" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.select} value="" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
 
               {/* Add more Picker.Item as needed */}
             </Picker>
@@ -801,7 +802,7 @@ const EditProfile = (props) => {
                     backgroundColor: 'white',
                     color: 'black',
                   }}>
-                  Country
+                  {newTranslation?.countryPreference}
                 </Text>
               </View>
               <View style={styles.picker}>
@@ -869,7 +870,7 @@ const EditProfile = (props) => {
                 alignItems: 'center',
               }}>
               <Text style={{fontWeight: '500', fontSize: 20}}>
-                Language Known
+                {newTranslation?.languageKnown}
               </Text>
               <TouchableOpacity
                 onPress={() => {

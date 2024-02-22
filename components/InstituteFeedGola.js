@@ -1,7 +1,9 @@
 import {Image, StyleSheet, Button, Text, View} from 'react-native';
 import React from 'react';
-
+import {useGlobalState} from '../GlobalProvider';
 const InstituteFeedGola = ({value, props}) => {
+  const {globalState, translation,newTranslation, notifications, setGlobalState} =
+  useGlobalState();
   return (
     <View style={styles.main}>
       <Text
@@ -58,7 +60,7 @@ const InstituteFeedGola = ({value, props}) => {
           {value?.instituteName}
         </Text>
         <Button
-          title="View"
+          title={newTranslation.view}
           onPress={() =>
             props.navigation.navigate(
               'Get Institute By Id',

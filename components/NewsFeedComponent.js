@@ -2,8 +2,10 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useState} from 'react';
 import {WebView} from 'react-native-webview';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-consNewsFeedComponent = ({value}) => {
+import { useGlobalState } from '../GlobalProvider';
+const NewsFeedComponent = ({value}) => {
   const [showFullArticle, setShowFullArticle] = useState(false);
+  const {newTranslation} = useGlobalState();
   return (
     <>
       <View style={styles.main}>
@@ -17,7 +19,7 @@ consNewsFeedComponent = ({value}) => {
           style={{flexDirection: 'row', justifyContent:"flex-end"}}
           onPress={() => setShowFullArticle(!showFullArticle)}>
           <Text style={styles.link}>
-            {showFullArticle ? 'Hide Details' : 'Read More'}
+            {showFullArticle ? newTranslation?.hideDetails : newTranslation?.readDetails}
           </Text>
         </TouchableOpacity>
       </View>
@@ -52,7 +54,7 @@ consNewsFeedComponent = ({value}) => {
             style={{flexDirection: 'row', padding:10}}
             onPress={() => setShowFullArticle(!showFullArticle)}>
             <Text style={styles.link}>
-              {showFullArticle ? 'Hide Details' : 'Read More'}
+              {showFullArticle ? newTranslation?.hideDetails : newTranslation?.readDetails}
             </Text>
           </TouchableOpacity>
         </View>

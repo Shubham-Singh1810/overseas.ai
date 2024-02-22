@@ -42,7 +42,7 @@ const Home = props => {
     }
     return true;
   });
-  const {globalState, translation, notifications, setGlobalState} =
+  const {globalState, translation,newTranslation, notifications, setGlobalState} =
     useGlobalState();
   const [searchJobKey, setSearchJobKey] = useState('');
   const [searchCounterKey, setSearchCountryKey] = useState('');
@@ -223,7 +223,7 @@ const Home = props => {
                         }
                       </Text>
                     </View>
-                    <Text style={{color: '#000'}}>Search your dream job!</Text>
+                    <Text style={{color: '#000'}}>{newTranslation?.searchYourDreamJob}</Text>
                   </View>
 
                   <Pressable
@@ -248,7 +248,7 @@ const Home = props => {
                       searchJob(itemValue, searchCounterKey);
                     }}>
                     <Picker.Item
-                      label="Select an occupation"
+                      label={newTranslation?.selectOccupation}
                       value={null}
                       style={{color: 'gray'}}
                     />
@@ -270,7 +270,7 @@ const Home = props => {
                       searchJob(searchJobKey, itemValue);
                     }}>
                     <Picker.Item
-                      label="Select country name"
+                      label={newTranslation?.selectCountry}
                       value={null}
                       style={{color: 'gray'}}
                     />
@@ -304,7 +304,7 @@ const Home = props => {
                       <View>
                         <Text
                           style={{fontSize: 18, marginTop: 15, color: '#000'}}>
-                          Search results : {jobList.length}
+                          {newTranslation?.searchResults} : {jobList.length}
                         </Text>
                         {jobList.length == 0 ? (
                           <View
@@ -321,7 +321,7 @@ const Home = props => {
                                 paddingHorizontal: 20,
                                 textAlign: 'center',
                               }}>
-                              Opps! No result found for this combination
+                              {newTranslation?.OppsNoResultFoundForThisCombination}
                             </Text>
                           </View>
                         ) : (
@@ -340,7 +340,7 @@ const Home = props => {
                   <View style={{marginTop: 20}}>
                     <View style={styles.jobsList}>
                       <Text style={styles.heading}>
-                        {translation.jobsYouCanGet}
+                        {newTranslation?.JobOccupationsThatWeOffer}
                       </Text>
                       <ScrollView horizontal={true}>
                         {loaderOccu ? (
@@ -394,7 +394,7 @@ const Home = props => {
                           fontSize: 20,
                           textAlign: 'center',
                         }}>
-                        Discover Fresh Feed Delights Now!
+                        {newTranslation?.discoverFreshFeedDelightsNow}
                       </Text>
                     </View>
                     {dynamicFeedArr?.map((v, i) => {
