@@ -52,18 +52,7 @@ const FavrouiteJob = (props) => {
             alignItems: 'center',
           }}>
           <Text style={styles.messageText}>{newTranslation?.handPickedJobsForYou}</Text>
-          <Pressable
-            // onPress={() => setShowModal(true)}
-            style={{
-              backgroundColor: '#035292',
-              padding: 8,
-              elevation: 10,
-              borderRadius: 3,
-            }}>
-            <Text style={{color: 'white', fontWeight: '500'}}>
-              Video Tutorial
-            </Text>
-          </Pressable>
+          
         </View>
         
         {showLoader? <ActivityIndicator size="large" color="#0000ff" style={{marginTop:200}}/>: favouriteJobListArr?.map((v, i) => {

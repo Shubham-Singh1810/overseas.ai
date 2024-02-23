@@ -69,18 +69,7 @@ const SavedJobs = props => {
               alignItems: 'center',
             }}>
             <Text style={styles.messageText}>{newTranslation?.jobsYouHaveSavedEarlier}</Text>
-            <Pressable
-              // onPress={() => setShowModal(true)}
-              style={{
-                backgroundColor: '#035292',
-                padding: 8,
-                elevation: 10,
-                borderRadius: 3,
-              }}>
-              <Text style={{color: 'white', fontWeight: '500'}}>
-                Video Tutorial
-              </Text>
-            </Pressable>
+            
           </View>
           {savedList?.length==0 ? <View style={{height:500, justifyContent:"center", alignItems:"center"}}><Text style={{fontSize:22}}>You haven't saved any job yet !!!</Text></View> :savedList?.map((v, i) => {
             return <SearchResult backTo="Saved Jobs" getListOfSavedJobs={getListOfSavedJobs} saved={true} props={props} value={v} />;

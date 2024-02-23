@@ -29,7 +29,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import { useGlobalState } from '../GlobalProvider';
 const CandidateDetailsStep1 = props => {
   const [experienceMsgText, setShowExperinceMsgText] = useState(
-    'Do you have past experience ?',
+    newTranslation.doYouHavePastExperience,
   );
   const {newTranslation} = useGlobalState()
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);

@@ -226,18 +226,7 @@ const Home = props => {
                     <Text style={{color: '#000'}}>{newTranslation?.searchYourDreamJob}</Text>
                   </View>
 
-                  <Pressable
-                    // onPress={() => setShowModal(true)}
-                    style={{
-                      backgroundColor: '#035292',
-                      padding: 8,
-                      elevation: 10,
-                      borderRadius: 3,
-                    }}>
-                    <Text style={{color: 'white', fontWeight: '500'}}>
-                      Video Tutorial
-                    </Text>
-                  </Pressable>
+                  
                 </View>
               </View>
               <View>

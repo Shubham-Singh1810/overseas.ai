@@ -1025,7 +1025,7 @@ const MyDocument = props => {
                     });
                   }}>
                   <Picker.Item
-                    label="Select Passport Category"
+                    label={newTranslation?.selectPassportCategory}
                     value=""
                     style={{color: 'gray'}}
                   />
@@ -1053,7 +1053,7 @@ const MyDocument = props => {
                 style={[styles.input, {marginBottom: 15, padding: 17}]}>
                 <Text>
                   {passportForm.passportIssueDate == ''
-                    ? 'Passport Issue Date'
+                    ? newTranslation?.placeOfIssue
                     : passportForm.passportIssueDate}
                 </Text>
               </TouchableOpacity>

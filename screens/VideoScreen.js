@@ -364,18 +364,7 @@ const VideoScreen = props => {
           <Text style={[styles.title, {color: '#000'}]}>
             {newTranslation?.introductoryVideo}
           </Text>
-          <Pressable
-            onPress={() => setShowModal(true)}
-            style={{
-              backgroundColor: '#035292',
-              padding: 8,
-              elevation: 10,
-              borderRadius: 3,
-            }}>
-            <Text style={{color: 'white', fontWeight: '500'}}>
-              Video Tutorial
-            </Text>
-          </Pressable>
+          
         </View>
 
         <View>

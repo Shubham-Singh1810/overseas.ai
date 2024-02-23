@@ -127,6 +127,7 @@ const EditProfile = (props) => {
         Toast.show({
           type: 'success',
           text1: 'Profile pic updated successfully',
+          text1: 'Please logout and login again to view the updated data',
           visibilityTime: 3000,
         });
         setUserImage(response?.data?.empData?.empPhoto);
@@ -218,6 +219,7 @@ const EditProfile = (props) => {
         Toast.show({
           type: 'success',
           text1: 'User profile updated successfully',
+          text1: 'Please logout and login again to view the updated data',
           position: 'bottom',
           visibilityTime: 3000,
         });

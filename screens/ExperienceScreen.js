@@ -332,9 +332,7 @@ const ExperienceScreen = (props) => {
         {/* <View style={{marginEnd:10}}>
         <Button title="ADD MORE"  />
         </View> */}
-        <View>
-          <Button title="Video tutorial" color="#035292" />
-        </View>
+        
       </View>
       <ScrollView>
         {experienceList?.map((v, i) => {

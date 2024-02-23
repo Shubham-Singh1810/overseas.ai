@@ -103,18 +103,7 @@ const GetCertificate = props => {
             </Text>
             <Text style={styles.nameText}>{newTranslation?.getCertified}</Text>
           </View>
-          <Pressable
-            // onPress={() => setShowModal(true)}
-            style={{
-              backgroundColor: '#035292',
-              padding: 8,
-              elevation: 10,
-              borderRadius: 3,
-            }}>
-            <Text style={{color: 'white', fontWeight: '500'}}>
-              Video Tutorial
-            </Text>
-          </Pressable>
+          
         </View>
         <View style={{marginTop: 20}}>
           {/* <TouchableOpacity style={styles.input}>

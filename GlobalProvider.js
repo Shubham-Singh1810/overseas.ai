@@ -814,10 +814,16 @@ export const GlobalStateProvider = ({children}) => {
 
       placeOfIssue:
         globalState.selectedLanguage == 'english'
-          ? 'Enter Passport Number'
+          ? 'Place of Issue'
           : globalState.selectedLanguage == 'hindi'
-          ? 'अवहेदन का स्थान'
+          ? 'आवेदन का स्थान'
           : 'আবেদনের জায়গা',
+          selectPassportCategory:
+        globalState.selectedLanguage == 'english'
+          ? 'Select Passport Category'
+          : globalState.selectedLanguage == 'hindi'
+          ? 'पासपोर्ट श्रेणी चुनें'
+          : 'পাসপোর্ট বিভাগ নির্বাচন করুন',
       upload:
         globalState.selectedLanguage == 'english'
           ? 'Upload'
@@ -931,7 +937,7 @@ export const GlobalStateProvider = ({children}) => {
         globalState.selectedLanguage == 'english'
           ? 'Select'
           : globalState.selectedLanguage == 'hindi'
-          ? 'चुनना'
+          ? 'चुनें'
           : 'নির্বাচন করুন',
       loanProvider:
         globalState.selectedLanguage == 'english'
@@ -1633,7 +1639,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Registration Number'
           : globalState.selectedLanguage == 'hindi'
           ? 'पंजीकरण संख्या'
-          : 'নিবন্ধন নম্বর',
+          : 'রেজিস্ট্রেশন নম্বর',
       courseProvidedByInstitute:
         globalState.selectedLanguage == 'english'
           ? 'Course Provided By Institute'
@@ -1654,7 +1660,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Unfollow'
           : globalState.selectedLanguage == 'hindi'
           ? 'अनफॉलो'
-          : 'উন্ফল্লও',
+          : 'আনফলো',
       followers:
         globalState.selectedLanguage == 'english'
           ? 'Followers'
@@ -1694,36 +1700,7 @@ export const GlobalStateProvider = ({children}) => {
       // hra translation end
 
       //course by id translation start
-      jobsPostedByHra:
-        globalState.selectedLanguage == 'english'
-          ? 'Jobs posted by HRA : '
-          : globalState.selectedLanguage == 'hindi'
-          ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
-          : 'HRA দ্বারা পোস্ট করা চাকরি : ',
-      jobsPostedByHra:
-        globalState.selectedLanguage == 'english'
-          ? 'Jobs posted by HRA : '
-          : globalState.selectedLanguage == 'hindi'
-          ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
-          : 'HRA দ্বারা পোস্ট করা চাকরি : ',
-      jobsPostedByHra:
-        globalState.selectedLanguage == 'english'
-          ? 'Jobs posted by HRA : '
-          : globalState.selectedLanguage == 'hindi'
-          ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
-          : 'HRA দ্বারা পোস্ট করা চাকরি : ',
-      jobsPostedByHra:
-        globalState.selectedLanguage == 'english'
-          ? 'Jobs posted by HRA : '
-          : globalState.selectedLanguage == 'hindi'
-          ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
-          : 'HRA দ্বারা পোস্ট করা চাকরি : ',
-      jobsPostedByHra:
-        globalState.selectedLanguage == 'english'
-          ? 'Jobs posted by HRA : '
-          : globalState.selectedLanguage == 'hindi'
-          ? 'एचआरए द्वारा पोस्ट की गई नौकरियाँ : '
-          : 'HRA দ্বারা পোস্ট করা চাকরি : ',
+      
       institute:
         globalState.selectedLanguage == 'english'
           ? 'Institute'
@@ -1747,7 +1724,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Course Fee'
           : globalState.selectedLanguage == 'hindi'
           ? 'पाठ्यक्रम शुल्क'
-          : 'প্রশিক্ষণ খরচ',
+          : 'প্রশিক্ষণের খরচ',
       //course by id translation end
 
       // tab name start
@@ -1768,13 +1745,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'My Videos'
           : globalState.selectedLanguage == 'hindi'
           ? 'मेरे वीडियो'
-          : 'আমার ভিডিওগুলো',
-          myProfile:
-        globalState.selectedLanguage == 'english'
-          ? 'My Profile'
-          : globalState.selectedLanguage == 'hindi'
-          ? 'मेरी प्रोफाइल'
-          : 'আমার প্রোফাইল',
+          : 'আমার ভিডিও',
           improveYourProfile:
         globalState.selectedLanguage == 'english'
           ? 'Improve Your Profile'
@@ -1804,7 +1775,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Applied Jobs'
           : globalState.selectedLanguage == 'hindi'
           ? 'एप्लाइड नौकरियाँ'
-          : 'অ্যাপ্লায়েড চাকরি',
+          : 'প্রয়োগ করা চাকরি',
           yourHra:
         globalState.selectedLanguage == 'english'
           ? 'Your HRA'
@@ -1835,12 +1806,6 @@ export const GlobalStateProvider = ({children}) => {
           : globalState.selectedLanguage == 'hindi'
           ? 'नौकरी विवरण'
           : 'চাকরির বিস্তারিত',
-          myExperience:
-        globalState.selectedLanguage == 'english'
-          ? 'My Experience'
-          : globalState.selectedLanguage == 'hindi'
-          ? 'मेरा अनुभव'
-          : 'আমার অভিজ্ঞতা',
           courseDetails:
         globalState.selectedLanguage == 'english'
           ? 'Course Details'
@@ -1858,7 +1823,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Edit Profile '
           : globalState.selectedLanguage == 'hindi'
           ? 'प्रोफ़ाइल संपादित करें'
-          : 'জীবন বৃত্তান্ত সম্পাদনা',
+          : 'প্রোফাইল পরিবর্তন',
       // tab name end
 
       // job By Id start
@@ -1867,7 +1832,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Apply Now'
           : globalState.selectedLanguage == 'hindi'
           ? 'अभी अप्लाई करें'
-          : 'এখন আবেদন কর',
+          : 'এখন আবেদন করুন',
           jobPostedBy:
         globalState.selectedLanguage == 'english'
           ? 'Job Posted By :'
@@ -1904,24 +1869,18 @@ export const GlobalStateProvider = ({children}) => {
           : globalState.selectedLanguage == 'hindi'
           ? 'अधिक जानकारी'
           : 'আরো বিস্তারিত',
-          moreDetails:
-        globalState.selectedLanguage == 'english'
-          ? 'More Details'
-          : globalState.selectedLanguage == 'hindi'
-          ? 'अधिक जानकारी'
-          : 'আরো বিস্তারিত',
           serviceCharge:
         globalState.selectedLanguage == 'english'
           ? 'Service Charge'
           : globalState.selectedLanguage == 'hindi'
           ? 'सेवा शुल्क'
-          : 'সেবা খরচ',
+          : 'সার্ভিস খরচ',
           salaryNegotiable:
         globalState.selectedLanguage == 'english'
           ? 'Salary Negotiable'
           : globalState.selectedLanguage == 'hindi'
           ? 'वेतन पर भाव - ताव'
-          : 'আলোচনাসাপেক্ষে বেতন',
+          : 'আলোচনা সাপেক্ষে বেতন',
           hiringCompany:
         globalState.selectedLanguage == 'english'
           ? 'Hiring Company : '
@@ -1951,7 +1910,7 @@ export const GlobalStateProvider = ({children}) => {
             ? 'Overtime : '
             : globalState.selectedLanguage == 'hindi'
             ? 'ओवरटाइम : '
-            : 'সময়ের সাথে সাথে : ',
+            : 'ওভারটাইম : ',
             facilities:
           globalState.selectedLanguage == 'english'
             ? 'Facilities : '
@@ -1963,7 +1922,7 @@ export const GlobalStateProvider = ({children}) => {
             ? 'Required Documents : '
             : globalState.selectedLanguage == 'hindi'
             ? 'आवश्यक दस्तावेज : '
-            : 'आवश्यक दस्तावेज : ',
+            : 'প্রয়োজনীয় কাগজপত্র : ',
             interviewDate:
           globalState.selectedLanguage == 'english'
             ? 'Interview Date'
@@ -1987,13 +1946,13 @@ export const GlobalStateProvider = ({children}) => {
         ? 'Skip'
         : globalState.selectedLanguage == 'hindi'
         ? 'स्किप'
-        : 'স্কিপ ',
+        : 'এড়িয়ে যান ',
         anyOtherContact:
       globalState.selectedLanguage == 'english'
         ? 'Any other contact'
         : globalState.selectedLanguage == 'hindi'
         ? 'कोई अन्य संपर्क'
-        : 'অন্য কোন যোগাযোগ ',
+        : 'অন্য যোগাযোগ নম্বর ',
         addProfilePic:
       globalState.selectedLanguage == 'english'
         ? 'Add Profile Pic'
@@ -2047,7 +2006,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'State'
           : globalState.selectedLanguage == 'hindi'
           ? 'राज्य'
-          : 'অবস্থা',
+          : 'রাজ্য',
           district:
         globalState.selectedLanguage == 'english'
           ? 'District'
@@ -2138,13 +2097,13 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Apply for caution money'
           : globalState.selectedLanguage == 'hindi'
           ? 'कॉशन मनी के लिए आवेदन करें'
-          : 'সাবধানতা টাকা জন্য আবেদন',
+          : 'জামানতের টাকার জন্য আবেদন',
           cautionMoneyRepay:
         globalState.selectedLanguage == 'english'
           ? 'Caution Money Refunded'
           : globalState.selectedLanguage == 'hindi'
           ? 'कॉशन मनी वापस किया गया'
-          : 'সতর্কতা টাকা ফেরত',
+          : 'জামানতের টাকা ফেরত',
           congoMess:
         globalState.selectedLanguage == 'english'
           ? 'Congratulations!  You can fly to achieve your dream.'
@@ -2162,7 +2121,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Join Now'
           : globalState.selectedLanguage == 'hindi'
           ? 'ज्वाइन करे'
-          : 'যৌন করুন',
+          : 'এখনি যোগদিন',
           meetingLinkWillBeUpdatedSoon:
         globalState.selectedLanguage == 'english'
           ? 'Meeting Link will be updated soon.'
@@ -2186,7 +2145,7 @@ export const GlobalStateProvider = ({children}) => {
             ? 'Caution Amount'
             : globalState.selectedLanguage == 'hindi'
             ? 'कॉशन राशि'
-            : 'কাউশন পরিমাণ',
+            : 'জামানতের পরিমাণ',
             selectpaymentScreensort:
           globalState.selectedLanguage == 'english'
             ? 'Select Payment Screensort'
@@ -2223,12 +2182,25 @@ export const GlobalStateProvider = ({children}) => {
                 : globalState.selectedLanguage == 'hindi'
                 ? 'भुगतान सफल के रूप में चिह्नित!'
                 : 'পেমেন্ট সফল হিসাবে চিহ্নিত!',
+                interviewTime:
+              globalState.selectedLanguage == 'english'
+                ? 'Interview Time'
+                : globalState.selectedLanguage == 'hindi'
+                ? 'साक्षात्कार का समय'
+                : 'সাক্ষাৎকারের সময়',
+                doYouHavePastExperience:
+              globalState.selectedLanguage == 'english'
+                ? 'Do You Have Past Experience ? '
+                : globalState.selectedLanguage == 'hindi'
+                ? 'क्या आपके पास पिछला अनुभव है ?'
+                : 'আপনার কি অতীত অভিজ্ঞতা আছে ?',
                 noteMessage:
               globalState.selectedLanguage == 'english'
                 ? "You will get a full refund of your caution money once you migrate successfully or if you fail in visa/ medical test"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'सफलतापूर्वक प्रवास करने पर या वीज़ा/मेडिकल परीक्षण में असफल होने पर आपको आपकी कॉशन मनी की पूरी राशि वापस मिल जाएगी'
-                : 'একবার আপনি সফলভাবে মাইগ্রেট করলে বা ভিসা/চিকিৎসা পরীক্ষায় ব্যর্থ হলে আপনি আপনার সতর্কতার টাকা সম্পূর্ণ ফেরত পাবেন',
+                : 'একবার আপনি সফলভাবে মাইগ্রেট করলে বা ভিসা/চিকিৎসা পরীক্ষায় ব্যর্থ হলে আপনি আপনার জামানতের টাকা সম্পূর্ণ ফেরত পাবেন',
+                
     });
   };
 

@@ -112,7 +112,7 @@ const CustomDrawerContent = props => {
     {
       title: 'Apply Medical Test',
       hindiName: 'चिकित्सा परीक्षण करें',
-      banglaName: 'মেডিকেল টেস্ট প্রয়োগ করুন',
+      banglaName: 'মেডিকেল -এর জন্য আবেদন করুন',
       component: MedicalTest,
       name: 'Apply Medical Test',
       subMenu: [],
@@ -142,7 +142,7 @@ const CustomDrawerContent = props => {
     {
       title: 'Share with friends',
       hindiName: 'दोस्तों के साथ बांटें',
-      banglaName: 'বন্ধুদের সাথে ভাগাভাগি করা',
+      banglaName: 'বন্ধুদের সাথে শেয়ার করুন',
       translation: newTranslation?.home,
     },
     {

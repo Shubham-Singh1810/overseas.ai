@@ -746,12 +746,12 @@ const AppliedJobById = props => {
             <View>
               <Text style={{color: 'black', fontSize: 15, marginBottom: 3}}>
                 {newTranslation?.interviewDate} :{' '}
-                {moment(
+                {interviewJobDetails?.interviewModeData?.interviewDate && moment(
                   interviewJobDetails?.interviewModeData?.interviewDate,
                 ).format('MMM Do YY')}{' '}
               </Text>
               <Text style={{color: 'black', fontSize: 15, marginBottom: 3}}>
-                Interview Time :{' '}
+                {newTranslation?.interviewTime} :{' '}
                 {interviewJobDetails?.interviewModeData?.interviewTime}
               </Text>
               {interviewJobDetails?.data?.interviewMode == 'offline' ? (
