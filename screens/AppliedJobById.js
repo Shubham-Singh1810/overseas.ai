@@ -23,6 +23,7 @@ import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import DocumentPicker from 'react-native-document-picker';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import { useGlobalState } from '../GlobalProvider';
 const AppliedJobById = props => {
   useAndroidBackHandler(() => {
     if (props?.route?.params?.backTo) {
@@ -33,6 +34,7 @@ const AppliedJobById = props => {
       return true;
     }
   });
+  const {newTranslation} = useGlobalState();
   const [loading, showLoading] = useState(true);
   const [appliedJobDetails, setAppliedJobDetails] = useState();
   const getAppliedJobById = async id => {
@@ -320,7 +322,7 @@ const AppliedJobById = props => {
               {appliedJobDetails?.jobWagesCurrencyType}
             </Text>
             <Button
-              title="View Details"
+              title={newTranslation?.readDetails}
               color="#035292"
               onPress={() => {
                 props.navigation.navigate('Job Details', {
@@ -352,16 +354,16 @@ const AppliedJobById = props => {
             marginRight: 10,
           }}>
           <Text style={styles.date}>
-            Applied on - {appliedJobDetails?.appliedOn}
+            {newTranslation?.appliedOn}- {appliedJobDetails?.appliedOn}
           </Text>
         </View>
       </View>
       <View style={{marginTop: 15}}>
-        <Text style={styles.countryText}>Status</Text>
+        <Text style={styles.countryText}>{newTranslation?.status}</Text>
         <View
           style={{flexDirection: 'row', marginTop: 10, alignItems: 'center'}}>
           <View style={[styles.highlight, styles.backgroundColorGreen]}></View>
-          <Text style={styles.textGreen}>Application Sent to HRA</Text>
+          <Text style={styles.textGreen}>{newTranslation?.applicationSentToHRA}</Text>
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
@@ -372,7 +374,7 @@ const AppliedJobById = props => {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View
                   style={[styles.highlight, {backgroundColor: 'red'}]}></View>
-                <Text style={{color: 'red'}}>Application Rejected</Text>
+                <Text style={{color: 'red'}}>{newTranslation?.applicationRejected}</Text>
               </View>
               <View style={styles.grayDot}></View>
               <View style={styles.grayDot}></View>
@@ -389,7 +391,7 @@ const AppliedJobById = props => {
             style={
               interviewJobDetails?.data?.stageStepCount >= 2 && styles.textGreen
             }>
-            Interview Scheduled
+            {newTranslation?.interviewScheduled}
           </Text>
           {interviewJobDetails?.data?.status == 1 &&
             interviewJobDetails?.data?.stage2 == 1 &&
@@ -406,7 +408,7 @@ const AppliedJobById = props => {
                   backgroundColor: '#F1F7FF',
                   alignItems: 'center',
                 }}>
-                <Text style={{color: 'black'}}>View</Text>
+                <Text style={{color: 'black'}}>{newTranslation?.view}</Text>
                 <Image
                   source={require('../images/infoIcon.png')}
                   style={{
@@ -429,7 +431,7 @@ const AppliedJobById = props => {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View
                   style={[styles.highlight, {backgroundColor: 'red'}]}></View>
-                <Text style={{color: 'red'}}>Rejected in interview</Text>
+                <Text style={{color: 'red'}}>{newTranslation?.rejectedInInterview}</Text>
               </View>
               <View style={styles.grayDot}></View>
               <View style={styles.grayDot}></View>
@@ -455,7 +457,7 @@ const AppliedJobById = props => {
               // appliedJobDetails?.interviewStatus == 1 &&
               styles.textGreen
             }>
-            Selected
+            {newTranslation?.selected}
           </Text>
           {interviewJobDetails?.data?.offerLatterSent == 1 && (
             <Pressable
@@ -473,7 +475,7 @@ const AppliedJobById = props => {
                 backgroundColor: '#F1F7FF',
                 alignItems: 'center',
               }}>
-              <Text style={{color: 'black'}}>View Offer Letter</Text>
+              <Text style={{color: 'black'}}>{newTranslation?.viewOfferLetter}</Text>
             </Pressable>
           )}
         </View>
@@ -491,7 +493,7 @@ const AppliedJobById = props => {
               interviewJobDetails?.data?.offerLatterSent == 1 &&
               styles.textGreen
             }>
-            Signed Offer Letter
+            {newTranslation?.signedOfferLetter}
           </Text>
           {interviewJobDetails?.data?.offerLatterSent == 1 &&
           interviewJobDetails?.data?.cautionMoneyStatus == 0 ? (
@@ -506,7 +508,7 @@ const AppliedJobById = props => {
                 backgroundColor: '#F1F7FF',
                 alignItems: 'center',
               }}>
-              <Text style={{color: 'black'}}>Upload</Text>
+              <Text style={{color: 'black'}}>{newTranslation?.upload}</Text>
             </Pressable>
           ) : (
             interviewJobDetails?.data?.cautionMoneyStatus != 2 &&
@@ -522,7 +524,7 @@ const AppliedJobById = props => {
                   backgroundColor: '#F1F7FF',
                   alignItems: 'center',
                 }}>
-                <Text style={{color: 'black'}}>View</Text>
+                <Text style={{color: 'black'}}>{newTranslation?.view}</Text>
                 <Image
                   source={require('../images/infoIcon.png')}
                   style={{
@@ -551,7 +553,7 @@ const AppliedJobById = props => {
               interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
                 styles.textGreen,
             ]}>
-            Medical And PCC
+            {newTranslation?.medicalAndPCC}
           </Text>
           {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
             interviewJobDetails?.data?.stageStepCount == 3 &&
@@ -567,7 +569,7 @@ const AppliedJobById = props => {
                   backgroundColor: '#F1F7FF',
                   alignItems: 'center',
                 }}>
-                <Text style={{color: 'black'}}>Upload</Text>
+                <Text style={{color: 'black'}}>{newTranslation?.upload}</Text>
               </Pressable>
             )}
         </View>
@@ -579,7 +581,7 @@ const AppliedJobById = props => {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View
                   style={[styles.highlight, {backgroundColor: 'red'}]}></View>
-                <Text style={{color: 'red'}}>Visa Application Rejected</Text>
+                <Text style={{color: 'red'}}>{newTranslation?.visaApplicationRejected}</Text>
               </View>
               <View style={styles.grayDot}></View>
               <View style={styles.grayDot}></View>
@@ -601,7 +603,7 @@ const AppliedJobById = props => {
                 interviewJobDetails?.data?.stage5 == 1 &&
                 styles.textGreen,
             ]}>
-            Visa Relised
+            {newTranslation?.visaReleased}
           </Text>
           {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
             interviewJobDetails?.data?.stageStepCount == 5 &&
@@ -619,7 +621,7 @@ const AppliedJobById = props => {
                   backgroundColor: '#F1F7FF',
                   alignItems: 'center',
                 }}>
-                <Text style={{color: 'black'}}>View</Text>
+                <Text style={{color: 'black'}}>{newTranslation?.view}</Text>
               </Pressable>
             )}
         </View>
@@ -645,7 +647,7 @@ const AppliedJobById = props => {
                   '/placeholder/no-doc-found.jpg' &&
                 styles.textGreen,
             ]}>
-            Ticket Relised
+            {newTranslation?.ticketReleased}
           </Text>
           {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
             interviewJobDetails?.data?.stageStepCount == 5 &&
@@ -667,7 +669,7 @@ const AppliedJobById = props => {
                   backgroundColor: '#F1F7FF',
                   alignItems: 'center',
                 }}>
-                <Text style={{color: 'black'}}>View</Text>
+                <Text style={{color: 'black'}}>{newTranslation?.view}</Text>
               </Pressable>
             )}
         </View>
@@ -676,13 +678,13 @@ const AppliedJobById = props => {
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View style={styles.highlight}></View>
-          <Text>Apply for caution money</Text>
+          <Text>{newTranslation?.applyForCautionMoney}</Text>
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View style={styles.highlight}></View>
-          <Text>Caution Money Repay</Text>
+          <Text>{newTranslation?.cautionMoneyRepay}</Text>
         </View>
       </View>
       {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
@@ -698,8 +700,9 @@ const AppliedJobById = props => {
                 fontWeight: '600',
                 marginVertical: 20,
                 textAlign: 'center',
+                padding:10
               }}>
-              Congratulations! {'\n'} You can fly to achieve your dream.
+              {newTranslation?.congoMess}
             </Text>
           </View>
         )}
@@ -730,7 +733,7 @@ const AppliedJobById = props => {
                 marginBottom: 10,
               }}>
               <Text style={{color: 'black', fontSize: 18, fontWeight: '500'}}>
-                Interview Mode :{' '}
+                {newTranslation?.interviewMode} :{' '}
                 {interviewJobDetails?.data?.interviewMode
                   ?.charAt(0)
                   ?.toUpperCase() +
@@ -742,7 +745,7 @@ const AppliedJobById = props => {
             </View>
             <View>
               <Text style={{color: 'black', fontSize: 15, marginBottom: 3}}>
-                Interview Date :{' '}
+                {newTranslation?.interviewDate} :{' '}
                 {moment(
                   interviewJobDetails?.interviewModeData?.interviewDate,
                 ).format('MMM Do YY')}{' '}
@@ -754,17 +757,17 @@ const AppliedJobById = props => {
               {interviewJobDetails?.data?.interviewMode == 'offline' ? (
                 <View>
                   <Text style={{color: 'black', fontSize: 15, marginBottom: 3}}>
-                    State :{' '}
+                    {newTranslation?.state} :{' '}
                     {
                       interviewJobDetails?.interviewModeData?.interview_state
                         .name
                     }
                   </Text>
                   <Text style={{color: 'black', fontSize: 15, marginBottom: 3}}>
-                    PIN : {interviewJobDetails?.interviewModeData?.pin}
+                    {newTranslation?.pinCode} : {interviewJobDetails?.interviewModeData?.pin}
                   </Text>
                   <Text style={{color: 'black', fontSize: 15, marginBottom: 3}}>
-                    Interview Location :{' '}
+                    {newTranslation?.interviewLocation} :{' '}
                     {interviewJobDetails?.interviewModeData?.officialAddress}
                   </Text>
                 </View>
@@ -779,12 +782,12 @@ const AppliedJobById = props => {
                         )
                       }>
                       <Text style={{color: 'black', fontSize: 15}}>
-                        Join Now
+                        {newTranslation?.joinNow}
                       </Text>
                     </Pressable>
                   ) : (
                     <Text style={{color: 'black', fontSize: 15}}>
-                      Meeting Link will be updated soon.
+                      {newTranslation?.meetingLinkWillBeUpdatedSoon}
                     </Text>
                   )}
                 </View>
@@ -820,7 +823,7 @@ const AppliedJobById = props => {
                 marginBottom: 10,
               }}>
               <Text style={{color: 'black', fontSize: 18, fontWeight: '500'}}>
-                Offer Letter
+                {newTranslation?.offerLetter}
               </Text>
               <Pressable onPress={() => setShowOfferLetterPopUp(false)}>
                 <Image source={require('../images/close.png')} />
@@ -890,7 +893,7 @@ const AppliedJobById = props => {
                 marginBottom: 10,
               }}>
               <Text style={{color: 'black', fontSize: 18, fontWeight: '500'}}>
-                Upload Signed Offer Letter
+                {newTranslation?.uploadSignedOfferLetter}
               </Text>
               <Pressable onPress={() => setShowDocUploader(false)}>
                 <Image source={require('../images/close.png')} />
@@ -899,8 +902,8 @@ const AppliedJobById = props => {
             <View>
               <Text style={{color: 'green', fontWeight: '600'}}>
                 {' '}
-                <Text style={{color: 'black'}}>Note</Text> : You will get your
-                caution back once you get placed successfully.
+                <Text style={{color: 'black'}}>Note</Text> :
+                 {newTranslation?.noteMessage}
               </Text>
               <Image
                 style={{height: 250, marginVertical: 15, width: '100%'}}
@@ -913,7 +916,7 @@ const AppliedJobById = props => {
                   marginVertical: 10,
                   justifyContent: 'space-between',
                 }}>
-                <Text style={{color: 'black'}}>Caution Amount :100</Text>
+                <Text style={{color: 'black'}}>{newTranslation?.cautionAmount} :100</Text>
                 {/* <Pressable onPress={handlePayNow}>
               <Text
                 style={{
@@ -948,8 +951,8 @@ const AppliedJobById = props => {
                   }}>
                   <Text>
                     {uploadSignedDoc?.cautionMoneyScreensort == ''
-                      ? 'Select Payment Screensort'
-                      : 'Selected'}{' '}
+                      ? newTranslation?.selectpaymentScreensort
+                      : newTranslation?.selected}{' '}
                   </Text>
                 </Pressable>
                 <Pressable
@@ -962,14 +965,14 @@ const AppliedJobById = props => {
                   }}>
                   <Text>
                     {uploadSignedDoc.signedOfferLatter == ''
-                      ? 'Select Signed Offer Letter'
-                      : 'Selected'}
+                      ? newTranslation?.selectSignedOfferLetter
+                      : newTranslation?.selected}
                   </Text>
                 </Pressable>
               </View>
               <View>
                 <Button
-                  title="Upload"
+                  title={newTranslation?.upload}
                   onPress={() => handleUploadSignedDocuments()}
                 />
               </View>
@@ -1003,7 +1006,7 @@ const AppliedJobById = props => {
                 marginBottom: 10,
               }}>
               <Text style={{color: 'black', fontSize: 18, fontWeight: '500'}}>
-                Payment Status
+                {newTranslation?.paymentStatus}
               </Text>
               <Pressable onPress={() => setShowPaymentPopUp(false)}>
                 <Image source={require('../images/close.png')} />
@@ -1024,7 +1027,7 @@ const AppliedJobById = props => {
                       borderRadius: 4,
                       fontSize: 16,
                     }}>
-                    Waiting for Admin Approval
+                    {newTranslation?.waitingForAdminApproval}
                   </Text>
                 )}
                 {interviewJobDetails?.data?.cautionMoneyStatus == -1 && (
@@ -1037,7 +1040,7 @@ const AppliedJobById = props => {
                       borderRadius: 4,
                       fontSize: 16,
                     }}>
-                    Payment marked as Rejected
+                    {newTranslation?.paymentMarkedAsRejected}
                   </Text>
                 )}
                 {interviewJobDetails?.data?.cautionMoneyStatus == 2 && (
@@ -1049,7 +1052,7 @@ const AppliedJobById = props => {
                       borderRadius: 4,
                       fontSize: 16,
                     }}>
-                    Payment marked as Successful !
+                    {newTranslation?.paymentMarkedAsSuccessfull}
                   </Text>
                 )}
               </View>
@@ -1116,7 +1119,7 @@ const AppliedJobById = props => {
                   <Text>
                     {medicalPccForm?.medicalReport == ''
                       ? 'Select Medical'
-                      : 'Selected'}{' '}
+                      : newTranslation?.selected}{' '}
                   </Text>
                 </Pressable>
                 <Text
@@ -1137,13 +1140,13 @@ const AppliedJobById = props => {
                     borderRadius: 8,
                   }}>
                   <Text>
-                    {medicalPccForm?.ppc == '' ? 'Select PCC' : 'Selected'}
+                    {medicalPccForm?.ppc == '' ? newTranslation?.selectPCC : newTranslation?.selected}
                   </Text>
                 </Pressable>
               </View>
               <View>
                 <Button
-                  title="Upload"
+                  title={newTranslation?.upload}
                   onPress={() => handleUploadMedicalPcc()}
                 />
               </View>

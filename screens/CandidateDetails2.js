@@ -22,7 +22,7 @@ import Toast from 'react-native-toast-message';
 import {useFocusEffect} from '@react-navigation/native';
 const CandidateDetails2 = ({route}) => {
   console.log(route.params.step1user.access_token)
-  const {globalState, setGlobalState} = useGlobalState();
+  const {globalState,newTranslation, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
     empEmail: '', 
     empDailyWage: '',
@@ -156,7 +156,7 @@ const CandidateDetails2 = ({route}) => {
     <ScrollView style={{backgroundColor: 'white'}}>
       <View style={styles.main}>
         <View>
-          <Text style={styles.heading}>Please Enter Your Details : 2/2</Text>
+          <Text style={styles.heading}>{newTranslation?.pleaseEnterYourDetails}2/2</Text>
         </View>
         <View style={styles.inputGroup}>
           <View
@@ -189,31 +189,31 @@ const CandidateDetails2 = ({route}) => {
                 />
               )}
               <Text style={{color: '#035292', textDecorationLine: 'underline'}}>
-                Add Profile Pic
+                {newTranslation?.addProfilePic}
               </Text>
             </Pressable>
           </View>
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder={newTranslation.email}
             onChangeText={text =>
               setFormData({...formData, empEmail: text})
             }></TextInput>
           <TextInput
             style={styles.input}
-            placeholder="Aadhar Number"
+            placeholder={newTranslation?.aadhaNumber}
             onChangeText={text =>
               setFormData({...formData, empAadharNo: text})
             }></TextInput>
           <TextInput
             style={styles.input}
-            placeholder="Present Monthly Income"
+            placeholder={newTranslation?.presentMonthlyIncome}
             onChangeText={text =>
               setFormData({...formData, empDailyWage: text})
             }></TextInput>
           <TextInput
             style={styles.input}
-            placeholder="Expected Monthly Income"
+            placeholder={newTranslation?.expectedMonthlyIncome}
             onChangeText={text =>
               setFormData({...formData, empExpectedMonthlyIncome: text})
             }></TextInput>
@@ -222,13 +222,13 @@ const CandidateDetails2 = ({route}) => {
             <>
               <TextInput
                 style={styles.input}
-                placeholder="Reference Person Name"
+                placeholder={newTranslation?.referencePersoneName}
                 onChangeText={text =>
                   setFormData({...formData, empRefName: text})
                 }></TextInput>
               <TextInput
                 style={styles.input}
-                placeholder="Reference Person Contact"
+                placeholder={newTranslation?.referencePersoneContact}
                 onChangeText={text =>
                   setFormData({...formData, empRefPhone: text})
                 }></TextInput>
@@ -241,12 +241,12 @@ const CandidateDetails2 = ({route}) => {
                   setContactRef(itemValue);
                 }}>
                 <Picker.Item
-                  label="Any other contact "
+                  label={newTranslation?.anyOtherContact}
                   value=""
                   style={{color: 'gray'}}
                 />
-                <Picker.Item label="Yes" value={true} style={{color: 'gray'}} />
-                <Picker.Item label="No" value={false} style={{color: 'gray'}} />
+                <Picker.Item label={newTranslation?.yes} value={true} style={{color: 'gray'}} />
+                <Picker.Item label={newTranslation?.no} value={false} style={{color: 'gray'}} />
 
                 {/* Add more Picker.Item as needed */}
               </Picker>
@@ -259,12 +259,12 @@ const CandidateDetails2 = ({route}) => {
                 setFormData({...formData, empRelocationIntQ: itemValue});
               }}>
               <Picker.Item
-                label="Are you intrested in international migration ?"
+                label={newTranslation?.areYouInterestedInInternationalMigration}
                 value=""
                 style={{color: 'gray'}}
               />
-              <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
-              <Picker.Item label="No" value="No" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
 
               {/* Add more Picker.Item as needed */}
             </Picker>
@@ -280,7 +280,7 @@ const CandidateDetails2 = ({route}) => {
                   });
                 }}>
                 <Picker.Item
-                  label="Country"
+                  label={newTranslation?.selectCountry}
                   value=""
                   style={{color: 'gray'}}
                 />
@@ -312,7 +312,7 @@ const CandidateDetails2 = ({route}) => {
               {formData.empPhoto =="" &&
             <Text
               style={{textDecorationLine: 'underline', paddingHorizontal: 10}}>
-              Skip
+              {newTranslation?.skip}
             </Text>}
           </TouchableOpacity>
           
@@ -325,7 +325,7 @@ const CandidateDetails2 = ({route}) => {
               borderRadius: 5,
             }}
             onPress={handleSubmit}>
-            <Text style={{color: 'white'}}>Save</Text>
+            <Text style={{color: 'white'}}>{newTranslation?.save}</Text>
           </TouchableOpacity>
         </View>
       </View>

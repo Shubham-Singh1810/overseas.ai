@@ -160,7 +160,7 @@ const JobDetailedScreen = params => {
               INR / month
             </Text>
           ) : (
-            <Text style={styles.currencyText}>Salary : Negotiable</Text>
+            <Text style={styles.currencyText}>{newTranslation?.salaryNegotiable}</Text>
           )}
         </View>
       </View>
@@ -193,7 +193,7 @@ const JobDetailedScreen = params => {
       </View>
       <View style={{marginTop:7}}>
       <Button
-        title="Apply Now"
+        title={newTranslation?.applyNow}
         onPress={() => handleApplyJob(details?.id)}
         color="#035292"
         
@@ -203,7 +203,7 @@ const JobDetailedScreen = params => {
       <ScrollView>
         <View style={styles.otherDetailsContainer}>
           <View style={[styles.tableItemPadding, styles.borderBottom]}>
-            <Text style={[styles.tableText]}>Job Posted By :</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.jobPostedBy}</Text>
             <View style={[styles.flex, {marginTop: 5}]}>
               <Text
                 style={[
@@ -221,39 +221,6 @@ const JobDetailedScreen = params => {
               </Text>
             </View>
           </View>
-
-          {/* <Pressable
-              onPress={() => setShowJobDetails(!showJobDetails)}
-              style={[
-                styles.flex,
-                styles.tableItemPadding,
-                styles.borderBottom,
-                {justifyContent: 'space-between'},
-              ]}>
-              <Text style={styles.tableText}>Industries Served</Text>
-              <View>
-                <Image
-                  source={
-                    !showJobDetails
-                      ? require('../images/downArrow.png')
-                      : require('../images/upArrow.png')
-                  }
-                />
-              </View>
-            </Pressable>
-            {showJobDetails &&
-              params.cmpWorkingDepartmentNames.map((v, i) => {
-                return (
-                  <View
-                    style={[
-                      styles.tableItemPadding,
-                      styles.borderBottom,
-                      {backgroundColor: '#fff'},
-                    ]}>
-                    <Text style={styles.tableText}>{v}</Text>
-                  </View>
-                );
-              })} */}
           <View
             style={[
               styles.flex,
@@ -261,7 +228,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Number of Vacancy</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.numberOfVacancy}</Text>
             <Text style={[styles.tableText]}>{details?.jobVacancyNo}</Text>
           </View>
           <View
@@ -271,7 +238,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Job Age Limit</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.ageLimit}</Text>
             <Text style={[styles.tableText]}>{details?.jobAgeLimit} years</Text>
           </View>
           <View
@@ -281,7 +248,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Passport Type</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.passportType}</Text>
             <Text style={[styles.tableText]}>{details?.passport_type}</Text>
           </View>
           <View
@@ -291,11 +258,24 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Contract Period</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.contractPeriod}</Text>
             <Text style={[styles.tableText]}>
               {details?.contract_period} months
             </Text>
           </View>
+          {details?.cmpNameACT && <View
+            style={[
+              styles.flex,
+              styles.tableItemPadding,
+              styles.borderBottom,
+              {justifyContent: 'space-between'},
+            ]}>
+            <Text style={[styles.tableText]}>{newTranslation?.hiringCompany}</Text>
+            <Text style={[styles.tableText, {width:200, textAlign:"right"}]}>
+              {details?.cmpNameACT}
+            </Text>
+          </View>}
+          
 
           <View
             style={[
@@ -304,7 +284,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Experience Required</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.experienceRequired}</Text>
             <Text style={[styles.tableText]}>
               {details?.jobExpDuration} years
             </Text>
@@ -316,7 +296,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Experience Type</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.experienceType}</Text>
             <Text style={[styles.tableText]}>
               {toTitleCase(details?.jobExpTypeReq)}
             </Text>
@@ -328,7 +308,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Interview Mode</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.interviewMode}</Text>
             <Text style={[styles.tableText]}>{details?.jobMode}</Text>
           </View>
           {details?.jobInterviewDate && (
@@ -339,7 +319,7 @@ const JobDetailedScreen = params => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Interview Date</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.interviewDate}</Text>
               <Text style={[styles.tableText]}>
                 {details?.jobInterviewDate}
               </Text>
@@ -354,7 +334,7 @@ const JobDetailedScreen = params => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Interview Place</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.interviewMode}</Text>
               <Text style={[styles.tableText]}>
                 {details?.jobInterviewPlace}
               </Text>
@@ -379,7 +359,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Working Days</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.workingDays}</Text>
             <Text style={[styles.tableText]}>{details?.jobWorkingDay}</Text>
           </View>
           <View
@@ -389,7 +369,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Working Hours</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.workingHours}</Text>
             <Text style={[styles.tableText]}>{details?.jobWorkingHour}</Text>
           </View>
           <View
@@ -399,7 +379,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Overtime</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.overtime}</Text>
             <Text style={[styles.tableText]}>{details?.jobOvertime}</Text>
           </View>
           <Pressable
@@ -410,7 +390,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={styles.tableText}>Facilities</Text>
+            <Text style={styles.tableText}>{newTranslation?.facilities}</Text>
             <View>
               <Image
                 source={
@@ -443,7 +423,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={styles.tableText}>Required Documents</Text>
+            <Text style={styles.tableText}>{newTranslation?.requiredDocuments}</Text>
             <View>
               <Image
                 source={
@@ -475,7 +455,7 @@ const JobDetailedScreen = params => {
               styles.borderBottom,
               {justifyContent: 'space-between'},
             ]}>
-            <Text style={[styles.tableText]}>Salary Negotiable</Text>
+            <Text style={[styles.tableText]}>{newTranslation?.salaryNegotiable}</Text>
             <Text style={[styles.tableText]}>{details?.salary_negotiable}</Text>
           </View>
           {details?.service_charge && (
@@ -486,7 +466,7 @@ const JobDetailedScreen = params => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText]}>Service Charge</Text>
+              <Text style={[styles.tableText]}>{newTranslation?.serviceCharge}</Text>
               <Text style={[styles.tableText]}>
                 {details?.service_charge} INR
               </Text>
@@ -497,7 +477,7 @@ const JobDetailedScreen = params => {
             <View style={[styles.tableItemPadding, styles.borderBottom]}>
               <Text
                 style={[styles.tableText, {textDecorationLine: 'underline'}]}>
-                More Details :
+                {newTranslation?.moreDetails} :
               </Text>
               <View style={[styles.flex, {marginTop: 5}]}>
                 <Text style={[styles.tableText, {}]}>

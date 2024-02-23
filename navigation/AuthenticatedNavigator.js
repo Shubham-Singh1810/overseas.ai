@@ -48,7 +48,7 @@ import ExperienceScreen from '../screens/ExperienceScreen';
 const Drawer = createDrawerNavigator();
 
 const AuthenticatedNavigator = () => {
-  const {translation, globalState, setGlobalState} = useGlobalState();
+  const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
   const getProfileStrengthFunc = async() => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -73,19 +73,19 @@ const AuthenticatedNavigator = () => {
           name="Home"
           component={Home}
           options={({navigation, route}) => ({
-            title: 'Home',
+            title: newTranslation?.home,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
         <Drawer.Screen name="MyProfile" component={MyProfile} options={({navigation, route}) => ({
-            title: 'My Profile',
+            title: newTranslation?.myProfile,
             headerRight: () => <RightNav navigation={navigation} />,
           })}/>
         <Drawer.Screen
           name="Upload Video"
           component={VideoScreen}
           options={({navigation, route}) => ({
-            title: 'My Videos',
+            title: newTranslation?.myVideos,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -93,7 +93,7 @@ const AuthenticatedNavigator = () => {
           name="Improve Profile"
           component={BuildProfile}
           options={({navigation, route}) => ({
-            title: 'Improve Your Profile',
+            title: newTranslation?.improveYourProfile,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -101,7 +101,7 @@ const AuthenticatedNavigator = () => {
           name="News Feed"
           component={NewsFeed}
           options={({navigation, route}) => ({
-            title: 'News Feed',
+            title: newTranslation?.newsFeed,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -109,7 +109,7 @@ const AuthenticatedNavigator = () => {
           name="Favourite Job"
           component={FavrouiteJob}
           options={({navigation, route}) => ({
-            title: 'Favourite Job',
+            title: newTranslation?.favouriteJob,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -117,7 +117,7 @@ const AuthenticatedNavigator = () => {
           name="Saved Jobs"
           component={SavedJobs}
           options={({navigation, route}) => ({
-            title: 'Saved Jobs',
+            title: newTranslation?.savedJobs,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -125,7 +125,7 @@ const AuthenticatedNavigator = () => {
           name="Applied Job"
           component={JobApplied}
           options={({navigation, route}) => ({
-            title: 'Applied Jobs',
+            title: newTranslation?.appliedJobs,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -133,7 +133,7 @@ const AuthenticatedNavigator = () => {
           name="Your HRA"
           component={YourHra}
           options={({navigation, route}) => ({
-            title: 'Your HRA',
+            title: newTranslation?.yourHra,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -149,7 +149,7 @@ const AuthenticatedNavigator = () => {
           name="DetailedHra"
           component={DetailedHra}
           options={({navigation, route}) => ({
-            title: 'Your HRA',
+            title: newTranslation?.yourHra,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -157,7 +157,7 @@ const AuthenticatedNavigator = () => {
           name="Jobs By Department"
           component={JobsByCategory}
           options={({navigation, route}) => ({
-            title: 'Jobs By Department',
+            title: newTranslation?.JobsByDepartment,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -165,7 +165,7 @@ const AuthenticatedNavigator = () => {
           name="Jobs By Country"
           component={JobsByCountry}
           options={({navigation, route}) => ({
-            title: 'Jobs By Country',
+            title: newTranslation?.jobsByCountry,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -207,7 +207,7 @@ const AuthenticatedNavigator = () => {
           name="Contact Us"
           component={Help}
           options={({navigation, route}) => ({
-            title: 'Contact Us',
+            title: "",
             headerShown: false, 
             headerRight: () => <RightNav navigation={navigation} />,
           })}
@@ -232,7 +232,7 @@ const AuthenticatedNavigator = () => {
           name="Edit Profile"
           component={EditProfile}
           options={({navigation, route}) => ({
-            title: 'Edit Profile',
+            title: newTranslation?.editProfile,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -240,7 +240,7 @@ const AuthenticatedNavigator = () => {
           name="Get Institute By Id"
           component={GetInstituteById}
           options={({navigation, route}) => ({
-            title: 'Training Institute',
+            title: newTranslation?.trainingInstitute,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -248,7 +248,7 @@ const AuthenticatedNavigator = () => {
           name="Get Course By Id"
           component={GetCourseById}
           options={({navigation, route}) => ({
-            title: 'Course Details',
+            title: newTranslation?.courseDetails,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -256,7 +256,7 @@ const AuthenticatedNavigator = () => {
           name="Applied Courses"
           component={AppliedCourseList}
           options={({navigation, route}) => ({
-            title: 'Applied Courses',
+            title: newTranslation?.appliedCourse,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -264,7 +264,7 @@ const AuthenticatedNavigator = () => {
           name="My Documents"
           component={MyDocument}
           options={({navigation, route}) => ({
-            title: 'My Documents',
+            title: newTranslation?.myDocuments,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -272,7 +272,7 @@ const AuthenticatedNavigator = () => {
           name="My Certificates"
           component={MyCertificate}
           options={({navigation, route}) => ({
-            title: 'My Certificates',
+            title: newTranslation?.myCertificate,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -280,7 +280,7 @@ const AuthenticatedNavigator = () => {
           name="Job Details"
           component={JobDetailedScreen}
           options={({navigation, route}) => ({
-            title: 'Job Details',
+            title: newTranslation?.jobDetails,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -288,7 +288,7 @@ const AuthenticatedNavigator = () => {
           name="My Experience"
           component={ExperienceScreen}
           options={({navigation, route}) => ({
-            title: 'My Experience',
+            title: newTranslation?.myExperience,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

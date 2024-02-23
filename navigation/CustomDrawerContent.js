@@ -20,7 +20,7 @@ import BuildProfile from '../screens/BuildProfile';
 import YourHra from '../screens/YourHra';
 import GetCertificate from '../screens/GetCertificate';
 import NeedMigrationLoan from '../screens/NeedMigrationLoan';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import FavrouiteJob from '../screens/FavrouiteJob';
 import {useFocusEffect} from '@react-navigation/native';
@@ -31,47 +31,55 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomDrawerContent = props => {
   const {navigation} = props;
-  const {globalState,newTranslation, setGlobalState} = useGlobalState();
+  const {globalState, newTranslation, setGlobalState} = useGlobalState();
   const [navItem, setNavItem] = useState([
     {
       title: 'Home',
-      translation:newTranslation?.home,
+      hindiName: 'होम',
+      banglaName: 'হোম',
       component: Home,
       name: 'Home',
       subMenu: [],
     },
     {
       title: 'Upload Video',
-      translation:newTranslation?.home,
+      hindiName: 'अपलोड वीडियो',
+      banglaName: 'আপলোড ভিডিও',
       component: VideoInput,
       name: 'Upload Video',
       subMenu: [],
     },
     {
       title: 'Improve Profile',
-      translation:newTranslation?.home,
+      hindiName: 'प्रोफाइल बेहतर करे',
+      banglaName: 'প্রোফাইল উন্নত করুন',
       component: BuildProfile,
       name: 'Improve Profile',
       subMenu: [],
     },
     {
       title: 'Jobs',
+      hindiName: 'नौकरियां',
+      banglaName: 'চাকরি',
       subMenu: [
         {
           title: 'Favourite Job',
-          translation:newTranslation?.home,
+          hindiName: 'पसंदीदा नौकरियां',
+          banglaName: 'প্রিয় কাজ',
           component: FavrouiteJob,
           name: 'Favourite Job',
         },
         {
           title: 'Saved Job',
-          translation:newTranslation?.home,
+          hindiName: 'सेव नौकरियां',
+          banglaName: 'সংরক্ষিত কাজ',
           component: SavedJobs,
           name: 'Saved Jobs',
         },
         {
           title: 'Application Status',
-          translation:newTranslation?.home,
+          hindiName: 'आवेदन की स्थिति',
+          banglaName: 'আবেদনপত্রের অবস্থা',
           component: JobApplied,
           name: 'Applied Job',
         },
@@ -79,64 +87,74 @@ const CustomDrawerContent = props => {
     },
     {
       title: 'Your HRA',
-      translation:newTranslation?.home,
+      hindiName: 'आपका  एचआरए',
+      banglaName: 'তোমার HRA',
       component: YourHra,
       name: 'Your HRA',
       subMenu: [],
     },
     {
       title: 'News Feed',
-      translation:newTranslation?.home,
+      hindiName: 'समाचार पढ़े',
+      banglaName: 'খবর পড়ুন',
       component: NewsFeed,
       name: 'News Feed',
       subMenu: [],
     },
-
     {
       title: 'Get Certificate',
-      translation:newTranslation?.home,
+      hindiName: 'प्रमाणपत्र प्राप्त करें',
+      banglaName: 'সার্টিফিকেট পান',
       component: GetCertificate,
       name: 'Get Certificate',
       subMenu: [],
     },
     {
       title: 'Apply Medical Test',
-      translation:newTranslation?.home,
+      hindiName: 'चिकित्सा परीक्षण करें',
+      banglaName: 'মেডিকেল টেস্ট প্রয়োগ করুন',
       component: MedicalTest,
       name: 'Apply Medical Test',
       subMenu: [],
     },
     {
       title: 'Apply PCC',
-      translation:newTranslation?.home,
+      hindiName: 'पीसीसी के लिए आवेदन करें',
+      banglaName: 'PCC-এর জন্য আবেদন করুন',
       component: ApplyPcc,
       name: 'Apply PCC',
       subMenu: [],
     },
-
     {
       title: 'Need Migration Loan',
-      translation:newTranslation?.home,
+      hindiName: 'प्रवासन ऋण की आवश्यकता है',
+      banglaName: 'মাইগ্রেশন লোন প্রয়োজন',
       component: NeedMigrationLoan,
       name: 'Need Migration Loan',
       subMenu: [],
     },
     {
       title: 'Switch Language',
-      translation:newTranslation?.home,
+      hindiName: 'भाषा बदलें',
+      banglaName: 'ভাষা পরিবর্তন করুন',
+      translation: newTranslation?.home,
     },
     {
       title: 'Share with friends',
-      translation:newTranslation?.home,
+      hindiName: 'दोस्तों के साथ बांटें',
+      banglaName: 'বন্ধুদের সাথে ভাগাভাগি করা',
+      translation: newTranslation?.home,
     },
     {
       title: 'Contact Us',
-      translation:newTranslation?.home,
+      hindiName: 'संपर्क करें',
+      banglaName: 'যোগাযোগ করুন',
       component: Help,
       name: 'Contact Us',
       subMenu: [],
     },
   ]);
+
   const [showSubMnu, setShowSubmenu] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -159,6 +177,19 @@ const CustomDrawerContent = props => {
     }
   };
   const [selectedScreen, setSelectedScreen] = useState('Home');
+  const [notificationList, setNotificationistList] = useState(null);
+  const getNotificationFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getNotification(JSON.parse(user).access_token);
+      if (response.status == 200) {
+        console.log(response.data);
+        setNotificationistList(response.data);
+      } else {
+        console.warn('sdkfj');
+      }
+    } catch (error) {}
+  };
   const renderNavItem = () => {
     return navItem.map((v, i) => {
       if (v.title == 'Jobs') {
@@ -179,7 +210,11 @@ const CustomDrawerContent = props => {
                     fontWeight: '500',
                     marginVertical: 10,
                   }}>
-                  {v?.title}
+                  {globalState?.selectedLanguage == 'english'
+                    ? v.title
+                    : globalState?.selectedLanguage == 'hindi'
+                    ? v.hindiName
+                    : v.banglaName}
                 </Text>
                 {showSubMnu ? (
                   <Image source={require('../images/upArrow.png')} />
@@ -196,7 +231,13 @@ const CustomDrawerContent = props => {
                       style={[selectedScreen == value.title && styles.navBox]}>
                       <DrawerItem
                         key={i}
-                        label={value.title}
+                        label={
+                          globalState?.selectedLanguage == 'english'
+                            ? value.title
+                            : globalState?.selectedLanguage == 'hindi'
+                            ? value.hindiName
+                            : value.banglaName
+                        }
                         onPress={() => {
                           setSelectedScreen(value.title);
                           setShowSubmenu(false);
@@ -232,10 +273,16 @@ const CustomDrawerContent = props => {
       } else if (v.title == 'Improve Profile') {
         return (
           <TouchableOpacity>
-            {globalState?.profileStrength? (
+            {globalState?.profileStrength ? (
               <DrawerItem
                 key={i}
-                label={v.title}
+                label={
+                  globalState?.selectedLanguage == 'english'
+                    ? v.title
+                    : globalState?.selectedLanguage == 'hindi'
+                    ? v.hindiName
+                    : v.banglaName
+                }
                 labelStyle={{
                   color: '#334B5E',
                   fontSize: 16,
@@ -300,7 +347,13 @@ const CustomDrawerContent = props => {
                   fontWeight: '500',
                   marginVertical: 20,
                 }}>
-                {v.title}
+                {
+                globalState?.selectedLanguage == 'english'
+                  ? v.title
+                  : globalState?.selectedLanguage == 'hindi'
+                  ? v.hindiName
+                  : v.banglaName
+              }
               </Text>
               <Image
                 source={require('../images/languageSelect.png')}
@@ -331,7 +384,11 @@ const CustomDrawerContent = props => {
                   fontWeight: '500',
                   marginVertical: 10,
                 }}>
-                {v.title}
+                {globalState?.selectedLanguage == 'english'
+                    ? v.title
+                    : globalState?.selectedLanguage == 'hindi'
+                    ? v.hindiName
+                    : v.banglaName}
               </Text>
               <Image source={require('../images/shareIcon.png')} />
             </View>
@@ -339,10 +396,16 @@ const CustomDrawerContent = props => {
         );
       } else {
         return (
-          <View style={selectedScreen == v?.title && styles.navBox}>
+          <View style={selectedScreen === v?.title ? styles.navBox : null}>
             <DrawerItem
               key={i}
-              label={v?.title}
+              label={
+                globalState?.selectedLanguage == 'english'
+                  ? v.title
+                  : globalState?.selectedLanguage == 'hindi'
+                  ? v.hindiName
+                  : v.banglaName
+              }
               labelStyle={{
                 color: '#334B5E',
                 fontSize: 16,
@@ -358,19 +421,6 @@ const CustomDrawerContent = props => {
       }
     });
   };
-  const [notificationList, setNotificationistList] = useState(null);
-  const getNotificationFunc = async () => {
-    let user = await AsyncStorage.getItem('user');
-    try {
-      let response = await getNotification(JSON.parse(user).access_token);
-      if (response.status == 200) {
-        console.log(response.data);
-        setNotificationistList(response.data);
-      } else {
-        console.warn('sdkfj');
-      }
-    } catch (error) {}
-  };
   useFocusEffect(
     React.useCallback(() => {
       renderNavItem();
@@ -382,12 +432,6 @@ const CustomDrawerContent = props => {
       );
     }, [props.navigation.getState()]),
   );
-  useFocusEffect(
-    React.useCallback(() => {
-      renderNavItem();
-    }, [globalState?.selectedLanguage]),
-  );
-  
   return (
     <>
       <DrawerContentScrollView>
@@ -427,7 +471,7 @@ const CustomDrawerContent = props => {
                 {JSON.parse(globalState?.user)?.empData?.empName}
               </Text>
               <Text style={{color: '#00111F', fontSize: 12}}>
-                Profile Strength {globalState?.profileStrength?.profileStrength}
+              {newTranslation?.profileStrength} {globalState?.profileStrength?.profileStrength}
                 %
               </Text>
             </View>
@@ -473,6 +517,7 @@ const CustomDrawerContent = props => {
                 style={styles.selectBox}
                 onPress={() => {
                   setShowModal(false);
+
                   setGlobalState({...globalState, selectedLanguage: 'english'});
                 }}>
                 <Text style={styles.textCenter}>English</Text>
@@ -481,6 +526,7 @@ const CustomDrawerContent = props => {
                 style={styles.selectBox}
                 onPress={() => {
                   setShowModal(false);
+
                   setGlobalState({...globalState, selectedLanguage: 'hindi'});
                 }}>
                 <Text style={styles.textCenter}>हिंदी </Text>

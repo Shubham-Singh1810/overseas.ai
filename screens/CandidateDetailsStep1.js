@@ -26,10 +26,12 @@ import {
 import {registerUserStep1, addExperienceStep2} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
+import { useGlobalState } from '../GlobalProvider';
 const CandidateDetailsStep1 = props => {
   const [experienceMsgText, setShowExperinceMsgText] = useState(
     'Do you have past experience ?',
   );
+  const {newTranslation} = useGlobalState()
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showCalender, setShowCalender] = useState(false);
   const [showJoiningCalender, setJoiningCalender] = useState(false);
@@ -440,7 +442,7 @@ const CandidateDetailsStep1 = props => {
     <ScrollView>
       <View style={styles.main}>
         <View>
-          <Text style={styles.heading}>Please Enter Your Details : 1/2</Text>
+          <Text style={styles.heading}>{newTranslation?.pleaseEnterYourDetails}1/2</Text>
         </View>
         <View style={[styles.inputGroup]}>
           <TouchableOpacity
@@ -451,7 +453,7 @@ const CandidateDetailsStep1 = props => {
               formDataError.empDob !== '' ? {borderColor: 'red'} : {},
             ]}>
             <Text>
-              {formData?.empDob == '' ? 'Date of Birth' : formData?.empDob}
+              {formData?.empDob == '' ? newTranslation?.dateOfBirth : formData?.empDob}
             </Text>
           </TouchableOpacity>
           <Text
@@ -474,7 +476,7 @@ const CandidateDetailsStep1 = props => {
                     }
                   : {}),
               }}>
-              Gender
+              {newTranslation?.gender}
             </Text>
             <View
               style={{
@@ -491,7 +493,7 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Male' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/maleIcon.png')} />
-                <Text>Male</Text>
+                <Text>{newTranslation?.male}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -503,7 +505,7 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Female' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/femaleIcon.png')} />
-                <Text>Female</Text>
+                <Text>{newTranslation?.female}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -515,7 +517,7 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Other' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/otherGenderIcon.png')} />
-                <Text style={{marginLeft: 3}}>Others</Text>
+                <Text style={{marginLeft: 3}}>{newTranslation?.others}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -547,7 +549,7 @@ const CandidateDetailsStep1 = props => {
           {/* </View> */}
 
           <TextInput
-            placeholder="Whatsapp Number"
+            placeholder={newTranslation?.whatsappNumber}
             style={[
               styles.input,
               {marginBottom: 5, marginTop: 20},
@@ -575,7 +577,7 @@ const CandidateDetailsStep1 = props => {
             ]}>
             <Text>
               {formData.empLanguage.length == 0
-                ? 'Language Select'
+                ? newTranslation?.languageKnown
                 : formData?.empLanguage.join(', ')}{' '}
             </Text>
           </TouchableOpacity>
@@ -599,18 +601,18 @@ const CandidateDetailsStep1 = props => {
                   setFormData({...formData, empMS: itemValue});
                 }}>
                 <Picker.Item
-                  label="Marital Status"
+                  label={newTranslation?.maritalStatus}
                   value=""
                   style={{color: 'gray'}}
                 />
                 <Picker.Item
-                  label="Married"
-                  value="Married"
+                  label={newTranslation?.married}
+                  value={newTranslation?.married}
                   style={{color: 'gray'}}
                 />
                 <Picker.Item
-                  label="Single"
-                  value="Unmarried"
+                  label={newTranslation?.single}
+                  value={newTranslation?.single}
                   style={{color: 'gray'}}
                 />
 
@@ -638,12 +640,12 @@ const CandidateDetailsStep1 = props => {
                   setFormData({...formData, empPassportQ: itemValue});
                 }}>
                 <Picker.Item
-                  label="Do you have Passport"
+                  label={newTranslation?.doYouHavePassport}
                   value=""
                   style={{color: 'gray'}}
                 />
-                <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
-                <Picker.Item label="No" value="No" style={{color: 'gray'}} />
+                <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
+                <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
 
                 {/* Add more Picker.Item as needed */}
               </Picker>
@@ -670,7 +672,7 @@ const CandidateDetailsStep1 = props => {
                   setFormData({...formData, empOccuId: itemValue});
                 }}>
                 <Picker.Item
-                  label="Present Working Department"
+                  label={newTranslation?.presentWorkingDepertment}
                   value=""
                   style={{color: 'gray'}}
                 />
@@ -709,7 +711,7 @@ const CandidateDetailsStep1 = props => {
                       setFormDataError({...formDataError, empSkill: ''});
                     }}>
                     <Picker.Item
-                      label="Present Occupation"
+                      label={newTranslation?.presentOccupation}
                       value=""
                       style={{color: 'gray'}}
                     />
@@ -758,12 +760,12 @@ const CandidateDetailsStep1 = props => {
                   });
                 }}>
                 <Picker.Item
-                  label="Past International Migration Experience"
+                  label={newTranslation?.pastInternationalMigrationExperience}
                   value=""
                   style={{color: 'gray'}}
                 />
-                <Picker.Item label="Yes" value="Yes" style={{color: 'gray'}} />
-                <Picker.Item label="No" value="No" style={{color: 'gray'}} />
+                <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
+                <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
 
                 {/* Add more Picker.Item as needed */}
               </Picker>
@@ -789,7 +791,7 @@ const CandidateDetailsStep1 = props => {
                   setFormDataError({...formDataError, empEdu: ''});
                 }}>
                 <Picker.Item
-                  label="Highest Education Qualification"
+                  label={newTranslation?.highestEducationQualification}
                   value=""
                   style={{color: 'gray'}}
                 />
@@ -813,7 +815,7 @@ const CandidateDetailsStep1 = props => {
             </Text>
           </View>
           <Text style={{color: 'black', marginBottom: 18}}>
-            Parmanent Address*
+            {newTranslation?.parmanentAddress}
           </Text>
           <View
             style={[
@@ -827,7 +829,7 @@ const CandidateDetailsStep1 = props => {
                 setFormData({...formData, empState: itemValue});
                 getDistrictListFunc(itemValue);
               }}>
-              <Picker.Item label="State" value="" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.state} value="" style={{color: 'gray'}} />
               {stateList?.map((v, i) => {
                 return (
                   <Picker.Item
@@ -861,7 +863,7 @@ const CandidateDetailsStep1 = props => {
                 setFormData({...formData, empDistrict: itemValue});
                 setFormDataError({...formDataError, empDistrict: ''});
               }}>
-              <Picker.Item label="District" value="" style={{color: 'gray'}} />
+              <Picker.Item label={newTranslation?.district} value="" style={{color: 'gray'}} />
               {districtList?.map((v, i) => {
                 return (
                   <Picker.Item
@@ -885,7 +887,7 @@ const CandidateDetailsStep1 = props => {
             {formDataError.empDistrict}
           </Text>
           <TextInput
-            placeholder="Pin Code*"
+            placeholder={newTranslation?.pinCode}
             keyboardType="numeric"
             maxLength={6}
             // style={styles.input}
@@ -950,7 +952,7 @@ const CandidateDetailsStep1 = props => {
                 </TouchableOpacity>
               </View>
               <TextInput
-                placeholder="Company Name"
+                placeholder={newTranslation?.companyName}
                 style={styles.input}
                 value={experienceForm.experinceCompanyName}
                 onChangeText={text =>
@@ -970,7 +972,7 @@ const CandidateDetailsStep1 = props => {
                     });
                   }}>
                   <Picker.Item
-                    label="Working Department"
+                    label={newTranslation?.workingDepertment}
                     value=""
                     style={{color: 'gray'}}
                   />
@@ -996,7 +998,7 @@ const CandidateDetailsStep1 = props => {
                     });
                   }}>
                   <Picker.Item
-                    label="Occupation"
+                    label={newTranslation?.selectOccupation}
                     value=""
                     style={{color: 'gray'}}
                   />
@@ -1023,18 +1025,18 @@ const CandidateDetailsStep1 = props => {
                     });
                   }}>
                   <Picker.Item
-                    label="Experience Type"
+                    label={newTranslation?.experienceType}
                     value=""
                     style={{color: 'gray'}}
                   />
 
                   <Picker.Item
-                    label="Inside India"
+                    label={newTranslation?.insideIndia}
                     value="national"
                     style={{color: 'gray'}}
                   />
                   <Picker.Item
-                    label="Outside India"
+                    label={newTranslation?.outsideIndia}
                     value="international"
                     style={{color: 'gray'}}
                   />
@@ -1054,7 +1056,7 @@ const CandidateDetailsStep1 = props => {
                       });
                     }}>
                     <Picker.Item
-                      label="State"
+                      label={newTranslation?.state}
                       value=""
                       style={{color: 'gray'}}
                     />
@@ -1083,7 +1085,7 @@ const CandidateDetailsStep1 = props => {
                       });
                     }}>
                     <Picker.Item
-                      label="Country"
+                      label={newTranslation?.country}
                       value=""
                       style={{color: 'gray'}}
                     />
@@ -1112,7 +1114,7 @@ const CandidateDetailsStep1 = props => {
                   {' '}
                   {experienceForm.fromDate != ''
                     ? experienceForm.fromDate
-                    : 'Joining Date'}
+                    : newTranslation?.joiningDate}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -1125,11 +1127,11 @@ const CandidateDetailsStep1 = props => {
                   {' '}
                   {experienceForm.toDate != ''
                     ? experienceForm.toDate
-                    : 'Ending Date'}
+                    : newTranslation?.endingDate}
                 </Text>
               </TouchableOpacity>
               <Button
-                title="Add Experience"
+                title={newTranslation?.save}
                 onPress={addExperience}
                 color="#5F90CA"
               />
@@ -1137,7 +1139,7 @@ const CandidateDetailsStep1 = props => {
           )}
           {/* experince form start */}
           <TextInput
-            placeholder="Year of highest education qualification*"
+            placeholder={newTranslation?.yearOfHighestEducationQualification}
             style={[
               styles.input,
               formDataError.empEduYear !== '' ? {borderColor: 'red'} : {},
@@ -1158,7 +1160,7 @@ const CandidateDetailsStep1 = props => {
             {formDataError.empEduYear}
           </Text>
           <TextInput
-            placeholder="Specialisation*"
+            placeholder={newTranslation?.specialisation}
             onChangeText={text => {
               setFormData({...formData, empSpecialEdu: text});
               setFormDataError({...formDataError, empSpecialEdu: ''});
@@ -1184,7 +1186,7 @@ const CandidateDetailsStep1 = props => {
                 setFormData({...formData, empTechEdu: itemValue});
               }}>
               <Picker.Item
-                label="Technical/Vocational Education"
+                label={newTranslation?.technicalVocationalEducation}
                 value=""
                 style={{color: 'gray'}}
               />
@@ -1200,7 +1202,7 @@ const CandidateDetailsStep1 = props => {
         </View>
         <View style={styles.nextBtn}>
           <Button
-            title="Save and Continue"
+            title={newTranslation?.save}
             onPress={handleSubmit}
             color="#035292"
           />
@@ -1239,7 +1241,7 @@ const CandidateDetailsStep1 = props => {
                 alignItems: 'center',
               }}>
               <Text style={{fontWeight: '500', fontSize: 20}}>
-                Language Known
+                {newTranslation?.languageKnown}
               </Text>
               <TouchableOpacity
                 onPress={() => {
@@ -1401,7 +1403,7 @@ const CandidateDetailsStep1 = props => {
             </View>
             <View style={{marginHorizontal: 18, marginTop: 10}}>
               <Button
-                title="Save"
+                title={newTranslation?.save}
                 onPress={() => setShowLanguageSelect(false)}
               />
             </View>
@@ -1434,7 +1436,7 @@ const CandidateDetailsStep1 = props => {
                 alignItems: 'center',
               }}>
               <Text style={{fontWeight: '600', fontSize: 20}}>
-                Select Date Of Birth
+                {newTranslation?.dateOfBirth}
               </Text>
               <TouchableOpacity onPress={() =>setShowCalender(false)}>
                 <Image source={require('../images/close.png')} />
@@ -1494,7 +1496,7 @@ const CandidateDetailsStep1 = props => {
                 alignItems: 'center',
               }}>
               <Text style={{fontWeight: '600', fontSize: 20}}>
-                Select Date Of Joining
+                {newTranslation?.joiningDate}
               </Text>
               <TouchableOpacity onPress={() => setJoiningCalender(false)}>
                 <Image source={require('../images/close.png')} />
@@ -1543,7 +1545,7 @@ const CandidateDetailsStep1 = props => {
                 alignItems: 'center',
               }}>
               <Text style={{fontWeight: '600', fontSize: 20}}>
-                Select Date Of Exit
+                {newTranslation?.endingDate}
               </Text>
               <TouchableOpacity onPress={() => setEndingCalender(false)}>
                 <Image source={require('../images/close.png')} />
