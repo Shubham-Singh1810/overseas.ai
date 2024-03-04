@@ -127,11 +127,19 @@ const EditProfile = (props) => {
         Toast.show({
           type: 'success',
           text1: 'Profile pic updated successfully',
-          text1: 'Please logout and login again to view the updated data',
+          text2: 'Refreshing app for latest updates.',
           visibilityTime: 3000,
         });
         setUserImage(response?.data?.empData?.empPhoto);
         getProfileStrengthFunc();
+        user = JSON.parse(user);
+        await AsyncStorage.setItem(
+          'user',
+          JSON.stringify({...user, empData: response?.data.empData}),
+        );
+        setTimeout(()=>{
+          RNRestart.Restart();
+        }, 3000)
       } else {
         Toast.show({
           type: 'error',
@@ -219,18 +227,18 @@ const EditProfile = (props) => {
         Toast.show({
           type: 'success',
           text1: 'User profile updated successfully',
-          text1: 'Please logout and login again to view the updated data',
+          text2: 'Refreshing app for latest updates.',
           position: 'bottom',
           visibilityTime: 3000,
         });
-
         user = JSON.parse(user);
         await AsyncStorage.setItem(
           'user',
           JSON.stringify({...user, empData: response?.data.empData}),
         );
-        setUserData();
-        getProfileStrengthFunc();
+        setTimeout(()=>{
+          RNRestart.Restart();
+        }, 3000)
       } else {
         Toast.show({
           type: 'error',

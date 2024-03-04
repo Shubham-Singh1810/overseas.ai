@@ -147,6 +147,7 @@ const CandidateDetails2 = ({route}) => {
     await AsyncStorage.setItem('user', JSON.stringify(route.params.step1user));
     setUserData();
   };
+  
   useFocusEffect(
     React.useCallback(() => {
       getCountryList();
