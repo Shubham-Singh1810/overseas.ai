@@ -2200,6 +2200,13 @@ export const GlobalStateProvider = ({children}) => {
                 : globalState.selectedLanguage == 'hindi'
                 ? 'सफलतापूर्वक प्रवास करने पर या वीज़ा/मेडिकल परीक्षण में असफल होने पर आपको आपकी कॉशन मनी की पूरी राशि वापस मिल जाएगी'
                 : 'একবার আপনি সফলভাবে মাইগ্রেট করলে বা ভিসা/চিকিৎসা পরীক্ষায় ব্যর্থ হলে আপনি আপনার জামানতের টাকা সম্পূর্ণ ফেরত পাবেন',
+                doYouWantToAddMoreExperience:
+                globalState.selectedLanguage == 'english'
+                ? "Do you want to add more experience ?"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'क्या आप और अधिक अनुभव जोड़ना चाहते हैं?'
+                : 'আপনি আরো অভিজ্ঞতা যোগ করতে চান?',
+                
                 
     });
   };

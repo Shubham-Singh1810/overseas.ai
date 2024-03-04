@@ -28,10 +28,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import { useGlobalState } from '../GlobalProvider';
 const CandidateDetailsStep1 = props => {
+  const {newTranslation} = useGlobalState()
   const [experienceMsgText, setShowExperinceMsgText] = useState(
     newTranslation.doYouHavePastExperience,
   );
-  const {newTranslation} = useGlobalState()
+  
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showCalender, setShowCalender] = useState(false);
   const [showJoiningCalender, setJoiningCalender] = useState(false);
@@ -418,7 +419,7 @@ const CandidateDetailsStep1 = props => {
           stateName: '',
           certificateImage: '',
         });
-        setShowExperinceMsgText('Do you want to add more experience ?');
+        setShowExperinceMsgText(newTranslation?.doYouWantToAddMoreExperience);
         setShowAddExperienceForm(false);
       } else {
         Toast.show({

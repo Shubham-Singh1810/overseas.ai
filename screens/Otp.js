@@ -112,7 +112,7 @@ const Otp = props => {
             text1: newTranslation?.otpResendSuccessfully,
             visibilityTime: 3000,
           });
-          setTimer(30);
+          setTimer(60);
           startTimer();
         }
       } else {
@@ -126,7 +126,7 @@ const Otp = props => {
             text1: newTranslation?.otpResendSuccessfully,
             visibilityTime: 3000,
           });
-          setTimer(30);
+          setTimer(60);
           startTimer();
         }
       }

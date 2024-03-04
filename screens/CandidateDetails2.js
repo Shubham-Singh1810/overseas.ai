@@ -144,7 +144,7 @@ const CandidateDetails2 = ({route}) => {
   };
 
   const handleSkip = async () => {
-    await AsyncStorage.setItem('user', route.params.step1user);
+    await AsyncStorage.setItem('user', JSON.stringify(route.params.step1user));
     setUserData();
   };
   useFocusEffect(
