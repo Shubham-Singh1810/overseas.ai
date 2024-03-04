@@ -178,7 +178,7 @@ const SignUp = props => {
                 paddingHorizontal: 5,
               }}
               onPress={() => props.navigation.navigate('LoginCom')}>
-              <Text>{newTranslation?.logIn}</Text>
+              <Text style={{color:"#5F90CA"}}>{newTranslation?.logIn}</Text>
             </Pressable>
           </View>
         </View>
