@@ -1,4 +1,4 @@
-package com.overseas;
+package ai.overseas;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

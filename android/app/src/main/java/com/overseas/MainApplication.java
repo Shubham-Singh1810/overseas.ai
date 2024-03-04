@@ -1,4 +1,4 @@
-package com.overseas;
+package ai.overseas;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
