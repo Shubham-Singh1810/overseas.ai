@@ -65,7 +65,7 @@ const EditProfile = (props) => {
       setCountryList(response?.countries);
     } catch (error) {}
   };
-  const {translation,newTranslation, globalState, setUserData, setGlobalState} =
+  const {translation,newTranslation, globalState,  setGlobalState} =
     useGlobalState();
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [formData, setFormData] = useState({
@@ -127,7 +127,6 @@ const EditProfile = (props) => {
         Toast.show({
           type: 'success',
           text1: 'Profile pic updated successfully',
-          text2: 'Refreshing app for latest updates.',
           visibilityTime: 3000,
         });
         setUserImage(response?.data?.empData?.empPhoto);
@@ -137,9 +136,9 @@ const EditProfile = (props) => {
           'user',
           JSON.stringify({...user, empData: response?.data.empData}),
         );
-        setTimeout(()=>{
-          RNRestart.Restart();
-        }, 3000)
+        setTimeout(() => {
+          props.navigation.navigate("MyProfile")
+        }, 2000);
       } else {
         Toast.show({
           type: 'error',
@@ -216,7 +215,7 @@ const EditProfile = (props) => {
         empRefPhone: JSON.parse(globalState.user).empData.empRefPhone,
       });
       getSkillListByOccuId(JSON.parse(globalState.user).empData.empOccuId);
-    }, []),
+    }, [globalState.user]),
   );
 
   const handleSubmit = async () => {
@@ -227,18 +226,19 @@ const EditProfile = (props) => {
         Toast.show({
           type: 'success',
           text1: 'User profile updated successfully',
-          text2: 'Refreshing app for latest updates.',
           position: 'bottom',
           visibilityTime: 3000,
         });
         user = JSON.parse(user);
         await AsyncStorage.setItem(
           'user',
-          JSON.stringify({...user, empData: response?.data.empData}),
+          JSON.stringify({...user, empData:
+            response?.data?.empData}),
         );
-        setTimeout(()=>{
-          RNRestart.Restart();
-        }, 3000)
+        setTimeout(() => {
+          props.navigation.navigate("MyProfile")
+        }, 2000);
+       
       } else {
         Toast.show({
           type: 'error',

@@ -12,10 +12,11 @@ import {
 } from 'react-native';
 import {loginOut} from "../services/user.service"
 import React, {useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyProfile = props => {
-  const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
+  const {translation,newTranslation,setUserData, globalState, setGlobalState} = useGlobalState();
   const handleLogOut = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -73,6 +74,11 @@ const MyProfile = props => {
     }
   };
   const [showLogOutPopUp, setShowLogOutPopUp]=useState(false)
+  useFocusEffect(
+    React.useCallback(() => {
+      setUserData()
+    }, []),
+  );
   return (
     <>
       <View style={styles.main}>
