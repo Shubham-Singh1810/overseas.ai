@@ -25,7 +25,7 @@ const DetailedHra = props => {
     props.navigation.navigate('Your HRA');
     return true;
   });
-  const {params} = props.route;
+  const [params, setParams]=useState(props?.route.params.hraDetails ? props?.route.params.hraDetails : props?.route)
   const {newTranslation}=useGlobalState();
   const [showJobDetails, setShowJobDetails] = useState(false);
   const [showClientName, setShowClientName] = useState(false);
@@ -83,15 +83,13 @@ const DetailedHra = props => {
       });
       if (response?.status == 200) {
         setHraJobList(response?.data?.jobs);
+        setShowLoader(false)
       } else {
         console.warn('something went wrong');
       }
     } catch (error) {
       console.warn('something went wrong');
     };
-    setTimeout(() => {
-      setShowLoader(false);
-    }, 1000);
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -329,12 +327,12 @@ const DetailedHra = props => {
             <View>
               <View style={{marginVertical: 30}}>
                 <Text style={[styles.hraName]}>
-                  {newTranslation?.jobsPostedByHra} <Text>{hraJobList?.length}</Text>
+                  {newTranslation?.jobsPostedByHra} <Text>{!showLoader && hraJobList?.length}</Text>
                 </Text>
               </View>
               <View style={{paddingBottom: 200}}>
                 {hraJobList?.map((v, i) => {
-                  return <SearchResult backTo="Your HRA" value={v} props={props}/>;
+                  return <SearchResult backTo="DetailedHra" hraDetails={params} value={v} props={props}/>;
                 })}
               </View>
             </View>

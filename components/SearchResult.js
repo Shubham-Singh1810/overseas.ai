@@ -14,7 +14,7 @@ import {applyJobApi} from '../services/job.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {saveJobById} from '../services/job.service';
-const SearchResult = ({value,countryId,countryName,hraId, getListOfSavedJobs, saved, favroite, props , backTo,departmentName, departmentId}) => {
+const SearchResult = ({value,countryId,countryName,hraId,hraDetails, getListOfSavedJobs, saved, favroite, props , backTo,departmentName, departmentId}) => {
   const [showModal, setShowModal] = useState(false);
   const {translation, newTranslation} = useGlobalState();
   const handleApplyJob = async jobId => {
@@ -96,8 +96,8 @@ const SearchResult = ({value,countryId,countryName,hraId, getListOfSavedJobs, sa
               countryId:countryId,
               countryName:countryName,
               departmentName:departmentName,
-               departmentId:departmentId,
-               hraId:hraId
+              departmentId:departmentId,
+              hraDetails:hraDetails
             })
           }>
           <Text style={styles.jobName}>
@@ -218,7 +218,7 @@ const SearchResult = ({value,countryId,countryName,hraId, getListOfSavedJobs, sa
                   countryName:countryName,
                   departmentName:departmentName,
                    departmentId:departmentId,
-                   hraId:hraId
+                   hraDetails:hraDetails
                 })
               }>
               {translation.readDetails}
