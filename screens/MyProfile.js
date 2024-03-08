@@ -10,7 +10,7 @@ import {
   Modal,
   Button
 } from 'react-native';
-import {loginOut} from "../services/user.service"
+import {loginOut,getProfileStrength} from "../services/user.service"
 import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useGlobalState} from '../GlobalProvider';
@@ -73,10 +73,26 @@ const MyProfile = props => {
       );
     }
   };
+  const getProfileStrengthFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getProfileStrength(JSON.parse(user).access_token);
+      if (
+        response?.data.msg == 'Some fields are empty' ||
+        response?.data.msg ==
+          'Profile strength calculated successfully and updated in records'
+      ) {
+        setGlobalState({...globalState, profileStrength: response?.data});
+      }
+    } catch (error) {
+      console.log('NEW', error);
+    }
+  };
   const [showLogOutPopUp, setShowLogOutPopUp]=useState(false)
   useFocusEffect(
     React.useCallback(() => {
       setUserData()
+      getProfileStrengthFunc()
     }, []),
   );
   return (
