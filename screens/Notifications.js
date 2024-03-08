@@ -17,11 +17,11 @@ import {useGlobalState} from '../GlobalProvider';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const Notifications = props => {
   useAndroidBackHandler(() => {
-    if(props?.route?.params?.backTo){
+    if (props?.route?.params?.backTo) {
       props.navigation.navigate(props?.route?.params.backTo);
       return true;
-    }else{
-      props.navigation.navigate("MyProfile") 
+    } else {
+      props.navigation.navigate('MyProfile');
       return true;
     }
   });
@@ -109,7 +109,10 @@ const Notifications = props => {
                 return (
                   <Pressable
                     onPress={() =>
-                      props.navigation.navigate('Job Details', {jobId: v.id, backTo:"Notifications"})
+                      props.navigation.navigate('Job Details', {
+                        jobId: v.id,
+                        backTo: 'Notifications',
+                      })
                     }
                     style={styles.notificationBox}>
                     <Text style={styles.notificationBoxText}>
@@ -135,7 +138,7 @@ const Notifications = props => {
                     onPress={() =>
                       props.navigation.navigate('Applied Job By Id', {
                         id: v?.jobApplicationId,
-                        backTo:"Notifications"
+                        backTo: 'Notifications',
                       })
                     }
                     style={styles.notificationBox}>
@@ -161,7 +164,9 @@ const Notifications = props => {
                   !v.complete && (
                     <Pressable
                       onPress={() =>
-                        props.navigation.navigate(v.type, {backTo:"Notifications"})
+                        props.navigation.navigate(v.type, {
+                          backTo: 'Notifications',
+                        })
                       }
                       style={styles.notificationBox}>
                       <Text style={styles.notificationBoxText}>
@@ -175,12 +180,53 @@ const Notifications = props => {
                           fontWeight: 500,
                           fontSize: 12,
                         }}>
-                       Action
+                        Action
                       </Text>
                     </Pressable>
                   )
                 );
               })}
+            {showNotifyScreen == 'Applications' &&
+              notificationArr.notifications?.length == 0 && (
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginTop:100,
+                    color: 'maroon',
+                    paddingHorizontal: 20,
+                    textAlign: 'center',
+                  }}>
+                  No new notifications
+                </Text>
+              )}
+            {showNotifyScreen == 'Jobs' &&
+              notificationArr?.newJobs?.length == 0 && (
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginTop:100,
+                    color: 'maroon',
+                    paddingHorizontal: 20,
+                    textAlign: 'center',
+                  }}>
+                  No new notifications
+                </Text>
+              )}
+            {showNotifyScreen == 'Profile' &&
+              globalState.profileStrength.emptyFields.filter?.((v, i) => {
+                return !v.complete;
+              }).length == 0 && (
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginTop:100,
+                    color: 'green',
+                    paddingHorizontal: 20,
+                    textAlign: 'center',
+                  }}>
+                  We will let you know if you can do anything else to improve your profile shortly!
+                </Text>
+              )}
           </ScrollView>
         </View>
       )}

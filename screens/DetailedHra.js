@@ -10,7 +10,7 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {getJobByHra} from '../services/hra.service';
 import WebView from 'react-native-webview';
 import {useFocusEffect} from '@react-navigation/native';
@@ -25,7 +25,17 @@ const DetailedHra = props => {
     props.navigation.navigate('Your HRA');
     return true;
   });
-  const [params, setParams]=useState(props?.route.params.hraDetails ? props?.route.params.hraDetails : props?.route)
+  const [params, setParams] = useState(props?.route.params.hraDetails || props?.route.params);
+  useFocusEffect(
+    React.useCallback(() => {
+      if(props?.route.params.hraDetails){
+        setParams(props?.route.params.hraDetails)
+      }else{
+        setParams(props?.route.params)
+      }
+    }, [props?.route]),
+  );
+  
   const {newTranslation}=useGlobalState();
   const [showJobDetails, setShowJobDetails] = useState(false);
   const [showClientName, setShowClientName] = useState(false);

@@ -18,7 +18,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import Toast from 'react-native-toast-message';
 const JobDetailedScreen = params => {
-  console.warn("dsfj", params?.route?.params?.hraDetails)
   useAndroidBackHandler(() => {
     params.navigation.navigate(params.route.params.backTo,
       {countryName:params?.route?.params?.countryName,

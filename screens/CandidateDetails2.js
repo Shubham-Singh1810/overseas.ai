@@ -21,10 +21,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {useFocusEffect} from '@react-navigation/native';
 const CandidateDetails2 = ({route}) => {
-  console.log(route.params.step1user.access_token)
-  const {globalState,newTranslation, setGlobalState} = useGlobalState();
+  console.log(route.params.step1user.access_token);
+  const {globalState, newTranslation, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
-    empEmail: '', 
+    empEmail: '',
     empDailyWage: '',
     empExpectedMonthlyIncome: '',
     empRelocationIntQ: '',
@@ -46,9 +46,12 @@ const CandidateDetails2 = ({route}) => {
         type: result[0].type,
         name: result[0].name,
       });
-      
-      let response = await registerUserStep2(imageformData, route.params.step1user.access_token);
-      console.log(response)
+
+      let response = await registerUserStep2(
+        imageformData,
+        route.params.step1user.access_token,
+      );
+      console.log(response);
       setFormData({...formData, empPhoto: response.empData.empPhoto});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -73,10 +76,10 @@ const CandidateDetails2 = ({route}) => {
       console.warn('error from global provider');
     }
   };
-  const formValidation = ()=>{
+  const formValidation = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(formData.empEmail!=""){
-      if(!emailRegex.test(formData.empEmail)){
+    if (formData.empEmail != '') {
+      if (!emailRegex.test(formData.empEmail)) {
         Toast.show({
           type: 'error',
           position: 'top',
@@ -84,11 +87,11 @@ const CandidateDetails2 = ({route}) => {
           // text2: '',
           visibilityTime: 3000,
         });
-        return false
+        return false;
       }
     }
-    if(formData.empRefPhone!=""){
-      if(formData.empRefPhone.length!=10){
+    if (formData.empRefPhone != '') {
+      if (formData.empRefPhone.length != 10) {
         Toast.show({
           type: 'error',
           position: 'top',
@@ -96,25 +99,24 @@ const CandidateDetails2 = ({route}) => {
           // text2: '',
           visibilityTime: 3000,
         });
-        return false
-      }  
+        return false;
+      }
     }
-    if(formData.empAadharNo!=""){
-      if(formData.empAadharNo.length!=16){
+    if (formData.empAadharNo != '') {
+      if (formData.empAadharNo.length != 16) {
         Toast.show({
           type: 'error',
           position: 'top',
           text1: 'Invalid Aadhar number',
           visibilityTime: 3000,
         });
-        return false
+        return false;
       }
     }
-    return true
-  }
+    return true;
+  };
   const handleSubmit = async () => {
-    
-    if(formValidation()){
+    if (formValidation()) {
       try {
         let response = await registerUserStep2(
           {
@@ -127,10 +129,16 @@ const CandidateDetails2 = ({route}) => {
             empRefPhone: formData.empRefPhone,
             empAadharNo: formData.empAadharNo,
           },
-          route.params.step1user.access_token
+          route.params.step1user.access_token,
         );
         if (response?.msg == 'Data Updated Successfully.') {
-          await AsyncStorage.setItem('user', JSON.stringify({...response, access_token:route.params.step1user.access_token}));
+          await AsyncStorage.setItem(
+            'user',
+            JSON.stringify({
+              ...response,
+              access_token: route.params.step1user.access_token,
+            }),
+          );
           setUserData();
         } else {
           console.warn('something went wrong');
@@ -140,14 +148,13 @@ const CandidateDetails2 = ({route}) => {
         console.warn(error, 'Enternal server error');
       }
     }
-    
   };
 
   const handleSkip = async () => {
     await AsyncStorage.setItem('user', JSON.stringify(route.params.step1user));
     setUserData();
   };
-  
+
   useFocusEffect(
     React.useCallback(() => {
       getCountryList();
@@ -157,7 +164,9 @@ const CandidateDetails2 = ({route}) => {
     <ScrollView style={{backgroundColor: 'white'}}>
       <View style={styles.main}>
         <View>
-          <Text style={styles.heading}>{newTranslation?.pleaseEnterYourDetails}2/2</Text>
+          <Text style={styles.heading}>
+            {newTranslation?.pleaseEnterYourDetails}2/2
+          </Text>
         </View>
         <View style={styles.inputGroup}>
           <View
@@ -203,23 +212,50 @@ const CandidateDetails2 = ({route}) => {
           <TextInput
             style={styles.input}
             placeholder={newTranslation?.aadhaNumber}
+            keyboardType="numeric"
             onChangeText={text =>
               setFormData({...formData, empAadharNo: text})
             }></TextInput>
           <TextInput
             style={styles.input}
             placeholder={newTranslation?.presentMonthlyIncome}
+            keyboardType="numeric"
             onChangeText={text =>
               setFormData({...formData, empDailyWage: text})
             }></TextInput>
           <TextInput
             style={styles.input}
             placeholder={newTranslation?.expectedMonthlyIncome}
+            keyboardType="numeric"
             onChangeText={text =>
               setFormData({...formData, empExpectedMonthlyIncome: text})
             }></TextInput>
+          <View style={styles.picker}>
+            <Picker
+              // selectedValue={contactRef}
+              onValueChange={(itemValue, itemIndex) => {
+                setContactRef(itemValue);
+              }}>
+              <Picker.Item
+                label={newTranslation?.anyOtherContact}
+                value=""
+                style={{color: 'gray'}}
+              />
+              <Picker.Item
+                label={newTranslation?.yes}
+                value={true}
+                style={{color: 'gray'}}
+              />
+              <Picker.Item
+                label={newTranslation?.no}
+                value={false}
+                style={{color: 'gray'}}
+              />
 
-          {contactRef ? (
+              {/* Add more Picker.Item as needed */}
+            </Picker>
+          </View>
+          {contactRef && (
             <>
               <TextInput
                 style={styles.input}
@@ -230,28 +266,11 @@ const CandidateDetails2 = ({route}) => {
               <TextInput
                 style={styles.input}
                 placeholder={newTranslation?.referencePersoneContact}
+                keyboardType="numeric"
                 onChangeText={text =>
                   setFormData({...formData, empRefPhone: text})
                 }></TextInput>
             </>
-          ) : (
-            <View style={styles.picker}>
-              <Picker
-                // selectedValue={contactRef}
-                onValueChange={(itemValue, itemIndex) => {
-                  setContactRef(itemValue);
-                }}>
-                <Picker.Item
-                  label={newTranslation?.anyOtherContact}
-                  value=""
-                  style={{color: 'gray'}}
-                />
-                <Picker.Item label={newTranslation?.yes} value={true} style={{color: 'gray'}} />
-                <Picker.Item label={newTranslation?.no} value={false} style={{color: 'gray'}} />
-
-                {/* Add more Picker.Item as needed */}
-              </Picker>
-            </View>
           )}
           <View style={styles.picker}>
             <Picker
@@ -264,8 +283,16 @@ const CandidateDetails2 = ({route}) => {
                 value=""
                 style={{color: 'gray'}}
               />
-              <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
-              <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
+              <Picker.Item
+                label={newTranslation?.yes}
+                value="Yes"
+                style={{color: 'gray'}}
+              />
+              <Picker.Item
+                label={newTranslation?.no}
+                value="No"
+                style={{color: 'gray'}}
+              />
 
               {/* Add more Picker.Item as needed */}
             </Picker>
@@ -307,16 +334,20 @@ const CandidateDetails2 = ({route}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-           <TouchableOpacity
+          <TouchableOpacity
             style={{flexDirection: 'row', justifyContent: 'flex-end'}}
             onPress={handleSkip}>
-              {formData.empPhoto =="" &&
-            <Text
-              style={{textDecorationLine: 'underline', paddingHorizontal: 10}}>
-              {newTranslation?.skip}
-            </Text>}
+            {formData.empPhoto == '' && (
+              <Text
+                style={{
+                  textDecorationLine: 'underline',
+                  paddingHorizontal: 10,
+                }}>
+                {newTranslation?.skip}
+              </Text>
+            )}
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={{
               width: '50%',

@@ -68,8 +68,7 @@ const SavedJobs = props => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={styles.messageText}>{newTranslation?.jobsYouHaveSavedEarlier}</Text>
-            
+            <Text style={styles.messageText}>{newTranslation?.jobsYouHaveSavedEarlier}: {savedList.length}</Text>
           </View>
           {savedList?.length==0 ? <View style={{height:500, justifyContent:"center", alignItems:"center"}}><Text style={{fontSize:22}}>You haven't saved any job yet !!!</Text></View> :savedList?.map((v, i) => {
             return <SearchResult backTo="Saved Jobs" getListOfSavedJobs={getListOfSavedJobs} saved={true} props={props} value={v} />;
