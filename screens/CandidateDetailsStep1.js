@@ -134,7 +134,7 @@ const CandidateDetailsStep1 = props => {
   };
   useFocusEffect(
     React.useCallback(() => {
-      getOccupationList();
+    getOccupationList();
     getLocalUser();
     getCountryList();
     getStateList();

@@ -132,6 +132,15 @@ const CandidateDetails2 = ({route}) => {
           route.params.step1user.access_token,
         );
         if (response?.msg == 'Data Updated Successfully.') {
+          const regSource = response?.data?.user?.regSource;
+            // Check if "regSource" exists before setting it in AsyncStorage
+            if (regSource !== undefined && regSource !== null) {
+              
+              await AsyncStorage.setItem('regSource', regSource);
+            } else {
+              
+              console.log("No registration source found in the response.");
+            }
           await AsyncStorage.setItem(
             'user',
             JSON.stringify({
@@ -151,7 +160,15 @@ const CandidateDetails2 = ({route}) => {
   };
 
   const handleSkip = async () => {
+    const regSource = route.params.step1user.user?.regSource;
+    // Check if "regSource" exists before setting it in AsyncStorage
+    if (regSource !== undefined && regSource !== null) {
+      await AsyncStorage.setItem('regSource', regSource);
+    } else {
+      console.log('No registration source found in the response.');
+    }
     await AsyncStorage.setItem('user', JSON.stringify(route.params.step1user));
+
     setUserData();
   };
 

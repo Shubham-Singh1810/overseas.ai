@@ -78,6 +78,12 @@ const Otp = props => {
             setLoading(false);
             return;
           }
+          const regSource = response?.data?.user?.regSource;
+          if (regSource !== undefined && regSource !== null) {
+            await AsyncStorage.setItem('regSource', regSource);
+          } else {
+            console.log("No registration source found in the response.");
+          }
           await AsyncStorage.setItem('user', JSON.stringify(response.data));
           setUserData();
         } else {

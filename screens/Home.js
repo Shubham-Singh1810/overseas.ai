@@ -202,7 +202,7 @@ const Home = props => {
   );
   const handleShowRegPopUp = async () => {
     let regSource = await AsyncStorage.getItem('regSource');
-    if (regSource) {
+    if (regSource && regSource!="Other") {
       setShowRefSelectPopUp(false);
     } else {
       setShowRefSelectPopUp(true);
@@ -567,11 +567,11 @@ const Home = props => {
                 onPress={() => submitReferItem('Poster')}>
                 <Text style={styles.textCenter}>Poster</Text>
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={[styles.box, refItem == 'Other' && styles.selectedBox]}
                 onPress={() => submitReferItem('Other')}>
                 <Text style={styles.textCenter}>Other</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View
               style={{
