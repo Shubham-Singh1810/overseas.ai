@@ -342,7 +342,7 @@ const EditProfile = (props) => {
           <TouchableOpacity
             onPress={() => setShowLanguageSelect(true)}
             style={[styles.input, {marginBottom: 16, padding: 17}]}>
-            <Text>
+            <Text style={{color:"gray"}}>
               {formData?.empLanguage.length > 2
                 ? formData?.empLanguage.substring(
                     1,
@@ -592,6 +592,7 @@ const EditProfile = (props) => {
           </View>
           <TextInput
             style={[styles.input]}
+            placeholderTextColor="gray"
             onChangeText={text => {
               setFormData({...formData, empEduYear: text});
             }}
@@ -645,6 +646,7 @@ const EditProfile = (props) => {
           <TextInput
             style={styles.input}
             placeholder={newTranslation?.email}
+            placeholderTextColor="gray"
             onChangeText={text => {
               setFormData({...formData, empEmail: text});
             }}
@@ -666,6 +668,7 @@ const EditProfile = (props) => {
           <TextInput
             style={styles.input}
             placeholder=""
+            placeholderTextColor="gray"
             onChangeText={text => {
               setFormData({...formData, empAadharNo: text});
             }}
@@ -1070,6 +1073,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 18,
     backgroundColor: 'white',
+    color:"gray"
   },
   heading: {
     color: '#000',

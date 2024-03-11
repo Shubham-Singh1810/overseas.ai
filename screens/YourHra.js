@@ -150,6 +150,7 @@ const YourHra = props => {
         }}>
         <TextInput
           placeholder={newTranslation?.searchByName}
+          placeholderTextColor="gray"
           value={searchKey}
           style={styles.input}
           onChangeText={text => {

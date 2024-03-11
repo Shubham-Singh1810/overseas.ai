@@ -1007,6 +1007,7 @@ const MyDocument = props => {
             <ScrollView style={{marginTop: 20}}>
               <TextInput
                 placeholder={newTranslation?.enterPassportNumber}
+                placeholderTextColor="gray"
                 style={styles.input}
                 value={passportForm.passportNumber}
                 onChangeText={text =>
@@ -1043,6 +1044,7 @@ const MyDocument = props => {
               </View>
               <TextInput
                 placeholder={newTranslation?.placeOfIssue}
+                placeholderTextColor="gray"
                 style={styles.input}
                 value={passportForm.placeOfIssue}
                 onChangeText={text =>
@@ -1051,7 +1053,7 @@ const MyDocument = props => {
               <TouchableOpacity
                 onPress={() => setShowPassportIssueCalender(true)}
                 style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                <Text>
+                <Text style={{color:"gray"}}>
                   {passportForm.passportIssueDate == ''
                     ? newTranslation?.placeOfIssue
                     : passportForm.passportIssueDate}
@@ -1060,7 +1062,7 @@ const MyDocument = props => {
               <TouchableOpacity
                 onPress={() => setShowPassportExpCalender(true)}
                 style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                <Text>
+                <Text style={{color:"gray"}}>
                   {passportForm.passportExpDate == ''
                     ? 'Passport Expriry Date'
                     : passportForm.passportExpDate}
@@ -1186,7 +1188,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
                 Passport Issue Date
               </Text>
               <TouchableOpacity
@@ -1237,7 +1239,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
                 Passport Expire Date
               </Text>
               <TouchableOpacity
@@ -1295,6 +1297,7 @@ const MyDocument = props => {
                 <ScrollView style={{marginTop: 20}}>
                   <TextInput
                     placeholder="Enter Licence Number"
+                    placeholderTextColor="gray"
                     style={styles.input}
                     editable={dlFormType == 'Edit' ? false : true}
                     value={dlFormData.licenceNumber}
@@ -1751,7 +1754,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
                 Liecence Issue Date
               </Text>
               <TouchableOpacity onPress={() => setShowDlIssueCalender(false)}>
@@ -1801,7 +1804,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
                 Liecence Expire Date
               </Text>
               <TouchableOpacity onPress={() => setShowDlExpCalender(false)}>
@@ -1945,6 +1948,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 18,
     backgroundColor: 'white',
+    color:"gray"
   },
   picker: {
     borderWidth: 1,

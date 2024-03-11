@@ -55,11 +55,13 @@ const CandidateDetails = props => {
         <View style={styles.inputGroup}>
           <TextInput
             placeholder="Full Name"
+            placeholderTextColor="gray"
             value={userDeatils.name}
             style={styles.input}
           />
           <TextInput
             placeholder="Date of Birth"
+            placeholderTextColor="gray"
             value={userDeatils.empDob}
             style={styles.input}
           />
@@ -142,7 +144,7 @@ const CandidateDetails = props => {
               </Picker>
             </View>
           </View>
-          <TextInput placeholder="Police Station" value={userDeatils.empPS} style={styles.input} />
+          <TextInput placeholder="Police Station" placeholderTextColor="gray" value={userDeatils.empPS} style={styles.input} />
           <TextInput
             placeholder="Do you have passport ?*"
             style={styles.input}

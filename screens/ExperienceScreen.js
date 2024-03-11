@@ -521,7 +521,6 @@ const ExperienceScreen = (props) => {
                             textAlign: 'center',
                             color: '#035292',
                             marginEnd: 20,
-                            
                           }}>
                           {experienceForm.certificateImage =="" ? newTranslation?.upload: newTranslation?.selected} 
                         </Text>
@@ -589,6 +588,7 @@ const ExperienceScreen = (props) => {
               )}
               <TextInput
                 placeholder={newTranslation?.companyName}
+                placeholderTextColor="gray"
                 style={styles.input}
                 value={experienceForm.experinceCompanyName}
                 editable={addForm == 'Edit' ? false : true}
@@ -602,6 +602,7 @@ const ExperienceScreen = (props) => {
               {addForm == 'Edit' ? (
                 <TextInput
                   editable={false}
+                  placeholderTextColor="gray"
                   style={styles.input}
                   value={editExtraField.viewJobProfile}></TextInput>
               ) : (
@@ -672,6 +673,7 @@ const ExperienceScreen = (props) => {
               {addForm == 'Edit' ? (
                 <TextInput
                   editable={false}
+                  placeholderTextColor="gray"
                   style={styles.input}
                   value={
                     experienceForm.experienceType == 'national'
@@ -712,6 +714,7 @@ const ExperienceScreen = (props) => {
               {experienceForm.experienceType == 'national' && (
                 <View style={styles.picker}>
                   <Picker
+                  style={{color: 'gray'}}
                     selectedValue={experienceForm.stateName}
                     onValueChange={(itemValue, itemIndex) => {
                       setExperienceForm({
@@ -786,7 +789,7 @@ const ExperienceScreen = (props) => {
                   <TouchableOpacity
                     onPress={() => setJoiningCalender(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                    <Text>
+                    <Text style={{color:"gray"}}>
                       {experienceForm.fromDate != ''
                         ? experienceForm.fromDate
                         : newTranslation?.joiningDate}
@@ -795,7 +798,7 @@ const ExperienceScreen = (props) => {
                   <TouchableOpacity
                     onPress={() => setEndingCalender(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                    <Text>
+                    <Text style={{color:"gray"}}>
                       {experienceForm.toDate != ''
                         ? experienceForm.toDate
                         : newTranslation?.endingDate}
@@ -932,6 +935,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 18,
     backgroundColor: 'white',
+    color:"gray"
   },
   picker: {
     borderWidth: 1,

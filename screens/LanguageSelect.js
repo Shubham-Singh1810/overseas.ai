@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     marginBottom:17
   },
   textCenter:{
-    textAlign:"center"
+    textAlign:"center",
+    color:"gray"
   },
   selectBox:{
     borderWidth:1,

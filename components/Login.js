@@ -160,6 +160,7 @@ const Login = props => {
         <View>
           <TextInput
             placeholder={newTranslation.mobileNumber}
+            placeholderTextColor="gray"
             style={styles.input}
             onChangeText={text => setFormData({...formData, empPhone: text})}
             value={formData.empPhone}
@@ -167,6 +168,7 @@ const Login = props => {
           <Text style={styles.errorMessage}>{errors.empPhone}</Text>
           <TextInput
             placeholder={newTranslation.password}
+            placeholderTextColor="gray"
             style={styles.input}
             onChangeText={text => setFormData({...formData, password: text})}
             value={formData.password}
@@ -213,7 +215,7 @@ const Login = props => {
                   alignItems: 'center',
                   marginTop: 20,
                 }}>
-                <Text>{newTranslation.dontHaveAnyAccount}</Text>
+                <Text style={{color: '#212121'}}>{newTranslation.dontHaveAnyAccount}</Text>
                 <Pressable
                   style={{
                     borderBottomColor: '#5F90CA',

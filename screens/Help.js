@@ -188,18 +188,21 @@ const Help = props => {
           value={formData?.user_contact}
           onChangeText={text => setFormData({...formData, user_contact: text})}
           placeholder={newTranslation?.mobileNumber+"*"}
+          placeholderTextColor="gray"
           keyboardType='numeric'
           maxLength={13}
         />
         <TextInput
           style={styles.inputBox}
           placeholder={newTranslation?.subject+"*"}
+          placeholderTextColor="gray"
           value={formData.help_subject}
           onChangeText={text => setFormData({...formData, help_subject: text})}
         />
         <TextInput
           style={styles.inputBox}
           placeholder={newTranslation?.writeyourqueryhere+"*"} 
+          placeholderTextColor="gray"
           value={formData.help_query}
           multiline={true}
           numberOfLines={5}
@@ -318,6 +321,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     padding: 10,
     borderRadius: 5,
+    color:"gray"
   },
   btn: {
     backgroundColor: '#F1F7FF',

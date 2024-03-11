@@ -222,12 +222,14 @@ const CandidateDetails2 = ({route}) => {
           </View>
           <TextInput
             style={styles.input}
+            placeholderTextColor="gray"
             placeholder={newTranslation.email}
             onChangeText={text =>
               setFormData({...formData, empEmail: text})
             }></TextInput>
           <TextInput
             style={styles.input}
+            placeholderTextColor="gray"
             placeholder={newTranslation?.aadhaNumber}
             keyboardType="numeric"
             onChangeText={text =>
@@ -235,6 +237,7 @@ const CandidateDetails2 = ({route}) => {
             }></TextInput>
           <TextInput
             style={styles.input}
+            placeholderTextColor="gray"
             placeholder={newTranslation?.presentMonthlyIncome}
             keyboardType="numeric"
             onChangeText={text =>
@@ -242,6 +245,7 @@ const CandidateDetails2 = ({route}) => {
             }></TextInput>
           <TextInput
             style={styles.input}
+            placeholderTextColor="gray"
             placeholder={newTranslation?.expectedMonthlyIncome}
             keyboardType="numeric"
             onChangeText={text =>
@@ -276,12 +280,14 @@ const CandidateDetails2 = ({route}) => {
             <>
               <TextInput
                 style={styles.input}
+                placeholderTextColor="gray"
                 placeholder={newTranslation?.referencePersoneName}
                 onChangeText={text =>
                   setFormData({...formData, empRefName: text})
                 }></TextInput>
               <TextInput
                 style={styles.input}
+                placeholderTextColor="gray"
                 placeholder={newTranslation?.referencePersoneContact}
                 keyboardType="numeric"
                 onChangeText={text =>
@@ -359,6 +365,7 @@ const CandidateDetails2 = ({route}) => {
                 style={{
                   textDecorationLine: 'underline',
                   paddingHorizontal: 10,
+                  color:"gray"
                 }}>
                 {newTranslation?.skip}
               </Text>

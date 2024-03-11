@@ -453,7 +453,7 @@ const CandidateDetailsStep1 = props => {
               {marginBottom: 15, padding: 17, marginTop: 5},
               formDataError.empDob !== '' ? {borderColor: 'red'} : {},
             ]}>
-            <Text>
+            <Text style={{color:"#212121"}}>
               {formData?.empDob == '' ? newTranslation?.dateOfBirth : formData?.empDob}
             </Text>
           </TouchableOpacity>
@@ -474,6 +474,7 @@ const CandidateDetailsStep1 = props => {
                       borderBottomWidth: 1,
                       borderColor: 'red',
                       width: 50,
+                      color:"#212121"
                     }
                   : {}),
               }}>
@@ -494,7 +495,7 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Male' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/maleIcon.png')} />
-                <Text>{newTranslation?.male}</Text>
+                <Text style={{color:"#212121"}}>{newTranslation?.male}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -506,7 +507,7 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Female' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/femaleIcon.png')} />
-                <Text>{newTranslation?.female}</Text>
+                <Text style={{color:"#212121"}}>{newTranslation?.female}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -518,7 +519,7 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Other' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/otherGenderIcon.png')} />
-                <Text style={{marginLeft: 3}}>{newTranslation?.others}</Text>
+                <Text style={{marginLeft: 3, color:"#212121"}}>{newTranslation?.others}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -551,6 +552,7 @@ const CandidateDetailsStep1 = props => {
 
           <TextInput
             placeholder={newTranslation?.whatsappNumber}
+            placeholderTextColor="gray"
             style={[
               styles.input,
               {marginBottom: 5, marginTop: 20},
@@ -576,7 +578,7 @@ const CandidateDetailsStep1 = props => {
               {marginBottom: 5, padding: 17, marginTop: 10},
               formDataError.empLanguage !=="" ? {borderColor: 'red'} : {},
             ]}>
-            <Text>
+            <Text style={{color:"#212121"}}>
               {formData.empLanguage.length == 0
                 ? newTranslation?.languageKnown
                 : formData?.empLanguage.join(', ')}{' '}
@@ -889,6 +891,7 @@ const CandidateDetailsStep1 = props => {
           </Text>
           <TextInput
             placeholder={newTranslation?.pinCode}
+            placeholderTextColor="gray"
             keyboardType="numeric"
             maxLength={6}
             // style={styles.input}
@@ -954,6 +957,7 @@ const CandidateDetailsStep1 = props => {
               </View>
               <TextInput
                 placeholder={newTranslation?.companyName}
+                placeholderTextColor="gray"
                 style={styles.input}
                 value={experienceForm.experinceCompanyName}
                 onChangeText={text =>
@@ -1141,6 +1145,7 @@ const CandidateDetailsStep1 = props => {
           {/* experince form start */}
           <TextInput
             placeholder={newTranslation?.yearOfHighestEducationQualification}
+            placeholderTextColor="gray"
             style={[
               styles.input,
               formDataError.empEduYear !== '' ? {borderColor: 'red'} : {},
@@ -1162,6 +1167,7 @@ const CandidateDetailsStep1 = props => {
           </Text>
           <TextInput
             placeholder={newTranslation?.specialisation}
+            placeholderTextColor="gray"
             onChangeText={text => {
               setFormData({...formData, empSpecialEdu: text});
               setFormDataError({...formDataError, empSpecialEdu: ''});

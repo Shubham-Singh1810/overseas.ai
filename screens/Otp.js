@@ -156,7 +156,7 @@ const Otp = props => {
           if(text.length===6){
             verifyOtp(text);
           }
-        }}keyboardType="numeric" style={{backgroundColor:"white", elevation:2,paddingHorizontal:20, marginBottom:25, borderRadius:5, fontSize:30}}>
+        }}keyboardType="numeric" style={{backgroundColor:"white", elevation:2,paddingHorizontal:20, marginBottom:25, borderRadius:5,color:"#212121", fontSize:30}}>
 
         </TextInput>
       )}

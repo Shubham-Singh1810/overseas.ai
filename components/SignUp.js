@@ -94,12 +94,14 @@ const SignUp = props => {
         <View>
           <TextInput
             placeholder={newTranslation.name}
+            placeholderTextColor="gray"
             style={styles.input}
             onChangeText={text => setFormData({...formData, name: text})}
           />
           <Text style={styles.errorMessage}>{errors.name}</Text>
           <TextInput
             placeholder={newTranslation.mobileNumber}
+            placeholderTextColor="gray"
             style={styles.input}
             keyboardType='numeric'
             onChangeText={text => setFormData({...formData, mobile_no: text})}
@@ -107,6 +109,7 @@ const SignUp = props => {
           <Text style={styles.errorMessage}>{errors.mobile_no}</Text>
           <TextInput
             secureTextEntry={showPassword}
+            placeholderTextColor="gray"
             placeholder={newTranslation.enterPassword}
             style={styles.input}
             onChangeText={text => setFormData({...formData, password: text})}
@@ -133,6 +136,7 @@ const SignUp = props => {
           <Text style={styles.errorMessage}>{errors.password}</Text>
           <TextInput
             secureTextEntry={showConfirmPassword}
+            placeholderTextColor="gray"
             placeholder={newTranslation.reEnterPassword}
             style={styles.input}
             onChangeText={text =>
@@ -169,7 +173,7 @@ const SignUp = props => {
               alignItems: 'center',
               marginTop: 20,
             }}>
-            <Text>{newTranslation?.alreadyHaveAnAccount}</Text>
+            <Text style={{color:"#212121"}}>{newTranslation?.alreadyHaveAnAccount}</Text>
             <Pressable
               style={{
                 borderBottomColor: '#5F90CA',
