@@ -1373,6 +1373,7 @@ const MyDocument = props => {
                     : dlFormData.licenceType == 'international' && (
                         <TextInput
                           value={dlFormData.countryName}
+                          placeholderTextColor="gray"
                           style={styles.input}
                           editable={false}
                         />
@@ -1416,15 +1417,16 @@ const MyDocument = props => {
                           value={dlFormData.stateName}
                           style={styles.input}
                           editable={false}
+                          placeholderTextColor="gray"
                         />
                       )}
                   <TouchableOpacity
                     onPress={() => setShowLicenceCat(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
                     {dlFormData.licenceCategory == '' ? (
-                      <Text>Select Licence Category</Text>
+                      <Text style={{color:"gray"}}>Select Licence Category</Text>
                     ) : (
-                      <Text>
+                      <Text style={{color:"gray"}}>
                         {dlFormType == 'Add'
                           ? dlFormData?.licenceCategory?.map((v, i) => {
                               return <>{v} , </>;
@@ -1436,7 +1438,7 @@ const MyDocument = props => {
                   <TouchableOpacity
                     onPress={() => setShowDlIssueCalender(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                    <Text>
+                    <Text style={{color:"gray"}}>
                       {dlFormData.formDate == ''
                         ? 'Liecence Issue Date'
                         : dlFormData.formDate}
@@ -1445,7 +1447,7 @@ const MyDocument = props => {
                   <TouchableOpacity
                     onPress={() => setShowDlExpCalender(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                    <Text>
+                    <Text style={{color:"gray"}}>
                       {dlFormData.toDate == ''
                         ? 'Licence Expriry Date'
                         : dlFormData.toDate}
