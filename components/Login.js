@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = props => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
+  const {newTranslation, globalState, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
     empPhone: '',
     password: '',
@@ -75,7 +75,22 @@ const Login = props => {
             setLoading(false);
             return;
           }
-          await AsyncStorage.setItem('user', JSON.stringify(response.data));
+          try {
+            const regSource = response?.data?.user?.regSource;
+            // Check if "regSource" exists before setting it in AsyncStorage
+            if (regSource !== undefined && regSource !== null) {
+              
+              await AsyncStorage.setItem('regSource', regSource);
+            } else {
+              
+              console.log("No registration source found in the response.");
+            }
+            // Set the "user" item in AsyncStorage with the response data
+            await AsyncStorage.setItem('user', JSON.stringify(response.data));
+          } catch (error) {
+            // Handle AsyncStorage errors
+            console.error('Error saving data to AsyncStorage:', error);
+          }
           setUserData();
           setLoading(false);
         } else {

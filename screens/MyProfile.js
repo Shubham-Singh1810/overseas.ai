@@ -22,7 +22,7 @@ const MyProfile = props => {
     try {
       let response = await loginOut(JSON.parse(user).access_token)
       if(response?.data?.logout=="success"){
-        await AsyncStorage.removeItem('user');
+        await AsyncStorage.clear();
         setGlobalState({...globalState, user: null});
         setShowLogOutPopUp(false)
       }else{

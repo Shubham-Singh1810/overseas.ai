@@ -397,3 +397,20 @@ export const loginOut = async (access_token) => {
     throw error;
   }
 };
+
+export const submitReference = async (access_token, formData) => {
+  console.log(access_token, formData)
+  try {
+    const response = await axios.post(BASE_URL+"add-registration-source" , formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

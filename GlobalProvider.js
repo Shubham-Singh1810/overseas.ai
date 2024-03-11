@@ -23,6 +23,7 @@ export const GlobalStateProvider = ({children}) => {
     user: null,
     profileStrength: null,
     notifications: null,
+    regSource:null
   });
   const [translation, setTranslation] = useState({});
   const [newTranslation, setNewTranslation] = useState({});
