@@ -49,7 +49,10 @@ const Otp = props => {
           empName: tempUser.name,
           password: tempUser.password,
           otp: otp,
+          email:tempUser.empEmail,
+          countryCode:tempUser.countryCode,
         });
+        console.log(response)
         if (response.data.access_token) {
           await AsyncStorage.setItem('signUpUser', JSON.stringify(response.data));
           props.navigation.navigate("CandidateDetails1")

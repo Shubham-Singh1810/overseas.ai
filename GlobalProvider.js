@@ -2207,8 +2207,18 @@ export const GlobalStateProvider = ({children}) => {
                 : globalState.selectedLanguage == 'hindi'
                 ? 'क्या आप और अधिक अनुभव जोड़ना चाहते हैं?'
                 : 'আপনি আরো অভিজ্ঞতা যোগ করতে চান?',
-                
-                
+                phoneNumberIsRequired:
+                globalState.selectedLanguage == 'english'
+                ? "Phone number is required"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'फ़ोन नंबर आवश्यक है'
+                : 'ফোন নম্বর প্রয়োজন',
+                invalidEmailFormat:
+                globalState.selectedLanguage == 'english'
+                ? "Invalid email format"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'अमान्य ईमेल प्रारूप'
+                : 'অবৈধ ইমেল বিন্যাস',
     });
   };
 

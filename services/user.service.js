@@ -40,10 +40,9 @@ export const verifyOtpForLogin = async (formData) => {
 };
 
 export const signUp = async (formData) => {
+  console.log("sdfs", formData)
   try {
-    const response = await axios.get(BASE_URL+"get-otp",{
-      params:formData
-    } );
+    const response = await axios.post(BASE_URL+"get-otp", formData );
     return (response);
   } catch (error) {
     // Handle error (e.g., log or throw an error)
