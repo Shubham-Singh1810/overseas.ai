@@ -54,7 +54,7 @@ export const signUp = async (formData) => {
 export const verifyOtpForSignUp = async (formData) => {
   try {
     
-    const response = await axios.post(BASE_URL+"resgister-person-step1",formData);
+    const response = await axios.post(BASE_URL+"register-person-step1",formData);
     return (response);
   } catch (error) {
     // Handle error (e.g., log or throw an error)

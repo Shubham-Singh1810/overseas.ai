@@ -476,7 +476,7 @@ const CandidateDetailsStep1 = props => {
                       width: 50,
                       color:"#212121"
                     }
-                  : {}),
+                  : {color:"#212121"}),
               }}>
               {newTranslation?.gender}
             </Text>
@@ -1115,7 +1115,7 @@ const CandidateDetailsStep1 = props => {
                   styles.input,
                   {marginBottom: 15, padding: 17, marginTop: 5},
                 ]}>
-                <Text>
+                <Text style={{color:"gray"}}>
                   {' '}
                   {experienceForm.fromDate != ''
                     ? experienceForm.fromDate
@@ -1128,7 +1128,7 @@ const CandidateDetailsStep1 = props => {
                   styles.input,
                   {marginBottom: 15, padding: 17, marginTop: 5},
                 ]}>
-                <Text>
+                <Text style={{color:"gray"}}>
                   {' '}
                   {experienceForm.toDate != ''
                     ? experienceForm.toDate
@@ -1247,7 +1247,7 @@ const CandidateDetailsStep1 = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '500', fontSize: 20}}>
+              <Text style={{fontWeight: '500',color:"black", fontSize: 20}}>
                 {newTranslation?.languageKnown}
               </Text>
               <TouchableOpacity
@@ -1442,7 +1442,7 @@ const CandidateDetailsStep1 = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
                 {newTranslation?.dateOfBirth}
               </Text>
               <TouchableOpacity onPress={() =>setShowCalender(false)}>
@@ -1502,7 +1502,7 @@ const CandidateDetailsStep1 = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
                 {newTranslation?.joiningDate}
               </Text>
               <TouchableOpacity onPress={() => setJoiningCalender(false)}>
@@ -1551,7 +1551,7 @@ const CandidateDetailsStep1 = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
                 {newTranslation?.endingDate}
               </Text>
               <TouchableOpacity onPress={() => setEndingCalender(false)}>
@@ -1620,6 +1620,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 18,
     backgroundColor: 'white',
+    color:"black"
   },
   genderGroup: {
     flexDirection: 'row',

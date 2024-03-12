@@ -686,6 +686,7 @@ const styles = StyleSheet.create({
   },
   textCenter: {
     textAlign: 'center',
+    color:"black"
   },
   box: {
     borderWidth: 1,

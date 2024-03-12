@@ -430,6 +430,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 18,
     backgroundColor: 'white',
+    color:"black"
   },
   genderGroup: {
     flexDirection: 'row',
