@@ -238,7 +238,6 @@ const EditProfile = (props) => {
         setTimeout(() => {
           props.navigation.navigate("MyProfile")
         }, 2000);
-       
       } else {
         Toast.show({
           type: 'error',

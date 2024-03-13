@@ -7,7 +7,7 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import Toast from 'react-native-toast-message';
 import {useGlobalState} from '../GlobalProvider';
 import {getApiData, postApiData, signUp} from '../services/user.service';
@@ -99,9 +99,17 @@ const SignUp = props => {
     setErrors(newErrors);
     return valid;
   };
-  useEffect(()=>{
-    validateForm()
-  },[formData.countryCode])
+  useEffect(() => {
+    // Check if the component has already rendered
+    if (initialRender.current) {
+      initialRender.current = false; // Set the initial render flag to false
+    } else {
+      validateForm(); // Call validateForm when countryCode changes
+    }
+  }, [formData.countryCode]); // Run effect when countryCode changes
+  
+  // useRef to track initial render
+  const initialRender = useRef(true);
   const handleSubmit = async () => {
     if (validateForm()) {
       try {

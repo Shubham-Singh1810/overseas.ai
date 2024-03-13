@@ -16,7 +16,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyProfile = props => {
-  const {translation,newTranslation,setUserData, globalState, setGlobalState} = useGlobalState();
+  const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
   const handleLogOut = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -73,27 +73,19 @@ const MyProfile = props => {
       );
     }
   };
-  const getProfileStrengthFunc = async () => {
-    let user = await AsyncStorage.getItem('user');
-    try {
-      let response = await getProfileStrength(JSON.parse(user).access_token);
-      if (
-        response?.data.msg == 'Some fields are empty' ||
-        response?.data.msg ==
-          'Profile strength calculated successfully and updated in records'
-      ) {
-        setGlobalState({...globalState, profileStrength: response?.data});
-      }
-    } catch (error) {
-      console.log('NEW', error);
-    }
-  };
   const [showLogOutPopUp, setShowLogOutPopUp]=useState(false)
   useFocusEffect(
     React.useCallback(() => {
-      setUserData()
-      getProfileStrengthFunc()
-    }, []),
+      const fetchUserData = async () => {
+        try {
+          const user = await AsyncStorage.getItem('user');
+          setGlobalState({...globalState, user: user});
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+      fetchUserData()
+    }, [])
   );
   return (
     <>
