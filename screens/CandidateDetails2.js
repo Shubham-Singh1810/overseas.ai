@@ -33,7 +33,7 @@ const CandidateDetails2 = ({route}) => {
     empPhoto: '',
     empAadharNo: '',
   });
-  const [contactRef, setContactRef] = useState(false);
+  const [contactRef, setContactRef] = useState("Any Other Contacts");
   const pickDocument = async () => {
     const imageformData = new FormData();
     try {
@@ -105,7 +105,7 @@ const CandidateDetails2 = ({route}) => {
       if (formData.empAadharNo.length != 16) {
         Toast.show({
           type: 'error',
-          position: 'top',
+          position: 'bottom',
           text1: 'Invalid Aadhar number',
           visibilityTime: 3000,
         });

@@ -8,6 +8,7 @@ import {
   TextInput,
   Share,
   Alert,
+  Linking
 } from 'react-native';
 import React, {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
@@ -175,10 +176,10 @@ const Help = props => {
               style={{height: 40, width: 40, resizeMode: 'contain'}}
             />
           </View>
-          <View style={{marginLeft: 10}}>
+          <Pressable onPress={()=>Linking.openURL(`tel:18008904788`)} style={{marginLeft: 10}}>
             <Text style={styles.phoneNumberText}>1800 890 4788</Text>
             <Text style={[styles.text, {width:"80%"}]}>{newTranslation?.available24X7forYourQuires}</Text>
-          </View>
+          </Pressable>
         </View>
       </View>
       <ScrollView style={styles.main}>

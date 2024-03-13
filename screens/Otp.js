@@ -22,7 +22,7 @@ const Otp = props => {
   const [tempUser, setTempUser] = useState(params ? params.tempUser : null);
   const {newTranslation, globalState, setGlobalState} = useGlobalState();
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(60);
   const startTimer = () => {
     if (timer == 0) {
       return;
@@ -52,7 +52,6 @@ const Otp = props => {
           email:tempUser.empEmail,
           countryCode:tempUser.countryCode,
         });
-        console.log(response)
         if (response.data.access_token) {
           await AsyncStorage.setItem('signUpUser', JSON.stringify(response.data));
           props.navigation.navigate("CandidateDetails1")
