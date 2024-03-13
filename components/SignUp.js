@@ -99,16 +99,7 @@ const SignUp = props => {
     setErrors(newErrors);
     return valid;
   };
-  useEffect(() => {
-    // Check if the component has already rendered
-    if (initialRender.current) {
-      initialRender.current = false; // Set the initial render flag to false
-    } else {
-      validateForm(); // Call validateForm when countryCode changes
-    }
-  }, [formData.countryCode]); // Run effect when countryCode changes
   
-  // useRef to track initial render
   const initialRender = useRef(true);
   const handleSubmit = async () => {
     if (validateForm()) {
@@ -260,7 +251,8 @@ const SignUp = props => {
               onChangeText={text => setFormData({...formData, empEmail: text})}
             />
           )}
-          <Text style={styles.errorMessage}>{errors.empEmail}</Text>
+          {formData.countryCode!="+91" && <Text style={styles.errorMessage}>{errors.empEmail}</Text>}
+          
           <TextInput
             secureTextEntry={showPassword}
             placeholderTextColor="gray"

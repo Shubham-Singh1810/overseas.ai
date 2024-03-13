@@ -668,6 +668,7 @@ const EditProfile = (props) => {
             style={styles.input}
             placeholder=""
             placeholderTextColor="gray"
+            keyboardType="numeric"
             onChangeText={text => {
               setFormData({...formData, empAadharNo: text});
             }}
@@ -688,6 +689,7 @@ const EditProfile = (props) => {
           </View>
           <TextInput
             style={styles.input}
+            keyboardType="numeric"
             onChangeText={text => {
               setFormData({...formData, empDailyWage: text});
             }}
@@ -708,6 +710,7 @@ const EditProfile = (props) => {
           </View>
           <TextInput
             style={styles.input}
+            keyboardType="numeric"
             onChangeText={text => {
               setFormData({...formData, empExpectedMonthlyIncome: text});
             }}
@@ -747,6 +750,7 @@ const EditProfile = (props) => {
             </Text>
           </View>
           <TextInput
+          keyboardType="numeric"
             style={styles.input}
             onChangeText={text => {
               setFormData({...formData, empRefPhone: text});

@@ -67,7 +67,7 @@ export const GlobalStateProvider = ({children}) => {
           : 'নাম',
       mobileNumber:
         globalState.selectedLanguage == 'english'
-          ? 'Mobile number'
+          ? 'Mobile Number'
           : globalState.selectedLanguage == 'hindi'
           ? 'मोबाइल नंबर'
           : 'মোবাইল নম্বর',
@@ -85,7 +85,7 @@ export const GlobalStateProvider = ({children}) => {
           : 'পাসওয়ার্ড লিখুন',
       reEnterPassword:
         globalState.selectedLanguage == 'english'
-          ? 'Re Enter Password'
+          ? 'Re-Enter Password'
           : globalState.selectedLanguage == 'hindi'
           ? 'पासवर्ड फिर से दर्ज करें'
           : 'পাসওয়ার্ড পুনরায় প্রবেশ',
@@ -519,7 +519,7 @@ export const GlobalStateProvider = ({children}) => {
           : 'আপনার অ্যাকাউন্টে লগ ইন করুন',
       mobileNumber:
         globalState.selectedLanguage == 'english'
-          ? 'Mobile number'
+          ? 'Mobile Number'
           : globalState.selectedLanguage == 'hindi'
           ? 'मोबाइल नंबर'
           : 'মোবাইল নম্বর',
@@ -603,7 +603,7 @@ export const GlobalStateProvider = ({children}) => {
           : 'পাসওয়ার্ড লিখুন',
       reEnterPassword:
         globalState.selectedLanguage == 'english'
-          ? 'Re Enter Password'
+          ? 'Re-Enter Password'
           : globalState.selectedLanguage == 'hindi'
           ? 'पासवर्ड फिर से दर्ज करें'
           : 'পাসওয়ার্ড পুনরায় লিখুন',
@@ -1396,7 +1396,7 @@ export const GlobalStateProvider = ({children}) => {
 
       specialisation:
         globalState.selectedLanguage == 'english'
-          ? 'Specialisation'
+          ? 'Specialization'
           : globalState.selectedLanguage == 'hindi'
           ? 'विशेषज्ञता'
           : 'বিশেষীকরণ',
@@ -1453,7 +1453,7 @@ export const GlobalStateProvider = ({children}) => {
           : 'অভিজ্ঞতা',
       profileStrength:
         globalState.selectedLanguage == 'english'
-          ? 'profile Strength'
+          ? 'Profile Strength'
           : globalState.selectedLanguage == 'hindi'
           ? 'प्रोफाइल शक्ति'
           : 'প্রোফাইল ক্ষমতা',

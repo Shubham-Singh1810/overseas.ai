@@ -21,7 +21,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {useFocusEffect} from '@react-navigation/native';
 const CandidateDetails2 = ({route}) => {
-  console.log(route.params.step1user.access_token);
   const {globalState, newTranslation, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
     empEmail: '',
@@ -253,7 +252,7 @@ const CandidateDetails2 = ({route}) => {
             }></TextInput>
           <View style={styles.picker}>
             <Picker
-              // selectedValue={contactRef}
+              selectedValue={contactRef}
               onValueChange={(itemValue, itemIndex) => {
                 setContactRef(itemValue);
               }}>
