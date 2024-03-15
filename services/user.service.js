@@ -2,6 +2,7 @@ import axios from 'axios';
 
 // Define your API base URL
 const BASE_URL = "https://overseas.ai/api/";
+// const BASE_URL = "https://mysecurecloudhost.com:2083/api/";
 
 
 
@@ -40,7 +41,6 @@ export const verifyOtpForLogin = async (formData) => {
 };
 
 export const signUp = async (formData) => {
-  console.log("sdfs", formData)
   try {
     const response = await axios.post(BASE_URL+"get-otp", formData );
     return (response);
@@ -63,7 +63,6 @@ export const verifyOtpForSignUp = async (formData) => {
 };
 // Function to make a POST request
 export const registerUserStep1 = async (formData, access_token) => {
-  console.log(formData)
   try {
     const response = await axios.post(BASE_URL+"user-profile-complete-step2", formData ,{
       headers: {
@@ -98,7 +97,6 @@ export const addExperienceStep2 = async (formData, access_token) => {
         Authorization: `Bearer ${access_token}`
       }
     });
-    console.log(response?.data)
     return response;
   } catch (error) {
     console.error('Error posting data:', error);
@@ -114,7 +112,6 @@ export const editExperienceStepApi = async (formData, access_token) => {
         Authorization: `Bearer ${access_token}`
       }
     });
-    console.log("GRGER",response?.data)
     return response;
   } catch (error) {
     console.error('Error posting data:', error);
@@ -151,7 +148,6 @@ export const uploadWorkVideo = async (formData, access_token) => {
 };
 
 export const submitContactQuery = async (params) => {
-  console.log(params.formData)
   try {
     const response = await axios.post(BASE_URL+"need-help" , params?.formData, {
       headers: {
@@ -182,7 +178,6 @@ export const editProfile = async (formData, access_token) => {
   }
 };
 export const getProfileStrength = async (access_token) => {
-  console.log(access_token)
   try {
     const response = await axios.get(BASE_URL+"user-improve-profile", {
       headers: {

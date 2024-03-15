@@ -53,7 +53,6 @@ export const getCourseList = async access_token => {
 
 
 export const searchForCourse = async (params) => {
-  console.log("params", params)
   try {
     const response = await axios.post(
       BASE_URL + 'filter-courses', {instId:params.id},
@@ -70,7 +69,6 @@ export const searchForCourse = async (params) => {
   }
 };
 export const applyCourse = async (params) => {
-  console.log("params", params)
   try {
     const response = await axios.post(
       BASE_URL + 'apply-course/'+ params.id, {},

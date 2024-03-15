@@ -11,7 +11,7 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-modern-datepicker';
@@ -22,17 +22,20 @@ import {
   getCountries,
   getState,
   getDistrict,
+  getPs,
+  getPanchayat,
+  getVillage,
 } from '../services/info.service';
 import {registerUserStep1, addExperienceStep2} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
-import { useGlobalState } from '../GlobalProvider';
+import {useGlobalState} from '../GlobalProvider';
 const CandidateDetailsStep1 = props => {
-  const {newTranslation} = useGlobalState()
+  const {newTranslation} = useGlobalState();
   const [experienceMsgText, setShowExperinceMsgText] = useState(
     newTranslation.doYouHavePastExperience,
   );
-  
+
   const [showLanguageSelect, setShowLanguageSelect] = useState(false);
   const [showCalender, setShowCalender] = useState(false);
   const [showJoiningCalender, setJoiningCalender] = useState(false);
@@ -54,9 +57,14 @@ const CandidateDetailsStep1 = props => {
     empState: '',
     empDistrict: '',
     empPin: '',
+    empPS: '',
+    empPSName: '',
+    empPanchayatID: '',
+    empPanchayat: '',
+    empVillage: '',
+    empVillageID: '',
   });
   const handleLanguageSelect = selectedLanguage => {
-    
     if (formData.empLanguage.includes(selectedLanguage)) {
       const updatedLanguages = formData.empLanguage.filter(
         lang => lang !== selectedLanguage,
@@ -68,8 +76,8 @@ const CandidateDetailsStep1 = props => {
         empLanguage: [...formData.empLanguage, selectedLanguage],
       });
     }
-    if(formData.empLanguage.length>0){
-      setFormDataError({...formDataError, empLanguage:""})
+    if (formData.empLanguage.length > 0) {
+      setFormDataError({...formDataError, empLanguage: ''});
     }
   };
   const [occupations, setOccupations] = useState([]);
@@ -132,20 +140,48 @@ const CandidateDetailsStep1 = props => {
       console.log(error);
     }
   };
+  const [psList, setPsList] = useState([]);
+  const getPoliceStationById = async id => {
+    try {
+      let response = await getPs(id);
+      setPsList(response?.data?.ps_list);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [panchayatList, setPanchayatList] = useState([]);
+  const getPanchayatList = async id => {
+    try {
+      let response = await getPanchayat(id);
+      setPanchayatList(response?.data.panchayat_list);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const [villageList, setVillageList] = useState([]);
+  const getVillageList = async id => {
+    try {
+      let response = await getVillage(id);
+      setVillageList(response?.data.village_list);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useFocusEffect(
     React.useCallback(() => {
-    getOccupationList();
-    getLocalUser();
-    getCountryList();
-    getStateList();
+      getOccupationList();
+      getLocalUser();
+      getCountryList();
+      getStateList();
     }, []),
   );
-  
+
   const [formDataError, setFormDataError] = useState({
     empDob: '',
     empGender: '',
     empWhatsapp: '',
-    empLanguage: "",
+    empLanguage: '',
     empMS: '',
     empPassportQ: '',
     empSkill: '',
@@ -158,6 +194,12 @@ const CandidateDetailsStep1 = props => {
     empState: '',
     empDistrict: '',
     empPin: '',
+    empPS: '',
+    empPSName: '',
+    empPanchayatID: '',
+    empPanchayat: '',
+    empVillage: '',
+    empVillageID: '',
   });
   const formValidaion = () => {
     let result = true;
@@ -290,6 +332,17 @@ const CandidateDetailsStep1 = props => {
       newErrors.empDistrict = 'District is required field';
       result = false;
     }
+    if (formData.empPS == '' && formData.empPSName == '') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Police Station is required field',
+        // text2: '',
+        visibilityTime: 3000,
+      });
+      newErrors.empPS = 'Police Station is required field';
+      result = false;
+    }
     if (formData.empPin.length != 6) {
       Toast.show({
         type: 'error',
@@ -331,15 +384,16 @@ const CandidateDetailsStep1 = props => {
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
 
   const handleSubmit = async () => {
-    
     if (formValidaion()) {
       try {
         const finalPayload = {
           ...formData,
           empLanguage: JSON.stringify(formData.empLanguage),
         };
+        console.log("formdata",finalPayload)
         let response = await registerUserStep1(
-          finalPayload, localUser.access_token,
+          finalPayload,
+          localUser.access_token,
         );
         if (response?.msg == 'Data Updated Successfully') {
           Toast.show({
@@ -351,7 +405,7 @@ const CandidateDetailsStep1 = props => {
           });
           setTimeout(() => {
             props.navigation.navigate('CandidateDetails2', {
-              step1user: {...response, access_token:localUser.access_token},
+              step1user: {...response, access_token: localUser.access_token},
             });
           }, 1500);
           await AsyncStorage.clear();
@@ -364,7 +418,7 @@ const CandidateDetailsStep1 = props => {
           });
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
         Toast.show({
           type: 'error',
           position: 'bottom',
@@ -443,7 +497,9 @@ const CandidateDetailsStep1 = props => {
     <ScrollView>
       <View style={styles.main}>
         <View>
-          <Text style={styles.heading}>{newTranslation?.pleaseEnterYourDetails}1/2</Text>
+          <Text style={styles.heading}>
+            {newTranslation?.pleaseEnterYourDetails}1/2
+          </Text>
         </View>
         <View style={[styles.inputGroup]}>
           <TouchableOpacity
@@ -453,8 +509,10 @@ const CandidateDetailsStep1 = props => {
               {marginBottom: 15, padding: 17, marginTop: 5},
               formDataError.empDob !== '' ? {borderColor: 'red'} : {},
             ]}>
-            <Text style={{color:"#212121"}}>
-              {formData?.empDob == '' ? newTranslation?.dateOfBirth : formData?.empDob}
+            <Text style={{color: '#212121'}}>
+              {formData?.empDob == ''
+                ? newTranslation?.dateOfBirth
+                : formData?.empDob}
             </Text>
           </TouchableOpacity>
           <Text
@@ -474,9 +532,9 @@ const CandidateDetailsStep1 = props => {
                       borderBottomWidth: 1,
                       borderColor: 'red',
                       width: 50,
-                      color:"#212121"
+                      color: '#212121',
                     }
-                  : {color:"#212121"}),
+                  : {color: '#212121'}),
               }}>
               {newTranslation?.gender}
             </Text>
@@ -495,7 +553,7 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Male' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/maleIcon.png')} />
-                <Text style={{color:"#212121"}}>{newTranslation?.male}</Text>
+                <Text style={{color: '#212121'}}>{newTranslation?.male}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -507,7 +565,7 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Female' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/femaleIcon.png')} />
-                <Text style={{color:"#212121"}}>{newTranslation?.female}</Text>
+                <Text style={{color: '#212121'}}>{newTranslation?.female}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -519,7 +577,9 @@ const CandidateDetailsStep1 = props => {
                   formData.empGender == 'Other' && styles.genderGroupSelected,
                 ]}>
                 <Image source={require('../images/otherGenderIcon.png')} />
-                <Text style={{marginLeft: 3, color:"#212121"}}>{newTranslation?.others}</Text>
+                <Text style={{marginLeft: 3, color: '#212121'}}>
+                  {newTranslation?.others}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -564,7 +624,6 @@ const CandidateDetailsStep1 = props => {
               setFormDataError({...formDataError, empWhatsapp: ''});
             }}
             keyboardType="numeric"
-
           />
           <Text
             style={{fontSize: 10, marginBottom: 0, marginTop: 2, color: 'red'}}>
@@ -576,9 +635,9 @@ const CandidateDetailsStep1 = props => {
             style={[
               styles.input,
               {marginBottom: 5, padding: 17, marginTop: 10},
-              formDataError.empLanguage !=="" ? {borderColor: 'red'} : {},
+              formDataError.empLanguage !== '' ? {borderColor: 'red'} : {},
             ]}>
-            <Text style={{color:"#212121"}}>
+            <Text style={{color: '#212121'}}>
               {formData.empLanguage.length == 0
                 ? newTranslation?.languageKnown
                 : formData?.empLanguage.join(', ')}{' '}
@@ -647,8 +706,16 @@ const CandidateDetailsStep1 = props => {
                   value=""
                   style={{color: 'gray'}}
                 />
-                <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
-                <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
+                <Picker.Item
+                  label={newTranslation?.yes}
+                  value="Yes"
+                  style={{color: 'gray'}}
+                />
+                <Picker.Item
+                  label={newTranslation?.no}
+                  value="No"
+                  style={{color: 'gray'}}
+                />
 
                 {/* Add more Picker.Item as needed */}
               </Picker>
@@ -767,8 +834,16 @@ const CandidateDetailsStep1 = props => {
                   value=""
                   style={{color: 'gray'}}
                 />
-                <Picker.Item label={newTranslation?.yes} value="Yes" style={{color: 'gray'}} />
-                <Picker.Item label={newTranslation?.no} value="No" style={{color: 'gray'}} />
+                <Picker.Item
+                  label={newTranslation?.yes}
+                  value="Yes"
+                  style={{color: 'gray'}}
+                />
+                <Picker.Item
+                  label={newTranslation?.no}
+                  value="No"
+                  style={{color: 'gray'}}
+                />
 
                 {/* Add more Picker.Item as needed */}
               </Picker>
@@ -832,7 +907,11 @@ const CandidateDetailsStep1 = props => {
                 setFormData({...formData, empState: itemValue});
                 getDistrictListFunc(itemValue);
               }}>
-              <Picker.Item label={newTranslation?.state} value="" style={{color: 'gray'}} />
+              <Picker.Item
+                label={newTranslation?.state}
+                value=""
+                style={{color: 'gray'}}
+              />
               {stateList?.map((v, i) => {
                 return (
                   <Picker.Item
@@ -865,8 +944,13 @@ const CandidateDetailsStep1 = props => {
               onValueChange={(itemValue, itemIndex) => {
                 setFormData({...formData, empDistrict: itemValue});
                 setFormDataError({...formDataError, empDistrict: ''});
+                getPoliceStationById(itemValue);
               }}>
-              <Picker.Item label={newTranslation?.district} value="" style={{color: 'gray'}} />
+              <Picker.Item
+                label={newTranslation?.district}
+                value=""
+                style={{color: 'gray'}}
+              />
               {districtList?.map((v, i) => {
                 return (
                   <Picker.Item
@@ -889,6 +973,133 @@ const CandidateDetailsStep1 = props => {
             }}>
             {formDataError.empDistrict}
           </Text>
+          {formData.empState == '35' ? (
+            <View
+              style={[
+                styles.picker,
+                formDataError.empPS !== '' ? {borderColor: 'red'} : {},
+              ]}>
+              <Picker
+                selectedValue={formData.empPS}
+                onValueChange={(itemValue, itemIndex) => {
+                  setFormData({...formData, empPS: itemValue});
+                  getPanchayatList(itemValue);
+                  getVillageList(itemValue);
+                  setFormDataError({...formDataError, empPS: ''});
+                }}>
+                <Picker.Item
+                  label="Select Police Station"
+                  value=""
+                  style={{color: 'gray'}}
+                />
+                {psList?.map((v, i) => {
+                  return (
+                    <Picker.Item
+                      label={v.name}
+                      value={v.id}
+                      style={{color: 'gray'}}
+                    />
+                  );
+                })}
+
+                {/* Add more Picker.Item as needed */}
+              </Picker>
+            </View>
+          ) : (
+            <TextInput
+              placeholder="Enter Police Station"
+              placeholderTextColor="gray"
+              onChangeText={text => {
+                setFormDataError({...formDataError, empPS: ''});
+                setFormData({...formData, empPSName: text});
+              }}
+              style={[
+                styles.input,
+                formDataError.empPSName !== '' ? {borderColor: 'red'} : {},
+              ]}
+            />
+          )}
+          <Text
+            style={{
+              fontSize: 10,
+              marginBottom: 15,
+              marginTop: -12,
+              color: 'red',
+            }}>
+            {formDataError.empPS}
+          </Text>
+          {formData.empState == '35' ? (
+            <View style={[styles.picker]}>
+              <Picker
+                selectedValue={formData.empPanchayatID}
+                onValueChange={(itemValue, itemIndex) => {
+                  setFormData({...formData, empPanchayatID: itemValue});
+                }}>
+                <Picker.Item
+                  label="Select Panchayat"
+                  value=""
+                  style={{color: 'gray'}}
+                />
+                {panchayatList?.map((v, i) => {
+                  return (
+                    <Picker.Item
+                      label={v.name}
+                      value={v.id}
+                      style={{color: 'gray'}}
+                    />
+                  );
+                })}
+
+                {/* Add more Picker.Item as needed */}
+              </Picker>
+            </View>
+          ) : (
+            <TextInput
+              placeholder="Enter Panchayat"
+              placeholderTextColor="gray"
+              onChangeText={text => {
+                setFormData({...formData, empPanchayat: text});
+              }}
+              style={[styles.input]}
+            />
+          )}
+
+          {formData.empState == '35' ? (
+            <View style={[styles.picker]}>
+              <Picker
+                selectedValue={formData.empVillageID}
+                onValueChange={(itemValue, itemIndex) => {
+                  setFormData({...formData, empVillageID: itemValue});
+                }}>
+                <Picker.Item
+                  label="Select Village"
+                  value=""
+                  style={{color: 'gray'}}
+                />
+                {villageList?.map((v, i) => {
+                  return (
+                    <Picker.Item
+                      label={v.name}
+                      value={v.id}
+                      style={{color: 'gray'}}
+                    />
+                  );
+                })}
+
+                {/* Add more Picker.Item as needed */}
+              </Picker>
+            </View>
+          ) : (
+            <TextInput
+              placeholder="Enter Village"
+              placeholderTextColor="gray"
+              onChangeText={text => {
+                setFormData({...formData, empVillage: text});
+              }}
+              style={[styles.input]}
+            />
+          )}
+
           <TextInput
             placeholder={newTranslation?.pinCode}
             placeholderTextColor="gray"
@@ -1115,7 +1326,7 @@ const CandidateDetailsStep1 = props => {
                   styles.input,
                   {marginBottom: 15, padding: 17, marginTop: 5},
                 ]}>
-                <Text style={{color:"gray"}}>
+                <Text style={{color: 'gray'}}>
                   {' '}
                   {experienceForm.fromDate != ''
                     ? experienceForm.fromDate
@@ -1128,7 +1339,7 @@ const CandidateDetailsStep1 = props => {
                   styles.input,
                   {marginBottom: 15, padding: 17, marginTop: 5},
                 ]}>
-                <Text style={{color:"gray"}}>
+                <Text style={{color: 'gray'}}>
                   {' '}
                   {experienceForm.toDate != ''
                     ? experienceForm.toDate
@@ -1247,7 +1458,7 @@ const CandidateDetailsStep1 = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '500',color:"black", fontSize: 20}}>
+              <Text style={{fontWeight: '500', color: 'black', fontSize: 20}}>
                 {newTranslation?.languageKnown}
               </Text>
               <TouchableOpacity
@@ -1442,10 +1653,10 @@ const CandidateDetailsStep1 = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
                 {newTranslation?.dateOfBirth}
               </Text>
-              <TouchableOpacity onPress={() =>setShowCalender(false)}>
+              <TouchableOpacity onPress={() => setShowCalender(false)}>
                 <Image source={require('../images/close.png')} />
               </TouchableOpacity>
             </View>
@@ -1454,24 +1665,23 @@ const CandidateDetailsStep1 = props => {
               mode="calender"
               format="YYYY-MM-DD"
               onDateChange={date => {
-                const curreentDate= new Date();
-                const currentYear = curreentDate.getFullYear()
-                const birthYear= date.split("/")[0];
-                const agg =currentYear-birthYear
-                if(agg<16){
+                const curreentDate = new Date();
+                const currentYear = curreentDate.getFullYear();
+                const birthYear = date.split('/')[0];
+                const agg = currentYear - birthYear;
+                if (agg < 16) {
                   Toast.show({
                     type: 'error', // 'success', 'error', 'info', or any custom type you define
                     // position: 'top',
                     text1: 'Age must be more than 16 years',
                     visibilityTime: 3000, // Duration in milliseconds
                   });
-                }else{
+                } else {
                   setFormData({...formData, empDob: date});
                   setFormDataError({...formDataError, empDob: ''});
                   setShowCalender(false);
-                  setFormDataError({...formDataError, empDob:""})
+                  setFormDataError({...formDataError, empDob: ''});
                 }
-                
               }}
             />
           </View>
@@ -1502,7 +1712,7 @@ const CandidateDetailsStep1 = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
                 {newTranslation?.joiningDate}
               </Text>
               <TouchableOpacity onPress={() => setJoiningCalender(false)}>
@@ -1551,7 +1761,7 @@ const CandidateDetailsStep1 = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
                 {newTranslation?.endingDate}
               </Text>
               <TouchableOpacity onPress={() => setEndingCalender(false)}>
@@ -1620,7 +1830,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 18,
     backgroundColor: 'white',
-    color:"black"
+    color: 'black',
   },
   genderGroup: {
     flexDirection: 'row',

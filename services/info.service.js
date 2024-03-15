@@ -16,7 +16,6 @@ export const getState = async formData => {
 
 // Function to get district list
 export const getDistrict = async data => {
-  console.log(data)
   try {
     const response = await axios.get(BASE_URL + 'district-list', {
       params: {state_id:data},
@@ -77,6 +76,44 @@ export const getHomeData = async data => {
     return response.data;
   } catch (error) {
     console.error('Error posting data:', error);
+    throw error;
+  }
+};
+
+// Function to get ps list
+export const getPs = async district_id => {
+  try {
+    const response = await axios.get(BASE_URL + 'ps-list', {
+      params: { district_id: district_id }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+// Function to get panchayat list
+export const getPanchayat = async ps_id => {
+  try {
+    const response = await axios.get(BASE_URL + 'panchayat-list',{
+      params: { ps_id: ps_id }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+// Function to get village list
+export const getVillage = async ps_id => {
+  try {
+    const response = await axios.get(BASE_URL + 'village-list', {
+      params: { ps_id: ps_id }
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
     throw error;
   }
 };
