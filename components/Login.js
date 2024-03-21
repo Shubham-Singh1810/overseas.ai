@@ -31,16 +31,16 @@ const Login = props => {
     const newErrors = {...errors};
 
     // Validate mobile_no length
-    if (formData.empPhone.trim().length != 10) {
-      newErrors.empPhone = newTranslation?.mobileNumberMustBeOf10Digit;
+    if (formData.empPhone=="") {
+      newErrors.empPhone = "Phone number is required field";
       valid = false;
     } else {
       newErrors.empPhone = '';
     }
 
     // Validate password
-    if (formData.password.length < 6) {
-      newErrors.password = newTranslation?.passwordMustBeAtLeast6Characters;
+    if (formData.password.length < 8) {
+      newErrors.password = "Password must be of 8 characters";
       valid = false;
     } else {
       newErrors.password = '';

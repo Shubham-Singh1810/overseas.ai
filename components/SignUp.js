@@ -10,8 +10,29 @@ import {
 import React, {useEffect, useState, useRef} from 'react';
 import Toast from 'react-native-toast-message';
 import {useGlobalState} from '../GlobalProvider';
+import {Picker} from '@react-native-picker/picker';
 import {getApiData, postApiData, signUp} from '../services/user.service';
+import {
+  getOccupations,
+  getSkillsByOccuId,
+  getState,
+  getDistrict,
+  getPs,
+  getPanchayat,
+  getVillage,
+  getCountryCode,
+  getCountries,
+} from '../services/info.service';
 const SignUp = props => {
+  const [countryCodeArr, setCountryCodeArr] = useState([]);
+  const getListOfCountryCode = async () => {
+    try {
+      let response = await getCountryCode();
+      setCountryCodeArr(response?.data?.countryCodes);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {newTranslation, translation} = useGlobalState();
@@ -30,7 +51,6 @@ const SignUp = props => {
     confirmPassword: '',
     empEmail: ''
   });
-  const [showCountryCodePopup, setShowCountryCodePopup] = useState(false);
   const validateEmail = (email) => {
     // Regular expression for basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -128,7 +148,9 @@ const SignUp = props => {
       }
     }
   };
-
+  useEffect(()=>{
+    getListOfCountryCode()
+  },[])
   return (
     <View style={styles.authMain}>
       <View style={styles.main}>
@@ -148,18 +170,48 @@ const SignUp = props => {
               borderRadius: 5,
               borderColor: '1px solid rgba(167, 167, 167, 0.50)',
             }}>
-            <Pressable
-              onPress={() => setShowCountryCodePopup(!showCountryCodePopup)}
+            <View
               style={{
-                borderRightWidth: 1,
-                borderColor: 'rgba(167, 167, 167, 0.50)',
                 width: '18%',
+                height: '100%',
+                position: 'absolute',
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
               <Text style={{color: 'gray'}}>{formData.countryCode}</Text>
-            </Pressable>
+            </View>
+            <View
+              style={{
+                width: '18%',
+                borderRightWidth: 0.8,
+                borderColor: 'gray',
+              }}>
+              <Picker
+                selectedValue={formData.countryCode}
+                onValueChange={(itemValue, itemIndex) => {
+                  setFormData({...formData, countryCode: itemValue});
+                }}
+                // mode="dropdown"
+                style={{color: 'black', opacity: 0}}>
+                <Picker.Item
+                  label="Select country code"
+                  value="+91"
+                  style={{color: 'gray'}}
+                />
+                {countryCodeArr?.map((v, i) => {
+                  return (
+                    <Picker.Item
+                      label={'+' + v.countryCode + '  ' + v.name}
+                      value={'+' + v.countryCode}
+                      style={{color: 'gray'}}
+                    />
+                  );
+                })}
+
+                {/* Add more Picker.Item as needed */}
+              </Picker>
+            </View>
             <TextInput
               placeholder={newTranslation.mobileNumber}
               placeholderTextColor="gray"
@@ -172,76 +224,7 @@ const SignUp = props => {
             />
           </View>
           <Text style={[styles.errorMessage, {marginTop:16, marginBottom:-10}]}>{errors.mobile_no}</Text>
-          {showCountryCodePopup && (
-            <View
-              style={{
-                backgroundColor: 'whitesmoke',
-                marginTop: -16,
-                position: 'relative',
-                padding: 8,
-                position: 'absolute',
-                top: 150,
-                zIndex: 1,
-                width: '18%',
-              }}>
-              <Pressable
-                onPress={() => {
-                  setFormData({...formData, countryCode: '+91'});
-                  setShowCountryCodePopup(false);
-                }}
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: 5,
-                  borderBottomWidth: 0.5,
-                  borderColor: 'gray',
-                  paddingHorizontal: 2,
-                }}>
-                <Text style={{color: 'gray'}}>+91</Text>
-              </Pressable>
-              <Pressable
-                onPress={() => {
-                  setFormData({...formData, countryCode: '+1'});
-                  setShowCountryCodePopup(false);
-                }}
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: 5,
-                  borderBottomWidth: 0.5,
-                  borderColor: 'gray',
-                  paddingHorizontal: 2,
-                }}>
-                <Text style={{color: 'gray'}}>+1</Text>
-              </Pressable>
-              <Pressable
-                onPress={() => {
-                  setFormData({...formData, countryCode: '+49'});
-                  setShowCountryCodePopup(false);
-                }}
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: 5,
-                  borderBottomWidth: 0.5,
-                  borderColor: 'gray',
-                  paddingHorizontal: 2,
-                }}>
-                <Text style={{color: 'gray'}}>+49</Text>
-              </Pressable>
-              <Pressable
-                onPress={() => {
-                  setFormData({...formData, countryCode: '+44'});
-                  setShowCountryCodePopup(false);
-                }}
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: 5,
-                  borderBottomWidth: 0.5,
-                  borderColor: 'gray',
-                  paddingHorizontal: 2,
-                }}>
-                <Text style={{color: 'gray'}}>+44</Text>
-              </Pressable>
-            </View>
-          )}
+          
           
           {formData?.countryCode != '+91' && (
             <TextInput

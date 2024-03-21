@@ -19,7 +19,7 @@ import DatePicker from 'react-native-modern-datepicker';
 import {Picker} from '@react-native-picker/picker';
 import MyMultipleSelectPopUp from '../components/MyMultipleSelectPopUp';
 import MySingleSelectPopUp from '../components/MySingleSelectPopUp';
-import {countryCodeList} from '../services/countryCodeList';
+// import {countryCodeList} from '../services/countryCodeList';
 import {
   getOccupations,
   getSkillsByOccuId,

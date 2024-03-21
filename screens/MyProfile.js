@@ -10,11 +10,13 @@ import {
   Modal,
   Button
 } from 'react-native';
-import {loginOut,getProfileStrength} from "../services/user.service"
+import {loginOut} from "../services/user.service"
 import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getProfileStrength, getNotification} from "../services/user.service";
+
 const MyProfile = props => {
   const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
   const handleLogOut = async () => {
@@ -84,7 +86,7 @@ const MyProfile = props => {
           console.error('Error fetching user data:', error);
         }
       };
-      fetchUserData()
+      fetchUserData();
     }, [])
   );
   return (
