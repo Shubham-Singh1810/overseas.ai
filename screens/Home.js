@@ -16,7 +16,7 @@ import CandidateVideoGola from '../components/CandidateVideoGola';
 import CountryGola from '../components/CountryGola';
 import SearchResult from '../components/SearchResult';
 import {useGlobalState} from '../GlobalProvider';
-import {submitReference} from '../services/user.service';
+import {submitReference, checkServiceCode} from '../services/user.service';
 import {
   getCountries,
   getCountriesForJobs,
@@ -202,17 +202,28 @@ const Home = props => {
   );
   const handleShowRegPopUp = async () => {
     let regSource = await AsyncStorage.getItem('regSource');
-    if (regSource && regSource!="Other") {
+    if (regSource && regSource != 'Other') {
       setShowRefSelectPopUp(false);
     } else {
       setShowRefSelectPopUp(true);
     }
   };
+  const [showBlockPopUp, setShowBlockPopUp] = useState(false);
+  const checkCode = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await checkServiceCode(JSON.parse(user).access_token);
+      setShowBlockPopUp(!response?.data?.access);
+    } catch (error) {
+      console.log('dfjghdfj', error);
+    }
+  };
   useFocusEffect(
     React.useCallback(() => {
-      setTimeout(()=>{
+      checkCode();
+      setTimeout(() => {
         handleShowRegPopUp();
-      },5000)
+      }, 5000);
     }, []),
   );
   const [refItem, setRefItem] = useState('');
@@ -233,6 +244,7 @@ const Home = props => {
       console.warn(error);
     }
   };
+
   return (
     <>
       <View style={{backgroundColor: '#fff', flex: 1}}>
@@ -586,6 +598,32 @@ const Home = props => {
           </View>
         </View>
       </Modal>
+      <Modal transparent={true} visible={showBlockPopUp} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View
+            style={{
+              padding: 20,
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+              backgroundColor: '#fff',
+            }}>
+            <View>
+              <Text style={{color:"black", fontWeight:"600", fontSize:19,padding:20, textAlign:"center"}}>
+                Currently, Services are not available
+                {"\n"} in your area!
+              </Text>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
@@ -686,7 +724,7 @@ const styles = StyleSheet.create({
   },
   textCenter: {
     textAlign: 'center',
-    color:"black"
+    color: 'black',
   },
   box: {
     borderWidth: 1,

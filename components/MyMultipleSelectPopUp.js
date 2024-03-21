@@ -7,31 +7,43 @@ import {
   Button,
   View,
   TouchableOpacity,
+  TextInput,
+  ScrollView,
 } from 'react-native';
-import React,{useState} from 'react';
+import React, {useState} from 'react';
+
 const MyMultipleSelectPopUp = ({
   title,
   toggle,
   setToggle,
   inputOption,
   callBackFunck,
+  showSearch,
 }) => {
-  const [selectedInput, setSelectedInput]=useState([]);
+  const [selectedInput, setSelectedInput] = useState([]);
+  const [searchKey, setSearchKey] = useState('');
   const handleInputSelect = input => {
     if (selectedInput.includes(input)) {
-      const updatedInput = selectedInput.filter(
-        inp => inp !== input,
-      );
+      const updatedInput = selectedInput.filter(inp => inp !== input);
       setSelectedInput(updatedInput);
     } else {
-        setSelectedInput([...selectedInput, input],
-      );
+      setSelectedInput([...selectedInput, input]);
     }
   };
-  const handleSubmit=()=>{
+  const handleSubmit = () => {
     callBackFunck(selectedInput);
     setToggle(false);
-  }
+    setSearchKey('');
+    setShowInputOption(inputOption);
+  };
+  const [showInputOption, setShowInputOption] = useState(inputOption);
+  const handleSearch = text => {
+    setSearchKey(text);
+    let filteredArray = inputOption?.filter(v => {
+      return v.label.toLowerCase().includes(text.toLowerCase());
+    });
+    setShowInputOption(filteredArray);
+  };
   return (
     <Modal transparent={true} visible={toggle}>
       <View
@@ -61,47 +73,72 @@ const MyMultipleSelectPopUp = ({
             <Text style={{fontWeight: '500', fontSize: 20}}>{title}</Text>
             <TouchableOpacity
               onPress={() => {
-                //   setFormData({...formData, empLanguage: []});
                 setToggle(false);
+                setSearchKey('');
+                setShowInputOption(inputOption);
               }}>
               <Image source={require('../images/close.png')} />
             </TouchableOpacity>
           </View>
-          {inputOption?.map((v, i) => {
-            return (
-              <View key={i}>
-                <Pressable
-                  onPress={() => handleInputSelect(v?.value)}
-                  style={{
-                    flexDirection: 'row',
-                    paddingHorizontal: 20,
-                    paddingVertical: 10,
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{fontSize: 18, color: 'black'}}>{v?.label}</Text>
-                  <View
-                    style={[
-                      {
-                        height: 15,
-                        width: 15,
-                        borderRadius: 7.5,
-                        borderWidth: 1,
-                        borderColor: '#ccc',
-                      },
-                      selectedInput.includes(v?.value) &&
-                        styles.backgroundBlue,
-                    ]}></View>
-                </Pressable>
-              </View>
-            );
-          })}
+          {showSearch && (
+            <View
+              style={[
+                {
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: 5,
+                },
+                styles.input,
+              ]}>
+              <TextInput
+                placeholder="Search"
+                style={{fontSize: 15, padding: 5}}
+                onChangeText={text => handleSearch(text)}
+                value={searchKey}
+              />
+              <Image
+                source={require('../images/searchIcon.png')}
+                style={{height: 20, width: 20, resizeMode: 'contain'}}
+              />
+            </View>
+          )}
+          <ScrollView style={{maxHeight: 500}}>
+            {showInputOption?.map((v, i) => {
+              return (
+                <View key={i}>
+                  <Pressable
+                    onPress={() => handleInputSelect(v?.value)}
+                    style={{
+                      flexDirection: 'row',
+                      paddingHorizontal: 20,
+                      paddingVertical: 10,
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+                    <Text style={{fontSize: 18, color: 'black'}}>
+                      {v?.label}
+                    </Text>
+                    <View
+                      style={[
+                        {
+                          height: 15,
+                          width: 15,
+                          borderRadius: 7.5,
+                          borderWidth: 1,
+                          borderColor: '#ccc',
+                        },
+                        selectedInput.includes(v?.value) &&
+                          styles.backgroundBlue,
+                      ]}></View>
+                  </Pressable>
+                </View>
+              );
+            })}
+          </ScrollView>
 
           <View style={{marginHorizontal: 18, marginTop: 10}}>
-            <Button
-              title="Save"
-              onPress={handleSubmit}
-            />
+            <Button title="Save" onPress={handleSubmit} />
           </View>
         </View>
       </View>
@@ -112,7 +149,14 @@ const MyMultipleSelectPopUp = ({
 export default MyMultipleSelectPopUp;
 
 const styles = StyleSheet.create({
-    backgroundBlue: {
-        backgroundColor: '#5F90CA',
-      },
+  backgroundBlue: {
+    backgroundColor: '#5F90CA',
+  },
+  input: {
+    borderColor: '#CCC',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    backgroundColor: 'white',
+  },
 });

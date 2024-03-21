@@ -30,6 +30,9 @@ const CandidateDetails2 = ({route}) => {
     empRelocationIntQCountry: '',
     empRefName: '',
     empRefPhone: '',
+    empRefPs: '',
+    empVillRef: '',
+    empRefDistance: '',
     empPhoto: '',
     empAadharNo: '',
   });
@@ -112,6 +115,16 @@ const CandidateDetails2 = ({route}) => {
         return false;
       }
     }
+    if (formData.empDailyWage= '') {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Daily wage is required field',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    
     return true;
   };
   const handleSubmit = async () => {
@@ -292,6 +305,65 @@ const CandidateDetails2 = ({route}) => {
                 onChangeText={text =>
                   setFormData({...formData, empRefPhone: text})
                 }></TextInput>
+                <TextInput
+                style={styles.input}
+                placeholderTextColor="gray"
+                placeholder="Reference Person Police Station"
+                onChangeText={text =>
+                  setFormData({...formData, empRefPs: text})
+                }></TextInput>
+                <TextInput
+                style={styles.input}
+                placeholderTextColor="gray"
+                placeholder="Reference Person Village"
+                onChangeText={text =>
+                  setFormData({...formData, empVillRef: text})
+                }></TextInput>
+                <View style={styles.picker}>
+            <Picker
+              selectedValue={formData.empRefDistance}
+              onValueChange={(itemValue, itemIndex) => {
+                setFormData({...formData, empRefDistance: itemValue});
+              }}>
+              <Picker.Item
+                label="Refrence person distance from you"
+                value=""
+                style={{color: 'gray'}}
+              />
+              <Picker.Item
+                label="0-5 km"
+                value="0-5 km"
+                style={{color: 'gray'}}
+              />
+              <Picker.Item
+                label="5-10 km"
+                value="5-10 km"
+                style={{color: 'gray'}}
+              />
+              <Picker.Item
+                label="10-25 km"
+                value="10-25 km"
+                style={{color: 'gray'}}
+              />
+              <Picker.Item
+                label="25-50 km"
+                value="25-50 km"
+                style={{color: 'gray'}}
+              />
+               <Picker.Item
+                label="50-100 km"
+                value="50-100 km"
+                style={{color: 'gray'}}
+              />
+              <Picker.Item
+                label="Above 100 km"
+                value="Above 100 km"
+                style={{color: 'gray'}}
+              />
+
+              {/* Add more Picker.Item as needed */}
+            </Picker>
+          </View>
             </>
           )}
           <View style={styles.picker}>

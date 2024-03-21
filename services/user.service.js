@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // Define your API base URL
 const BASE_URL = "https://overseas.ai/api/";
-// const BASE_URL = "https://mysecurecloudhost.com:2083/api/";
+// const BASE_URL = "https://overseas.ai/overseastestserver/api/";
+
 
 
 
@@ -63,6 +64,7 @@ export const verifyOtpForSignUp = async (formData) => {
 };
 // Function to make a POST request
 export const registerUserStep1 = async (formData, access_token) => {
+  console.log(formData)
   try {
     const response = await axios.post(BASE_URL+"user-profile-complete-step2", formData ,{
       headers: {
@@ -90,6 +92,7 @@ export const registerUserStep2 = async (formData, access_token) => {
   }
 };
 export const addExperienceStep2 = async (formData, access_token) => {
+  console.log( "dfd", formData, access_token)
   try {
     const response = await axios.post(BASE_URL+"add-experience-step2", formData,{
       headers: {
@@ -396,6 +399,22 @@ export const submitReference = async (access_token, formData) => {
   console.log(access_token, formData)
   try {
     const response = await axios.post(BASE_URL+"add-registration-source" , formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+export const checkServiceCode = async (access_token) => {
+  try {
+    const response = await axios.get(BASE_URL+"check-service-status" ,  {
       headers: {
         'Content-Type': `multipart/form-data`,
         Authorization: `Bearer ${access_token}`

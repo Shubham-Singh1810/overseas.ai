@@ -9,6 +9,7 @@ import CandidateDetailsStep1 from '../screens/CandidateDetailsStep1';
 import Login from '../components/Login';
 import SignUp from '../components/SignUp';
 import CandidateDetails2 from '../screens/CandidateDetails2';
+import CandidateFormDetails from '../screens/CandidateFormDetails';
 const LayoutNavigator = () => {
   const Stack = createNativeStackNavigator();
   const {translation, newTranslation} = useGlobalState();
@@ -16,6 +17,7 @@ const LayoutNavigator = () => {
     <NavigationContainer>
       <SafeAreaView style={styles.main}>
         <Stack.Navigator>
+        
           <Stack.Screen name="Select Language" options={{headerShown: false}} component={LanguageSelect} />
           <Stack.Screen
             name="Login"
@@ -27,9 +29,14 @@ const LayoutNavigator = () => {
           <Stack.Screen name="Verify Otp" options={{title: newTranslation?.verifyOTP}} component={Otp} />
           <Stack.Screen
             name="CandidateDetails1"
-            component={CandidateDetailsStep1}
+            component={CandidateFormDetails}
             options={{headerShown: false}}
           />
+          {/* <Stack.Screen
+            name="CandidateDetails1"
+            component={CandidateDetailsStep1}
+            options={{headerShown: false}}
+          /> */}
           <Stack.Screen
             name="CandidateDetails2"
             component={CandidateDetails2}

@@ -32,7 +32,7 @@ const JobsByCountry = (props) => {
     <>
       <ScrollView style={{flex:1, backgroundColor:"#fff"}}>
         <View style={{padding: 15, marginBottom:50,}}>
-          <Text style={{fontSize:18,  marginBottom:15}}>Location: <Text style={{color:"#000"}}>{countryName}</Text></Text>
+          <Text style={{fontSize:18,  marginBottom:15, color:"gray"}}>Location: <Text style={{color:"#000"}}>{countryName}</Text></Text>
           {loading? 
           <View style={{height:500,flexDirection:"row", alignItems:"center",justifyContent:"center"}}>
             <ActivityIndicator size="large" color="maroon" />

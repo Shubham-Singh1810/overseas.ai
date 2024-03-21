@@ -102,6 +102,7 @@ const CandidateDetailsStep1 = props => {
     'Graduate in Engineering',
     'Any other Vocational Training (one year or above)',
     'Any other Vocational Training (less than one year)',
+    'Not applicable'
   ];
   const getSkillListByOccuId = async id => {
     try {
@@ -390,7 +391,7 @@ const CandidateDetailsStep1 = props => {
           ...formData,
           empLanguage: JSON.stringify(formData.empLanguage),
         };
-        console.log("formdata",finalPayload)
+        console.log('formdata', finalPayload);
         let response = await registerUserStep1(
           finalPayload,
           localUser.access_token,
@@ -606,7 +607,6 @@ const CandidateDetailsStep1 = props => {
               <Picker.Item label="Yes" value={true} style={{color: 'gray'}} />
               <Picker.Item label="No" value={false} style={{color: 'gray'}} />
 
-            
             </Picker> */}
           {/* </View> */}
 
@@ -858,39 +858,237 @@ const CandidateDetailsStep1 = props => {
               {formDataError.empInternationMigrationExp}
             </Text>
             <View
-              style={[
-                styles.picker,
-                formDataError.empEdu !== '' ? {borderColor: 'red'} : {},
-              ]}>
-              <Picker
-                selectedValue={formData.empEdu}
-                onValueChange={(itemValue, itemIndex) => {
-                  setFormData({...formData, empEdu: itemValue});
-                  setFormDataError({...formDataError, empEdu: ''});
-                }}>
-                <Picker.Item
-                  label={newTranslation?.highestEducationQualification}
-                  value=""
-                  style={{color: 'gray'}}
-                />
-                {highestEducationArr.map((v, i) => {
-                  return (
-                    <Picker.Item label={v} value={v} style={{color: 'gray'}} />
-                  );
-                })}
-
-                {/* Add more Picker.Item as needed */}
-              </Picker>
-            </View>
-            <Text
               style={{
-                fontSize: 10,
-                marginBottom: 15,
-                marginTop: -12,
-                color: 'red',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 18,
               }}>
-              {formDataError.empEdu}
-            </Text>
+              <Pressable
+                style={[
+                  styles.golaBorder,
+                  showAddExperienceForm && styles.backgroundBlue,
+                ]}
+                onPress={() =>
+                  setShowAddExperienceForm(!showAddExperienceForm)
+                }></Pressable>
+              <Text style={{marginTop: 2, color: 'black'}}>
+                {experienceMsgText}{' '}
+              </Text>
+            </View>
+
+            {/* experince form start */}
+            {(showAddExperienceForm || formData.empInternationMigrationExp=="Yes") && (
+              <View
+                style={{
+                  paddingHorizontal: 10,
+                  marginBottom: 20,
+                  borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  paddingVertical: 30,
+                }}>
+                  {formData.empInternationMigrationExp=="No" && <View
+                  style={{
+                    flexDirection: 'row',
+                    marginBottom: 15,
+                    marginTop: -10,
+                    justifyContent: 'flex-end',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => setShowAddExperienceForm(false)}>
+                    <Image source={require('../images/close.png')} />
+                  </TouchableOpacity>
+                </View>}
+
+                <TextInput
+                  placeholder={newTranslation?.companyName}
+                  placeholderTextColor="gray"
+                  style={styles.input}
+                  value={experienceForm.experinceCompanyName}
+                  onChangeText={text =>
+                    setExperienceForm({
+                      ...experienceForm,
+                      experinceCompanyName: text,
+                    })
+                  }></TextInput>
+                <View style={styles.picker}>
+                  <Picker
+                    selectedValue={experienceForm.jobProfile}
+                    onValueChange={(itemValue, itemIndex) => {
+                      getSkillListByOccuId(itemValue);
+                      setExperienceForm({
+                        ...experienceForm,
+                        jobProfile: itemValue,
+                      });
+                    }}>
+                    <Picker.Item
+                      label={newTranslation?.workingDepertment}
+                      value=""
+                      style={{color: 'gray'}}
+                    />
+                    {occupations.map((v, i) => {
+                      return (
+                        <Picker.Item
+                          label={v.occupation}
+                          value={v.id}
+                          style={{color: 'gray'}}
+                        />
+                      );
+                    })}
+                    {/* Add more Picker.Item as needed */}
+                  </Picker>
+                </View>
+                <View style={styles.picker}>
+                  <Picker
+                    selectedValue={experienceForm.jobOccupation}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setExperienceForm({
+                        ...experienceForm,
+                        jobOccupation: itemValue,
+                      });
+                    }}>
+                    <Picker.Item
+                      label={newTranslation?.selectOccupation}
+                      value=""
+                      style={{color: 'gray'}}
+                    />
+                    {skills.map((v, i) => {
+                      return (
+                        <Picker.Item
+                          label={v?.skill}
+                          value={v.id}
+                          style={{color: 'gray'}}
+                        />
+                      );
+                    })}
+
+                    {/* Add more Picker.Item as needed */}
+                  </Picker>
+                </View>
+                <View style={styles.picker}>
+                  <Picker
+                    selectedValue={experienceForm.experienceType}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setExperienceForm({
+                        ...experienceForm,
+                        experienceType: itemValue,
+                      });
+                    }}>
+                    <Picker.Item
+                      label={newTranslation?.experienceType}
+                      value=""
+                      style={{color: 'gray'}}
+                    />
+
+                    <Picker.Item
+                      label={newTranslation?.insideIndia}
+                      value="national"
+                      style={{color: 'gray'}}
+                    />
+                    <Picker.Item
+                      label={newTranslation?.outsideIndia}
+                      value="international"
+                      style={{color: 'gray'}}
+                    />
+
+                    {/* Add more Picker.Item as needed */}
+                  </Picker>
+                </View>
+
+                {experienceForm.experienceType == 'national' && (
+                  <View style={styles.picker}>
+                    <Picker
+                      selectedValue={experienceForm.stateName}
+                      onValueChange={(itemValue, itemIndex) => {
+                        setExperienceForm({
+                          ...experienceForm,
+                          stateName: itemValue,
+                        });
+                      }}>
+                      <Picker.Item
+                        label={newTranslation?.state}
+                        value=""
+                        style={{color: 'gray'}}
+                      />
+                      {stateList?.map((v, i) => {
+                        return (
+                          <Picker.Item
+                            label={v?.name}
+                            value={v.id}
+                            style={{color: 'gray'}}
+                          />
+                        );
+                      })}
+
+                      {/* Add more Picker.Item as needed */}
+                    </Picker>
+                  </View>
+                )}
+                {experienceForm.experienceType == 'international' && (
+                  <View style={styles.picker}>
+                    <Picker
+                      selectedValue={experienceForm.countryName}
+                      onValueChange={(itemValue, itemIndex) => {
+                        setExperienceForm({
+                          ...experienceForm,
+                          countryName: itemValue,
+                        });
+                      }}>
+                      <Picker.Item
+                        label={newTranslation?.country}
+                        value=""
+                        style={{color: 'gray'}}
+                      />
+                      {countryList?.map((v, i) => {
+                        return (
+                          <Picker.Item
+                            label={v?.name}
+                            value={v.id}
+                            style={{color: 'gray'}}
+                          />
+                        );
+                      })}
+
+                      {/* Add more Picker.Item as needed */}
+                    </Picker>
+                  </View>
+                )}
+
+                <TouchableOpacity
+                  onPress={() => setJoiningCalender(true)}
+                  style={[
+                    styles.input,
+                    {marginBottom: 15, padding: 17, marginTop: 5},
+                  ]}>
+                  <Text style={{color: 'gray'}}>
+                    {' '}
+                    {experienceForm.fromDate != ''
+                      ? experienceForm.fromDate
+                      : newTranslation?.joiningDate}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setEndingCalender(true)}
+                  style={[
+                    styles.input,
+                    {marginBottom: 15, padding: 17, marginTop: 5},
+                  ]}>
+                  <Text style={{color: 'gray'}}>
+                    {' '}
+                    {experienceForm.toDate != ''
+                      ? experienceForm.toDate
+                      : newTranslation?.endingDate}
+                  </Text>
+                </TouchableOpacity>
+                <Button
+                  title={newTranslation?.save}
+                  onPress={addExperience}
+                  color="#5F90CA"
+                />
+              </View>
+            )}
+            {/* experince form start */}
+
           </View>
           <Text style={{color: 'black', marginBottom: 18}}>
             {newTranslation?.parmanentAddress}
@@ -1125,235 +1323,39 @@ const CandidateDetailsStep1 = props => {
             {formDataError.empPin}
           </Text>
           <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 18,
-            }}>
-            <Pressable
               style={[
-                styles.golaBorder,
-                showAddExperienceForm && styles.backgroundBlue,
-              ]}
-              onPress={() =>
-                setShowAddExperienceForm(!showAddExperienceForm)
-              }></Pressable>
-            <Text style={{marginTop: 2, color: 'black'}}>
-              {experienceMsgText}{' '}
-            </Text>
-          </View>
-
-          {/* experince form start */}
-          {showAddExperienceForm && (
-            <View
-              style={{
-                paddingHorizontal: 10,
-                marginBottom: 20,
-                borderRadius: 5,
-                borderWidth: 1,
-                borderColor: 'gray',
-                paddingVertical: 30,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: 15,
-                  marginTop: -10,
-                  justifyContent: 'flex-end',
+                styles.picker,
+                formDataError.empEdu !== '' ? {borderColor: 'red'} : {},
+              ]}>
+              <Picker
+                selectedValue={formData.empEdu}
+                onValueChange={(itemValue, itemIndex) => {
+                  setFormData({...formData, empEdu: itemValue});
+                  setFormDataError({...formDataError, empEdu: ''});
                 }}>
-                <TouchableOpacity
-                  onPress={() => setShowAddExperienceForm(false)}>
-                  <Image source={require('../images/close.png')} />
-                </TouchableOpacity>
-              </View>
-              <TextInput
-                placeholder={newTranslation?.companyName}
-                placeholderTextColor="gray"
-                style={styles.input}
-                value={experienceForm.experinceCompanyName}
-                onChangeText={text =>
-                  setExperienceForm({
-                    ...experienceForm,
-                    experinceCompanyName: text,
-                  })
-                }></TextInput>
-              <View style={styles.picker}>
-                <Picker
-                  selectedValue={experienceForm.jobProfile}
-                  onValueChange={(itemValue, itemIndex) => {
-                    getSkillListByOccuId(itemValue);
-                    setExperienceForm({
-                      ...experienceForm,
-                      jobProfile: itemValue,
-                    });
-                  }}>
-                  <Picker.Item
-                    label={newTranslation?.workingDepertment}
-                    value=""
-                    style={{color: 'gray'}}
-                  />
-                  {occupations.map((v, i) => {
-                    return (
-                      <Picker.Item
-                        label={v.occupation}
-                        value={v.id}
-                        style={{color: 'gray'}}
-                      />
-                    );
-                  })}
-                  {/* Add more Picker.Item as needed */}
-                </Picker>
-              </View>
-              <View style={styles.picker}>
-                <Picker
-                  selectedValue={experienceForm.jobOccupation}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setExperienceForm({
-                      ...experienceForm,
-                      jobOccupation: itemValue,
-                    });
-                  }}>
-                  <Picker.Item
-                    label={newTranslation?.selectOccupation}
-                    value=""
-                    style={{color: 'gray'}}
-                  />
-                  {skills.map((v, i) => {
-                    return (
-                      <Picker.Item
-                        label={v?.skill}
-                        value={v.id}
-                        style={{color: 'gray'}}
-                      />
-                    );
-                  })}
+                <Picker.Item
+                  label={newTranslation?.highestEducationQualification}
+                  value=""
+                  style={{color: 'gray'}}
+                />
+                {highestEducationArr.map((v, i) => {
+                  return (
+                    <Picker.Item label={v} value={v} style={{color: 'gray'}} />
+                  );
+                })}
 
-                  {/* Add more Picker.Item as needed */}
-                </Picker>
-              </View>
-              <View style={styles.picker}>
-                <Picker
-                  selectedValue={experienceForm.experienceType}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setExperienceForm({
-                      ...experienceForm,
-                      experienceType: itemValue,
-                    });
-                  }}>
-                  <Picker.Item
-                    label={newTranslation?.experienceType}
-                    value=""
-                    style={{color: 'gray'}}
-                  />
-
-                  <Picker.Item
-                    label={newTranslation?.insideIndia}
-                    value="national"
-                    style={{color: 'gray'}}
-                  />
-                  <Picker.Item
-                    label={newTranslation?.outsideIndia}
-                    value="international"
-                    style={{color: 'gray'}}
-                  />
-
-                  {/* Add more Picker.Item as needed */}
-                </Picker>
-              </View>
-
-              {experienceForm.experienceType == 'national' && (
-                <View style={styles.picker}>
-                  <Picker
-                    selectedValue={experienceForm.stateName}
-                    onValueChange={(itemValue, itemIndex) => {
-                      setExperienceForm({
-                        ...experienceForm,
-                        stateName: itemValue,
-                      });
-                    }}>
-                    <Picker.Item
-                      label={newTranslation?.state}
-                      value=""
-                      style={{color: 'gray'}}
-                    />
-                    {stateList?.map((v, i) => {
-                      return (
-                        <Picker.Item
-                          label={v?.name}
-                          value={v.id}
-                          style={{color: 'gray'}}
-                        />
-                      );
-                    })}
-
-                    {/* Add more Picker.Item as needed */}
-                  </Picker>
-                </View>
-              )}
-              {experienceForm.experienceType == 'international' && (
-                <View style={styles.picker}>
-                  <Picker
-                    selectedValue={experienceForm.countryName}
-                    onValueChange={(itemValue, itemIndex) => {
-                      setExperienceForm({
-                        ...experienceForm,
-                        countryName: itemValue,
-                      });
-                    }}>
-                    <Picker.Item
-                      label={newTranslation?.country}
-                      value=""
-                      style={{color: 'gray'}}
-                    />
-                    {countryList?.map((v, i) => {
-                      return (
-                        <Picker.Item
-                          label={v?.name}
-                          value={v.id}
-                          style={{color: 'gray'}}
-                        />
-                      );
-                    })}
-
-                    {/* Add more Picker.Item as needed */}
-                  </Picker>
-                </View>
-              )}
-
-              <TouchableOpacity
-                onPress={() => setJoiningCalender(true)}
-                style={[
-                  styles.input,
-                  {marginBottom: 15, padding: 17, marginTop: 5},
-                ]}>
-                <Text style={{color: 'gray'}}>
-                  {' '}
-                  {experienceForm.fromDate != ''
-                    ? experienceForm.fromDate
-                    : newTranslation?.joiningDate}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setEndingCalender(true)}
-                style={[
-                  styles.input,
-                  {marginBottom: 15, padding: 17, marginTop: 5},
-                ]}>
-                <Text style={{color: 'gray'}}>
-                  {' '}
-                  {experienceForm.toDate != ''
-                    ? experienceForm.toDate
-                    : newTranslation?.endingDate}
-                </Text>
-              </TouchableOpacity>
-              <Button
-                title={newTranslation?.save}
-                onPress={addExperience}
-                color="#5F90CA"
-              />
+                {/* Add more Picker.Item as needed */}
+              </Picker>
             </View>
-          )}
-          {/* experince form start */}
+            <Text
+              style={{
+                fontSize: 10,
+                marginBottom: 15,
+                marginTop: -12,
+                color: 'red',
+              }}>
+              {formDataError.empEdu}
+            </Text>
           <TextInput
             placeholder={newTranslation?.yearOfHighestEducationQualification}
             placeholderTextColor="gray"

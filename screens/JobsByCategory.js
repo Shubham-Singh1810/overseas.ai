@@ -33,7 +33,7 @@ const JobsByCategory = props => {
     <>
       <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
         <View style={{padding: 15, marginBottom: 50}}>
-          <Text style={{fontSize: 18, marginBottom: 15}}>
+          <Text style={{fontSize: 18, marginBottom: 15, color:"gray"}}>
             Occupation: <Text style={{color: '#000'}}>{departmentName}</Text>
           </Text>
           {loading? 

@@ -117,3 +117,15 @@ export const getVillage = async ps_id => {
     throw error;
   }
 };
+
+
+// Function to get country code list
+export const getCountryCode = async ps_id => {
+  try {
+    const response = await axios.get(BASE_URL + 'country-code-list');
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

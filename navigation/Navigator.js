@@ -4,6 +4,7 @@ import AuthenticatedNavigator from './AuthenticatedNavigator';
 import LayoutNavigator from './LayoutNavigator';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import {} from "../services/user.service"
 
 const Navigator = () => {
   const {translation, globalState, setGlobalState} = useGlobalState();
@@ -16,6 +17,7 @@ const Navigator = () => {
       console.warn('error from global provider');
     }
   };
+ 
   useEffect(() => {
     setUserData();
   }, []);

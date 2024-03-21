@@ -22,7 +22,7 @@ const Otp = props => {
   const [tempUser, setTempUser] = useState(params ? params.tempUser : null);
   const {newTranslation, globalState, setGlobalState} = useGlobalState();
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(120);
   const startTimer = () => {
     if (timer == 0) {
       return;
@@ -120,7 +120,7 @@ const Otp = props => {
             text1: newTranslation?.otpResendSuccessfully,
             visibilityTime: 3000,
           });
-          setTimer(60);
+          setTimer(120);
           startTimer();
         }
       } else {
@@ -134,7 +134,7 @@ const Otp = props => {
             text1: newTranslation?.otpResendSuccessfully,
             visibilityTime: 3000,
           });
-          setTimer(60);
+          setTimer(120);
           startTimer();
         }
       }
@@ -149,6 +149,7 @@ const Otp = props => {
   return (
     <View style={styles.main}>
       <View>
+        <Text style={{color:"black",fontWeight:"400", marginBottom:20, textAlign:"center"}}>Otp has been sent to your{"\n"}{tempUser?.empEmail ? tempUser?.empEmail: "Phone Number"}</Text>
         <Text style={styles.heading}>{newTranslation?.enterOTP}</Text>
       </View>
       {loading ? (
