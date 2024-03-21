@@ -713,7 +713,7 @@ export default function CandidateFormDetails() {
                 alignItems: 'center',
                 marginLeft: 5,
               }}>
-              <Text>{formData.empWhatsappCountryCode}</Text>
+              <Text style={{color:"black"}}>{formData.empWhatsappCountryCode}</Text>
             </View>
             <View
               style={{
@@ -754,6 +754,7 @@ export default function CandidateFormDetails() {
                 setFormData({...formData, empWhatsapp: text})
               }
               value={formData.empWhatsapp}
+              style={{ width:"100%"}}
             />
           </View>
           {/* <TextInput style={styles.input} onChangeText={(text)=>setFormData({...formData, empEmail:text})} value={formData.empEmail}/> */}
