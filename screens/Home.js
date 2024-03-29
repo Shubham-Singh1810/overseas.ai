@@ -9,8 +9,9 @@ import {
   Modal,
   ActivityIndicator,
   Button,
+  RefreshControl,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import JobGola from '../components/JobGola';
 import CandidateVideoGola from '../components/CandidateVideoGola';
 import CountryGola from '../components/CountryGola';
@@ -35,6 +36,7 @@ import HraGolaFeed from '../components/HraGolaFeed';
 import CourseGola from '../components/CourseGola';
 import InstituteFeedGola from '../components/InstituteFeedGola';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+
 const Home = props => {
   useAndroidBackHandler(() => {
     if (searchJobKey || searchCounterKey) {
@@ -244,6 +246,33 @@ const Home = props => {
       console.warn(error);
     }
   };
+  const [refreshing, setRefreshing] = useState(false);
+  const fetchData = () => {
+    setTimeout(() => {
+      createDynamicFeedFunc();
+      setRefreshing(false);
+    }, 1000);
+  };
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
+  const [showPageLoader, setShowPageLoader] = useState(false);
+  const scrollViewRef = useRef(null);
+  const [pageNo, setPageNo] = useState(1);
+  const handleScroll = ({nativeEvent}) => {
+    const {layoutMeasurement, contentOffset, contentSize} = nativeEvent;
+    const isEndReached =
+      layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
+
+    if (isEndReached) {
+      setShowPageLoader(true);
+      setTimeout(() => {
+        setPageNo(pageNo + 1);
+        setShowPageLoader(true);
+      }, 1000);
+    }
+  };
 
   return (
     <>
@@ -316,7 +345,13 @@ const Home = props => {
                 </Picker>
               </TouchableOpacity>
             </View>
-            <ScrollView style={{marginBottom: 350}}>
+            <ScrollView
+              style={{marginBottom: 350}}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+              ref={scrollViewRef}
+              onScroll={handleScroll}>
               {searchJobKey || searchCounterKey ? (
                 <View>
                   {loaderSearch ? (
@@ -433,7 +468,8 @@ const Home = props => {
                       {newTranslation?.discoverFreshFeedDelightsNow}
                     </Text>
                   </View>
-                  {dynamicFeedArr?.map((v, i) => {
+
+                  {dynamicFeedArr?.slice(0, pageNo * 10).map((v, i) => {
                     if (v?.dataType == 'hra') {
                       return (
                         <View>
@@ -498,6 +534,12 @@ const Home = props => {
                       );
                     }
                   })}
+                  {showPageLoader && (
+                    <View style={{marginVertical: 50}}>
+                      <ActivityIndicator size="large" />
+                    </View>
+                  )}
+
                   <View style={styles.jobsList}>
                     <Text style={styles.heading}>
                       {translation.hereFromOther}
@@ -616,9 +658,16 @@ const Home = props => {
               backgroundColor: '#fff',
             }}>
             <View>
-              <Text style={{color:"black", fontWeight:"600", fontSize:19,padding:20, textAlign:"center"}}>
+              <Text
+                style={{
+                  color: 'black',
+                  fontWeight: '600',
+                  fontSize: 19,
+                  padding: 20,
+                  textAlign: 'center',
+                }}>
                 Currently, Services are not available
-                {"\n"} in your area!
+                {'\n'} in your area!
               </Text>
             </View>
           </View>

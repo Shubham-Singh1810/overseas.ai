@@ -7,6 +7,7 @@ import {
   View,
   Pressable,
   ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
@@ -26,6 +27,7 @@ const Notifications = props => {
     }
   });
   const {globalState, setGlobalState} = useGlobalState();
+  const [refreshing, setRefreshing] = useState(false);
   const [showNotifyScreen, setShowNotifyScreen] = useState('Jobs');
   const [notificationArr, setNotificationArr] = useState(null);
   const [showLoader, setShowLoader] = useState(true);
@@ -48,7 +50,18 @@ const Notifications = props => {
       getNotificationFunc();
     }, []),
   );
+  const fetchData = () => {
+    // Simulating data fetching
+    setTimeout(() => {
+      getNotificationFunc();
+      setRefreshing(false); // Set refreshing to false when done fetching
+    }, 1000); // Simulated delay of 1 second
+  };
 
+  const onRefresh = () => {
+    setRefreshing(true); // Set refreshing to true when refresh is triggered
+    fetchData(); // Call your data fetching function here
+  };
   return (
     <View style={styles.main}>
       <View>
@@ -92,18 +105,19 @@ const Notifications = props => {
         </ScrollView>
       </View>
       {showLoader ? (
-        <View
-          style={{
-            height: 400,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
+        <ScrollView>
+          <ActivityIndicator
+            style={{marginTop: 200}}
+            size="large"
+            color="#0000ff"
+          />
+        </ScrollView>
       ) : (
         <View style={{marginTop: 16}}>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
             {showNotifyScreen == 'Jobs' &&
               notificationArr?.newJobs?.map((v, i) => {
                 return (
@@ -191,7 +205,7 @@ const Notifications = props => {
                 <Text
                   style={{
                     fontSize: 18,
-                    marginTop:100,
+                    marginTop: 100,
                     color: 'maroon',
                     paddingHorizontal: 20,
                     textAlign: 'center',
@@ -204,7 +218,7 @@ const Notifications = props => {
                 <Text
                   style={{
                     fontSize: 18,
-                    marginTop:100,
+                    marginTop: 100,
                     color: 'maroon',
                     paddingHorizontal: 20,
                     textAlign: 'center',
@@ -219,12 +233,13 @@ const Notifications = props => {
                 <Text
                   style={{
                     fontSize: 18,
-                    marginTop:100,
+                    marginTop: 100,
                     color: 'green',
                     paddingHorizontal: 20,
                     textAlign: 'center',
                   }}>
-                  We will let you know if you can do anything else to improve your profile shortly!
+                  We will let you know if you can do anything else to improve
+                  your profile shortly!
                 </Text>
               )}
           </ScrollView>

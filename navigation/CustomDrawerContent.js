@@ -609,6 +609,7 @@ const styles = StyleSheet.create({
   },
   textCenter: {
     textAlign: 'center',
+    color:"black"
   },
   selectBox: {
     borderWidth: 1,

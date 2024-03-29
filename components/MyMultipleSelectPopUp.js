@@ -70,7 +70,9 @@ const MyMultipleSelectPopUp = ({
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{fontWeight: '500', fontSize: 20}}>{title}</Text>
+            <Text style={{fontWeight: '500', fontSize: 20, color: 'black'}}>
+              {title}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 setToggle(false);
@@ -93,7 +95,8 @@ const MyMultipleSelectPopUp = ({
               ]}>
               <TextInput
                 placeholder="Search"
-                style={{fontSize: 15, padding: 5}}
+                placeholderTextColor="gray"
+                style={{fontSize: 15, padding: 5, color: 'black'}}
                 onChangeText={text => handleSearch(text)}
                 value={searchKey}
               />

@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text,ActivityIndicator, View} from 'react-native';
+import {ScrollView, StyleSheet, Text,ActivityIndicator,RefreshControl, View} from 'react-native';
 import React,{useEffect, useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import {getOccupations, getJobByDepartment, getJobByCountry} from '../services/job.service';
@@ -28,9 +28,23 @@ const JobsByCountry = (props) => {
       getJobsByCountryFunc();
     }, [countryId]),
   );
+  const [refreshing, setRefreshing] = useState(false);
+  const fetchData = () => {
+    setTimeout(() => {
+      getJobsByCountryFunc();
+      setRefreshing(false); 
+    }, 1000); 
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true); 
+    fetchData(); 
+  };
   return (
     <>
-      <ScrollView style={{flex:1, backgroundColor:"#fff"}}>
+      <ScrollView style={{flex:1, backgroundColor:"#fff"}}  refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={{padding: 15, marginBottom:50,}}>
           <Text style={{fontSize:18,  marginBottom:15, color:"gray"}}>Location: <Text style={{color:"#000"}}>{countryName}</Text></Text>
           {loading? 

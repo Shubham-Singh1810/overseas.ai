@@ -68,7 +68,7 @@ const MySingleSelectPopUp = ({
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{fontWeight: '500', fontSize: 20}}>{title}</Text>
+            <Text style={{fontWeight: '500', fontSize: 20, color:"black"}}>{title}</Text>
             <TouchableOpacity
               onPress={() => {
                 setToggle(false);
@@ -91,9 +91,10 @@ const MySingleSelectPopUp = ({
               ]}>
               <TextInput
                 placeholder="Search"
-                style={{fontSize: 15, padding: 5}}
+                style={{fontSize: 15, padding: 5, color:"black"}}
                 onChangeText={text => handleSearch(text)}
                 value={searchKey}
+                placeholderTextColor="gray"
               />
               <Image
                 source={require('../images/searchIcon.png')}

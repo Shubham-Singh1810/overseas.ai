@@ -407,7 +407,7 @@ const VideoScreen = props => {
                   />
                 </View>
               </View>
-              <Text style={{textAlign: 'center', marginVertical: 5}}>
+              <Text style={{textAlign: 'center',color:"black", marginVertical: 5}}>
                 {newTranslation?.uploadIntroVideo}
               </Text>
             </TouchableOpacity>
@@ -676,7 +676,7 @@ const VideoScreen = props => {
             <TouchableOpacity
               style={styles.input}
               onPress={pickMediaForWorkVideo}>
-              <Text>
+              <Text style={{color:"black"}}>
                 {formData.video == null
                   ? newTranslation?.chooseVideoFile
                   : formData.video.name}
@@ -740,7 +740,7 @@ const VideoScreen = props => {
                 <TouchableOpacity
                   style={styles.input}
                   onPress={pickMediaForIntroVideo}>
-                  <Text>
+                  <Text style={{color:"black"}}>
                     {introformData.video == null
                       ? newTranslation?.chooseVideoFile
                       : introformData.video.name}
@@ -781,11 +781,11 @@ const VideoScreen = props => {
               </View>
             ) : (
               <View>
-                <Text>
+                <Text style={{color:"black"}}>
                   You have already uploaded all the introduction video in
                   different languages. {'\n'}
                 </Text>
-                <Text style={{fontWeight: '600', marginBottom: 10}}>
+                <Text style={{fontWeight: '600',color:"black", marginBottom: 10}}>
                   Edit Known language to add more intro video
                 </Text>
                 <Button

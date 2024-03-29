@@ -40,10 +40,11 @@ import GetCourseById from '../screens/GetCourseById';
 import AppliedCourseList from '../screens/AppliedCourseList';
 import MyCertificate from '../screens/MyCertificate';
 import JobDetailedScreen from '../screens/JobDetailedScreen';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {getProfileStrength, getNotification} from "../services/user.service";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExperienceScreen from '../screens/ExperienceScreen';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Drawer = createDrawerNavigator();
 
@@ -64,6 +65,7 @@ const AuthenticatedNavigator = () => {
   useEffect(()=>{
     getProfileStrengthFunc();
   },[])
+
   return (
     <NavigationContainer>
       <Drawer.Navigator

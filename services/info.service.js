@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Define your API base URL
-const BASE_URL = 'https://overseas.ai/api/';
+// const BASE_URL = 'https://overseas.ai/api/';
+const BASE_URL = "https://test.overseas.ai/api/"; // test api
 
 // Function to get state list
 export const getState = async formData => {
@@ -123,6 +124,17 @@ export const getVillage = async ps_id => {
 export const getCountryCode = async ps_id => {
   try {
     const response = await axios.get(BASE_URL + 'country-code-list');
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+// Function to get version code
+export const getVersionCode = async () => {
+  try {
+    const response = await axios.get(BASE_URL + 'check-version');
     return response;
   } catch (error) {
     console.error('Error fetching data:', error);

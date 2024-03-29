@@ -9,6 +9,7 @@ import {
   Pressable,
   Modal,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,6 +37,8 @@ import ExperiencePopStep1 from '../components/ExperiencePopStep1';
 import {registerUserStep1, addExperienceStep2} from '../services/user.service';
 export default function CandidateFormDetails() {
   const {globalState, newTranslation, setGlobalState} = useGlobalState();
+  const [showStatePref, setShowStatePref] = useState(false);
+  const [showCountryPref, setShowCountryPref] = useState(false);
   const [formData, setFormData] = useState({
     empDob: '',
     empGender: '',
@@ -149,6 +152,7 @@ export default function CandidateFormDetails() {
   ];
   const [showStatePopUp, setShowStatePopUp] = useState(false);
   const [stateList, setStateList] = useState([]);
+  const [stateListforPref, setStateListforPref] = useState([]);
   const getStateList = async () => {
     try {
       let response = await getState();
@@ -156,12 +160,16 @@ export default function CandidateFormDetails() {
         label: item.name,
         value: item.id,
       }));
+      let statePref = response.data.states.map(item => ({
+        label: item.name,
+        value: item.name,
+      }));
       setStateList(state);
+      setStateListforPref(statePref)
     } catch (error) {
       console.log(error);
     }
   };
-
   const [showDistrictPopUp, setShowDistrictPopUp] = useState(false);
   const [districtList, setDistrictList] = useState([]);
   const getDistrictListFunc = async value => {
@@ -241,7 +249,7 @@ export default function CandidateFormDetails() {
       let response = await getCountries();
       let country = response.countries.map(item => ({
         label: item.name,
-        value: item.id,
+        value: item.name,
       }));
       console.log('ewwjh', country);
       setCountryList(country);
@@ -657,7 +665,7 @@ export default function CandidateFormDetails() {
                   setFormData({...formData, empGender: 'Male'});
                 }}
               />
-              <Text>Male</Text>
+              <Text style={{color: 'black'}}>Male</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
@@ -670,7 +678,7 @@ export default function CandidateFormDetails() {
                   setFormData({...formData, empGender: 'Female'});
                 }}
               />
-              <Text>Female</Text>
+              <Text style={{color: 'black'}}>Female</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
@@ -683,7 +691,7 @@ export default function CandidateFormDetails() {
                   setFormDataError({...formDataError, empGender: ''});
                 }}
               />
-              <Text>Other</Text>
+              <Text style={{color: 'black'}}>Other</Text>
             </View>
           </View>
           <Text style={styles.errorText}>{formDataError.empGender}</Text>
@@ -713,7 +721,9 @@ export default function CandidateFormDetails() {
                 alignItems: 'center',
                 marginLeft: 5,
               }}>
-              <Text style={{color:"black"}}>{formData.empWhatsappCountryCode}</Text>
+              <Text style={{color: 'black'}}>
+                {formData.empWhatsappCountryCode}
+              </Text>
             </View>
             <View
               style={{
@@ -754,7 +764,7 @@ export default function CandidateFormDetails() {
                 setFormData({...formData, empWhatsapp: text})
               }
               value={formData.empWhatsapp}
-              style={{ width:"100%"}}
+              style={{width: '100%', color: 'black'}}
             />
           </View>
           {/* <TextInput style={styles.input} onChangeText={(text)=>setFormData({...formData, empEmail:text})} value={formData.empEmail}/> */}
@@ -814,7 +824,7 @@ export default function CandidateFormDetails() {
                   setFormData({...formData, empMS: 'married'});
                 }}
               />
-              <Text>Married</Text>
+              <Text style={{color: 'black'}}>Married</Text>
             </View>
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -828,7 +838,7 @@ export default function CandidateFormDetails() {
                   setFormData({...formData, empMS: 'unmarried'});
                 }}
               />
-              <Text>Unmarried</Text>
+              <Text style={{color: 'black'}}>Unmarried</Text>
             </View>
           </View>
           <Text style={styles.errorText}>{formDataError.empMS}</Text>
@@ -862,7 +872,7 @@ export default function CandidateFormDetails() {
                   setFormData({...formData, empPassportQ: 'yes'});
                 }}
               />
-              <Text>Yes</Text>
+              <Text style={{color: 'black'}}>Yes</Text>
             </View>
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -876,7 +886,7 @@ export default function CandidateFormDetails() {
                   setFormData({...formData, empPassportQ: 'no'});
                 }}
               />
-              <Text>No</Text>
+              <Text style={{color: 'black'}}>No</Text>
             </View>
           </View>
           <Text style={styles.errorText}>{formDataError.empPassportQ}</Text>
@@ -1286,7 +1296,7 @@ export default function CandidateFormDetails() {
                   });
                 }}
               />
-              <Text>International</Text>
+              <Text style={{color: 'black'}}>International</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
@@ -1307,7 +1317,7 @@ export default function CandidateFormDetails() {
                   });
                 }}
               />
-              <Text>National</Text>
+              <Text style={{color: 'black'}}>National</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
@@ -1322,7 +1332,7 @@ export default function CandidateFormDetails() {
                   });
                 }}
               />
-              <Text>None</Text>
+              <Text style={{color: 'black'}}>None</Text>
             </View>
           </View>
           <Text style={styles.errorText}>
@@ -1416,7 +1426,7 @@ export default function CandidateFormDetails() {
                   setFormDataError({...formDataError, empRelocationIntQ: ''});
                 }}
               />
-              <Text>International</Text>
+              <Text style={{color: 'black'}}>International</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
@@ -1429,7 +1439,7 @@ export default function CandidateFormDetails() {
                   setFormData({...formData, empRelocationIntQ: 'no'});
                 }}
               />
-              <Text>National</Text>
+              <Text style={{color: 'black'}}>National</Text>
             </View>
           </View>
 
@@ -1440,75 +1450,57 @@ export default function CandidateFormDetails() {
         {formData.empRelocationIntQ != '' && (
           <View>
             {formData.empRelocationIntQ == 'no' ? (
-              <View style={styles.inputGroup}>
-                <Text style={styles.label}>State</Text>
-                <View style={styles.input}>
-                  <Picker
-                    selectedValue={formData.empRelocationIntQState}
-                    style={{color: 'black', fontSize: 14}}
-                    onValueChange={(itemValue, itemIndex) => {
-                      setFormData({
-                        ...formData,
-                        empRelocationIntQState: itemValue,
-                      });
+              <>
+                <View style={{flexDirection: 'row', marginTop:-20}}>
+                  <Text
+                    style={{
+                      position: 'relative',
+                      top: 7,
+                      zIndex: 6,
+                      left: 7,
+                      paddingHorizontal: 4,
+                      backgroundColor: 'white',
+                      color: 'black',
                     }}>
-                    <Picker.Item
-                      label="Select"
-                      value=""
-                      style={{color: 'gray', fontSize: 14}}
-                    />
-                    {stateList?.map((v, i) => {
-                      {
-                        return (
-                          <Picker.Item
-                            label={v.label}
-                            value={v.value}
-                            style={{color: 'gray', fontSize: 14}}
-                          />
-                        );
-                      }
-                    })}
-
-                    {/* Add more Picker.Item as needed */}
-                  </Picker>
+                    State Preference
+                  </Text>
                 </View>
-                <Text style={styles.errorText}></Text>
-              </View>
+                <TouchableOpacity
+                  onPress={() => setShowStatePref(true)}
+                  style={[styles.input, {marginBottom: 40, padding: 17}]}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{color: 'black'}}>
+                      {formData.empRelocationIntQState.slice(1, -1)}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </>
             ) : (
-              <View style={styles.inputGroup}>
-                <Text style={styles.label}>Country</Text>
-                <View style={styles.input}>
-                  <Picker
-                    selectedValue={formData.empRelocationIntQCountry}
-                    style={{color: 'black', fontSize: 14}}
-                    onValueChange={(itemValue, itemIndex) => {
-                      setFormData({
-                        ...formData,
-                        empRelocationIntQCountry: itemValue,
-                      });
+              <>
+              <View style={{flexDirection: 'row', marginTop:-20}}>
+                  <Text
+                    style={{
+                      position: 'relative',
+                      top: 7,
+                      zIndex: 6,
+                      left: 7,
+                      paddingHorizontal: 4,
+                      backgroundColor: 'white',
+                      color: 'black',
                     }}>
-                    <Picker.Item
-                      label="Select"
-                      value=""
-                      style={{color: 'gray', fontSize: 14}}
-                    />
-                    {countryList?.map((v, i) => {
-                      {
-                        return (
-                          <Picker.Item
-                            label={v.label}
-                            value={v.value}
-                            style={{color: 'gray', fontSize: 14}}
-                          />
-                        );
-                      }
-                    })}
-
-                    {/* Add more Picker.Item as needed */}
-                  </Picker>
+                    Country Preference
+                  </Text>
                 </View>
-                <Text style={styles.errorText}></Text>
-              </View>
+                <TouchableOpacity
+                  onPress={() => setShowCountryPref(true)}
+                  style={[styles.input, {marginBottom: 40, padding: 17}]}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{color: 'black'}}>
+                      {formData.empRelocationIntQCountry.slice(1, -1)}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </>
             )}
           </View>
         )}
@@ -1616,7 +1608,33 @@ export default function CandidateFormDetails() {
           formData.empInternationMigrationExp == 'yes' ? true : false
         }
       />
-        <Toast ref={ref => Toast.setRef(ref)} />
+      <MyMultipleSelectPopUp
+        title="Select relocation state"
+        toggle={showStatePref}
+        showSearch={true}
+        setToggle={setShowStatePref}
+        inputOption={stateListforPref}
+        callBackFunck={value => {
+          setFormData({
+            ...formData,
+            empRelocationIntQState: JSON.stringify(value),
+          });
+        }}
+      />
+      <MyMultipleSelectPopUp
+        title="Select relocation country"
+        toggle={showCountryPref}
+        showSearch={true}
+        setToggle={setShowCountryPref}
+        inputOption={countryList}
+        callBackFunck={value => {
+          setFormData({
+            ...formData,
+            empRelocationIntQCountry: JSON.stringify(value),
+          });
+        }}
+      />
+      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 }

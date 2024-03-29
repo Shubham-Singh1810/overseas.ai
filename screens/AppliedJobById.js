@@ -384,12 +384,12 @@ const AppliedJobById = props => {
           <View
             style={[
               styles.highlight,
-              interviewJobDetails?.data?.stageStepCount >= 2 &&
-                styles.backgroundColorGreen,
+              interviewJobDetails?.data?.stageStepCount >= 2 ?
+                styles.backgroundColorGreen:{color:"black"},
             ]}></View>
           <Text
             style={
-              interviewJobDetails?.data?.stageStepCount >= 2 && styles.textGreen
+              interviewJobDetails?.data?.stageStepCount >= 2 ? styles.textGreen:{color:"black"}
             }>
             {newTranslation?.interviewScheduled}
           </Text>
@@ -453,9 +453,9 @@ const AppliedJobById = props => {
               interviewJobDetails?.InterviewStage2?.afterInterviewStatus == 1 &&
               // interviewJobDetails?.data?.status == 1 &&
               interviewJobDetails?.data?.stage3 == 1 &&
-              interviewJobDetails?.data?.offerLatterSent == 1 &&
+              interviewJobDetails?.data?.offerLatterSent == 1 ?
               // appliedJobDetails?.interviewStatus == 1 &&
-              styles.textGreen
+              styles.textGreen : {color:"black"}
             }>
             {newTranslation?.selected}
           </Text>
@@ -485,13 +485,13 @@ const AppliedJobById = props => {
           <View
             style={[
               styles.highlight,
-              interviewJobDetails?.data?.offerLatterSent == 1 &&
-                styles.backgroundColorGreen,
+              interviewJobDetails?.data?.offerLatterSent == 1 ?
+                styles.backgroundColorGreen:{color:"black"},
             ]}></View>
           <Text
             style={
-              interviewJobDetails?.data?.offerLatterSent == 1 &&
-              styles.textGreen
+              interviewJobDetails?.data?.offerLatterSent == 1 ?
+              styles.textGreen:{color:"black"}
             }>
             {newTranslation?.signedOfferLetter}
           </Text>
@@ -550,8 +550,8 @@ const AppliedJobById = props => {
             ]}></View>
           <Text
             style={[
-              interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
-                styles.textGreen,
+              interviewJobDetails?.data?.cautionMoneyStatus == 2 ?
+                styles.textGreen: {color:"black"},
             ]}>
             {newTranslation?.medicalAndPCC}
           </Text>
@@ -600,8 +600,8 @@ const AppliedJobById = props => {
             style={[
               interviewJobDetails?.data?.cautionMoneyStatus == 2 &&
                 interviewJobDetails?.data?.stageStepCount == 5 &&
-                interviewJobDetails?.data?.stage5 == 1 &&
-                styles.textGreen,
+                interviewJobDetails?.data?.stage5 == 1 ?
+                styles.textGreen : {color:"black"},
             ]}>
             {newTranslation?.visaReleased}
           </Text>
@@ -644,8 +644,8 @@ const AppliedJobById = props => {
                 interviewJobDetails?.data?.stageStepCount == 5 &&
                 interviewJobDetails?.data?.stage5 == 1 &&
                 interviewJobDetails?.InterviewStage4?.ticket !=
-                  '/placeholder/no-doc-found.jpg' &&
-                styles.textGreen,
+                  '/placeholder/no-doc-found.jpg' ?
+                styles.textGreen : {color:"black"},
             ]}>
             {newTranslation?.ticketReleased}
           </Text>
@@ -678,13 +678,13 @@ const AppliedJobById = props => {
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View style={styles.highlight}></View>
-          <Text>{newTranslation?.applyForCautionMoney}</Text>
+          <Text style={{color:"black"}}>{newTranslation?.applyForCautionMoney}</Text>
         </View>
         <View style={styles.grayDot}></View>
         <View style={styles.grayDot}></View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View style={styles.highlight}></View>
-          <Text>{newTranslation?.cautionMoneyRepay}</Text>
+          <Text style={{color:"black"}}>{newTranslation?.cautionMoneyRepay}</Text>
         </View>
       </View>
       {interviewJobDetails?.data?.cautionMoneyStatus == 2 &&

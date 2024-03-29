@@ -87,11 +87,13 @@ const GetCourseById = props => {
           <View
             style={{
               marginVertical: 20,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexDirection: 'row',
+              // justifyContent: 'space-between',
+              // alignItems: 'center',
+              // flexDirection: 'row',
+              
             }}>
-            <Text style={styles.title}>{courseDetails?.course_name}</Text>
+            <Text style={[styles.title]}>{courseDetails?.course_name}</Text>
+            <View style={{flexDirection:"row", justifyContent:"flex-end"}}>
             <Text
               style={[
                 styles.tableText,
@@ -100,10 +102,13 @@ const GetCourseById = props => {
                   paddingHorizontal: 6,
                   borderRadius: 5,
                   borderColor: 'green',
+                  marginTop:15,
                 },
               ]}>
               {newTranslation?.courseFee} : {courseDetails?.course_fee} &#8377;
             </Text>
+            </View>
+            
           </View>
 
           <View style={styles.otherDetailsContainer}>

@@ -1,4 +1,11 @@
-import {ScrollView, StyleSheet, Text,ActivityIndicator, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  ActivityIndicator,
+  View,
+  RefreshControl
+} from 'react-native';
 import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
@@ -15,12 +22,12 @@ const JobsByCategory = props => {
   });
   const {departmentId, departmentName} = route.params;
   const [jobList, setJobList] = useState([]);
-  const [loading, setLoading]=useState(true)
+  const [loading, setLoading] = useState(true);
   const getJobsByDetartmentFunc = async () => {
     try {
       let response = await getJobByDepartment(departmentId);
       setJobList(response?.data?.jobs);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {}
   };
 
@@ -29,18 +36,47 @@ const JobsByCategory = props => {
       getJobsByDetartmentFunc();
     }, [departmentId]),
   );
+  const [refreshing, setRefreshing] = useState(false);
+  const fetchData = () => {
+    setTimeout(() => {
+      getJobsByDetartmentFunc()
+      setRefreshing(false); 
+    }, 1000); 
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true); 
+    fetchData(); 
+  };
   return (
     <>
-      <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
+      <ScrollView
+        style={{flex: 1, backgroundColor: '#fff'}}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={{padding: 15, marginBottom: 50}}>
-          <Text style={{fontSize: 18, marginBottom: 15, color:"gray"}}>
+          <Text style={{fontSize: 18, marginBottom: 15, color: 'gray'}}>
             Occupation: <Text style={{color: '#000'}}>{departmentName}</Text>
           </Text>
-          {loading? 
-          <View style={{height:500,flexDirection:"row", alignItems:"center",justifyContent:"center"}}>
-            <ActivityIndicator size="large" color="maroon" />
-          </View>: jobList.length == 0 ? (
-            <View style={{height:500,flexDirection:"row", alignItems:"center",justifyContent:"center"}}>
+          {loading ? (
+            <View
+              style={{
+                height: 500,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <ActivityIndicator size="large" color="maroon" />
+            </View>
+          ) : jobList.length == 0 ? (
+            <View
+              style={{
+                height: 500,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               <Text
                 style={{
                   fontSize: 20,
@@ -48,7 +84,8 @@ const JobsByCategory = props => {
                   paddingHorizontal: 20,
                   textAlign: 'center',
                 }}>
-                Opps! No result found for{"\n"}{departmentName}
+                Opps! No result found for{'\n'}
+                {departmentName}
               </Text>
             </View>
           ) : (
@@ -64,8 +101,6 @@ const JobsByCategory = props => {
               );
             })
           )}
-          
-          
         </View>
       </ScrollView>
       <Toast ref={ref => Toast.setRef(ref)} />

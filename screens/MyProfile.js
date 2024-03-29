@@ -329,7 +329,7 @@ const MyProfile = props => {
             </View>
           </View>
         </ScrollView>
-        <Text style={{textAlign: 'center', padding: 10}}>Version 2.0.1</Text>
+        <Text style={{textAlign: 'center', padding: 10, color:"gray"}}>Version 2.0.1</Text>
       </View>
       <Modal
         transparent={true}

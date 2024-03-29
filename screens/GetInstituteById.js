@@ -50,7 +50,7 @@ const GetInstituteById = props => {
   useFocusEffect(
     React.useCallback(() => {
       getCourseByInstituteFunc(params?.id);
-    }, []),
+    }, [params?.id]),
   );
   return (
     <View style={styles.main}>
@@ -100,7 +100,7 @@ const GetInstituteById = props => {
         </View>
 
         <View>
-          <View style={[styles.flex, {alignItems: 'center'}]}>
+          <View style={[styles.flex, {alignItems: 'center',width:200}]}>
             <Text style={styles.hraName}>{params?.instituteName}</Text>
           </View>
 
@@ -125,7 +125,7 @@ const GetInstituteById = props => {
                 {justifyContent: 'space-between'},
               ]}>
               <Text style={[styles.tableText]}>{newTranslation?.address}</Text>
-              <Text style={[styles.tableText]}>{params?.insAddress}</Text>
+              <Text style={[styles.tableText, {width:200}]}>{params?.insAddress}</Text>
             </View>
             <View
               style={[
