@@ -8,11 +8,17 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  Modal,
 } from 'react-native';
 import {useState} from 'react';
 import {useGlobalState} from '../GlobalProvider';
 import Toast from 'react-native-toast-message';
-import {loginUsingPassword, loginUsingOtp} from '../services/user.service';
+import {
+  loginUsingPassword,
+  loginUsingOtp,
+  getOtpOnEmail,
+  verifyOtpForLogin
+} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = props => {
   const [loading, setLoading] = useState(false);
@@ -31,8 +37,8 @@ const Login = props => {
     const newErrors = {...errors};
 
     // Validate mobile_no length
-    if (formData.empPhone=="") {
-      newErrors.empPhone = "Phone number is required field";
+    if (formData.empPhone == '') {
+      newErrors.empPhone = 'Phone number is required field';
       valid = false;
     } else {
       newErrors.empPhone = '';
@@ -40,7 +46,7 @@ const Login = props => {
 
     // Validate password
     if (formData.password.length < 8) {
-      newErrors.password = "Password must be of 8 characters";
+      newErrors.password = 'Password must be of 8 characters';
       valid = false;
     } else {
       newErrors.password = '';
@@ -79,11 +85,9 @@ const Login = props => {
             const regSource = response?.data?.user?.regSource;
             // Check if "regSource" exists before setting it in AsyncStorage
             if (regSource !== undefined && regSource !== null) {
-              
               await AsyncStorage.setItem('regSource', regSource);
             } else {
-              
-              console.log("No registration source found in the response.");
+              console.log('No registration source found in the response.');
             }
             // Set the "user" item in AsyncStorage with the response data
             await AsyncStorage.setItem('user', JSON.stringify(response.data));
@@ -105,7 +109,7 @@ const Login = props => {
       } catch (error) {
         setLoading(false);
       }
-    } 
+    }
   };
   function isValidIndianMobileNumber(mobileNumber) {
     // Regular expression for Indian mobile numbers
@@ -140,7 +144,7 @@ const Login = props => {
             Toast.show({
               type: 'error', // 'success', 'error', 'info', or any custom type you define
               position: 'top',
-              text1:newTranslation?.phoneNumberNotRegistered,
+              text1: newTranslation?.phoneNumberNotRegistered,
               visibilityTime: 3000, // Duration in milliseconds
             });
           }
@@ -151,6 +155,62 @@ const Login = props => {
         newErrors.empPhone = newTranslation?.pleaseEnterAValidNumber;
         setErrors(newErrors);
       }
+    }
+  };
+  const [showPopUp, setShowPopUp] = useState(false);
+  const [showOtpInp, setShowOtpInp] = useState(false);
+  const [empEmail, setEmpEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const getOtpViaEmail = async () => {
+    try {
+      let reponse = await getOtpOnEmail({empEmail});
+      if ((reponse.data.msg = 'Otp Sent Successfully.')) {
+        setShowOtpInp(true);
+      }
+    } catch (error) {
+      console.warn('sdyfg', error);
+    }
+  };
+  const verifyOtp = async () => {
+    try {
+      let response = await verifyOtpForLogin({
+        empEmail: empEmail,
+        otp: otp,
+      });
+      console.log(response.data)
+      if (response.data.access_token) {
+        if (response.data.user.second_step == '0') {
+          await AsyncStorage.setItem(
+            'signUpUser',
+            JSON.stringify(response.data),
+          );
+          props.navigation.navigate('CandidateDetails1');
+          return;
+        }
+        const regSource = response?.data?.user?.regSource;
+        if (regSource !== undefined && regSource !== null) {
+          await AsyncStorage.setItem('regSource', regSource);
+        } else {
+          console.log('No registration source found in the response.');
+        }
+        await AsyncStorage.setItem('user', JSON.stringify(response.data));
+        setUserData();
+      } else {
+        setLoading(false);
+        Toast.show({
+          type: 'error',
+          text1: newTranslation?.wrongOtp,
+          visibilityTime: 3000,
+        });
+      }
+    } catch (error) {
+      setLoading(false);
+      Toast.show({
+        type: 'error',
+        // position: 'top',
+        text1: newTranslation?.somethingWentWrong,
+        visibilityTime: 3000,
+      });
     }
   };
   return (
@@ -182,17 +242,24 @@ const Login = props => {
                 right: 10,
               }}
               onPress={() => setShowPassword(!showPassword)}>
-                {showPassword? <Image
-                source={require('../images/closeEye.png')}
-                style={{height: 25, width: 25, resizeMode: 'contain'}}
-              />:<Image
-              source={require('../images/openEye.png')}
-              style={{height: 25, width: 25, resizeMode: 'contain'}}
-            />}
-              
+              {showPassword ? (
+                <Image
+                  source={require('../images/closeEye.png')}
+                  style={{height: 25, width: 25, resizeMode: 'contain'}}
+                />
+              ) : (
+                <Image
+                  source={require('../images/openEye.png')}
+                  style={{height: 25, width: 25, resizeMode: 'contain'}}
+                />
+              )}
             </Pressable>
           </View>
-          <Text style={[styles.errorMessage, {marginTop:-20, marginBottom:20}]}>{errors.password}</Text>
+          <Text
+            style={[styles.errorMessage, {marginTop: -20, marginBottom: 20}]}>
+            {errors.password}
+          </Text>
+
           {loading ? (
             <ActivityIndicator size="large" color="gray" />
           ) : (
@@ -202,7 +269,7 @@ const Login = props => {
                 {translation.forgetPassword}?
               </Text> */}
                 <Text style={[styles.sendOtp]} onPress={handleRouteToOtp}>
-                {newTranslation.logInViaOtpVerification}
+                  {newTranslation.logInViaOtpVerification}
                 </Text>
               </View>
               <Pressable style={styles.btn} onPress={handleSubmit}>
@@ -215,7 +282,9 @@ const Login = props => {
                   alignItems: 'center',
                   marginTop: 20,
                 }}>
-                <Text style={{color: '#212121'}}>{newTranslation.dontHaveAnyAccount}</Text>
+                <Text style={{color: '#212121'}}>
+                  {newTranslation.dontHaveAnyAccount}
+                </Text>
                 <Pressable
                   style={{
                     borderBottomColor: '#5F90CA',
@@ -224,14 +293,105 @@ const Login = props => {
                     paddingHorizontal: 5,
                   }}
                   onPress={() => props.navigation.navigate('SignUpCom')}>
-                  <Text style={{color:"#5F90CA"}}>{newTranslation.signUp}</Text>
+                  <Text style={{color: '#5F90CA'}}>
+                    {newTranslation.signUp}
+                  </Text>
                 </Pressable>
               </View>
             </View>
           )}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 20,
+            }}>
+            <Pressable
+              style={{
+                paddingHorizontal: 10,
+                paddingVertical: 2,
+                borderRadius: 4,
+                borderWidth: 1,
+                borderColor: '#5F90CA',
+              }}
+              onPress={() => setShowPopUp(true)}>
+              <Text style={{color: '#5F90CA', fontSize: 12}}>
+                Get OTP on email
+              </Text>
+            </Pressable>
+          </View>
         </View>
         <Toast ref={ref => Toast.setRef(ref)} />
       </View>
+      <Modal visible={showPopUp} transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          }}>
+          <View
+            style={{
+              width: 330,
+              padding: 20,
+              backgroundColor: 'white',
+              elevation: 1,
+              borderRadius: 5,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 16,
+              }}>
+              <Text style={{color: 'black', fontSize: 18}}>
+                {showOtpInp ? 'Verify Otp' : 'Get OTP on email'}
+              </Text>
+              <Pressable onPress={() => setShowPopUp(false)}>
+                <Image source={require('../images/close.png')} />
+              </Pressable>
+            </View>
+            {showOtpInp && (
+              <Text
+                style={{
+                  color: 'green',
+                  textAlign: 'center',
+                  marginBottom: 20,
+                  textDecorationLine: 'underline',
+                }}>
+                OTP sent successfully.
+              </Text>
+            )}
+
+            <TextInput
+              placeholder="abs@gmail.com"
+              placeholderTextColor="gray"
+              style={styles.input}
+              value={empEmail}
+              onChangeText={text => setEmpEmail(text)}
+            />
+            {showOtpInp && (
+              <TextInput
+                placeholder="Enter OTP"
+                placeholderTextColor="gray"
+                style={styles.input}
+                value={otp}
+                maxLength={6}
+                keyboardType="numeric"
+                onChangeText={text => setOtp(text)}
+              />
+            )}
+            {showOtpInp ? (
+              <Button title="Verify" onPress={verifyOtp} />
+            ) : (
+              <Button title="Send" onPress={getOtpViaEmail} />
+            )}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

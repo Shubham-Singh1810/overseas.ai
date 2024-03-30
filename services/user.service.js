@@ -424,3 +424,15 @@ export const checkServiceCode = async (access_token) => {
     throw error;
   }
 };
+
+export const getOtpOnEmail = async (formData) => {
+  console.log(formData)
+  try {
+    const response = await axios.post(BASE_URL+"get-email-otp", formData );
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

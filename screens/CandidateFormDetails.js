@@ -817,11 +817,11 @@ export default function CandidateFormDetails() {
                 width: '50%',
               }}>
               <RadioButton
-                value="married"
-                status={formData.empMS === 'married' ? 'checked' : 'unchecked'}
+                value="Married"
+                status={formData.empMS === 'Married' ? 'checked' : 'unchecked'}
                 onPress={() => {
                   setFormDataError({...formDataError, empMS: ''});
-                  setFormData({...formData, empMS: 'married'});
+                  setFormData({...formData, empMS: 'Married'});
                 }}
               />
               <Text style={{color: 'black'}}>Married</Text>
@@ -829,13 +829,13 @@ export default function CandidateFormDetails() {
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
-                value="unmarried"
+                value="Unmarried"
                 status={
-                  formData.empMS === 'unmarried' ? 'checked' : 'unchecked'
+                  formData.empMS === 'Unmarried' ? 'checked' : 'unchecked'
                 }
                 onPress={() => {
                   setFormDataError({...formDataError, empMS: ''});
-                  setFormData({...formData, empMS: 'unmarried'});
+                  setFormData({...formData, empMS: 'Unmarried'});
                 }}
               />
               <Text style={{color: 'black'}}>Unmarried</Text>
@@ -863,13 +863,13 @@ export default function CandidateFormDetails() {
                 width: '50%',
               }}>
               <RadioButton
-                value="yes"
+                value="Yes"
                 status={
-                  formData.empPassportQ === 'yes' ? 'checked' : 'unchecked'
+                  formData.empPassportQ === 'Yes' ? 'checked' : 'unchecked'
                 }
                 onPress={() => {
                   setFormDataError({...formDataError, empPassportQ: ''});
-                  setFormData({...formData, empPassportQ: 'yes'});
+                  setFormData({...formData, empPassportQ: 'Yes'});
                 }}
               />
               <Text style={{color: 'black'}}>Yes</Text>
@@ -877,13 +877,13 @@ export default function CandidateFormDetails() {
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
-                value="no"
+                value="No"
                 status={
-                  formData.empPassportQ === 'no' ? 'checked' : 'unchecked'
+                  formData.empPassportQ === 'No' ? 'checked' : 'unchecked'
                 }
                 onPress={() => {
                   setFormDataError({...formDataError, empPassportQ: ''});
-                  setFormData({...formData, empPassportQ: 'no'});
+                  setFormData({...formData, empPassportQ: 'No'});
                 }}
               />
               <Text style={{color: 'black'}}>No</Text>
@@ -897,18 +897,18 @@ export default function CandidateFormDetails() {
             style={[
               styles.input,
               {padding: 15},
-              formDataError.empSkill !== '' && {borderColor: 'red'},
+              formDataError.empOccuId !== '' && {borderColor: 'red'},
             ]}
             onPress={() => setShowWorkDepPopUp(true)}>
             <Text style={{color: '#212121', fontSize: 14, fontWeight: '500'}}>
               {
                 occupations?.filter((v, i) => {
-                  return v.value == formData.empSkill;
+                  return v.value == formData.empOccuId;
                 })[0]?.label
               }
             </Text>
           </Pressable>
-          <Text style={styles.errorText}>{formDataError.empSkill}</Text>
+          <Text style={styles.errorText}>{formDataError.empOccuId}</Text>
           <MySingleSelectPopUp
             title="Select Working Department"
             toggle={showWorkDepPopUp}
@@ -916,9 +916,9 @@ export default function CandidateFormDetails() {
             setToggle={setShowWorkDepPopUp}
             inputOption={occupations}
             callBackFunck={value => {
-              setFormData({...formData, empSkill: value});
+              setFormData({...formData, empOccuId: value});
               getSkillList(value);
-              setFormDataError({...formDataError, empSkill: ''});
+              setFormDataError({...formDataError, empOccuId: ''});
             }}
           />
         </View>
@@ -928,18 +928,18 @@ export default function CandidateFormDetails() {
             style={[
               styles.input,
               {padding: 15},
-              formDataError.empOccuId !== '' && {borderColor: 'red'},
+              formDataError.empSkill !== '' && {borderColor: 'red'},
             ]}
             onPress={() => setShowSkillPopUp(true)}>
             <Text style={{color: '#212121', fontSize: 14, fontWeight: '500'}}>
               {
                 skillList?.filter((v, i) => {
-                  return v.value == formData.empOccuId;
+                  return v.value == formData.empSkill;
                 })[0]?.label
               }
             </Text>
           </Pressable>
-          <Text style={styles.errorText}>{formDataError.empOccuId}</Text>
+          <Text style={styles.errorText}>{formDataError.empSkill}</Text>
           <MySingleSelectPopUp
             title="Select Skill"
             toggle={showSkillPopUp}
@@ -947,8 +947,8 @@ export default function CandidateFormDetails() {
             setToggle={setShowSkillPopUp}
             inputOption={skillList}
             callBackFunck={value => {
-              setFormData({...formData, empOccuId: value});
-              setFormDataError({...formDataError, empOccuId: ''});
+              setFormData({...formData, empSkill: value});
+              setFormDataError({...formDataError, empSkill: ''});
             }}
           />
         </View>
@@ -1280,14 +1280,14 @@ export default function CandidateFormDetails() {
             ]}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
-                value="yes"
+                value=""
                 status={
-                  formData.empInternationMigrationExp === 'yes'
+                  formData.empInternationMigrationExp === ''
                     ? 'checked'
                     : 'unchecked'
                 }
                 onPress={() => {
-                  setFormData({...formData, empInternationMigrationExp: 'yes'});
+                  setFormData({...formData, empInternationMigrationExp: ''});
                   setShowExperiencePopUp(true);
                   setExperienceNome('');
                   setFormDataError({
@@ -1300,15 +1300,15 @@ export default function CandidateFormDetails() {
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
-                value="no"
+                value="No"
                 status={
-                  formData.empInternationMigrationExp === 'no' &&
+                  formData.empInternationMigrationExp === 'No' &&
                   experienceNone == ''
                     ? 'checked'
                     : 'unchecked'
                 }
                 onPress={() => {
-                  setFormData({...formData, empInternationMigrationExp: 'no'});
+                  setFormData({...formData, empInternationMigrationExp: 'No'});
                   setExperienceNome('');
                   setShowExperiencePopUp(true);
                   setFormDataError({
@@ -1324,7 +1324,7 @@ export default function CandidateFormDetails() {
                 value="none"
                 status={experienceNone === 'none' ? 'checked' : 'unchecked'}
                 onPress={() => {
-                  setFormData({...formData, empInternationMigrationExp: 'no'});
+                  setFormData({...formData, empInternationMigrationExp: 'No'});
                   setExperienceNome('none');
                   setFormDataError({
                     ...formDataError,
@@ -1417,12 +1417,12 @@ export default function CandidateFormDetails() {
                 alignItems: 'center',
               }}>
               <RadioButton
-                value="yes"
+                value="Yes"
                 status={
-                  formData.empRelocationIntQ === 'yes' ? 'checked' : 'unchecked'
+                  formData.empRelocationIntQ === 'Yes' ? 'checked' : 'unchecked'
                 }
                 onPress={() => {
-                  setFormData({...formData, empRelocationIntQ: 'yes'});
+                  setFormData({...formData, empRelocationIntQ: 'Yes'});
                   setFormDataError({...formDataError, empRelocationIntQ: ''});
                 }}
               />
@@ -1430,13 +1430,13 @@ export default function CandidateFormDetails() {
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
-                value="no"
+                value="No"
                 status={
-                  formData.empRelocationIntQ === 'no' ? 'checked' : 'unchecked'
+                  formData.empRelocationIntQ === 'No' ? 'checked' : 'unchecked'
                 }
                 onPress={() => {
                   setFormDataError({...formDataError, empRelocationIntQ: ''});
-                  setFormData({...formData, empRelocationIntQ: 'no'});
+                  setFormData({...formData, empRelocationIntQ: 'No'});
                 }}
               />
               <Text style={{color: 'black'}}>National</Text>
@@ -1449,7 +1449,7 @@ export default function CandidateFormDetails() {
         </View>
         {formData.empRelocationIntQ != '' && (
           <View>
-            {formData.empRelocationIntQ == 'no' ? (
+            {formData.empRelocationIntQ == 'No' ? (
               <>
                 <View style={{flexDirection: 'row', marginTop:-20}}>
                   <Text
@@ -1605,7 +1605,7 @@ export default function CandidateFormDetails() {
         showExperiencePopUp={showExperiencePopUp}
         localUser={localUser}
         showCountry={
-          formData.empInternationMigrationExp == 'yes' ? true : false
+          formData.empInternationMigrationExp == '' ? true : false
         }
       />
       <MyMultipleSelectPopUp

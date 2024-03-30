@@ -59,6 +59,7 @@ const EditProfile = props => {
     'Graduate in Engineering',
     'Any other Vocational Training (one year or above)',
     'Any other Vocational Training (less than one year)',
+    "Not applicable"
   ];
   const [showCountryPref, setShowCountryPref]=useState(false)
   const [countryList, setCountryList] = useState([]);
@@ -796,7 +797,7 @@ const EditProfile = props => {
             style={[styles.input, {marginBottom: 16, padding: 17}]}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black'}}>
-                {formData.empRelocationIntQState.slice(1, -1)}
+                {formData?.empRelocationIntQState?.slice(1, -1)}
               </Text>
             </View>
           </TouchableOpacity>
