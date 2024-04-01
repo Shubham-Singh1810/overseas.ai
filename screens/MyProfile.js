@@ -8,29 +8,29 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  Button
+  Button,
 } from 'react-native';
-import {loginOut} from "../services/user.service"
+import {loginOut} from '../services/user.service';
 import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getProfileStrength, getNotification} from "../services/user.service";
+import {getProfileStrength, getNotification} from '../services/user.service';
 
 const MyProfile = props => {
-  const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
+  const {translation, newTranslation, globalState, setGlobalState} =
+    useGlobalState();
   const handleLogOut = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
-      let response = await loginOut(JSON.parse(user).access_token)
-      if(response?.data?.logout=="success"){
+      let response = await loginOut(JSON.parse(user).access_token);
+      if (response?.data?.logout == 'success') {
         await AsyncStorage.clear();
         setGlobalState({...globalState, user: null});
-        setShowLogOutPopUp(false)
-      }else{
-        console.warn("Something went wrong")
+        setShowLogOutPopUp(false);
+      } else {
+        console.warn('Something went wrong');
       }
-      
     } catch (error) {
       console.error('Error removing user data from AsyncStorage:', error);
     }
@@ -75,7 +75,7 @@ const MyProfile = props => {
       );
     }
   };
-  const [showLogOutPopUp, setShowLogOutPopUp]=useState(false)
+  const [showLogOutPopUp, setShowLogOutPopUp] = useState(false);
   useFocusEffect(
     React.useCallback(() => {
       const fetchUserData = async () => {
@@ -87,7 +87,7 @@ const MyProfile = props => {
         }
       };
       fetchUserData();
-    }, [])
+    }, []),
   );
   return (
     <>
@@ -116,7 +116,11 @@ const MyProfile = props => {
                 )}
               </View>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('Edit Profile', {backTo:"MyProfile"})}>
+                onPress={() =>
+                  props.navigation.navigate('Edit Profile', {
+                    backTo: 'MyProfile',
+                  })
+                }>
                 <Text
                   style={{
                     textDecorationLine: 'underline',
@@ -232,7 +236,11 @@ const MyProfile = props => {
               </View> */}
 
               <Pressable
-                onPress={() => props.navigation.navigate('Applied Courses',{backTo:"MyProfile"})}>
+                onPress={() =>
+                  props.navigation.navigate('Applied Courses', {
+                    backTo: 'MyProfile',
+                  })
+                }>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -246,7 +254,11 @@ const MyProfile = props => {
               </Pressable>
 
               <Pressable
-                onPress={() => props.navigation.navigate('Applied Job',{backTo:"MyProfile"})}>
+                onPress={() =>
+                  props.navigation.navigate('Applied Job', {
+                    backTo: 'MyProfile',
+                  })
+                }>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -257,7 +269,11 @@ const MyProfile = props => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('My Documents',{backTo:"MyProfile"})}>
+                onPress={() =>
+                  props.navigation.navigate('My Documents', {
+                    backTo: 'MyProfile',
+                  })
+                }>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -269,7 +285,9 @@ const MyProfile = props => {
               </Pressable>
 
               <Pressable
-                onPress={() => props.navigation.navigate('Saved Jobs',{backTo:"MyProfile"})}>
+                onPress={() =>
+                  props.navigation.navigate('Saved Jobs', {backTo: 'MyProfile'})
+                }>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -280,7 +298,11 @@ const MyProfile = props => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('Notifications',{backTo:"MyProfile"})}>
+                onPress={() =>
+                  props.navigation.navigate('Notifications', {
+                    backTo: 'MyProfile',
+                  })
+                }>
                 <View style={styles.navItem}>
                   <Image
                     resizeMode="contain"
@@ -293,18 +315,26 @@ const MyProfile = props => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('My Experience',{backTo:"MyProfile"})}>
+                onPress={() =>
+                  props.navigation.navigate('My Experience', {
+                    backTo: 'MyProfile',
+                  })
+                }>
                 <View style={styles.navItem}>
                   <Image
                     source={require('../images/jobIcon.png')}
                     resizeMode="contain"
                     style={{height: 20, width: 20, marginRight: 10}}
                   />
-                  <Text style={styles.navText}>{newTranslation.experience}</Text>
+                  <Text style={styles.navText}>
+                    {newTranslation.experience}
+                  </Text>
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => props.navigation.navigate('Contact Us',{backTo:"MyProfile"})}>
+                onPress={() =>
+                  props.navigation.navigate('Contact Us', {backTo: 'MyProfile'})
+                }>
                 <View style={styles.navItem}>
                   <Image
                     source={require('../images/helpIcon.png')}
@@ -314,27 +344,29 @@ const MyProfile = props => {
                   <Text style={styles.navText}>{translation.needHelp}</Text>
                 </View>
               </Pressable>
-              <Pressable
-                onPress={() => setShowLogOutPopUp(true)}>
+              <Pressable onPress={() => setShowLogOutPopUp(true)}>
                 <View style={styles.navItem}>
                   <Image
                     source={require('../images/logoutIcon.png')}
-                    style={{height: 25, width: 25,position:"relative", right:3, marginRight:10}}
+                    style={{
+                      height: 25,
+                      width: 25,
+                      position: 'relative',
+                      right: 3,
+                      marginRight: 10,
+                    }}
                   />
-                  <Text style={styles.logout} >
-                    {translation.logOut}
-                  </Text>
+                  <Text style={styles.logout}>{translation.logOut}</Text>
                 </View>
               </Pressable>
             </View>
           </View>
         </ScrollView>
-        <Text style={{textAlign: 'center', padding: 10, color:"gray"}}>Version 2.0.1</Text>
+        <Text style={{textAlign: 'center', padding: 10, color: 'gray'}}>
+          Version 2.0.1
+        </Text>
       </View>
-      <Modal
-        transparent={true}
-        visible={showLogOutPopUp}
-        animationType="slide">
+      <Modal transparent={true} visible={showLogOutPopUp} animationType="slide">
         <View
           style={{
             flex: 1,
@@ -361,11 +393,9 @@ const MyProfile = props => {
                 justifyContent: 'space-between',
               }}>
               <View style={{width: '45%'}}>
-
-                
                 <Button
                   title={newTranslation?.no}
-                  onPress={()=>setShowLogOutPopUp(false)}
+                  onPress={() => setShowLogOutPopUp(false)}
                   color="#28a745"
                 />
               </View>
@@ -479,8 +509,8 @@ const styles = StyleSheet.create({
   },
   logout: {
     fontSize: 13,
-    position:"relative",
-    top:3,
+    position: 'relative',
+    top: 3,
     fontWeight: '500',
     fontFamily: 'Nato Sans',
     color: 'maroon',

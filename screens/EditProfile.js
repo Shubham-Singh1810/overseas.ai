@@ -579,7 +579,9 @@ const EditProfile = props => {
                 label={
                   skills?.filter((v, i) => {
                     return v?.id == formData?.empSkill;
-                  })[0]?.skill
+                  })[0]?.skill ? skills?.filter((v, i) => {
+                    return v?.id == formData?.empSkill;
+                  })[0]?.skill :"Select"
                 }
                 value={formData.empSkill}
                 style={{color: 'gray'}}
@@ -910,6 +912,7 @@ const EditProfile = props => {
         showSearch={true}
         setToggle={setShowLanguageSelect}
         inputOption={languageOption}
+        defaultSelected={formData.empLanguage}
         callBackFunck={value => {
           setFormData({...formData, empLanguage: JSON.stringify(value)});
           // setFormDataError({...formDataError, empLanguage: ''});
@@ -922,6 +925,7 @@ const EditProfile = props => {
         showSearch={true}
         setToggle={setShowStatePref}
         inputOption={stateList}
+        defaultSelected={formData.empRelocationIntQState}
         callBackFunck={value => {
           setFormData({...formData, empRelocationIntQState: JSON.stringify(value)});
         }}
@@ -929,7 +933,7 @@ const EditProfile = props => {
       <MyMultipleSelectPopUp
         title="Select relocation country"
         toggle={showCountryPref}
-        
+        defaultSelected={formData.empRelocationIntQCountry}
         showSearch={true}
         setToggle={setShowCountryPref}
         inputOption={countryList}

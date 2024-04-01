@@ -19,8 +19,9 @@ const MyMultipleSelectPopUp = ({
   inputOption,
   callBackFunck,
   showSearch,
+  defaultSelected
 }) => {
-  const [selectedInput, setSelectedInput] = useState([]);
+  const [selectedInput, setSelectedInput] = useState(defaultSelected? JSON.parse(defaultSelected):[]);
   const [searchKey, setSearchKey] = useState('');
   const handleInputSelect = input => {
     if (selectedInput.includes(input)) {

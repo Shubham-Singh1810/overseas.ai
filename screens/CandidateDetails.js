@@ -14,7 +14,7 @@ import {useState, useEffect} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import {getDistrict, getState} from '../services/info.service';
 const CandidateDetails = props => {
-  const {translation, globalState} = useGlobalState();
+  const {translation, newTranslation, globalState} = useGlobalState();
   const [jobAlert, setJobAlert] = useState(false);
   const [userDeatils, setUserDetails] = useState({
     name: globalState?.user.user.name,

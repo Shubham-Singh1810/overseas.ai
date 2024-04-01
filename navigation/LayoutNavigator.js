@@ -32,11 +32,7 @@ const LayoutNavigator = () => {
             component={CandidateFormDetails}
             options={{headerShown: false}}
           />
-          {/* <Stack.Screen
-            name="CandidateDetails1"
-            component={CandidateDetailsStep1}
-            options={{headerShown: false}}
-          /> */}
+          
           <Stack.Screen
             name="CandidateDetails2"
             component={CandidateDetails2}
