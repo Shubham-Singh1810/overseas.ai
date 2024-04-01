@@ -39,9 +39,7 @@ const Notifications = props => {
       if (response.status == 200) {
         console.log(response.data);
         setNotificationArr(response.data);
-      } else {
-        console.warn('sdkfj');
-      }
+      } 
     } catch (error) {}
     setShowLoader(false);
   };

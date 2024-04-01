@@ -109,15 +109,9 @@ const MyDocument = props => {
           text1: 'CV uploaded successfully.',
           visibilityTime: 3000, // Duration in milliseconds
         });
+        getAllDocList()
       }
-      // if (response.data.msg == 'CV already uploaded.') {
-      //   Toast.show({
-      //     type: 'info', // 'success', 'error', 'info', or any custom type you define
-      //     position: 'top',
-      //     text1: 'CV already uploaded.',
-      //     visibilityTime: 3000, // Duration in milliseconds
-      //   });
-      // }
+      
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         Toast.show({
@@ -164,6 +158,7 @@ const MyDocument = props => {
           text1: 'Highest education certificate uploaded successfully.',
           visibilityTime: 3000, // Duration in milliseconds
         });
+        getAllDocList()
       }
       if (
         response.data.msg == 'Highest education certificate already uploaded.'
@@ -774,7 +769,7 @@ const MyDocument = props => {
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{newTranslation?.customCV}</Text>
-            {allDocListDetail?.cv?.cv ? (
+            {allDocListDetail?.cv?.cv!="https://overseas.ai/placeholder/person.jpg" ? (
               <Pressable
                 onPress={uploadCv}
                 style={{
@@ -835,7 +830,7 @@ const MyDocument = props => {
         </View> */}
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{newTranslation?.covidCertificate}</Text>
-            {allDocListDetail?.covidCertificate?.covidCertificate ? (
+            {allDocListDetail?.covidCertificate?.covidCertificate!="https://overseas.ai/placeholder/person.jpg" ? (
               <Pressable
                 onPress={uploadCv}
                 style={{
@@ -874,7 +869,7 @@ const MyDocument = props => {
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{newTranslation?.educationCertificate}</Text>
-            {allDocListDetail?.highEduCertificate?.certificate ? (
+            {allDocListDetail?.highEduCertificate?.certificate!="https://overseas.ai/placeholder/person.jpg" ? (
               <Pressable
                 onPress={uploadCv}
                 style={{

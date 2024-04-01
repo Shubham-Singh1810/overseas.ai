@@ -771,7 +771,7 @@ const EditProfile = props => {
             style={[styles.input, {marginBottom: 16, padding: 17}]}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black'}}>
-                {formData.empRelocationIntQCountry.slice(1, -1)}
+                {formData?.empRelocationIntQCountry?.slice(1, -1)}
               </Text>
             </View>
           </TouchableOpacity>
@@ -929,6 +929,7 @@ const EditProfile = props => {
       <MyMultipleSelectPopUp
         title="Select relocation country"
         toggle={showCountryPref}
+        
         showSearch={true}
         setToggle={setShowCountryPref}
         inputOption={countryList}
