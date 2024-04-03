@@ -190,6 +190,15 @@ const AuthenticatedNavigator = () => {
           })}
         />
         <Drawer.Screen
+          name="Apply Passport"
+          component={ApplyPcc}
+          options={({navigation, route}) => ({
+            title: 'Apply Passport',
+            headerShown: false, 
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
           name="Get Certificate"
           component={GetCertificate}
           options={({navigation, route}) => ({

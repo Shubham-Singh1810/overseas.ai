@@ -28,6 +28,7 @@ import SavedJobs from '../screens/SavedJobs';
 import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PassportApply from '../screens/PassportApply';
 
 const CustomDrawerContent = props => {
   const {navigation} = props;
@@ -115,6 +116,14 @@ const CustomDrawerContent = props => {
       banglaName: 'মেডিকেল -এর জন্য আবেদন করুন',
       component: MedicalTest,
       name: 'Apply Medical Test',
+      subMenu: [],
+    },
+    {
+      title: 'Apply Passport',
+      hindiName: 'पासपोर्ट के लिए आवेदन करें',
+      banglaName: 'পাসপোর্ট জন্য আবেদন করুন',
+      component: PassportApply,
+      name: 'Apply Passport',
       subMenu: [],
     },
     {

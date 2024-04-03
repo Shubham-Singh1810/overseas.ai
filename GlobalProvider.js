@@ -2567,6 +2567,24 @@ export const GlobalStateProvider = ({children}) => {
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ व्यक्ति आपसे दूरी बनाए रखें'
                 : 'রেফারেন্স ব্যক্তি আপনার থেকে দূরত্ব',
+                statePreference:
+                globalState.selectedLanguage == 'english'
+                ? "State Preference"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'राज्य की प्राथमिकता'
+                : 'রাজ্য পছন্দ',
+                countryPreference:
+                globalState.selectedLanguage == 'english'
+                ? "Country Preference"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'देश की प्राथमिकता'
+                : 'দেশের পছন্দ',
+                referenceDetails:
+                globalState.selectedLanguage == 'english'
+                ? "Reference details"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'संदर्भ विवरण'
+                : 'রেফারেন্স বিবরণ',
     });
   };
 

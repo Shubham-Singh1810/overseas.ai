@@ -39,16 +39,15 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const MyDocument = props => {
   useAndroidBackHandler(() => {
-    if(props?.route?.params?.backTo){
+    if (props?.route?.params?.backTo) {
       props.navigation.navigate(props?.route?.params.backTo);
       return true;
-    }else{
-      props.navigation.navigate("MyProfile") 
+    } else {
+      props.navigation.navigate('MyProfile');
       return true;
     }
-    
   });
-  const[loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const getCountryList = async () => {
     try {
@@ -72,7 +71,7 @@ const MyDocument = props => {
       getStateList();
     }, []),
   );
- 
+
   const {translation, newTranslation} = useGlobalState();
   // function to upload passport
   const uploadPassport = () => {
@@ -109,9 +108,8 @@ const MyDocument = props => {
           text1: 'CV uploaded successfully.',
           visibilityTime: 3000, // Duration in milliseconds
         });
-        getAllDocList()
+        getAllDocList();
       }
-      
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         Toast.show({
@@ -158,7 +156,7 @@ const MyDocument = props => {
           text1: 'Highest education certificate uploaded successfully.',
           visibilityTime: 3000, // Duration in milliseconds
         });
-        getAllDocList()
+        getAllDocList();
       }
       if (
         response.data.msg == 'Highest education certificate already uploaded.'
@@ -192,7 +190,7 @@ const MyDocument = props => {
 
   // function to upload EXPERIENCE
   const uploadExperience = () => {
-    props.navigation.navigate('My Experience', {backTo:"My Documents"});
+    props.navigation.navigate('My Experience', {backTo: 'My Documents'});
   };
   // function to upload dl
   const [showDlPopUp, setShowDlPopUp] = useState(false);
@@ -625,14 +623,14 @@ const MyDocument = props => {
   const [showOptionForOtherDoc, setShowOptionForOtherDoc] = useState(false);
   const [allDocListDetail, setAllDocListDetails] = useState('');
   const getAllDocList = async () => {
-    setLoading(true)
+    setLoading(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getAllDocApi(JSON.parse(user).access_token);
       setAllDocListDetails(response.data);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {}
-    setLoading(false)
+    setLoading(false);
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -769,7 +767,8 @@ const MyDocument = props => {
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{newTranslation?.customCV}</Text>
-            {allDocListDetail?.cv?.cv!="https://overseas.ai/placeholder/person.jpg" ? (
+            {allDocListDetail?.cv?.cv !=
+            'https://overseas.ai/placeholder/person.jpg' ? (
               <Pressable
                 onPress={uploadCv}
                 style={{
@@ -812,10 +811,14 @@ const MyDocument = props => {
             )}
           </View>
           <View style={styles.buttonBox}>
-            <Text style={styles.text}>{newTranslation?.experienceCertificate}</Text>
+            <Text style={styles.text}>
+              {newTranslation?.experienceCertificate}
+            </Text>
             <Button
               title={
-                allDocListDetail?.experienceList?.length > 0 ? newTranslation?.view : newTranslation?.upload
+                allDocListDetail?.experienceList?.length > 0
+                  ? newTranslation?.view
+                  : newTranslation?.upload
               }
               onPress={uploadExperience}
             />
@@ -830,7 +833,8 @@ const MyDocument = props => {
         </View> */}
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{newTranslation?.covidCertificate}</Text>
-            {allDocListDetail?.covidCertificate?.covidCertificate!="https://overseas.ai/placeholder/person.jpg" ? (
+            {allDocListDetail?.covidCertificate?.covidCertificate !=
+            'https://overseas.ai/placeholder/person.jpg' ? (
               <Pressable
                 onPress={uploadCv}
                 style={{
@@ -868,8 +872,11 @@ const MyDocument = props => {
             )}
           </View>
           <View style={styles.buttonBox}>
-            <Text style={styles.text}>{newTranslation?.educationCertificate}</Text>
-            {allDocListDetail?.highEduCertificate?.certificate!="https://overseas.ai/placeholder/person.jpg" ? (
+            <Text style={styles.text}>
+              {newTranslation?.educationCertificate}
+            </Text>
+            {allDocListDetail?.highEduCertificate?.certificate !=
+            'https://overseas.ai/placeholder/person.jpg' ? (
               <Pressable
                 onPress={uploadCv}
                 style={{
@@ -903,7 +910,10 @@ const MyDocument = props => {
                 </Text>
               </Pressable>
             ) : (
-              <Button title={newTranslation?.upload} onPress={uploadEducationCertificate} />
+              <Button
+                title={newTranslation?.upload}
+                onPress={uploadEducationCertificate}
+              />
             )}
           </View>
           <Pressable
@@ -951,26 +961,32 @@ const MyDocument = props => {
                   </View>
                 );
               })}
-              {otherDocArr?.filter(item => !allDocListDetail?.otherDocs?.docs?.map(item => item.document_type).includes(item))?.map((v, i) => {
-                return (
-                  <View style={styles.buttonBox}>
-                    <Text style={styles.text}>{v}</Text>
-                    <Button
-                      title={newTranslation?.upload}
-                      onPress={() => pickDocumentOtherDoc(v)}
-                    />
-                  </View>
-                );
-              })}
+              {otherDocArr
+                ?.filter(
+                  item =>
+                    !allDocListDetail?.otherDocs?.docs
+                      ?.map(item => item.document_type)
+                      .includes(item),
+                )
+                ?.map((v, i) => {
+                  return (
+                    <View style={styles.buttonBox}>
+                      <Text style={styles.text}>{v}</Text>
+                      <Button
+                        title={newTranslation?.upload}
+                        onPress={() => pickDocumentOtherDoc(v)}
+                      />
+                    </View>
+                  );
+                })}
             </View>
           )}
         </View>
-       
       </ScrollView>
       <Text style={styles.grayText}>
         {translation.allYourDocumentsAreSafeWithUs}
       </Text>
-     
+
       <Modal
         transparent={true}
         visible={showPassportPopUp}
@@ -1048,7 +1064,7 @@ const MyDocument = props => {
               <TouchableOpacity
                 onPress={() => setShowPassportIssueCalender(true)}
                 style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                <Text style={{color:"gray"}}>
+                <Text style={{color: 'gray'}}>
                   {passportForm.passportIssueDate == ''
                     ? newTranslation?.placeOfIssue
                     : passportForm.passportIssueDate}
@@ -1057,7 +1073,7 @@ const MyDocument = props => {
               <TouchableOpacity
                 onPress={() => setShowPassportExpCalender(true)}
                 style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                <Text style={{color:"gray"}}>
+                <Text style={{color: 'gray'}}>
                   {passportForm.passportExpDate == ''
                     ? 'Passport Expriry Date'
                     : passportForm.passportExpDate}
@@ -1183,7 +1199,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
                 Passport Issue Date
               </Text>
               <TouchableOpacity
@@ -1234,7 +1250,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
                 Passport Expire Date
               </Text>
               <TouchableOpacity
@@ -1419,9 +1435,11 @@ const MyDocument = props => {
                     onPress={() => setShowLicenceCat(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
                     {dlFormData.licenceCategory == '' ? (
-                      <Text style={{color:"gray"}}>Select Licence Category</Text>
+                      <Text style={{color: 'gray'}}>
+                        Select Licence Category
+                      </Text>
                     ) : (
-                      <Text style={{color:"gray"}}>
+                      <Text style={{color: 'gray'}}>
                         {dlFormType == 'Add'
                           ? dlFormData?.licenceCategory?.map((v, i) => {
                               return <>{v} , </>;
@@ -1433,7 +1451,7 @@ const MyDocument = props => {
                   <TouchableOpacity
                     onPress={() => setShowDlIssueCalender(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                    <Text style={{color:"gray"}}>
+                    <Text style={{color: 'gray'}}>
                       {dlFormData.formDate == ''
                         ? 'Liecence Issue Date'
                         : dlFormData.formDate}
@@ -1442,7 +1460,7 @@ const MyDocument = props => {
                   <TouchableOpacity
                     onPress={() => setShowDlExpCalender(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                    <Text style={{color:"gray"}}>
+                    <Text style={{color: 'gray'}}>
                       {dlFormData.toDate == ''
                         ? 'Licence Expriry Date'
                         : dlFormData.toDate}
@@ -1751,7 +1769,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
                 Liecence Issue Date
               </Text>
               <TouchableOpacity onPress={() => setShowDlIssueCalender(false)}>
@@ -1801,7 +1819,7 @@ const MyDocument = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color:"gray"}}>
+              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
                 Liecence Expire Date
               </Text>
               <TouchableOpacity onPress={() => setShowDlExpCalender(false)}>
@@ -1945,7 +1963,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 18,
     backgroundColor: 'white',
-    color:"gray"
+    color: 'gray',
   },
   picker: {
     borderWidth: 1,

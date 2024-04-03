@@ -1463,7 +1463,7 @@ export default function CandidateFormDetails() {
                       backgroundColor: 'white',
                       color: 'black',
                     }}>
-                    State Preference
+                    {newTranslation?.statePreference}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -1489,7 +1489,7 @@ export default function CandidateFormDetails() {
                       backgroundColor: 'white',
                       color: 'black',
                     }}>
-                    Country Preference
+                    {newTranslation?.countryPreference}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -1523,7 +1523,7 @@ export default function CandidateFormDetails() {
               position: 'relative',
               bottom: 10.5,
             }}>
-            Reference details
+            {newTranslation?.referenceDetails}
           </Text>
         </View>
         <View style={styles.inputGroup}>

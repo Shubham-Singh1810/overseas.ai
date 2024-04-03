@@ -18,25 +18,29 @@ import Toast from 'react-native-toast-message';
 import {getFollowerCount, handleFollow} from '../services/hra.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchResult from '../components/SearchResult';
-import { useGlobalState } from '../GlobalProvider';
+import {useGlobalState} from '../GlobalProvider';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
+import {TextInput} from 'react-native-gesture-handler';
 const DetailedHra = props => {
   useAndroidBackHandler(() => {
     props.navigation.navigate('Your HRA');
     return true;
   });
-  const [params, setParams] = useState(props?.route.params.hraDetails || props?.route.params);
+  const [params, setParams] = useState(
+    props?.route.params.hraDetails || props?.route.params,
+  );
+  const [showRatingPop, setShowRattingPop] = useState(false);
   useFocusEffect(
     React.useCallback(() => {
-      if(props?.route.params.hraDetails){
-        setParams(props?.route.params.hraDetails)
-      }else{
-        setParams(props?.route.params)
+      if (props?.route.params.hraDetails) {
+        setParams(props?.route.params.hraDetails);
+      } else {
+        setParams(props?.route.params);
       }
     }, [props?.route]),
   );
-  
-  const {newTranslation}=useGlobalState();
+
+  const {newTranslation} = useGlobalState();
   const [showJobDetails, setShowJobDetails] = useState(false);
   const [showClientName, setShowClientName] = useState(false);
   const [showWebsite, setShowWebsite] = useState(false);
@@ -45,7 +49,7 @@ const DetailedHra = props => {
   const [showLoader, setShowLoader] = useState(false);
   const getFollowCountFunc = async () => {
     let user = await AsyncStorage.getItem('user');
-    console.log(JSON.parse(user).access_token)
+    console.log(JSON.parse(user).access_token);
     try {
       let response = await getFollowerCount({
         access_token: JSON.parse(user).access_token,
@@ -93,13 +97,13 @@ const DetailedHra = props => {
       });
       if (response?.status == 200) {
         setHraJobList(response?.data?.jobs);
-        setShowLoader(false)
+        setShowLoader(false);
       } else {
         console.warn('something went wrong');
       }
     } catch (error) {
       console.warn('something went wrong');
-    };
+    }
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -125,52 +129,79 @@ const DetailedHra = props => {
     }
     return stars;
   };
+  const [userratting, setRatting] = useState(3);
+  const [userReview, setUserReview]= useState("")
+  const handleRattingSelect = rate => {
+    setRatting(rate);
+  };
+  const handleReviewSubmit = async ()=>{
+    console.warn({userratting, userReview})
+    setShowRattingPop(false)
+    setRatting(0)
+  }
   return (
     <>
       <View style={styles.main}>
         <View style={styles.flex}>
-          {params?.cmpLogoS3 != 'placeholder/logo.png' ? (
-            <Image
-              source={{
-                uri: params?.cmpLogoS3,
-              }}
-              style={{
-                height: 110,
-                width: 110,
-                borderRadius: 55,
-                resizeMode: 'contain',
-                marginRight: 15,
-                borderWidth: 0.5,
-                borderColor: 'gray',
-              }}
-            />
-          ) : (
-            <Image
-              source={require('../images/hraDummyIcon.png')}
-              style={{
-                height: 110,
-                width: 110,
-                borderRadius: 55,
-                resizeMode: 'contain',
-                marginRight: 15,
-                borderWidth: 0.5,
-                borderColor: 'gray',
-              }}
-            />
-          )}
+          {/* <Pressable onPress={() => setShowRattingPop(true)}> */}
+            {params?.cmpLogoS3 != 'placeholder/logo.png' ? (
+              <Image
+                source={{
+                  uri: params?.cmpLogoS3,
+                }}
+                style={{
+                  height: 110,
+                  width: 110,
+                  borderRadius: 55,
+                  resizeMode: 'contain',
+                  marginRight: 15,
+                  borderWidth: 0.5,
+                  borderColor: 'gray',
+                }}
+              />
+            ) : (
+              <Image
+                source={require('../images/hraDummyIcon.png')}
+                style={{
+                  height: 110,
+                  width: 110,
+                  borderRadius: 55,
+                  resizeMode: 'contain',
+                  marginRight: 15,
+                  borderWidth: 0.5,
+                  borderColor: 'gray',
+                }}
+              />
+            )}
+            {/* <View style={{marginVertical: 2, marginRight: 15}}>
+              <Text
+                style={{
+                  color: 'black',
+                  textDecorationLine: 'underline',
+                  fontSize: 12,
+                  fontWeight: '500',
+                  textAlign: 'center',
+                }}>
+                Add Review
+              </Text>
+            </View> */}
+          {/* </Pressable> */}
 
           <View>
             <View style={[styles.flex, {alignItems: 'center'}]}>
               <Text style={styles.hraName}>{params?.cmpName}</Text>
             </View>
-            <View style={[styles.flex, {marginLeft: 0}]}>
+            <View style={[styles.flex, {marginLeft: 0, alignItems: 'center'}]}>
               {renderStars(params?.cmpRating)}
             </View>
+
             <View style={[styles.flex, {alignItems: 'center'}]}>
               <Text style={styles.hraName}>
                 {followDetails?.totalFollowers}
               </Text>
-              <Text style={styles.countryName}>{newTranslation?.followers}</Text>
+              <Text style={styles.countryName}>
+                {newTranslation?.followers}
+              </Text>
             </View>
             <Text style={styles.countryName}>{params?.state_name?.name}</Text>
             <View style={[styles.flex, {alignItems: 'center'}]}>
@@ -215,13 +246,17 @@ const DetailedHra = props => {
                 ? styles.buttonText
                 : {color: '#035292'},
             ]}>
-            {followDetails?.followStatus ? newTranslation?.unfollow : newTranslation?.follow}
+            {followDetails?.followStatus
+              ? newTranslation?.unfollow
+              : newTranslation?.follow}
           </Text>
         </TouchableOpacity>
         <ScrollView>
           <View style={styles.otherDetailsContainer}>
             <View style={[styles.tableItemPadding, styles.borderBottom]}>
-              <Text style={[styles.tableText]}>{newTranslation?.countryPresence} :</Text>
+              <Text style={[styles.tableText]}>
+                {newTranslation?.countryPresence} :
+              </Text>
               <View style={[styles.flex, {marginTop: 5}]}>
                 {params?.cmpWorkingCountryNames?.map((v, i) => {
                   return (
@@ -252,7 +287,9 @@ const DetailedHra = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={styles.tableText}>{newTranslation?.industriesServed}</Text>
+              <Text style={styles.tableText}>
+                {newTranslation?.industriesServed}
+              </Text>
               <View>
                 <Image
                   source={
@@ -284,7 +321,7 @@ const DetailedHra = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={[styles.tableText, {width:280}]}>
+              <Text style={[styles.tableText, {width: 280}]}>
                 {newTranslation?.numberOfAverageCandidatesPlacedYearly}
               </Text>
               <Text style={[styles.tableText]}>
@@ -299,7 +336,9 @@ const DetailedHra = props => {
                 styles.borderBottom,
                 {justifyContent: 'space-between'},
               ]}>
-              <Text style={styles.tableText}>{newTranslation?.listOfClientsOfTheHra}</Text>
+              <Text style={styles.tableText}>
+                {newTranslation?.listOfClientsOfTheHra}
+              </Text>
               <View>
                 <Image
                   source={
@@ -337,12 +376,20 @@ const DetailedHra = props => {
             <View>
               <View style={{marginVertical: 30}}>
                 <Text style={[styles.hraName]}>
-                  {newTranslation?.jobsPostedByHra} <Text>{!showLoader && hraJobList?.length}</Text>
+                  {newTranslation?.jobsPostedByHra}{' '}
+                  <Text>{!showLoader && hraJobList?.length}</Text>
                 </Text>
               </View>
               <View style={{paddingBottom: 200}}>
                 {hraJobList?.map((v, i) => {
-                  return <SearchResult backTo="DetailedHra" hraDetails={params} value={v} props={props}/>;
+                  return (
+                    <SearchResult
+                      backTo="DetailedHra"
+                      hraDetails={params}
+                      value={v}
+                      props={props}
+                    />
+                  );
                 })}
               </View>
             </View>
@@ -392,6 +439,85 @@ const DetailedHra = props => {
               </Text>
             </Pressable>
             <WebView source={{uri: params?.cmpFBLink}} style={{flex: 1}} />
+          </View>
+        </Modal>
+        <Modal transparent={true} visible={showRatingPop} animationType="slide">
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,0.5)',
+            }}>
+            <View
+              style={{
+                width: 330,
+                backgroundColor: 'white',
+                borderRadius: 5,
+                elevation: 1,
+              }}>
+              <View
+                style={{
+                  borderBottomColor: '#ccc',
+                  borderBottomWidth: 1,
+                  paddingHorizontal: 20,
+                  paddingVertical: 20,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <Text style={{fontWeight: '500', fontSize: 20, color: 'black'}}>
+                  Rate HRA
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    setShowRattingPop(false);
+                  }}>
+                  <Image source={require('../images/close.png')} />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  padding: 5,
+                  paddingHorizontal: 25,
+                }}>
+                {[1, 2, 3, 4, 5].map((v, i) => {
+                  return (
+                    <Pressable onPress={() => handleRattingSelect(i + 1)}>
+                      <Image
+                        source={
+                          userratting >= i + 1
+                            ? require('../images/starIcon.png')
+                            : require('../images/whiteStar.png')
+                        }
+                        style={{height: 40, width: 40, resizeMode: 'contain'}}
+                      />
+                    </Pressable>
+                  );
+                })}
+              </View>
+              <View style={{margin: 10, marginBottom: 25}}>
+                <TextInput
+                  placeholder="Write a review"
+                  multiline={true}
+                  numberOfLines={3}
+                  textAlignVertical="top"
+                  placeholderTextColor="gray"
+                  onChangeText={(text)=>setUserReview(text)}
+                  style={{
+                    borderWidth: 1,
+                    paddingLeft: 10,
+                    color: 'black',
+                    marginBottom: 15,
+                    borderColor: 'gray',
+                    borderRadius: 3,
+                  }}
+                />
+                <Button title="Submit" onPress={handleReviewSubmit}/>
+              </View>
+            </View>
           </View>
         </Modal>
       </View>

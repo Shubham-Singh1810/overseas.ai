@@ -2,12 +2,12 @@ import {Button, StyleSheet, TextInput, Text, View} from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
-const MedicalTest = () => {
+const PassportApply = () => {
   return (
     <View style={styles.main}>
       <View style={{flex: 1}}>
         <WebView
-          source={{uri: 'https://wafid.com/book-appointment/'}}
+          source={{uri: 'https://portal2.passportindia.gov.in/AppOnlineProject/online/pccOnlineApp'}}
           style={{flex: 1}}
         />
       </View>
@@ -15,7 +15,7 @@ const MedicalTest = () => {
   );
 }
 
-export default MedicalTest
+export default PassportApply
 
 const styles = StyleSheet.create({
   main: {

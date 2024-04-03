@@ -59,9 +59,9 @@ const EditProfile = props => {
     'Graduate in Engineering',
     'Any other Vocational Training (one year or above)',
     'Any other Vocational Training (less than one year)',
-    "Not applicable"
+    'Not applicable',
   ];
-  const [showCountryPref, setShowCountryPref]=useState(false)
+  const [showCountryPref, setShowCountryPref] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const getCountryList = async () => {
     try {
@@ -91,8 +91,8 @@ const EditProfile = props => {
     empDailyWage: '',
     empExpectedMonthlyIncome: '',
     empRelocationIntQ: '',
-    empRelocationIntQCountry: '',
-    empRelocationIntQState: '',
+    empRelocationIntQCountry: [],
+    empRelocationIntQState: [],
     empAadharNo: '',
     empLanguage: [],
     empRefName: '',
@@ -191,7 +191,6 @@ const EditProfile = props => {
     try {
       let response = await getCountryCode();
       setCountryCodeArr(response?.data?.countryCodes);
-      
     } catch (error) {
       console.log(error);
     }
@@ -254,7 +253,7 @@ const EditProfile = props => {
       });
     }
   };
-  const[showStatePref, setShowStatePref]=useState(false)
+  const [showStatePref, setShowStatePref] = useState(false);
   const [stateList, setStateList] = useState([]);
   const getStateList = async () => {
     try {
@@ -268,6 +267,9 @@ const EditProfile = props => {
       console.log(error);
     }
   };
+  const [defSelectedLang, setDefSelectedLang] = useState(null);
+  const [defSelectedState, setDefSelectedState] = useState(null);
+  const [defSelectedCountry, setDefSelectedCountry] = useState(null);
   useFocusEffect(
     React.useCallback(() => {
       console.warn(formData?.empSkill);
@@ -307,6 +309,13 @@ const EditProfile = props => {
           ? JSON.parse(globalState.user).empData.empWhatsappCountryCode
           : '+91',
       });
+      setDefSelectedLang(JSON.parse(globalState.user).empData.empLanguage);
+      setDefSelectedState(
+        JSON.parse(globalState.user).empData.empRelocationIntQState,
+      );
+      setDefSelectedCountry(
+        JSON.parse(globalState.user).empData.empRelocationIntQCountry,
+      );
       getSkillListByOccuId(JSON.parse(globalState.user).empData.empOccuId);
     }, [globalState.user]),
   );
@@ -345,7 +354,7 @@ const EditProfile = props => {
         </View>
         <View style={{marginTop: 15}}>
           <View style={{marginBottom: -20}}>
-            <Text style={styles.label}>Enter Whatsapp</Text>
+            <Text style={styles.label}>{newTranslation.enterWhatsapp}</Text>
             <View style={[styles.input, {flexDirection: 'row'}]}>
               <View
                 style={{
@@ -428,7 +437,7 @@ const EditProfile = props => {
             style={[styles.input, {marginBottom: 16, padding: 17}]}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black'}}>
-                {formData.empLanguage.slice(1, -1)}
+                {formData?.empLanguage?.slice(1, -1)}
               </Text>
             </View>
           </TouchableOpacity>
@@ -579,9 +588,11 @@ const EditProfile = props => {
                 label={
                   skills?.filter((v, i) => {
                     return v?.id == formData?.empSkill;
-                  })[0]?.skill ? skills?.filter((v, i) => {
-                    return v?.id == formData?.empSkill;
-                  })[0]?.skill :"Select"
+                  })[0]?.skill
+                    ? skills?.filter((v, i) => {
+                        return v?.id == formData?.empSkill;
+                      })[0]?.skill
+                    : 'Select'
                 }
                 value={formData.empSkill}
                 style={{color: 'gray'}}
@@ -723,8 +734,7 @@ const EditProfile = props => {
                 backgroundColor: 'white',
                 color: 'black',
               }}>
-              {/* {newTranslation?.areYouInterestedInInternationalMigration} */}
-              Migration Interest
+              {newTranslation?.preferedJobLocation}
             </Text>
           </View>
           <View style={styles.picker}>
@@ -732,6 +742,11 @@ const EditProfile = props => {
               selectedValue={formData.empRelocationIntQ}
               onValueChange={(itemValue, itemIndex) => {
                 setFormData({...formData, empRelocationIntQ: itemValue});
+                if (itemValue == 'Yes') {
+                  setDefSelectedCountry(formData.empRelocationIntQCountry ? formData.empRelocationIntQCountry : "not selected");
+                } else {
+                  setDefSelectedState(formData.empRelocationIntQState ? formData.empRelocationIntQState : "not selected");
+                }
               }}>
               <Picker.Item
                 label={newTranslation?.select}
@@ -769,14 +784,14 @@ const EditProfile = props => {
                 </Text>
               </View>
               <TouchableOpacity
-            onPress={() => setShowCountryPref(true)}
-            style={[styles.input, {marginBottom: 16, padding: 17}]}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{color: 'black'}}>
-                {formData?.empRelocationIntQCountry?.slice(1, -1)}
-              </Text>
-            </View>
-          </TouchableOpacity>
+                onPress={() => setShowCountryPref(true)}
+                style={[styles.input, {marginBottom: 16, padding: 17}]}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{color: 'black'}}>
+                    {formData?.empRelocationIntQCountry?.slice(1, -1)}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </>
           ) : (
             <>
@@ -791,18 +806,18 @@ const EditProfile = props => {
                     backgroundColor: 'white',
                     color: 'black',
                   }}>
-                  State Preference
+                  {newTranslation.statePreference}
                 </Text>
               </View>
               <TouchableOpacity
-            onPress={() => setShowStatePref(true)}
-            style={[styles.input, {marginBottom: 16, padding: 17}]}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{color: 'black'}}>
-                {formData?.empRelocationIntQState?.slice(1, -1)}
-              </Text>
-            </View>
-          </TouchableOpacity>
+                onPress={() => setShowStatePref(true)}
+                style={[styles.input, {marginBottom: 16, padding: 17}]}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{color: 'black'}}>
+                    {formData?.empRelocationIntQState?.slice(1, -1)}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </>
           )}
           <View style={{flexDirection: 'row'}}>
@@ -847,7 +862,9 @@ const EditProfile = props => {
             }}
             value={formData?.empRefPhone}></TextInput>
           <View style={{marginTop: 15, marginBottom: 20}}>
-            <Text style={styles.label}>Reference person distance from you</Text>
+            <Text style={styles.label}>
+              {newTranslation?.referencePersonDistanceFromYou}
+            </Text>
             <View style={styles.input}>
               <Picker
                 selectedValue={formData.empRefDistance}
@@ -905,42 +922,52 @@ const EditProfile = props => {
         </View>
       </View>
       <Toast ref={ref => Toast.setRef(ref)} />
-
-      <MyMultipleSelectPopUp
-        title="Select Known language"
-        toggle={showLanguageSelect}
-        showSearch={true}
-        setToggle={setShowLanguageSelect}
-        inputOption={languageOption}
-        defaultSelected={formData.empLanguage}
-        callBackFunck={value => {
-          setFormData({...formData, empLanguage: JSON.stringify(value)});
-          // setFormDataError({...formDataError, empLanguage: ''});
-        }}
-      />
-
-      <MyMultipleSelectPopUp
-        title="Select relocation state"
-        toggle={showStatePref}
-        showSearch={true}
-        setToggle={setShowStatePref}
-        inputOption={stateList}
-        defaultSelected={formData.empRelocationIntQState}
-        callBackFunck={value => {
-          setFormData({...formData, empRelocationIntQState: JSON.stringify(value)});
-        }}
-      />
-      <MyMultipleSelectPopUp
-        title="Select relocation country"
-        toggle={showCountryPref}
-        defaultSelected={formData.empRelocationIntQCountry}
-        showSearch={true}
-        setToggle={setShowCountryPref}
-        inputOption={countryList}
-        callBackFunck={value => {
-          setFormData({...formData, empRelocationIntQCountry: JSON.stringify(value)});
-        }}
-      />
+      {defSelectedLang && (
+        <MyMultipleSelectPopUp
+          title="Select Known language"
+          toggle={showLanguageSelect}
+          showSearch={true}
+          setToggle={setShowLanguageSelect}
+          inputOption={languageOption}
+          defaultSelected={JSON.parse(defSelectedLang)}
+          callBackFunck={value => {
+            setFormData({...formData, empLanguage: JSON.stringify(value)});
+            // setFormDataError({...formDataError, empLanguage: ''})
+          }}
+        />
+      )}
+      {defSelectedState && (
+        <MyMultipleSelectPopUp
+          title="Select relocation state"
+          toggle={showStatePref}
+          showSearch={true}
+          setToggle={setShowStatePref}
+          inputOption={stateList}
+          defaultSelected={defSelectedState=="not selected"? defSelectedState:  JSON.parse(defSelectedState)}
+          callBackFunck={value => {
+            setFormData({
+              ...formData,
+              empRelocationIntQState: JSON.stringify(value),
+            });
+          }}
+        />
+      )}
+      {defSelectedCountry && (
+        <MyMultipleSelectPopUp
+          title="Select relocation country"
+          toggle={showCountryPref}
+          defaultSelected={defSelectedCountry=="not selected"? defSelectedCountry: JSON.parse(defSelectedCountry)}
+          showSearch={true}
+          setToggle={setShowCountryPref}
+          inputOption={countryList}
+          callBackFunck={value => {
+            setFormData({
+              ...formData,
+              empRelocationIntQCountry: JSON.stringify(value),
+            });
+          }}
+        />
+      )}
     </ScrollView>
   );
 };
