@@ -141,3 +141,14 @@ export const getVersionCode = async () => {
     throw error;
   }
 };
+
+// Function to get news feed
+export const getNewsFeedData = async () => {
+  try {
+    const response = await axios.get(BASE_URL + 'get-news-feed');
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

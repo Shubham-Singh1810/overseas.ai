@@ -22,6 +22,7 @@ import {
   getCountries,
   getCountriesForJobs,
   getHomeData,
+  getNewsFeedData
 } from '../services/info.service';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -108,7 +109,15 @@ const Home = props => {
   const [courseFeed, setCourseFeed] = useState([]);
   const [homeData, setHomeData] = useState(null);
   const [hraFeed, setHraFeed] = useState([]);
-
+  const[newsData, setNewsData]=useState([])
+  const handleGetNews = async () => {
+    try {
+      let response = await getNewsFeedData(); 
+      setNewsData(response?.data?.newsData)
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const searchJobForFeed = async () => {
     setLoaderSearch(true);
     try {
@@ -193,6 +202,7 @@ const Home = props => {
       getCourseListFunc();
       getHomeDataFunc();
       getHraFunc();
+      handleGetNews()
     }, []),
   );
   useFocusEffect(

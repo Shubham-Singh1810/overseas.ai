@@ -13,20 +13,8 @@
 //   "Article": "kozhikode: in a surprise move, kerala governor arif mohammed khan took a walk across kozhikode's sm street on monday challenging the state government and police.\nhe headed to kozhikode sm street in his car after declaring that he wouldn't take police security anymore. in the visuals aired on tv channels, khan who stepped out of his vehicle was seen interacting with people and children in school uniforms.\nlater, he walked on foot through famous sweetmeat (sm) street, also known as mittai theruvu. the governor walked for about 200 metres from sk pottakkadu statue. many shopkeepers invited him into their shops and offered him delicacies. khan also posed for photographs with many and picked coddled a baby during his walk.\n\"i'm overwhelmed by the people's reception,\" he said after the walk.\nthough he declined police security, the district authority deployed a huge force for him. the police were completelt taken aback by the governor's decision to walk on sm street. policemen were seen forming a circle of protection around the governor.\nwhile addressing the media at calicut university, the governor had said that he already forwarded a letter to dgp sheikh darvesh saheb asking to withdraw the police security.\n\"kerala has the best police force. police are not at fault. but they are not being allowed to discharge their duties. they took action against the protesters only at the place where i came out of the car. what about the other two places? they decided to dilute the prosecution because of the instructions given by the chief minister. i won't blame the police. they are prevented from taking action. i have told police that i don't need any security. i am not scared of anyone. i have sent a letter to dgp regarding this,\" the governor said while addressing the media at calicut university on monday.\ntaking a dig at the chief minister, he alleged that the person who instigated violence in kannur is trying to threaten him with sfi activists.\nreferring to the appointment of carpenters at calicut university, the governor alleged that cpm men obtained the posts. he asserted that being chancellor of the universities, he is obliged to ensure the autonomy of the universities.\ncm says centre-state relations on icy ground\ndenouncing the governor's actions, kerala chief minister pinarayi vijayan asked the central government to intervene in the issue by pointing out that the federal system would go for a toss.\nthe cm also criticised the governor for taking the police to remove sfi banners in the calicut univerity and insulting his native place kannur as a land of criminals.\n\"he is blabbering. i think the centre should intervene in the issue and control him. otherwise, the centre and state relations will be affected,\" said the cm.",
 //   "Summary": "kozhikode: in a surprise move, kerala governor arif mohammed khan took a walk across kozhikode's sm street on monday challenging the state government and police. later, he walked on foot through famous sweetmeat (sm) street, also known as mittai theruvu. khan also posed for photographs with many and picked coddled a baby during his walk. though he declined police security, the district authority deployed a huge force for him. policemen were seen forming a circle of protection around the governor."
 //  },
-//  {
-//   "Date": "None",
-//   "link": "https:\/\/news.google.com\/articles\/CBMib2h0dHBzOi8vd3d3Lm5kdHYuY29tL2luZGlhLW5ld3MvaW5kaWFuLW1pZ3JhbnQtd29ya2Vycy11c2VkLWFzLWdvbGQtbXVsZXMtYnktc2luZ2Fwb3JlLXNtdWdnbGVycy1yZXBvcnQtNDY5MDQzNdIBdWh0dHBzOi8vd3d3Lm5kdHYuY29tL2luZGlhLW5ld3MvaW5kaWFuLW1pZ3JhbnQtd29ya2Vycy11c2VkLWFzLWdvbGQtbXVsZXMtYnktc2luZ2Fwb3JlLXNtdWdnbGVycy1yZXBvcnQtNDY5MDQzNS9hbXAvMQ?hl=en-IN&gl=IN&ceid=IN%3Aen",
-//   "Title": "indian migrant workers used as \"gold mules\" by singapore smugglers: report",
-//   "Article": "this comes in the wake of a spike in gold smuggling to the country. (representational)\nsmugglers in singapore have been approaching indian migrant workers flying home via changi airport to act as 'gold mules' by carrying jewellery in exchange for a fee, according to a media report on sunday.\ntravellers who show an interest in being a gold mule are directed to a quiet spot in the airport, where a deal is struck. during negotiations, the courier is assured that a syndicate runner will retrieve the gold jewellery from him when he lands in india, the straits times reported.\nwhile it is not illegal in singapore for travellers to carry precious metals, including gold, out of the country, the couriers risk breaking the law in india when they do not declare the gold they are carrying in, the report quoted mohamed bilal, president of the gem traders association of singapore, as saying.\nmale indian nationals are permitted to carry up to 20 gram of duty-free gold, of a maximum value of rs 50,000 rupees (sgd 800), into india. the limit for female indian nationals is double in terms of weight and value.\ngold jewellery carried over and above these limits will attract customs duty.\nbilal said that the practice of smuggling gold through 'mules' has been going on for decades.\ngold smuggling runners at terminal 1 of the changi airport want the 'mules' to carry jewellery of between 25 gram and 30 gram of gold, which is just outside the legal limit, the report said.\nmeanwhile, the report said, indian authorities, including customs officials, are on the lookout for travellers acting as gold mules.\nthis comes in the wake of a spike in gold smuggling to the country, and amid reports of syndicates targeting travellers at various airports in jurisdictions in the gulf, as well as in asia, including malaysia and singapore, where gold is cheaper than in india, it said.\nthere is no weight limit on the amount of gold and other precious metals that can be transported out of singapore by travellers, the report said, quoting singapore police force.\nin india, the world's second-biggest gold consumer, one gram of 24 karat gold costs about sgd 99 (approx rs 6,177). it would cost about sgd 92.40 (approx rs 5,765) in singapore.\n(except for the headline, this story has not been edited by ndtv staff and is published from a syndicated feed.)",
-//   "Summary": "(representational) smugglers in singapore have been approaching indian migrant workers flying home via changi airport to act as 'gold mules' by carrying jewellery in exchange for a fee, according to a media report on sunday. the limit for female indian nationals is double in terms of weight and value. bilal said that the practice of smuggling gold through 'mules' has been going on for decades. there is no weight limit on the amount of gold and other precious metals that can be transported out of singapore by travellers, the report said, quoting singapore police force. (except for the headline, this story has not been edited by ndtv staff and is published from a syndicated feed.)"
-//  },
-//  {
-//   "Date": "2023-12-17 09:45:02+00:00",
-//   "link": "https:\/\/news.google.com\/articles\/CBMinAFodHRwczovL3RoZXByaW50LmluL3dvcmxkL3NtdWdnbGVycy1pbi1zaW5nYXBvcmUtc2NvdXQtaW5kaWFuLW1pZ3JhbnQtd29ya2Vycy1yZXR1cm5pbmctaG9tZS12aWEtY2hhbmdpLWFpcnBvcnQtdG8tYWN0LWFzLWdvbGQtbXVsZXMtbWVkaWEtcmVwb3J0LTIvMTg4OTY0MC_SAaABaHR0cHM6Ly90aGVwcmludC5pbi93b3JsZC9zbXVnZ2xlcnMtaW4tc2luZ2Fwb3JlLXNjb3V0LWluZGlhbi1taWdyYW50LXdvcmtlcnMtcmV0dXJuaW5nLWhvbWUtdmlhLWNoYW5naS1haXJwb3J0LXRvLWFjdC1hcy1nb2xkLW11bGVzLW1lZGlhLXJlcG9ydC0yLzE4ODk2NDAvP2FtcA?hl=en-IN&gl=IN&ceid=IN%3Aen",
-//   "Title": "smugglers in singapore scout indian migrant workers returning home via changi airport to act as 'gold mules': media report",
-//   "Article": "while it is not illegal in singapore for travellers to carry precious metals, including gold, out of the country, the couriers risk breaking the law in india when they do not declare the gold they are carrying in, the report quoted mohamed bilal, president of the gem traders association of singapore, as saying.\ntravellers who show an interest in being a gold mule are directed to a quiet spot in the airport, where a deal is struck. during negotiations, the courier is assured that a syndicate runner will retrieve the gold jewellery from him when he lands in india, the straits times reported.\nsingapore, dec 17 (pti) smugglers in singapore have been approaching indian migrant workers flying home via changi airport to act as 'gold mules' by carrying jewellery in exchange for a fee, according to a media report on sunday.\nmale indian nationals are permitted to carry up to 20 gram of duty-free gold, of a maximum value of rs 50,000 rupees (sgd 800), into india. the limit for female indian nationals is double in terms of weight and value.\ngold jewellery carried over and above these limits will attract customs duty.\nbilal said that the practice of smuggling gold through 'mules' has been going on for decades.\ngold smuggling runners at terminal 1 of the changi airport want the 'mules' to carry jewellery of between 25 gram and 30 gram of gold, which is just outside the legal limit, the report said.\nmeanwhile, the report said, indian authorities, including customs officials, are on the lookout for travellers acting as gold mules.\nthis comes in the wake of a spike in gold smuggling to the country, and amid reports of syndicates targeting travellers at various airports in jurisdictions in the gulf, as well as in asia, including malaysia and singapore, where gold is cheaper than in india, it said.\nthere is no weight limit on the amount of gold and other precious metals that can be transported out of singapore by travellers, the report said, quoting singapore police force.\nin india, the world's second-biggest gold consumer, one gram of 24 karat gold costs about sgd 99 (approx rs 6,177). it would cost about sgd 92.40 (approx rs 5,765) in singapore. pti gs scy scy\nthis report is auto-generated from pti news service. theprint holds no responsibility for its content.",
-//   "Summary": "singapore, dec 17 (pti) smugglers in singapore have been approaching indian migrant workers flying home via changi airport to act as 'gold mules' by carrying jewellery in exchange for a fee, according to a media report on sunday. the limit for female indian nationals is double in terms of weight and value. gold jewellery carried over and above these limits will attract customs duty. bilal said that the practice of smuggling gold through 'mules' has been going on for decades. there is no weight limit on the amount of gold and other precious metals that can be transported out of singapore by travellers, the report said, quoting singapore police force."
-//  },
+//
+
 //  {
 //   "Date": "None",
 //   "link": "https:\/\/news.google.com\/articles\/CBMiPmh0dHBzOi8vdGhld2lyZS5pbi9sYWJvdXIvaW52aXNpYmxlLW1pZ3JhbnQtd29ya2VyLWZsb29kLWNvdmlk0gFMaHR0cHM6Ly9tLnRoZXdpcmUuaW4vYXJ0aWNsZS9sYWJvdXIvaW52aXNpYmxlLW1pZ3JhbnQtd29ya2VyLWZsb29kLWNvdmlkL2FtcA?hl=en-IN&gl=IN&ceid=IN%3Aen",
@@ -690,28 +678,439 @@
 // //  }
 // ]
 
-export const newsData= [
-{"ArticleTitle":"Indian Farm Workers Are Being Replaced by Drones. They Fear a Much Darker Future.","Link":"https:\/\/slate.com\/technology\/2024\/01\/drones-farming-labor-agriculture-india.html","Date":"2024-01-20","image":"https:\/\/compote.slate.com\/images\/96079005-046d-40a1-9171-b42df33350ad.jpeg?crop=1560%2C1040%2Cx0%2Cy1&width=1560","summary":"In India, agriculture accounts for about a fifth of the national GDP. As of November, there were around 13,000 drones registered in the country, though not all are used for agriculture. The industry also remains mostly unregulated."},
-{"ArticleTitle":"Cities have always been havens for immigrants. So why are they struggling now?","Link":"https:\/\/www.vox.com\/24063986\/cities-migrant-crisis-border-overwhelmed-shelters","Date":"2024-02-08","image":"https:\/\/cdn.vox-cdn.com\/thumbor\/IfNItv55EQGDd7lNFgyNmWaDDso=\/0x418:8192x4707\/fit-in\/1200x630\/cdn.vox-cdn.com\/uploads\/chorus_asset\/file\/25270860\/1975050446.jpg","summary":"The Biden administration has presided over a record number of migrant arrests at the southern border. More than 2 million people, the majority of them families, have been released into the country by US Customs and Border Protection over the last three years while they await legal proceedings to determine whether they will be deported."},
-{"ArticleTitle":"Undeterred by Gaza war, thousands of Indians turn up for jobs in Israel","Link":"https:\/\/www.aljazeera.com\/features\/2024\/1\/24\/undeterred-by-gaza-war-thousands-of-indians-turn-up-for-jobs-in-israel","Date":"2024-01-24","image":"https:\/\/www.aljazeera.com\/wp-content\/uploads\/2024\/01\/image-1706076170.jpg?resize=1920%2C1080&quality=80","summary":"Israel suspended work permits for thousands of Palestinians after more than 100 days of Israel\u2019s war on Gaza. In October, Israeli construction companies reportedly requested their government in Tel Aviv to allow them to hire up to 100,000 Indian workers. The Haryana government in December advertised 10,000 positions for construction workers in Israel."},
-{"ArticleTitle":"The Sundarbans dilemma: Islands swallowed by water, and nowhere else to go","Link":"https:\/\/www.aljazeera.com\/features\/2024\/1\/27\/the-sundarbans-dilemma-islands-swallowed-by-water-and-nowhere-else-to-go","Date":"2024-01-27","image":"https:\/\/www.aljazeera.com\/wp-content\/uploads\/2024\/01\/2021-01-13T230947Z_660403172_RC2B7L911U0D_RTRMADP_3_CLIMATE-CHANGE-INDIA-SUNDARBANS-1706330969.jpg?resize=1920%2C1440","summary":"The Sundarbans forest system is a cluster of low-lying islands and represents the largest mangrove ecosystem in the world. It acts as a natural barrier against cyclones, storm surges and other environmental hazards. Four cyclones that hit the eastern coast of India from 2019 to 2021 \u2013 Fani, Amphan, Bulbul and Yaas."},
-{"ArticleTitle":"Links 1\/29\/2024","Link":"https:\/\/www.nakedcapitalism.com\/2024\/01\/links-1-29-2024.html","Date":"2024-01-29","image":"https:\/\/www.nakedcapitalism.com\/wp-content\/uploads\/2024\/01\/flamingo.jpeg","summary":"A Famed Analyst\u2019s Final Forecast Is the Fall of the U.S. Economy New York Times: The financial system needs more capital and less complexity. The Economist China? Japan India Syraqistan Has International Law Survived, or Has the Western Political Class Killed It?"},
-{"ArticleTitle":"How art can challenge election-time rhetoric about immigrants","Link":"https:\/\/theconversation.com\/how-art-can-challenge-election-time-rhetoric-about-immigrants-221487","Date":"2024-01-28","image":"https:\/\/images.theconversation.com\/files\/570800\/original\/file-20240123-21-vj1i8o.jpg?ixlib=rb-1.1.0&rect=0%2C204%2C1920%2C960&q=45&auto=format&w=1356&h=668&fit=crop","summary":"The coming year is expected to be one of unprecedented election activity worldwide. In Germany, anti-immigration rhetoric has been on the rise ahead of regional elections later this year. A Canadian election in 2024 could be added to the long list of countries going to the polls."},
-{"ArticleTitle":"Bangladesh\u2019s Prospects Just Got a Little Dimmer","Link":"https:\/\/foreignpolicy.com\/2024\/01\/17\/bangladesh-elections-sheikh-hasina-democracy-opposition-boycott-modi-india\/","Date":"2024-01-17","image":"https:\/\/foreignpolicy.com\/wp-content\/uploads\/2024\/01\/Hasina-Bangladesh-Elections-GettyImages-1917277067.jpg?w=1000","summary":"The rest of the world is either disinterested or dismayed by Dhaka\u2019s democratic backsliding, but the global disapproval is relatively mild. Bangladeshi Prime Minister Sheikh Hasina surged to a fourth consecutive term, and the other is Indian Prime Minister Narendra Modi, for whom Hasina represents a rare friend in the neighborhood."},
-{"ArticleTitle":"Debt, wage theft and coercion drive the global garment industry \u2013 the only answer is collective action","Link":"https:\/\/theconversation.com\/debt-wage-theft-and-coercion-drive-the-global-garment-industry-the-only-answer-is-collective-action-220924","Date":"2024-01-24","image":"https:\/\/images.theconversation.com\/files\/570701\/original\/file-20240122-15-1ledo9.jpg?ixlib=rb-1.1.0&rect=0%2C126%2C5265%2C2632&q=45&auto=format&w=1356&h=668&fit=crop","summary":"Migrant workers across several Mauritian factories reported agreeing to pay fees ranging from a few hundred to several thousand US dollars to secure a good job. But upon arrival, they discovered the job was poorly paid and expenses were higher than promised. The Mauritius case is the latest example of the use of forced labour within company supply chains."},
-{"ArticleTitle":"Taiwan agrees to bring in Indian migrant workers to ease job crunch","Link":"https:\/\/www.channelnewsasia.com\/asia\/taiwan-agrees-bring-indian-migrant-workers-ease-job-crunch-4129031","Date":"2024-02-16","image":"https:\/\/onecms-res.cloudinary.com\/image\/upload\/s--lwPVfDaJ--\/fl_relative,g_south_east,l_one-cms:core:watermark:reuters,w_0.1\/f_auto,q_auto\/c_fill,g_auto,h_676,w_1200\/v1\/one-cms\/core\/2024-02-16t103306z_2_lynxnpek1f0ah_rtroptp_3_taiwan-dailylife.jpg?itok=LX2SICfZ","summary":"Taiwan and India signed an agreement to bring in Indian migrant workers to the island as labour-strained Taipei seeks to expand its foreign workforce. Taiwan is host to around 700,000 migrant workers who come mostly from Vietnam, Indonesia, the Philippines and Thailand."},
-{"ArticleTitle":"Taiwan agrees to bring in Indian migrant workers to ease job crunch","Link":"https:\/\/timesofindia.indiatimes.com\/india\/taiwan-agrees-to-bring-in-indian-migrant-workers-to-ease-job-crunch\/articleshow\/107753515.cms","Date":"2024-02-16","image":"https:\/\/static.toiimg.com\/thumb\/msid-107754375,width-1070,height-580,imgsize-22388,resizemode-75,overlay-toi_sw,pt-32,y_pad-40\/photo.jpg","summary":"India and Taiwan signed an agreement on Friday to bring Indian migrant workers to the island. Taiwan relies on migrant workers from Southeast Asian countries such as Vietnam, Indonesia, the Philippines, and Thailand. Taiwan has denied previous reports suggesting that up to 100,000 Indian workers would be allowed in."},
-{"ArticleTitle":"Taiwan agrees to bring in Indian migrant workers to ease job crunch","Link":"https:\/\/www.marketscreener.com\/news\/latest\/Taiwan-agrees-to-bring-in-Indian-migrant-workers-to-ease-job-crunch-45970763\/","Date":"2024-02-16","image":"https:\/\/www.marketscreener.com\/images\/reuters\/2024-02\/2024-02-16T103200Z_1_LYNXNPEK1F0AH_RTROPTP_3_TAIWAN-DAILYLIFE.JPG","summary":"Taiwan and India sign agreement to bring in Indian migrant workers to the island as labour-strained Taipei seeks to expand its foreign workforce. Taiwan is host to around 700,000 migrant workers who come mostly from Vietnam, Indonesia, the Philippines and Thailand."},
-{"ArticleTitle":"\"Cant Stop Working Over Fear\": Rescued Worker Back At Tunnel That Crashed","Link":"https:\/\/www.ndtv.com\/india-news\/cant-stop-working-over-fear-rescued-worker-back-at-tunnel-that-crashed-4958401","Date":"2024-01-30","image":"https:\/\/c.ndtvimg.com\/2023-11\/e115r0bg_uttarakhand-tunnel_625x300_28_November_23.jpg?im=FaceCrop,algorithm=dnn,width=1200,height=738","summary":"Construction has resumed on the Uttarakhand tunnel that collapsed last year, trapping 41 workers for 17 days. The transport ministry gave permission last week for work to resume, nearly two months after the collapse. Most of the trapped men were migrant workers who travelled hundreds of kilometres to work on the tunnel."},
-{"ArticleTitle":"Facing dire labor shortage, Israel recruits migrant workers from India","Link":"https:\/\/www.nbcnews.com\/news\/world\/israel-hamas-india-labor-shortage-migrant-workers-rcna135603","Date":"2024-02-04","image":"https:\/\/media-cldnry.s-nbcnews.com\/image\/upload\/t_nbcnews-fp-1200-630,f_auto,q_auto:best\/rockcms\/2024-01\/240126-india-israel-workers-mb-0754-fd19a7.jpg","summary":"Palestinians from both Gaza and the West Bank are mostly barred from entering Israel, their work permits revoked on security grounds. Thousands of migrant workers from Thailand, Nepal and the Philippines have opted to return home after seeing their fellow countrymen killed. The labor shortage has dealt an especially big blow to Israel\u2019s construction industry."},
-{"ArticleTitle":"How the Kennedy Family Caused Today\u2019s Immigration Crisis","Link":"https:\/\/freerepublic.com\/focus\/f-news\/4216978\/posts","Date":"2024-02-13","image":null,"summary":"LBJ signed the 1965 Immigration and Nationality Act into law. JFK had been dead for two years, but it, more than the Cuban missile crisis or the race to the moon, was his real legacy. It affected not only millions, but tens of millions, and it reshaped our lives and our country."},
-{"ArticleTitle":"Swallowed by Water, in the Sundarbans There Is Nowhere Else to Go","Link":"https:\/\/thediplomat.com\/2024\/01\/swallowed-by-water-in-the-sundarbans-there-is-nowhere-else-to-go\/","Date":"2024-01-29","image":"https:\/\/thediplomat.com\/wp-content\/uploads\/2024\/01\/sizes\/td-story-s-2\/thediplomat_2024-01-29-150827.jpg","summary":"Poor and lower-caste women shoulder the worst impacts of climate change in the Sundarbans. The area also highlights key lessons on building climate resilience. The four cyclones that hit the eastern coast of India between 2019-21 \u2013 Fani, Amphan, Bulbul and Yaas \u2013 point to the increasingly unpredictable weather events."},
-{"ArticleTitle":"Researcher: Debt, wage theft and coercion drive the global garment industry\u2014the only answer is collective action","Link":"https:\/\/phys.org\/news\/2024-01-debt-wage-theft-coercion-global.html","Date":"2024-01-25","image":"https:\/\/scx2.b-cdn.net\/gfx\/news\/hires\/2024\/clothes-factory.jpg","summary":"Major fashion brands have agreed to pay over \u00a3400,000 in compensation to migrant workers in Mauritius. Migrant workers across several Mauritian factories reported agreeing to pay fees ranging from a few hundred to several thousand US dollars to secure a good job. The Mauritius case is the latest example of the use of forced labor within company supply chains."},
-{"ArticleTitle":"TB \u00ad\u2013 a ticking time bomb?","Link":"https:\/\/www.thestar.com.my\/news\/nation\/2024\/02\/16\/tb---a-ticking-time-bomb","Date":"2024-02-15","image":"https:\/\/apicms.thestar.com.my\/uploads\/images\/2024\/02\/16\/2546243.jpg","summary":"The re-emergence of TB is due to infected people not seeking treatment and possibly the high presence of foreign workers. Malaysia\u2019s community health expert Prof Sharifa Ezat Wan Puteh said those who are infected may not have sought treatment."},
-{"ArticleTitle":"B-school grads left in the lurch as India Inc chases blue-collar workers","Link":"https:\/\/economictimes.indiatimes.com\/jobs\/fresher\/b-school-grads-left-in-the-lurch-as-india-inc-chases-blue-collar-workers\/articleshow\/107403772.cms","Date":"2024-02-04","image":"https:\/\/img.etimg.com\/thumb\/msid-107403794,width-1200,height-630,imgsize-31430,overlay-etcareers\/photo.jpg","summary":"India Inc is facing an acute shortage of blue-collar workforce amid a sharp drop in interstate migration of workers. White-collar hiring has slowed down sharply due to global macroeconomic conditions and geopolitical tensions, economists and top company officials said. Experts are seeking immediate measures such as higher wages and enhanced focus on skill development to boost availability."},
-{"ArticleTitle":"Budget 2024 survey: India's job story has a major missing part","Link":"https:\/\/economictimes.indiatimes.com\/jobs\/fresher\/budget-2024-survey-indias-job-story-has-a-major-missing-part\/articleshow\/107106600.cms","Date":"2024-01-24","image":"https:\/\/img.etimg.com\/thumb\/msid-107106525,width-1200,height-630,imgsize-79060,overlay-etcareers\/photo.jpg","summary":"In the lead-up to the Interim Budget, ET Online conducted a survey on the key challenges confronting the Indian economy. The survey received responses from over 10,500 Economic Times readers. According to 47.5% of those surveyed, the govt has been able to generate jobs -- but not enough quality jobs."},
-{"ArticleTitle":"Not just cricket: Qatar's Indians roar on football minnows","Link":"https:\/\/www.france24.com\/en\/live-news\/20240119-not-just-cricket-qatar-s-indians-roar-on-football-minnows","Date":"2024-01-19","image":"https:\/\/s.france24.com\/media\/display\/565238a0-b6cd-11ee-af7a-005056a90284\/w:1280\/p:16x9\/cb36ab248a587c0b935e3220383cd49470baccf1.jpg","summary":"About 750,000 of Qatar's 3 million people are Indian, according to latest figures. India's football team, ranked 102nd in the world, cannot compete with their cricket team for national affections. India coach Igor Stimac said he and his team were \"very sad about disappointing\" the fans."},
-{"ArticleTitle":"Individual evaluation of fatigue at work to enhance the safety performance in the construction industry: A systematic review","Link":"https:\/\/journals.plos.org\/plosone\/article?id=10.1371\/journal.pone.0287892","Date":"2024-02-07","image":"https:\/\/journals.plos.org\/plosone\/article\/figure\/image?id=10.1371\/journal.pone.0287892.g001&size=inline","summary":"The evaluation of fit for duty, or fitness for work (FFW) aims to determine if workers are at risk of adverse impacts of ill-health, injury or accidents. The construction industry is recognized as one of the most hazardous industries globally due to the dynamic on site activities and labour-intensive characteristics."},
-{"ArticleTitle":"Thousands in India flock to a recruitment center for jobs in Israel despite the Israel-Hamas war","Link":"https:\/\/apnews.com\/article\/india-israel-hamas-war-recruitment-jobs-646b684c10a4384213b399fe6c221151","Date":"2024-01-25","image":"https:\/\/dims.apnews.com\/dims4\/default\/bd13575\/2147483647\/strip\/true\/crop\/8640x4860+0+450\/resize\/1440x810!\/quality\/90\/?url=https%3A%2F%2Fassets.apnews.com%2F37%2F75%2F81a354376f3280a8c4ccd705d7b0%2F7eab4ef0e6cc4c42bb3b02e9ce9370d2","summary":"Thousands of Indians flocked to a recruitment center on Thursday for jobs that would take them to Israel. Israel is facing a labor shortage after barring tens of thousands of Palestinian workers following Hamas\u2019 deadly Oct. 7 attack on Israel that triggered the war. The states of Haryana and Uttar Pradesh have advertised for around 10,000 positions each."},
-{"ArticleTitle":"Migrant exploitation: Tauranga kiwifruit orchard labour contractor pleads guilty to charges","Link":"https:\/\/www.nzherald.co.nz\/bay-of-plenty-times\/news\/migrant-exploitation-tauranga-kiwifruit-orchard-labour-contractor-pleads-guilty-to-charges\/5V6CAWKC3JCOVPO6WYCLSFR34U\/","Date":"2024-02-01","image":"https:\/\/www.nzherald.co.nz\/resizer\/KikS-SUWABT4tNa4JJ8AKTmI5fg=\/1200x675\/smart\/filters:quality(70)\/cloudfront-ap-southeast-2.images.arcpublishing.com\/nzme\/6IJJ2OSPP23D2IIYPQNYICEMYI.jpg","summary":"A Tauranga kiwifruit labour contractor has admitted to exploiting four illegal migrant workers. One of them lived in a crowded garage with 19 others for four months with no heating or insulation. Their employer, Jafar Kurisi, 59, from Parkvale, also underpaid them thousands of dollars in wages."},
-]
+// export const newsData= [
+// {"ArticleTitle":"Indian Farm Workers Are Being Replaced by Drones. They Fear a Much Darker Future.","Link":"https:\/\/slate.com\/technology\/2024\/01\/drones-farming-labor-agriculture-india.html","Date":"2024-01-20","image":"https:\/\/compote.slate.com\/images\/96079005-046d-40a1-9171-b42df33350ad.jpeg?crop=1560%2C1040%2Cx0%2Cy1&width=1560","summary":"In India, agriculture accounts for about a fifth of the national GDP. As of November, there were around 13,000 drones registered in the country, though not all are used for agriculture. The industry also remains mostly unregulated."},
+// {"ArticleTitle":"Cities have always been havens for immigrants. So why are they struggling now?","Link":"https:\/\/www.vox.com\/24063986\/cities-migrant-crisis-border-overwhelmed-shelters","Date":"2024-02-08","image":"https:\/\/cdn.vox-cdn.com\/thumbor\/IfNItv55EQGDd7lNFgyNmWaDDso=\/0x418:8192x4707\/fit-in\/1200x630\/cdn.vox-cdn.com\/uploads\/chorus_asset\/file\/25270860\/1975050446.jpg","summary":"The Biden administration has presided over a record number of migrant arrests at the southern border. More than 2 million people, the majority of them families, have been released into the country by US Customs and Border Protection over the last three years while they await legal proceedings to determine whether they will be deported."},
+// {"ArticleTitle":"Undeterred by Gaza war, thousands of Indians turn up for jobs in Israel","Link":"https:\/\/www.aljazeera.com\/features\/2024\/1\/24\/undeterred-by-gaza-war-thousands-of-indians-turn-up-for-jobs-in-israel","Date":"2024-01-24","image":"https:\/\/www.aljazeera.com\/wp-content\/uploads\/2024\/01\/image-1706076170.jpg?resize=1920%2C1080&quality=80","summary":"Israel suspended work permits for thousands of Palestinians after more than 100 days of Israel\u2019s war on Gaza. In October, Israeli construction companies reportedly requested their government in Tel Aviv to allow them to hire up to 100,000 Indian workers. The Haryana government in December advertised 10,000 positions for construction workers in Israel."},
+// {"ArticleTitle":"The Sundarbans dilemma: Islands swallowed by water, and nowhere else to go","Link":"https:\/\/www.aljazeera.com\/features\/2024\/1\/27\/the-sundarbans-dilemma-islands-swallowed-by-water-and-nowhere-else-to-go","Date":"2024-01-27","image":"https:\/\/www.aljazeera.com\/wp-content\/uploads\/2024\/01\/2021-01-13T230947Z_660403172_RC2B7L911U0D_RTRMADP_3_CLIMATE-CHANGE-INDIA-SUNDARBANS-1706330969.jpg?resize=1920%2C1440","summary":"The Sundarbans forest system is a cluster of low-lying islands and represents the largest mangrove ecosystem in the world. It acts as a natural barrier against cyclones, storm surges and other environmental hazards. Four cyclones that hit the eastern coast of India from 2019 to 2021 \u2013 Fani, Amphan, Bulbul and Yaas."},
+// {"ArticleTitle":"Links 1\/29\/2024","Link":"https:\/\/www.nakedcapitalism.com\/2024\/01\/links-1-29-2024.html","Date":"2024-01-29","image":"https:\/\/www.nakedcapitalism.com\/wp-content\/uploads\/2024\/01\/flamingo.jpeg","summary":"A Famed Analyst\u2019s Final Forecast Is the Fall of the U.S. Economy New York Times: The financial system needs more capital and less complexity. The Economist China? Japan India Syraqistan Has International Law Survived, or Has the Western Political Class Killed It?"},
+// {"ArticleTitle":"How art can challenge election-time rhetoric about immigrants","Link":"https:\/\/theconversation.com\/how-art-can-challenge-election-time-rhetoric-about-immigrants-221487","Date":"2024-01-28","image":"https:\/\/images.theconversation.com\/files\/570800\/original\/file-20240123-21-vj1i8o.jpg?ixlib=rb-1.1.0&rect=0%2C204%2C1920%2C960&q=45&auto=format&w=1356&h=668&fit=crop","summary":"The coming year is expected to be one of unprecedented election activity worldwide. In Germany, anti-immigration rhetoric has been on the rise ahead of regional elections later this year. A Canadian election in 2024 could be added to the long list of countries going to the polls."},
+// {"ArticleTitle":"Bangladesh\u2019s Prospects Just Got a Little Dimmer","Link":"https:\/\/foreignpolicy.com\/2024\/01\/17\/bangladesh-elections-sheikh-hasina-democracy-opposition-boycott-modi-india\/","Date":"2024-01-17","image":"https:\/\/foreignpolicy.com\/wp-content\/uploads\/2024\/01\/Hasina-Bangladesh-Elections-GettyImages-1917277067.jpg?w=1000","summary":"The rest of the world is either disinterested or dismayed by Dhaka\u2019s democratic backsliding, but the global disapproval is relatively mild. Bangladeshi Prime Minister Sheikh Hasina surged to a fourth consecutive term, and the other is Indian Prime Minister Narendra Modi, for whom Hasina represents a rare friend in the neighborhood."},
+// {"ArticleTitle":"Debt, wage theft and coercion drive the global garment industry \u2013 the only answer is collective action","Link":"https:\/\/theconversation.com\/debt-wage-theft-and-coercion-drive-the-global-garment-industry-the-only-answer-is-collective-action-220924","Date":"2024-01-24","image":"https:\/\/images.theconversation.com\/files\/570701\/original\/file-20240122-15-1ledo9.jpg?ixlib=rb-1.1.0&rect=0%2C126%2C5265%2C2632&q=45&auto=format&w=1356&h=668&fit=crop","summary":"Migrant workers across several Mauritian factories reported agreeing to pay fees ranging from a few hundred to several thousand US dollars to secure a good job. But upon arrival, they discovered the job was poorly paid and expenses were higher than promised. The Mauritius case is the latest example of the use of forced labour within company supply chains."},
+// {"ArticleTitle":"Taiwan agrees to bring in Indian migrant workers to ease job crunch","Link":"https:\/\/www.channelnewsasia.com\/asia\/taiwan-agrees-bring-indian-migrant-workers-ease-job-crunch-4129031","Date":"2024-02-16","image":"https:\/\/onecms-res.cloudinary.com\/image\/upload\/s--lwPVfDaJ--\/fl_relative,g_south_east,l_one-cms:core:watermark:reuters,w_0.1\/f_auto,q_auto\/c_fill,g_auto,h_676,w_1200\/v1\/one-cms\/core\/2024-02-16t103306z_2_lynxnpek1f0ah_rtroptp_3_taiwan-dailylife.jpg?itok=LX2SICfZ","summary":"Taiwan and India signed an agreement to bring in Indian migrant workers to the island as labour-strained Taipei seeks to expand its foreign workforce. Taiwan is host to around 700,000 migrant workers who come mostly from Vietnam, Indonesia, the Philippines and Thailand."},
+// {"ArticleTitle":"Taiwan agrees to bring in Indian migrant workers to ease job crunch","Link":"https:\/\/timesofindia.indiatimes.com\/india\/taiwan-agrees-to-bring-in-indian-migrant-workers-to-ease-job-crunch\/articleshow\/107753515.cms","Date":"2024-02-16","image":"https:\/\/static.toiimg.com\/thumb\/msid-107754375,width-1070,height-580,imgsize-22388,resizemode-75,overlay-toi_sw,pt-32,y_pad-40\/photo.jpg","summary":"India and Taiwan signed an agreement on Friday to bring Indian migrant workers to the island. Taiwan relies on migrant workers from Southeast Asian countries such as Vietnam, Indonesia, the Philippines, and Thailand. Taiwan has denied previous reports suggesting that up to 100,000 Indian workers would be allowed in."},
+// {"ArticleTitle":"Taiwan agrees to bring in Indian migrant workers to ease job crunch","Link":"https:\/\/www.marketscreener.com\/news\/latest\/Taiwan-agrees-to-bring-in-Indian-migrant-workers-to-ease-job-crunch-45970763\/","Date":"2024-02-16","image":"https:\/\/www.marketscreener.com\/images\/reuters\/2024-02\/2024-02-16T103200Z_1_LYNXNPEK1F0AH_RTROPTP_3_TAIWAN-DAILYLIFE.JPG","summary":"Taiwan and India sign agreement to bring in Indian migrant workers to the island as labour-strained Taipei seeks to expand its foreign workforce. Taiwan is host to around 700,000 migrant workers who come mostly from Vietnam, Indonesia, the Philippines and Thailand."},
+// {"ArticleTitle":"\"Cant Stop Working Over Fear\": Rescued Worker Back At Tunnel That Crashed","Link":"https:\/\/www.ndtv.com\/india-news\/cant-stop-working-over-fear-rescued-worker-back-at-tunnel-that-crashed-4958401","Date":"2024-01-30","image":"https:\/\/c.ndtvimg.com\/2023-11\/e115r0bg_uttarakhand-tunnel_625x300_28_November_23.jpg?im=FaceCrop,algorithm=dnn,width=1200,height=738","summary":"Construction has resumed on the Uttarakhand tunnel that collapsed last year, trapping 41 workers for 17 days. The transport ministry gave permission last week for work to resume, nearly two months after the collapse. Most of the trapped men were migrant workers who travelled hundreds of kilometres to work on the tunnel."},
+// {"ArticleTitle":"Facing dire labor shortage, Israel recruits migrant workers from India","Link":"https:\/\/www.nbcnews.com\/news\/world\/israel-hamas-india-labor-shortage-migrant-workers-rcna135603","Date":"2024-02-04","image":"https:\/\/media-cldnry.s-nbcnews.com\/image\/upload\/t_nbcnews-fp-1200-630,f_auto,q_auto:best\/rockcms\/2024-01\/240126-india-israel-workers-mb-0754-fd19a7.jpg","summary":"Palestinians from both Gaza and the West Bank are mostly barred from entering Israel, their work permits revoked on security grounds. Thousands of migrant workers from Thailand, Nepal and the Philippines have opted to return home after seeing their fellow countrymen killed. The labor shortage has dealt an especially big blow to Israel\u2019s construction industry."},
+// {"ArticleTitle":"How the Kennedy Family Caused Today\u2019s Immigration Crisis","Link":"https:\/\/freerepublic.com\/focus\/f-news\/4216978\/posts","Date":"2024-02-13","image":null,"summary":"LBJ signed the 1965 Immigration and Nationality Act into law. JFK had been dead for two years, but it, more than the Cuban missile crisis or the race to the moon, was his real legacy. It affected not only millions, but tens of millions, and it reshaped our lives and our country."},
+// {"ArticleTitle":"Swallowed by Water, in the Sundarbans There Is Nowhere Else to Go","Link":"https:\/\/thediplomat.com\/2024\/01\/swallowed-by-water-in-the-sundarbans-there-is-nowhere-else-to-go\/","Date":"2024-01-29","image":"https:\/\/thediplomat.com\/wp-content\/uploads\/2024\/01\/sizes\/td-story-s-2\/thediplomat_2024-01-29-150827.jpg","summary":"Poor and lower-caste women shoulder the worst impacts of climate change in the Sundarbans. The area also highlights key lessons on building climate resilience. The four cyclones that hit the eastern coast of India between 2019-21 \u2013 Fani, Amphan, Bulbul and Yaas \u2013 point to the increasingly unpredictable weather events."},
+// {"ArticleTitle":"Researcher: Debt, wage theft and coercion drive the global garment industry\u2014the only answer is collective action","Link":"https:\/\/phys.org\/news\/2024-01-debt-wage-theft-coercion-global.html","Date":"2024-01-25","image":"https:\/\/scx2.b-cdn.net\/gfx\/news\/hires\/2024\/clothes-factory.jpg","summary":"Major fashion brands have agreed to pay over \u00a3400,000 in compensation to migrant workers in Mauritius. Migrant workers across several Mauritian factories reported agreeing to pay fees ranging from a few hundred to several thousand US dollars to secure a good job. The Mauritius case is the latest example of the use of forced labor within company supply chains."},
+// {"ArticleTitle":"TB \u00ad\u2013 a ticking time bomb?","Link":"https:\/\/www.thestar.com.my\/news\/nation\/2024\/02\/16\/tb---a-ticking-time-bomb","Date":"2024-02-15","image":"https:\/\/apicms.thestar.com.my\/uploads\/images\/2024\/02\/16\/2546243.jpg","summary":"The re-emergence of TB is due to infected people not seeking treatment and possibly the high presence of foreign workers. Malaysia\u2019s community health expert Prof Sharifa Ezat Wan Puteh said those who are infected may not have sought treatment."},
+// {"ArticleTitle":"B-school grads left in the lurch as India Inc chases blue-collar workers","Link":"https:\/\/economictimes.indiatimes.com\/jobs\/fresher\/b-school-grads-left-in-the-lurch-as-india-inc-chases-blue-collar-workers\/articleshow\/107403772.cms","Date":"2024-02-04","image":"https:\/\/img.etimg.com\/thumb\/msid-107403794,width-1200,height-630,imgsize-31430,overlay-etcareers\/photo.jpg","summary":"India Inc is facing an acute shortage of blue-collar workforce amid a sharp drop in interstate migration of workers. White-collar hiring has slowed down sharply due to global macroeconomic conditions and geopolitical tensions, economists and top company officials said. Experts are seeking immediate measures such as higher wages and enhanced focus on skill development to boost availability."},
+// {"ArticleTitle":"Budget 2024 survey: India's job story has a major missing part","Link":"https:\/\/economictimes.indiatimes.com\/jobs\/fresher\/budget-2024-survey-indias-job-story-has-a-major-missing-part\/articleshow\/107106600.cms","Date":"2024-01-24","image":"https:\/\/img.etimg.com\/thumb\/msid-107106525,width-1200,height-630,imgsize-79060,overlay-etcareers\/photo.jpg","summary":"In the lead-up to the Interim Budget, ET Online conducted a survey on the key challenges confronting the Indian economy. The survey received responses from over 10,500 Economic Times readers. According to 47.5% of those surveyed, the govt has been able to generate jobs -- but not enough quality jobs."},
+// {"ArticleTitle":"Not just cricket: Qatar's Indians roar on football minnows","Link":"https:\/\/www.france24.com\/en\/live-news\/20240119-not-just-cricket-qatar-s-indians-roar-on-football-minnows","Date":"2024-01-19","image":"https:\/\/s.france24.com\/media\/display\/565238a0-b6cd-11ee-af7a-005056a90284\/w:1280\/p:16x9\/cb36ab248a587c0b935e3220383cd49470baccf1.jpg","summary":"About 750,000 of Qatar's 3 million people are Indian, according to latest figures. India's football team, ranked 102nd in the world, cannot compete with their cricket team for national affections. India coach Igor Stimac said he and his team were \"very sad about disappointing\" the fans."},
+// {"ArticleTitle":"Individual evaluation of fatigue at work to enhance the safety performance in the construction industry: A systematic review","Link":"https:\/\/journals.plos.org\/plosone\/article?id=10.1371\/journal.pone.0287892","Date":"2024-02-07","image":"https:\/\/journals.plos.org\/plosone\/article\/figure\/image?id=10.1371\/journal.pone.0287892.g001&size=inline","summary":"The evaluation of fit for duty, or fitness for work (FFW) aims to determine if workers are at risk of adverse impacts of ill-health, injury or accidents. The construction industry is recognized as one of the most hazardous industries globally due to the dynamic on site activities and labour-intensive characteristics."},
+// {"ArticleTitle":"Thousands in India flock to a recruitment center for jobs in Israel despite the Israel-Hamas war","Link":"https:\/\/apnews.com\/article\/india-israel-hamas-war-recruitment-jobs-646b684c10a4384213b399fe6c221151","Date":"2024-01-25","image":"https:\/\/dims.apnews.com\/dims4\/default\/bd13575\/2147483647\/strip\/true\/crop\/8640x4860+0+450\/resize\/1440x810!\/quality\/90\/?url=https%3A%2F%2Fassets.apnews.com%2F37%2F75%2F81a354376f3280a8c4ccd705d7b0%2F7eab4ef0e6cc4c42bb3b02e9ce9370d2","summary":"Thousands of Indians flocked to a recruitment center on Thursday for jobs that would take them to Israel. Israel is facing a labor shortage after barring tens of thousands of Palestinian workers following Hamas\u2019 deadly Oct. 7 attack on Israel that triggered the war. The states of Haryana and Uttar Pradesh have advertised for around 10,000 positions each."},
+// {"ArticleTitle":"Migrant exploitation: Tauranga kiwifruit orchard labour contractor pleads guilty to charges","Link":"https:\/\/www.nzherald.co.nz\/bay-of-plenty-times\/news\/migrant-exploitation-tauranga-kiwifruit-orchard-labour-contractor-pleads-guilty-to-charges\/5V6CAWKC3JCOVPO6WYCLSFR34U\/","Date":"2024-02-01","image":"https:\/\/www.nzherald.co.nz\/resizer\/KikS-SUWABT4tNa4JJ8AKTmI5fg=\/1200x675\/smart\/filters:quality(70)\/cloudfront-ap-southeast-2.images.arcpublishing.com\/nzme\/6IJJ2OSPP23D2IIYPQNYICEMYI.jpg","summary":"A Tauranga kiwifruit labour contractor has admitted to exploiting four illegal migrant workers. One of them lived in a crowded garage with 19 others for four months with no heating or insulation. Their employer, Jafar Kurisi, 59, from Parkvale, also underpaid them thousands of dollars in wages."},
+// ]
+
+export const newsData = [
+  {
+    ArticleTitle:
+      'Ancient find reveals new evidence of Malaysia\u2019s multicultural past',
+    Link: 'https://www.aljazeera.com/news/2024/3/10/ancient-find-reveals-new-evidence-of-malaysias-multicultural-past',
+    Date: '2024-03-10',
+    image:
+      'https://www.aljazeera.com/wp-content/uploads/2024/03/DJI_0897-1709705865.jpg?resize=1920%2C1440',
+    summary:
+      "The 1,200-year-old Buddhist stupa of Bukit Choras was discovered last August in Malaysia\u2019s Bujang Valley. It is the best preserved in the country and experts say it could hold the key to Malaysia's long history of multiculturalism.",
+  },
+  {
+    ArticleTitle:
+      'Indians die fighting for Russia in Ukraine, leaving a trail of helplessness',
+    Link: 'https://www.aljazeera.com/news/2024/3/14/as-indians-die-fighting-for-russia-families-recount-their-pleas-for-help',
+    Date: '2024-03-14',
+    image:
+      'https://www.aljazeera.com/wp-content/uploads/2024/03/2024-03-07T153227Z_1804454263_RC23H6AU4LLR_RTRMADP_3_UKRAINE-CRISIS-INDIA-RUSSIA-1-1710394307.jpg?resize=1200%2C630',
+    summary:
+      'At least two Indian men have been killed on the Ukrainian front lines, revealing the desperation caused by widespread joblessness back home. Hemil was on the front lines of Russia\u2019s war on Ukraine, his role very different from the task of a Russian \u2018army helper\u2019 that he had signed up for.',
+  },
+  {
+    ArticleTitle:
+      'Why are South Asians going to fight in the Russia-Ukraine war?',
+    Link: 'https://www.aljazeera.com/news/2024/4/1/why-are-south-asians-going-to-fight-in-ukraine',
+    Date: '2024-04-01',
+    image:
+      'https://www.aljazeera.com/wp-content/uploads/2024/03/GettyImages-2037305678-1710394346.jpg?resize=1920%2C1440',
+    summary:
+      'Young men from India, Nepal and Sri Lanka are on the front lines of Russia\u2019s war on Ukraine. Nepali, Tajik and Afghan fighters are sent straight to the front line. The unofficial number of Indians fighting in Ukraine is estimated to be about 100.',
+  },
+  {
+    ArticleTitle: 'Cannes 2024: What\u2019s In The Mix? (Part 2)',
+    Link: 'http://deadline.com/2024/03/cannes-film-festival-2024-predictions-movies-lineup-1235858222/',
+    Date: '2024-03-18',
+    image:
+      'https://deadline.com/wp-content/uploads/2024/03/MixCollage-14-Mar-2024-03-27-PM-3571.jpg?w=1024',
+    summary:
+      "The bulk of the 77th edition (running May 14-25) is revealed at the press conference in Paris on April 11. We've rounded up a host of titles ready and in the running for a splash in either Official Selection or the main parallel sections of Directors\u2019 Fortnight and Critics\u2019 Week.",
+  },
+  {
+    ArticleTitle:
+      'African and Asian newcomers are the new face of migrants in NYC',
+    Link: 'https://gothamist.com/news/african-and-asian-newcomers-are-the-new-face-of-migrants-in-nyc',
+    Date: '2024-03-26',
+    image:
+      'https://cms.prod.nypr.digital/images/344139/fill-1200x650|format-webp|webpquality-85/',
+    summary:
+      "Central and South American migrants accounted for the vast majority of cases in New York City's immigration courts as recently as three years ago. Migrants from Africa, Asia, Europe and regions outside of Latin America now make up nearly half of the city's newest arrivals, according to an analysis of immigration court data.",
+  },
+  {
+    ArticleTitle:
+      'Shah says nobody will lose citizenship under CAA, MHA launches portal',
+    Link: 'https://indianexpress.com/article/india/shah-says-nobody-will-lose-citizenship-under-caa-mha-launches-portal-9210741/',
+    Date: '2024-03-12',
+    image: 'https://images.indianexpress.com/2024/03/amit-ji-shah-2col-1.jpg',
+    summary:
+      'Prime Minister Narendra Modi has honoured Hindu, Buddhist, Sikh and Jain refugees by giving them citizenship through CAA. The Centre on Monday implemented the Citizenship (Amendment) Act, 2019, notifying the rules four years after the contentious law was passed by Parliament to fast-track citizenship for undocumented non-Muslim migrants.',
+  },
+  {
+    ArticleTitle:
+      'The Truth About China\u2019s Economy: Debunking Western Media Myths',
+    Link: 'https://www.nakedcapitalism.com/2024/03/the-truth-about-chinas-economy-debunking-western-media-myths.html',
+    Date: '2024-03-23',
+    image: null,
+    summary:
+      'Radhika Desai, Micheal Hudon, and Mick Dunford continue their important discussion of how the West misunderstands or misrepresents the economic accomplishments of and propects for China. The 25th Geopolitical Economy Hour, the show that examines the fast-changing political and geopolitical economy of our time.',
+  },
+  {
+    ArticleTitle:
+      'Once-celebrated P.E.I. apple orchard faces no sanctions despite foreign worker abuse claims',
+    Link: 'https://www.cbc.ca/news/canada/pei-apple-orchard-foreign-workers-fifth-estate-1.7141840',
+    Date: '2024-03-15',
+    image:
+      'https://i.cbc.ca/1.7141908.1710357580!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_620/yan-liu-and-daughter.jpg',
+    summary:
+      'Canadian Nectar Products is at the centre of what federal authorities allege is a web of companies defrauding the government and foreign workers. The company has a farm in Alliston, P.E.I., where former foreign workers allege they were not given full-time hours and asked to pay large sums of money for paycheques.',
+  },
+  {
+    ArticleTitle:
+      'Totaliser technology ready but time to implement idea not come yet, says CEC',
+    Link: 'https://www.moneycontrol.com/news/technology/totaliser-technology-ready-but-time-to-implement-idea-not-come-yet-says-cec-12481941.html',
+    Date: '2024-03-18',
+    image:
+      'https://images.moneycontrol.com/static-mcnews/2024/03/Chief-Election-Commissioner-Rajiv-Kumar-1-770x433.jpg',
+    summary:
+      'The totaliser is a technology to link a number of polling machines and combine the results. It can be used for taking out the results in a group of 14 EVMs without revealing the votes in individual machines. The poll panel has also prepared a prototype to enable migrant workers to vote remotely.',
+  },
+  {
+    ArticleTitle:
+      'Australia tightens student visa rules as migration hits record high',
+    Link: 'https://www.moneycontrol.com/news/world/australia-tightens-student-visa-rules-as-migration-hits-record-high-12499511.html',
+    Date: '2024-03-21',
+    image:
+      'https://images.moneycontrol.com/static-mcnews/2024/02/Australia-1-770x433.jpg',
+    summary:
+      'Australia will begin enforcing tougher visa rules for foreign students this week as migration hits record high. English language requirements for student and graduate visas will be increased. Government will get power to suspend education providers from recruiting international students if they repeatedly break rules.',
+  },
+  {
+    ArticleTitle: "Joe Biden Breaks Public Support for 'Skilled' Migration",
+    Link: 'https://www.breitbart.com/immigration/2024/03/30/joe-biden-breaks-public-support-skilled-migration/',
+    Date: '2024-03-30',
+    image:
+      'https://media.breitbart.com/media/2021/03/Bidens-Awkward-Moments-1-640x335.jpg',
+    summary:
+      "The huge legal inflow of white-collar migrants into U.S. jobs via the nation's airports gets little press, partly because progressives, lobbyists, and establishment media outlets prefer to focus Americans\u2019 attention on grateful southern migrants. The growing opposition is likely caused by Biden\u2019s acceleratinginflow of foreign visa workers.",
+  },
+  {
+    ArticleTitle:
+      "Joe Biden Admits He WANTS 'More Orderly Flow' of Further Border Migrants",
+    Link: 'https://www.breitbart.com/immigration/2024/03/10/joe-biden-admits-he-wants-more-orderly-flow-of-further-border-migrants/',
+    Date: '2024-03-10',
+    image:
+      'https://media.breitbart.com/media/2021/10/joe-biden-migrant-caravan-illegal-aliens-border-crisis-getty-640x335.jpg',
+    summary:
+      'President Joe Biden has pulled in at least 7 million southern migrants to stimulate the consumer economy as low-wage workers, apartment-sharing renters, and government-funded consumers. He has also pushed up the inflow of legal immigrants, and visa workers for blue-collar and white-collar jobs. His inflow has imported roughly one migrant.',
+  },
+  {
+    ArticleTitle:
+      'Thailand\u2019s New Prime Minister Is Getting Down to Business. But Can He Heal His Nation?',
+    Link: 'https://time.com/6899782/thailand-prime-minister-srettha-thavisin-business-hub/',
+    Date: '2024-03-12',
+    image:
+      'https://api.time.com/wp-content/uploads/2024/03/srettha-thavisin-thai-pm-1.jpg?quality=85',
+    summary:
+      'Thailand\u2019s richest 1% controlled 66.9% of its wealth in 2018, according to the Credit Suisse Global Wealth Databook. Average GDP growth in Thailand has been below 2% over the past decade, while neighbors like the Philippines, Indonesia, and Vietnam registered double to triple that rate.',
+  },
+  {
+    ArticleTitle: 'The life and work of Edward Webster',
+    Link: 'https://africasacountry.com/2024/03/the-life-and-work-of-edward-webster/',
+    Date: '2024-03-07',
+    image:
+      'https://images.jacobinmag.com/wp-content/uploads/sites/3/2024/03/07140358/28_WebsterLifetimeAward-1080x720-1.jpg',
+    summary:
+      "It is exactly 50 years since C. Wright Mills penned his rendition of the sociological imagination as the interplay of biography and history, or, more actively, as transforming private troubles into public issues. Edward Webster is one of South Africa's most distinguished sociologists.",
+  },
+  {
+    ArticleTitle:
+      'Labour crunch forces Croatia to open doors to Asian workforce',
+    Link: 'https://www.yahoo.com/news/labour-crunch-forces-croatia-open-014407374.html',
+    Date: '2024-03-27',
+    image:
+      'https://media.zenfs.com/en/afp.com/ce012292814f311ac3ca66998edb20e1',
+    summary:
+      'Croatia is increasingly counting on labourers from Nepal, India, the Philippines and elsewhere to bridge the gap. Mass emigration and a shrinking population has created tens of thousands of vacant positions in construction and the service industry. But not everyone has put out the welcome mat, with migrants facing cramped and expensive housing, and occasional anti-immigrant rhetoric.',
+  },
+  {
+    ArticleTitle: 'Interview to Dmitry Kiselev',
+    Link: 'https://www.globalsecurity.org/wmd/library/news/russia/2024/03/russia-240313-kremlin01.htm',
+    Date: '2024-03-14',
+    image: null,
+    summary:
+      'Dmitry Kiselev: "We are talking about a six-year period. At the present moment, we are working on a three-year budget" The Dzhubga-Sochi highway: 130 kilometres, of which 90 kilometres are tunnels and the rest must be bridges, judging by the landscape.',
+  },
+  {
+    ArticleTitle:
+      'Israel\u2019s plans to replace its Palestinian labor force could spell disaster for the Palestinian economy',
+    Link: 'https://mondoweiss.net/2024/03/israels-plans-to-replace-its-palestinian-labor-force-could-spell-disaster-for-the-palestinian-economy/',
+    Date: '2024-03-22',
+    image:
+      'https://mondoweiss.net/wp-content/uploads/2023/04/EYAL-4-scaled.jpg',
+    summary:
+      'On October 6, 2023, hundreds of thousands of Palestinians, primarily from the occupied West Bank, made their way into Israel to complete their jobs as day laborers. Less than 48 hours later, virtually all of those Palestinians, an estimated 200,000 laborers, would be out of work.',
+  },
+  {
+    ArticleTitle: 'Researchers fill global migration data gaps',
+    Link: 'https://kingcenter.stanford.edu/news/what-headlines-dont-tell-you-about-global-migration-and-what-stanford-researchers-can',
+    Date: '2024-03-12',
+    image:
+      'https://kingcenter.stanford.edu/sites/g/files/sbiybj16611/files/styles/large/public/media/image/1_-_trade_0.png?itok=uZxQyBnz',
+    summary:
+      'If migrants formed their own country, it would be the fourth most populous country in the world, after China, India, and the United States. The King Center supports research on nine global themes, including migration. The aim of all these efforts is to improve existing laws and policies governing migration.',
+  },
+  {
+    ArticleTitle: 'Braving danger, for better pay',
+    Link: 'https://www.thehindubusinessline.com/opinion/braving-danger-for-better-pay/article67943942.ece',
+    Date: '2024-03-12',
+    image:
+      'https://bl-i.thgim.com/public/incoming/kf6h76/article67943963.ece/alternates/LANDSCAPE_1200/CCI_UDHindu_TheHindu_ULNB0QAIN_R1441811927_1_449.jpg',
+    summary:
+      'India and Israel signed an accord last May under which 42,000 Indians will head to Israel to work. India is now, far and away, the biggest remittance recipient, way ahead of other countries like Mexico and China. Remittances from Indians working abroad shot up dramatically in 2023 with Indians sending back $125 billion.',
+  },
+  {
+    ArticleTitle: 'A decade of triumph: Polio-free India',
+    Link: 'https://www.thehindubusinessline.com/specials/pulse/a-decade-of-triumph-polio-free-india/article68012866.ece',
+    Date: '2024-03-31',
+    image:
+      'https://bl-i.thgim.com/public/incoming/59fo74/article68012862.ece/alternates/LANDSCAPE_1200/6678_27_2_2022_20_51_47_2_PULSEPOLIO_6.JPG',
+    summary:
+      "This year marks a decade of a polio-free India \u2014 one of the country\u2019s most profound public health achievements to date. The last poliovirus case was reported in Howrah district, West Bengal, in 2011. India's journey to end polio is a battle of sheer scale.",
+  },
+  {
+    ArticleTitle: 'Telcos may take a tariff hike call after elections',
+    Link: 'https://www.thehindubusinessline.com/info-tech/telcos-may-take-a-tariff-hike-call-after-elections/article67987500.ece',
+    Date: '2024-03-24',
+    image:
+      'https://bl-i.thgim.com/public/incoming/volg9p/article67987728.ece/alternates/LANDSCAPE_1200/KIKKM_25-11-2009_11-31-19_MOBILE_6.JPG',
+    summary:
+      'After nearly two years of stable telecom tariffs, brokerage firms predict that telcos will take another 20 per cent hike in telecom prices. India has the cheapest telecom tariffs in the world, and increasing telecom prices has been a catch-22 for telcos. In January, Bank of America Securities upgraded Bharti Airtel\u2019s ratings expecting a significant tariff increase.',
+  },
+  {
+    ArticleTitle: 'Eric Adams\u2019s Destiny Is Crashing Into His Reality',
+    Link: 'https://www.theatlantic.com/ideas/archive/2024/03/eric-adams-new-york-destiny/677821/?utm_source=feed',
+    Date: '2024-03-21',
+    image: null,
+    summary:
+      'Eric Adams has a long history of ad-libbing in odd and often self-aggrandizing ways that befuddle his audiences. In the 2021 mayoral election, elites and liberal-left voters divided their ballots between his closest rivals. Federal agents waved aside his security team, handed him a subpoena, and seized his cellphones and iPad.',
+  },
+  {
+    ArticleTitle:
+      'Australia tightens student visa rules as migration hits record high',
+    Link: 'https://www.investing.com/news/world-news/australia-tightens-student-visa-rules-as-migration-hits-record-high-3347204',
+    Date: '2024-03-21',
+    image:
+      'https://i-invdn-com.investing.com/news/news_headline_open_108x81._800x533_L_1419519630.jpg',
+    summary:
+      'English language requirements for student and graduate visas will be increased from Saturday. The government will get the power to suspend education providers from recruiting international students if they repeatedly break rules. The moves follow a raft of actions last year to close off concessions introduced by the former government.',
+  },
+  {
+    ArticleTitle:
+      'Australia tightens student visa rules as migration hits record high',
+    Link: 'https://www.marketscreener.com/news/latest/Australia-tightens-student-visa-rules-as-migration-hits-record-high-46247728/',
+    Date: '2024-03-21',
+    image:
+      'https://www.marketscreener.com/images/reuters/2023-08/2023-08-25T140525Z_1_LYNXMPEJ7O0LQ_RTROPTP_3_AUSTRALIA-CHINA-HOUSING.JPG',
+    summary:
+      'English language requirements for student and graduate visas will be increased from Saturday. The government will get the power to suspend education providers from recruiting international students if they repeatedly break rules. The moves follow a raft of actions last year to close off concessions introduced by the former government.',
+  },
+  {
+    ArticleTitle:
+      'IT companies in Bengaluru urged to give 15 lakh employees WFH option as city grapples with water crisis',
+    Link: 'https://economictimes.indiatimes.com/news/india/it-companies-in-bengaluru-urged-to-give-15-lakh-employees-wfh-option-as-city-grapples-with-water-crisis/articleshow/108761390.cms',
+    Date: '2024-03-25',
+    image:
+      'https://img.etimg.com/thumb/msid-108762045,width-1200,height-630,imgsize-82894,overlay-economictimes/photo.jpg',
+    summary:
+      'Bengaluru is facing a shortage of about 500 million litres of water per day (MLD) Some netizens have been urging the IT industry and the government to give Work From Home facility. The Karnataka government is optimistic that the completion of phase 5 of the Cauvery project by June could ease the water crisis.',
+  },
+  {
+    ArticleTitle: 'Racial tensions cost Germany Inc. skilled foreign labour',
+    Link: 'https://www.marketscreener.com/quote/stock/META-PLATFORMS-INC-10547141/news/Racial-tensions-cost-Germany-Inc-skilled-foreign-labour-46294760/',
+    Date: '2024-03-27',
+    image:
+      'https://www.marketscreener.com/images/reuters/2024-03/2024-03-27T063540Z_1_LYNXNPEK2Q060_RTROPTP_3_GERMANY-POLITICS-FAR-RIGHT-COMPANIES.JPG',
+    summary:
+      "Chemnitz, east Germany, has become a focus of anti-immigrant feelings since 2018. The town's population has shrunk by around 20% to just over 250,000 since reunification in 1990. Foreigners have jumped to nearly 14% of inhabitants from just over 2% in 2000, according to data.",
+  },
+  {
+    ArticleTitle: 'Racial tensions cost Germany Inc. skilled foreign labour',
+    Link: 'https://www.investing.com/news/stock-market-news/racial-tensions-cost-germany-inc-skilled-foreign-labour-3354293',
+    Date: '2024-03-27',
+    image:
+      'https://i-invdn-com.investing.com/news/fa8a2f803ea2ddf92359d55091dcde0a_L.jpg',
+    summary:
+      'Chemnitz, east Germany, has become a focus of anti-immigrant feelings since 2018 when anti-migrant protests in the city turned to riots. Many large companies in Germany and the Netherlands have expressed concern about the difficulty of hiring due to anti- immigrant sentiment. Some employers say they are actually losing staff because of it.',
+  },
+  {
+    ArticleTitle:
+      "TMC's Abhishek Banerjee dares BJP to launch schemes like Lakshmir Bhandar in states it rules",
+    Link: 'https://economictimes.indiatimes.com/news/elections/lok-sabha/west-bengal/tmcs-abhishek-banerjee-dares-bjp-to-launch-schemes-like-lakshmir-bhandar-in-states-it-rules/articleshow/108900552.cms',
+    Date: '2024-03-30',
+    image:
+      'https://img.etimg.com/thumb/msid-108900665,width-1200,height-630,imgsize-231804,overlay-economictimes/photo.jpg',
+    summary:
+      "Trinamool Congress national general secretary Abhishek Banerjee dared the BJP to implement a social welfare scheme like 'Lakshmir Bhandar' The scheme was launched by the TMC government in February 2021 to provide financial help to women from economically weaker sections.",
+  },
+  {
+    ArticleTitle:
+      'Tech To Link EVMs, Hide Booth-Wise Voting Ready But...: Poll Body Chief',
+    Link: 'https://www.ndtv.com/india-news/tech-to-link-evms-hide-booth-wise-voting-ready-but-poll-body-chief-rajiv-kumar-5251228',
+    Date: '2024-03-16',
+    image:
+      'https://c.ndtvimg.com/2024-03/nlq69gi8_chief-election-commissioner-rajiv-kumar_625x300_16_March_24.jpg',
+    summary:
+      'The totaliser is a technology to link a number of EVMs and hide booth-wise voting patterns. It can be used for taking out the results in a group of 14 EVMs without revealing the votes in individual machines. The poll panel has also prepared a prototype to enable migrant workers to vote remotely.',
+  },
+  {
+    ArticleTitle: "Opinion: India's 10 Years As A Polio-Free Nation",
+    Link: 'https://www.ndtv.com/opinion/indias-10-years-as-a-polio-free-nation-5319889',
+    Date: '2024-03-27',
+    image:
+      'https://w.ndtvimg.com/sites/3/2024/02/19135635/660-81.jpg?im=FaceCrop,algorithm=dnn,width=1200,height=738?ver-20240316.08',
+    summary:
+      "This year marks a decade of a polio-free India - one of the country's most profound public health achievements to date. The last polio case was reported in Howrah district, West Bengal, in 2011, and three years later, India was officially certified polio- free as part of the South-East Asia Region of the World Health Organization.",
+  },
+  {
+    ArticleTitle: "Germany's Aramaic Christians seek support in their church",
+    Link: 'https://www.dw.com/en/germanys-aramaic-christians-seek-support-in-their-church/a-68675395',
+    Date: '2024-03-29',
+    image: 'https://static.dw.com/image/68663716_6.jpg',
+    summary:
+      'Some 120,000 Christians in Germany speak Aramaic, thought to be the language spoken by Jesus Christ. Some older congregants speak only broken German, and you can hear elements of Swabian dialect in the younger ones. The Syriac Orthodox Church originated in what is today the city of Antakya, southeastern Turkey.',
+  },
+  {
+    ArticleTitle: 'Youth from east want to join growth story',
+    Link: 'https://economictimes.indiatimes.com/news/india/youth-from-east-want-to-join-growth-story/articleshow/108687445.cms',
+    Date: '2024-03-21',
+    image:
+      'https://img.etimg.com/thumb/msid-108687454,width-1200,height-630,imgsize-14384,overlay-economictimes/photo.jpg',
+    summary:
+      "The region has been a steady source of migrant workers to the rest of the country owing to less economic opportunities. The government has been able to eliminate the scourge of Left-wing extremism in this region. Establishing property rights is an important function of the state and has implications for the region's economic development.",
+  },
+  {
+    ArticleTitle:
+      'How urbanisation \u2013 and Hinduisation \u2013 is stripping India\u2019s indigenous communities of their cultural heritage',
+    Link: 'https://theconversation.com/how-urbanisation-and-hinduisation-is-stripping-indias-indigenous-communities-of-their-cultural-heritage-221176',
+    Date: '2024-03-11',
+    image:
+      'https://images.theconversation.com/files/578650/original/file-20240228-26-uy6wya.jpg?ixlib=rb-1.1.0&rect=0%2C564%2C4896%2C2448&q=45&auto=format&w=1356&h=668&fit=crop',
+    summary:
+      'Over the past decades, rampant urbanisation and industrialisation has seen increasing numbers of Adivasi communities internally displaced. The Gondi homelands traditionally stretch across central India, encompassing parts of Madhya Pradesh, Chhattisgarh, Maharashtra, Odisha, Jharkhand, Bihar and west Bengal.',
+  },
+  {
+    ArticleTitle: 'Racial tensions cost Germany Inc. skilled foreign labour',
+    Link: 'https://www.thestar.com.my/news/world/2024/03/27/racial-tensions-cost-germany-inc-skilled-foreign-labour',
+    Date: '2024-03-27',
+    image:
+      'https://apicms.thestar.com.my/uploads/images/2024/03/27/2614110.jpg',
+    summary:
+      "Chemnitz has become a focus of anti-immigrant feelings since 2018 when anti-migrant protests in the city turned to riots. The town's population has shrunk by around 20% to just over 250,000 since reunification in 1990. Official German estimates suggest the country will be short of seven million skilled workers by 2035.",
+  },
+  {
+    ArticleTitle:
+      'Villagers duped into selling kidneys and told organ would regrow',
+    Link: 'https://news.sky.com/story/nepal-villagers-duped-into-selling-kidneys-and-told-organ-would-regrow-now-country-faces-new-health-crisis-13098662',
+    Date: '2024-03-31',
+    image:
+      'https://e3.365dm.com/24/03/1600x900/skynews-nepal-kidney-sellers_6496760.jpg?20240321121357',
+    summary:
+      "The village of Hokse in Nepal has a unique and exceptionally troubled history. It's known as Kidney Valley because someone from almost every household has sold a kidney. Brokers have been visiting the area for years, persuading people to part with an organ.",
+  },
+  {
+    ArticleTitle:
+      'Prevalence and risk factors of work-related musculoskeletal disorders among shopkeepers in Ethiopia: Evidence from a workplace cross-sectional study',
+    Link: 'https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0300934',
+    Date: '2024-03-21',
+    image:
+      'https://journals.plos.org/plosone/article/figure/image?id=10.1371/journal.pone.0300934.g003&size=inline',
+    summary:
+      'Work-related musculoskeletal disorders (WRMSDs) are the leading cause of disability worldwide. Shopkeepers in Ethiopia face an alarmingly high prevalence of work-related Musculoskeleton disorders.',
+  },
+  {
+    ArticleTitle:
+      "Taiwan Apologizes for Labor Minister's Remarks on Indian Workers",
+    Link: 'https://www.voanews.com/a/taiwan-apologizes-for-labor-minister-s-remarks-on-indian-workers/7517256.html',
+    Date: '2024-03-07',
+    image: 'https://gdb.voanews.com/11D29C3E-CE58-45C2-AFD0-420D26C6447A.jpg',
+    summary:
+      "Taiwan's Foreign Ministry has issued \"sincere apologies\" following a remark by Taiwan's labor minister. Hsu Ming-chun, Taiwan's minister of labor, said Taiwan may start recruiting migrant workers from India. India overtook China last year as the world's most populous country with more than 1.4 billion people.",
+  },
+  {
+    ArticleTitle:
+      'Labour crunch forces Croatia to open doors to Asian workforce',
+    Link: 'https://www.france24.com/en/live-news/20240327-labour-crunch-forces-croatia-to-open-doors-to-asian-workforce',
+    Date: '2024-03-27',
+    image:
+      'https://s.france24.com/media/display/a739b9bc-ebdb-11ee-a87e-005056bf30b7/w:1280/p:16x9/cc60cbb779a1c240acb8bdf00cfff20cf309f36c.jpg',
+    summary:
+      'Croatia is increasingly counting on migrants from Nepal, India, the Philippines and elsewhere to fill a labour shortage. Mass emigration and a shrinking population has created tens of thousands of vacant positions in construction and the service industry. But not everyone has put out the welcome mat, with migrants facing cramped and expensive housing, and occasional anti-immigrant rhetoric.',
+  },
+  {
+    ArticleTitle:
+      'Biden Wants $13 Billion from Congress for Migrants and Sanctuary Cities',
+    Link: 'https://www.breitbart.com/economy/2024/03/12/biden-wants-13-billion-from-congress-for-migrants-and-sanctuary-cities/',
+    Date: '2024-03-12',
+    image:
+      'https://media.breitbart.com/media/2023/08/AP19128754767405-1-640x335.jpg',
+    summary:
+      'The funding request likely will be approved unless the GOP wins a House and Senate majority in November. If approved, the 12 months of spending could begin on October 1, 2024. Some of the funding would go to the nationwide network of non-government organizations, cities, and towns that transport, feed, shelter, and hide migrants.',
+  },
+  {
+    ArticleTitle:
+      'Ethical frameworks should be applied to computational modelling of infectious disease interventions',
+    Link: 'https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011933',
+    Date: '2024-03-21',
+    image:
+      'https://journals.plos.org/ploscompbiol/article/figure/image?id=10.1371/journal.pcbi.1011933.g001&size=inline',
+    summary:
+      'Public health ethics can provide a conceptual foundation for developing this capacity. We discuss examples from the COVID-19 pandemic to illustrate the current separation between public health ethics and infectious disease modelling. We conclude by describing practical steps to build the capacity for ethically aware modelling.',
+  },
+  {
+    ArticleTitle:
+      'May 31 deadline for foreign workers recruitment under recalibration programme remains, says Saifuddin',
+    Link: 'https://www.thestar.com.my/news/nation/2024/03/08/may-31-deadline-for-foreign-workers-recruitment-under-recalibration-programme-remains-says-saifuddin',
+    Date: '2024-03-08',
+    image:
+      'https://apicms.thestar.com.my/uploads/images/2024/03/08/2582760.JPG',
+    summary:
+      'May 31 deadline set for recruitment of foreign workers through Labour Recalibration Programme 2.0 will remain. Home Minister Datuk Seri Saifuddin Nasution Ismail said the decision was reached collectively by all regulatory agencies under the Home Ministry and ministries involved in the recalibration programme.',
+  },
+  {
+    ArticleTitle:
+      "Nurses promised work and visas to relocate but left 'jobless'",
+    Link: 'https://www.1news.co.nz/2024/03/19/nurses-promised-work-and-visas-to-relocate-but-left-jobless/',
+    Date: '2024-03-19',
+    image:
+      'https://tvnz-1-news-prod.cdn.arcpublishing.com/resizer/v2/a-group-of-nurses-walk-down-a-hospital-corridor-file-picture-PFGWKW4LD5A3NCJIAT4GIBH6BQ.jpg?auth=470d25b63d985dce220c2e3848fb2aba1b7cc2b02e3e09db244529af0062bbbd&quality=70&width=600&height=315&focal=868%2C352',
+    summary:
+      'Around 20 nurses holding accredited employer work visas claim to be jobless at a time when the country is struggling with a shortage of healthcare workers. The healthcare workers were recruited by a company operating in Canterbury, which promised them jobs and a valid visa if they relocated to New Zealand. The labour hire company responsible for recruiting the nurses denied the allegations.',
+  },
+  {
+    ArticleTitle: 'Women Leading the Way towards the Economy of Equality',
+    Link: 'https://www.syllad.com/women-leading-the-way-towards-the-economy-of-equality/',
+    Date: '2024-03-08',
+    image:
+      'https://www.syllad.com/wp-content/uploads/2021/06/Iawmusiang-1-1.jpg',
+    summary:
+      "India has made significant strides in enhancing Women's Labor Force Participation Rate (WLFPR) India has implemented numerous initiatives and policies to bolster women\u2019s employment, reflecting significant progress in promoting gender balance in the workforce. This promising trend is a testament of heightened political and bureaucratic (public), corporate (private), and young women's will.",
+  },
+];
