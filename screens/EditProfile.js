@@ -937,7 +937,7 @@ const EditProfile = props => {
           }}
         />
       )}
-      {defSelectedState && (
+      {defSelectedState && stateList && (
         <MyMultipleSelectPopUp
           title="Select relocation state"
           toggle={showStatePref}
@@ -953,7 +953,7 @@ const EditProfile = props => {
           }}
         />
       )}
-      {defSelectedCountry && (
+      {defSelectedCountry && countryList && (
         <MyMultipleSelectPopUp
           title="Select relocation country"
           toggle={showCountryPref}
