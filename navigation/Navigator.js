@@ -70,21 +70,22 @@ const Navigator = () => {
   return (
     <View style={styles.main}>
       {globalState?.user ? <AuthenticatedNavigator /> : <LayoutNavigator />}
-      <Modal visible={showPopup}>
+      <Modal visible={showPopup} transparent={true}>
         <View
           style={{
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'flex-end',
+            backgroundColor:"rgba(0,0,0,0.3)"
           }}>
-          <View style={{width: 330}}>
-            <Text style={{color: 'gray', fontSize:20, marginBottom:20}}>
-              'Update Required', A new version of the app is available. Please
-              update to continue.
+          <View style={{width: "100%",padding:20,borderTopLeftRadius:25, borderTopRightRadius:25, backgroundColor:"white", paddingVertical:30}}>
+            <Text style={{color: 'gray',textAlign:"center", fontSize:18, marginBottom:30}}>
+            There is a new version of the App available on Play store, please update and restart the App.
             </Text>
             <Button
               title="UPDATE"
+              color="#035292"
               onPress={() =>
                 Linking.openURL(
                   'https://play.google.com/store/apps/details?id=ai.overseas',

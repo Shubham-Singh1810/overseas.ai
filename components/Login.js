@@ -164,11 +164,27 @@ const Login = props => {
   const getOtpViaEmail = async () => {
     try {
       let reponse = await getOtpOnEmail({empEmail});
-      if ((reponse.data.msg = 'Otp Sent Successfully.')) {
+      if ((reponse.data.msg == 'Otp Sent Successfully.')) {
         setShowOtpInp(true);
       }
+      console.log(reponse.data)
     } catch (error) {
-      console.warn('sdyfg', error);
+      if(error.response.status==422){
+        Toast.show({
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: newTranslation?.emailNotRegistered,
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
+      else{
+        Toast.show({
+          type: 'error', // 'success', 'error', 'info', or any custom type you define
+          // position: 'top',
+          text1: "Internal server error",
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+      }
     }
   };
   const verifyOtp = async () => {
@@ -223,6 +239,7 @@ const Login = props => {
             placeholderTextColor="gray"
             style={styles.input}
             onChangeText={text => setFormData({...formData, empPhone: text})}
+            keyboardType='numeric'
             value={formData.empPhone}
           />
           <Text style={styles.errorMessage}>{errors.empPhone}</Text>
@@ -348,9 +365,9 @@ const Login = props => {
                 marginBottom: 16,
               }}>
               <Text style={{color: 'black', fontSize: 18}}>
-                {showOtpInp ? 'Verify Otp' : 'Get OTP on email'}
+                {showOtpInp ? newTranslation?.verifyOtp : newTranslation?.getOtpOnEmail}
               </Text>
-              <Pressable onPress={() => setShowPopUp(false)}>
+              <Pressable onPress={() =>{setShowPopUp(false), setShowOtpInp(false), setEmpEmail("")}}>
                 <Image source={require('../images/close.png')} />
               </Pressable>
             </View>
@@ -362,7 +379,7 @@ const Login = props => {
                   marginBottom: 20,
                   textDecorationLine: 'underline',
                 }}>
-                OTP sent successfully.
+                {newTranslation?.otpSentSuccessfully}
               </Text>
             )}
 
@@ -375,7 +392,7 @@ const Login = props => {
             />
             {showOtpInp && (
               <TextInput
-                placeholder="Enter OTP"
+                placeholder={newTranslation?.enterOtp}
                 placeholderTextColor="gray"
                 style={styles.input}
                 value={otp}
@@ -385,9 +402,9 @@ const Login = props => {
               />
             )}
             {showOtpInp ? (
-              <Button title="Verify" onPress={verifyOtp} />
+              <Button title={newTranslation?.verifyOtp} onPress={verifyOtp} />
             ) : (
-              <Button title="Send" onPress={getOtpViaEmail} />
+              <Button title={newTranslation.sendOtp} onPress={getOtpViaEmail} />
             )}
           </View>
         </View>

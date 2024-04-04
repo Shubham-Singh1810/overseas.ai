@@ -11,7 +11,7 @@ import {
   Button,
 } from 'react-native';
 import {loginOut} from '../services/user.service';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,7 +19,7 @@ import {getProfileStrength, getNotification} from '../services/user.service';
 
 const MyProfile = props => {
   const {translation, newTranslation, globalState, setGlobalState} =
-    useGlobalState();
+    useGlobalState(); 
   const handleLogOut = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -33,6 +33,25 @@ const MyProfile = props => {
       }
     } catch (error) {
       console.error('Error removing user data from AsyncStorage:', error);
+    }
+  };
+  const getProfileStrengthFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getProfileStrength(JSON.parse(user).access_token);
+      if (
+        response?.data.msg == 'Some fields are empty' ||
+        response?.data.msg ==
+          'Profile strength calculated successfully and updated in records'
+      ) {
+        setGlobalState({
+          ...globalState,
+          user: user,
+          profileStrength: response?.data,
+        });
+      }
+    } catch (error) {
+      console.log('NEW', error);
     }
   };
   const renderStar = () => {
@@ -76,18 +95,21 @@ const MyProfile = props => {
     }
   };
   const [showLogOutPopUp, setShowLogOutPopUp] = useState(false);
+  const fetchUserData = async () => {
+    try {
+      const user = await AsyncStorage.getItem('user');
+      setGlobalState({...globalState, user: user});
+      setTimeout(() => {
+        getProfileStrengthFunc();
+      }, 2000);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
   useFocusEffect(
     React.useCallback(() => {
-      const fetchUserData = async () => {
-        try {
-          const user = await AsyncStorage.getItem('user');
-          setGlobalState({...globalState, user: user});
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-      fetchUserData();
-    }, []),
+    fetchUserData();
+    }, [globalState.selectedLanguage]),
   );
   return (
     <>

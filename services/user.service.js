@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // Define your API base URL
-// const BASE_URL = "https://overseas.ai/api/";
-const BASE_URL = "https://test.overseas.ai/api/"; // test api
+const BASE_URL = "https://overseas.ai/api/";
+// const BASE_URL = "https://test.overseas.ai/api/"; // test api
 
 // Function to make a GET request
 export const loginUsingPassword = async (formData) => {

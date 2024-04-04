@@ -181,6 +181,7 @@ const EditProfile = props => {
           'Profile strength calculated successfully and updated in records'
       ) {
         setGlobalState({...globalState, profileStrength: response?.data});
+        console.log("dgudf", response?.data.profileStrength)
       }
     } catch (error) {
       console.log('NEW', error);

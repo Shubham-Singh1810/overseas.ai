@@ -669,7 +669,7 @@ const CandidateDetailsStep1 = props => {
                 />
                 <Picker.Item
                   label={newTranslation?.married}
-                  value={newTranslation?.married}
+                  value="Married"
                   style={{color: 'gray'}}
                 />
                 <Picker.Item

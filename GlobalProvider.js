@@ -2219,138 +2219,139 @@ export const GlobalStateProvider = ({children}) => {
                 : globalState.selectedLanguage == 'hindi'
                 ? 'अमान्य ईमेल प्रारूप'
                 : 'অবৈধ ইমেল বিন্যাস',
+                
                 pleaseEnterValidEmail:
                 globalState.selectedLanguage == 'english'
                 ? "Please enter valid email"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'कृपया वैध ईमेल दर्ज़ करें'
-                : 'অনুগ্রহ করে আপনার সঠিক মেইল ​​আইডি প্রবেশ করান',
+                : 'অনুগ্রহ করে সঠিক মেইল আইডি প্রদান করুন ',
                 dateOfBirthIsARequiredFeild:
                 globalState.selectedLanguage == 'english'
                 ? "Date of Birth is a required Feild"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'जन्मतिथि एक आवश्यक क्षेत्र है'
-                : 'জন্ম তারিখ একটি প্রয়োজনীয় ফিল্ড',
+                : 'জন্ম তারিখ একটি আবশ্যক ক্ষেত্র ',
                 genderIsRequiredFeild:
                 globalState.selectedLanguage == 'english'
                 ? "Gender is required feild"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'लिंग आवश्यक फ़ील्ड है'
-                : 'লিঙ্গ প্রয়োজন ফিল্ড',
+                : 'লিঙ্গ নির্বাচন একটি  আবশ্যক ক্ষেত্র ',
                 languageSelectIsRequiredFeild:
                 globalState.selectedLanguage == 'english'
                 ? "Language select is required feild"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'भाषा चयन फ़ील्ड आवश्यक है'
-                : 'ভাষা নির্বাচন প্রয়োজন ফিল্ড',
+                : 'ভাষা নির্বাচন একটি  আবশ্যক ক্ষেত্র ',
                 maritalStatusIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "Marital status is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'वैवाहिक स्थिति आवश्यक फ़ील्ड है'
-                : 'বৈবাহিক অবস্থা প্রয়োজন ক্ষেত্র',
+                : 'বৈবাহিক অবস্থা একটি  আবশ্যক ক্ষেত্র ',
                 pleaseSelectDoYouHavePassport:
                 globalState.selectedLanguage == 'english'
                 ? "Please select : Do you have passport ?"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'कृपया चुनें: क्या आपके पास पासपोर्ट है?'
-                : 'অনুগ্রহ করে নির্বাচন করুন: আপনার কি পাসপোর্ট আছে?',
+                : 'আপনার কি পাসপোর্ট আছে? : দয়া করে নির্বাচন করুন ',
                 presentWorkingDepartmentIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "Present working department is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'वर्तमान कार्य विभाग आवश्यक क्षेत्र है'
-                : 'বর্তমান কাজের বিভাগ প্রয়োজনীয় ক্ষেত্র',
+                : 'বর্তমান কাজের  বিভাগ একটি  আবশ্যক ক্ষেত্র ',
                 presentOccupationIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "Present Occupation is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'वर्तमान व्यवसाय आवश्यक क्षेत्र है'
-                : 'বর্তমান পেশা প্রয়োজনীয় ক্ষেত্র',
+                : 'বর্তমান পেশা একটি আবশ্যক ক্ষেত্র ',
                 highestEducationQualificationIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "Highest education qualification is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'उच्चतम शिक्षा योग्यता आवश्यक क्षेत्र है'
-                : 'সর্বোচ্চ শিক্ষাগত যোগ্যতা প্রয়োজন ক্ষেত্র',
+                : 'সর্বোচ্চ শিক্ষাগত যোগ্যতা একটি  আবশ্যক ক্ষেত্র',
                 technicalEducationIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "Technical education is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'तकनीकी शिक्षा आवश्यक क्षेत्र है'
-                : 'কারিগরি শিক্ষার প্রয়োজন ক্ষেত্র',
+                : 'কারিগরি শিক্ষা একটি আবশ্যক ক্ষেত্র',
                 stateIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "State is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'राज्य आवश्यक फ़ील्ड है'
-                : 'রাষ্ট্র প্রয়োজন ক্ষেত্র',
+                : 'রাজ্য নির্বাচন একটি আবশ্যক ক্ষেত্র ',
                 districtIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "District is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'जिला आवश्यक फ़ील्ड है'
-                : 'জেলা প্রয়োজন ক্ষেত্র',
+                : 'জেলা নির্বাচন একটি আবশ্যক ক্ষেত্র ',
                 policeStationIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "Police Station is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पुलिस स्टेशन क्षेत्र आवश्यक है'
-                : 'থানা প্রয়োজন মাঠ',
+                : 'থানা নির্বাচন একটি আবশ্যক ক্ষেত্র',
                 pamchayatMunicipalityIsRequiredField:
                 globalState.selectedLanguage == 'english'
                 ? "Pamchayat/Municipality is required field"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पमचायत/नगर पालिका आवश्यक क्षेत्र है'
-                : 'পঞ্চায়েত/পৌরসভা প্রয়োজনীয় ক্ষেত্র',
+                : 'পঞ্চায়েত/পৌরসভা  নির্বাচন একটি আবশ্যক ক্ষেত্র',
                 pinCodeIsRequiredFieldPleaseWriteValidPinNumber:
                 globalState.selectedLanguage == 'english'
                 ? "Pin code is required field please write valid pin number"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पिन कोड आवश्यक फ़ील्ड है कृपया वैध पिन नंबर लिखें'
-                : 'পিন কোড প্রয়োজন ক্ষেত্র অনুগ্রহ করে বৈধ পিন নম্বর লিখুন',
+                : 'পিনকোড একটি আবশ্যক ক্ষেত্র ,অনুগ্রহ করে  সঠিক পিনকোড প্রদান করুন ',
                 pleaseSelectExperienceType:
                 globalState.selectedLanguage == 'english'
                 ? "Please select experience type"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'कृपया अनुभव प्रकार चुनें'
-                : 'অনুগ্রহ করে অভিজ্ঞতার ধরন নির্বাচন করুন',
+                : 'অনুগ্রহ করে কাজের অভিজ্ঞতার ধরন নির্বাচন করুন',
                 pleaseEnterPresentMonthlyIncome:
                 globalState.selectedLanguage == 'english'
                 ? "Please enter present monthly income"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'कृपया वर्तमान मासिक आय दर्ज करें'
-                : 'বর্তমান মাসিক আয় লিখুন',
+                : 'অনুগ্রহ করে বর্তমান মাসিক আয় প্রদান করুন',
                 pleaseEnterExpectedMonthlyIncome:
                 globalState.selectedLanguage == 'english'
                 ? "Please enter expected monthly income"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'कृपया अपेक्षित मासिक आय दर्ज करें'
-                : 'প্রত্যাশিত মাসিক আয় লিখুন',
+                : 'অনুগ্রহ করে প্রত্যাশিত  মাসিক আয় প্রদান করুন ',
                 pleaseEnterRelocationIntrest:
                 globalState.selectedLanguage == 'english'
-                ? "Please enter relocation intrest"
+                ? "Please enter preferred job location"
                 : globalState.selectedLanguage == 'hindi'
-                ? 'कृपया स्थानांतरण रुचि दर्ज करें'
-                : 'অনুগ্রহ করে স্থানান্তরের আগ্রহ লিখুন',
+                ? 'कृपया पसंदीदा नौकरी स्थान दर्ज करें'
+                : 'অনুগ্রহ করে স্থানান্তর এর মতামত প্রদান করুন ',
                 pleaseEnterYourDetails:
                 globalState.selectedLanguage == 'english'
                 ? "Please enter your details"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'कृपया अपना विवरण दर्ज करें'
-                : 'আপনার বিস্তারিত লিখুন',
+                : 'আপনার বিস্তারিত তথ্য প্রদান করুন',
                 enterDateOfBirth:
                 globalState.selectedLanguage == 'english'
                 ? "Enter Date of Birth*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'जन्म तारीख दर्ज करें*'
-                : 'জন্ম তারিখ লিখুন*',
+                : 'জন্ম তারিখ প্রদান করুন *',
                 selectGender:
                 globalState.selectedLanguage == 'english'
                 ? "Select Gender*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'लिंग चुनें*'
-                : 'লিংগ নির্বাচন*',
+                : 'লিঙ্গ নির্বাচন করুন *',
                 Male:
                 globalState.selectedLanguage == 'english'
                 ? "Male"
@@ -2386,19 +2387,19 @@ export const GlobalStateProvider = ({children}) => {
                 ? "Enter Whatsapp"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'व्हाट्सएप दर्ज करें'
-                : 'হোয়াটসঅ্যাপে প্রবেশ করুন',
+                : 'হোয়াটসআপ নাম্বার প্রদান করুন',
                 enterLanguageKnown:
                 globalState.selectedLanguage == 'english'
                 ? "Enter language known*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'ज्ञात भाषा दर्ज करें*'
-                : 'পরিচিত ভাষা লিখুন*',
+                : 'আপনার জানা ভাষাগুলি নির্বাচন করুন *',
                 selectMaritalStatus:
                 globalState.selectedLanguage == 'english'
                 ? "Select marital status*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'वैवाहिक स्थिति चुनें*'
-                : 'বৈবাহিক অবস্থা নির্বাচন করুন*',
+                : 'বৈবাহিক অবস্থা নির্বাচন করুন *',
                 Married:
                 globalState.selectedLanguage == 'english'
                 ? "Married"
@@ -2416,31 +2417,31 @@ export const GlobalStateProvider = ({children}) => {
                 ? "Select prefered department*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा विभाग चुनें*'
-                : 'পছন্দের বিভাগ নির্বাচন করুন*',
+                : 'পছন্দের  কাজের বিভাগ নির্বাচন করুন *',
                 selectPreferedOccupation:
                 globalState.selectedLanguage == 'english'
                 ? "Select prefered occupation*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा व्यवसाय चुनें*'
-                : 'পছন্দের পেশা নির্বাচন করুন*',
+                : 'পছন্দের পেশা নির্বাচন করুন *',
                 highestEducationQualification:
                 globalState.selectedLanguage == 'english'
                 ? "Highest education qualification*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'उच्चतम शैक्षणिक योग्यता*'
-                : 'সর্বোচ্চ শিক্ষাগত যোগ্যতা*',
+                : 'আপনার সর্বোচ্চ শিক্ষাগত যোগ্যতা প্রদান করুন *',
                 technicalVocationalEducation:
                 globalState.selectedLanguage == 'english'
                 ? "Technical/Vocational Education*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'तकनीकी/व्यावसायिक शिक्षा*'
-                : 'কারিগরি/বৃত্তিমূলক শিক্ষা*',
+                : 'কারিগরী /বৃত্তিমূলক শিক্ষাগত যোগ্যতা প্রদান করুন *',
                 parmanentAddress:
                 globalState.selectedLanguage == 'english'
                 ? "Parmanent Address"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'स्थाई पता'
-                : 'স্থায়ী ঠিকানা',
+                : 'আপনার স্থায়ী ঠিকানা প্রদান করুন ',
                 District:
                 globalState.selectedLanguage == 'english'
                 ? "District"
@@ -2464,37 +2465,37 @@ export const GlobalStateProvider = ({children}) => {
                 ? "Enter Police Station*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पुलिस स्टेशन दर्ज करें*'
-                : 'থানায় প্রবেশ করুন*',
+                : 'আপনার থানার নাম প্রদান করুন *',
                 selectPanchayatMunicipality:
                 globalState.selectedLanguage == 'english'
                 ? "Select Panchayat/Municipality*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पंचायत/नगर पालिका का चयन करें*'
-                : 'পঞ্চায়েত/পৌরসভা নির্বাচন করুন*',
+                : 'আপনার পঞ্চায়েত/পৌরসভার  নাম নির্বাচন  করুন*',
                 enterPanchayatMunicipality:
                 globalState.selectedLanguage == 'english'
                 ? "Enter Panchayat/Municipality*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पंचायत/नगर पालिका दर्ज करें*'
-                : 'পঞ্চায়েত/পৌরসভা লিখুন*',
+                : 'আপনার পঞ্চায়েত/পৌরসভার  নাম প্রদান করুন *',
                 enterVillageWard:
                 globalState.selectedLanguage == 'english'
                 ? "Enter Village/Ward"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'ग्राम/वार्ड दर्ज करें'
-                : 'গ্রাম/ওয়ার্ডে প্রবেশ করুন',
+                : 'আপনার গ্রাম/ওয়ার্ড  এর নাম নির্বাচন করুন *',
                 selectVillageWard:
                 globalState.selectedLanguage == 'english'
                 ? "Select Village/Ward"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'ग्राम/वार्ड का चयन करें'
-                : 'গ্রাম/ওয়ার্ড নির্বাচন করুন',
+                : 'আপনার গ্রাম/ওয়ার্ড  এর নাম প্রদান করুন ',
                 enterPincode:
                 globalState.selectedLanguage == 'english'
                 ? "Enter Pincode*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पिनकोड दर्ज करें*'
-                : 'পিনকোড লিখুন*',
+                : 'পিনকোড প্রদান করুন *',
                 Experience:
                 globalState.selectedLanguage == 'english'
                 ? "Experience"
@@ -2524,67 +2525,96 @@ export const GlobalStateProvider = ({children}) => {
                 ? "Select Experience Type*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'अनुभव प्रकार चुनें*'
-                : 'অভিজ্ঞতার ধরন নির্বাচন করুন*',
+                : 'কাজের অভিজ্ঞতার ধরন নির্বাচন করুন *',
                 jobPreference:
                 globalState.selectedLanguage == 'english'
                 ? "Job Preference"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'नौकरी की प्राथमिकता'
-                : 'চাকরির পছন্দ',
+                : 'পছন্দ মতো কাজ নির্বাচন ',
                 enterPresentMonthlyIncome:
                 globalState.selectedLanguage == 'english'
                 ? "Enter present monthly income"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'वर्तमान मासिक आय दर्ज करें'
-                : 'বর্তমান মাসিক আয় লিখুন',
+                : 'বর্তমান মাসিক আয় প্রদান করুন ',
                 enterExpectedMonthlyIncome:
                 globalState.selectedLanguage == 'english'
                 ? "Enter expected monthly income"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'अपेक्षित मासिक आय दर्ज करें'
-                : 'প্রত্যাশিত মাসিক আয় লিখুন',
+                : 'প্রত্যাশিত মাসিক আয় প্রদান করুন',
                 preferedJobLocation:
                 globalState.selectedLanguage == 'english'
                 ? "Prefered job location"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा नौकरी का स्थान'
-                : 'পছন্দের চাকরির অবস্থান',
+                : 'পছন্দের কাজের জায়গা প্রদান করুন ',
                 referencePersonName:
                 globalState.selectedLanguage == 'english'
                 ? "Reference person name"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ व्यक्ति का नाम'
-                : 'রেফারেন্স ব্যক্তির নাম',
+                : 'নির্দেশক ব্যাক্তির নাম প্রদান করুন ',
                 referencePersonPhoneNumber:
                 globalState.selectedLanguage == 'english'
                 ? "Reference person phone number"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ व्यक्ति फ़ोन नंबर'
-                : 'রেফারেন্স ব্যক্তির ফোন নম্বর',
+                : 'নির্দেশক ব্যাক্তির মোবাইল নম্বর  প্রদান করুন ',
                 referencePersonDistanceFromYou:
                 globalState.selectedLanguage == 'english'
                 ? "Reference person distance from you"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ व्यक्ति आपसे दूरी बनाए रखें'
-                : 'রেফারেন্স ব্যক্তি আপনার থেকে দূরত্ব',
+                : 'নির্দেশক ব্যাক্তির থেকে আপনার দূরত্ব প্রদান করুন  ',
+
+
+
                 statePreference:
                 globalState.selectedLanguage == 'english'
                 ? "State Preference"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'राज्य की प्राथमिकता'
-                : 'রাজ্য পছন্দ',
+                : 'পছন্দের রাজ্যের নাম প্রদান করুন ',
                 countryPreference:
                 globalState.selectedLanguage == 'english'
                 ? "Country Preference"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'देश की प्राथमिकता'
-                : 'দেশের পছন্দ',
+                : 'পছন্দের দেশের  নাম প্রদান করুন ',
                 referenceDetails:
                 globalState.selectedLanguage == 'english'
                 ? "Reference details"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ विवरण'
                 : 'রেফারেন্স বিবরণ',
+                emailNotRegistered:
+                globalState.selectedLanguage == 'english'
+                ? "Email not registered"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'ईमेल पंजीकृत नहीं है'
+                : 'ইমেল নিবন্ধিত না',
+                getOtpOnEmail:
+                globalState.selectedLanguage == 'english'
+                ? "Get otp on email"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'ईमेल पर ओटीपी प्राप्त करें'
+                : 'ইমেইলে otp পান',
+                otpSentSuccessfully:
+                globalState.selectedLanguage == 'english'
+                ? "OTP sent successfully!"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'ओटीपी सफलतापूर्वक भेजा गया'
+                : 'OTP সফলভাবে পাঠানো হয়েছে',
+                messageForUpdateVersion:
+                globalState.selectedLanguage == 'english'
+                ? "There is a new version of the App available on Play store, please update and restart the App"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'प्ले स्टोर पर ऐप का एक नया संस्करण उपलब्ध है, कृपया ऐप को अपडेट करें और पुनः आरंभ करें'
+                : 'প্লে স্টোরে অ্যাপটির একটি নতুন সংস্করণ উপলব্ধ রয়েছে, অনুগ্রহ করে অ্যাপটি আপডেট করুন এবং পুনরায় চালু করুন',
+                
+                
     });
   };
 

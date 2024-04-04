@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // Define your API base URL
-// const BASE_URL = 'https://overseas.ai/api/';
-const BASE_URL = "https://test.overseas.ai/api/"; // test api
+const BASE_URL = 'https://overseas.ai/api/';
+// const BASE_URL = "https://test.overseas.ai/api/"; // test api
 // Function to get job occupation list
 export const getInstituteList = async access_token => { 
   try {

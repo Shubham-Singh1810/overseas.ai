@@ -447,7 +447,7 @@ const CustomDrawerContent = props => {
         <TouchableOpacity
           onPress={() => {
             globalState?.profileStrength?.profileStrength &&
-              navigation.navigate('MyProfile');
+              navigation.navigate('MyProfile', {selectedLanguage: globalState.selectedLanguage});
           }}>
           <View
             style={{flexDirection: 'row', alignItems: 'center', margin: 10}}>
