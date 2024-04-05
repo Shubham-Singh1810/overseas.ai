@@ -100,11 +100,18 @@ const SearchResult = ({value,countryId,countryName,hraId,hraDetails, getListOfSa
               hraDetails:hraDetails
             })
           }>
-          <Text style={styles.jobName}>
+          {/* <Text style={styles.jobName}>
             {value?.jobTitle.length > 30 ? (
               <>{toTitleCase(value?.jobTitle).substring(0, 30)}...</>
             ) : (
               toTitleCase(value?.jobTitle)
+            )}
+          </Text> */}
+          <Text style={styles.jobName}>
+            {value?.jobTitle.length > 30 ? (
+              <>{value?.jobTitle.substring(0, 30)}...</>
+            ) : (
+              value?.jobTitle
             )}
           </Text>
         </Pressable>

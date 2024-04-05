@@ -23,7 +23,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = props => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const {newTranslation, globalState, setGlobalState} = useGlobalState();
+  const {newTranslation,translation, globalState, setGlobalState} = useGlobalState();
   const [formData, setFormData] = useState({
     empPhone: '',
     password: '',
@@ -333,7 +333,7 @@ const Login = props => {
               }}
               onPress={() => setShowPopUp(true)}>
               <Text style={{color: '#5F90CA', fontSize: 12}}>
-                Get OTP on email
+                {newTranslation?.getOtpOnEmail}
               </Text>
             </Pressable>
           </View>
@@ -402,9 +402,9 @@ const Login = props => {
               />
             )}
             {showOtpInp ? (
-              <Button title={newTranslation?.verifyOtp} onPress={verifyOtp} />
+              <Button title={newTranslation?.verifyOTP} onPress={verifyOtp} />
             ) : (
-              <Button title={newTranslation.sendOtp} onPress={getOtpViaEmail} />
+              <Button title={translation?.sendOtp} onPress={getOtpViaEmail} />
             )}
           </View>
         </View>

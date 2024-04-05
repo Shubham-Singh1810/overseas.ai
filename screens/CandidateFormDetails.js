@@ -211,7 +211,6 @@ export default function CandidateFormDetails() {
         label: item.name,
         value: item.id,
       }));
-      console.log(panchayatList);
       setPanchayatList(panchayatList);
     } catch (error) {
       console.log(error);
@@ -502,7 +501,7 @@ export default function CandidateFormDetails() {
       Toast.show({
         type: 'error',
         position: 'bottom',
-        text1: 'Please enter relocation intrest',
+        text1: 'Please enter prefered job location',
         text2: 'Form validation failed',
         visibilityTime: 3000,
       });
@@ -1116,7 +1115,7 @@ export default function CandidateFormDetails() {
               setToggle={setShowPsPopUp}
               inputOption={psList}
               callBackFunck={value => {
-                setFormData({...formData, empPS: value});
+                setFormData({...formData, empPS: value, empPanchayatID:"", empPanchayat:"", empVillage:"", empVillageID:""});
                 getPanchayatById(value);
                 getVillageList(value);
                 setFormDataError({...formDataError, empPS: ''});

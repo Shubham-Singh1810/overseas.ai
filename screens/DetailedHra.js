@@ -29,7 +29,7 @@ const DetailedHra = props => {
   const [params, setParams] = useState(
     props?.route.params.hraDetails || props?.route.params,
   );
-  const [showRatingPop, setShowRattingPop] = useState(false);
+  
   useFocusEffect(
     React.useCallback(() => {
       if (props?.route.params.hraDetails) {
@@ -129,21 +129,13 @@ const DetailedHra = props => {
     }
     return stars;
   };
-  const [userratting, setRatting] = useState(3);
-  const [userReview, setUserReview]= useState("")
-  const handleRattingSelect = rate => {
-    setRatting(rate);
-  };
-  const handleReviewSubmit = async ()=>{
-    console.warn({userratting, userReview})
-    setShowRattingPop(false)
-    setRatting(0)
-  }
+  
+  
   return (
     <>
       <View style={styles.main}>
         <View style={styles.flex}>
-          {/* <Pressable onPress={() => setShowRattingPop(true)}> */}
+          <Pressable onPress={() => props.navigation.navigate('Hra review',{detailedHra:params})}>
             {params?.cmpLogoS3 != 'placeholder/logo.png' ? (
               <Image
                 source={{
@@ -173,7 +165,7 @@ const DetailedHra = props => {
                 }}
               />
             )}
-            {/* <View style={{marginVertical: 2, marginRight: 15}}>
+            <View style={{marginVertical: 2, marginRight: 15}}>
               <Text
                 style={{
                   color: 'black',
@@ -182,14 +174,14 @@ const DetailedHra = props => {
                   fontWeight: '500',
                   textAlign: 'center',
                 }}>
-                Add Review
+               Rate & Review
               </Text>
-            </View> */}
-          {/* </Pressable> */}
+            </View>
+          </Pressable>
 
           <View>
             <View style={[styles.flex, {alignItems: 'center'}]}>
-              <Text style={styles.hraName}>{params?.cmpName}</Text>
+              <Text style={[styles.hraName, {width:"80%"}]}>{params?.cmpName}</Text>
             </View>
             <View style={[styles.flex, {marginLeft: 0, alignItems: 'center'}]}>
               {renderStars(params?.cmpRating)}
@@ -441,85 +433,7 @@ const DetailedHra = props => {
             <WebView source={{uri: params?.cmpFBLink}} style={{flex: 1}} />
           </View>
         </Modal>
-        <Modal transparent={true} visible={showRatingPop} animationType="slide">
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0,0,0,0.5)',
-            }}>
-            <View
-              style={{
-                width: 330,
-                backgroundColor: 'white',
-                borderRadius: 5,
-                elevation: 1,
-              }}>
-              <View
-                style={{
-                  borderBottomColor: '#ccc',
-                  borderBottomWidth: 1,
-                  paddingHorizontal: 20,
-                  paddingVertical: 20,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                <Text style={{fontWeight: '500', fontSize: 20, color: 'black'}}>
-                  Rate HRA
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    setShowRattingPop(false);
-                  }}>
-                  <Image source={require('../images/close.png')} />
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  padding: 5,
-                  paddingHorizontal: 25,
-                }}>
-                {[1, 2, 3, 4, 5].map((v, i) => {
-                  return (
-                    <Pressable onPress={() => handleRattingSelect(i + 1)}>
-                      <Image
-                        source={
-                          userratting >= i + 1
-                            ? require('../images/starIcon.png')
-                            : require('../images/whiteStar.png')
-                        }
-                        style={{height: 40, width: 40, resizeMode: 'contain'}}
-                      />
-                    </Pressable>
-                  );
-                })}
-              </View>
-              <View style={{margin: 10, marginBottom: 25}}>
-                <TextInput
-                  placeholder="Write a review"
-                  multiline={true}
-                  numberOfLines={3}
-                  textAlignVertical="top"
-                  placeholderTextColor="gray"
-                  onChangeText={(text)=>setUserReview(text)}
-                  style={{
-                    borderWidth: 1,
-                    paddingLeft: 10,
-                    color: 'black',
-                    marginBottom: 15,
-                    borderColor: 'gray',
-                    borderRadius: 3,
-                  }}
-                />
-                <Button title="Submit" onPress={handleReviewSubmit}/>
-              </View>
-            </View>
-          </View>
-        </Modal>
+        
       </View>
       <Toast ref={ref => Toast.setRef(ref)} />
     </>
@@ -543,6 +457,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#000',
     marginRight: 3,
+    // width:"80%"
   },
   countryName: {
     fontSize: 12,

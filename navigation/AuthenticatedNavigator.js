@@ -40,31 +40,38 @@ import GetCourseById from '../screens/GetCourseById';
 import AppliedCourseList from '../screens/AppliedCourseList';
 import MyCertificate from '../screens/MyCertificate';
 import JobDetailedScreen from '../screens/JobDetailedScreen';
-import React, { useEffect } from 'react';
-import {getProfileStrength, getNotification} from "../services/user.service";
+import React, {useEffect} from 'react';
+import {getProfileStrength, getNotification} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExperienceScreen from '../screens/ExperienceScreen';
 import {useFocusEffect} from '@react-navigation/native';
+import ReviewForHra from '../screens/ReviewForHra';
+import ReviewForInstitute from '../screens/ReviewForInstitute';
 
 const Drawer = createDrawerNavigator();
 
 const AuthenticatedNavigator = () => {
-  const {translation,newTranslation, globalState, setGlobalState} = useGlobalState();
-  const getProfileStrengthFunc = async() => {
+  const {translation, newTranslation, globalState, setGlobalState} =
+    useGlobalState();
+  const getProfileStrengthFunc = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getProfileStrength(JSON.parse(user).access_token);
-      if(response?.data.msg=="Some fields are empty" || response?.data.msg=="Profile strength calculated successfully and updated in records"){
-        setGlobalState({...globalState, profileStrength:response?.data});
+      if (
+        response?.data.msg == 'Some fields are empty' ||
+        response?.data.msg ==
+          'Profile strength calculated successfully and updated in records'
+      ) {
+        setGlobalState({...globalState, profileStrength: response?.data});
       }
     } catch (error) {
-      console.log("NEW", error)
+      console.log('NEW', error);
     }
   };
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     getProfileStrengthFunc();
-  },[])
+  }, []);
 
   return (
     <NavigationContainer>
@@ -79,10 +86,14 @@ const AuthenticatedNavigator = () => {
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
-        <Drawer.Screen name="MyProfile" component={MyProfile} options={({navigation, route}) => ({
+        <Drawer.Screen
+          name="MyProfile"
+          component={MyProfile}
+          options={({navigation, route}) => ({
             title: newTranslation?.myProfile,
             headerRight: () => <RightNav navigation={navigation} />,
-          })}/>
+          })}
+        />
         <Drawer.Screen
           name="Upload Video"
           component={VideoScreen}
@@ -176,7 +187,7 @@ const AuthenticatedNavigator = () => {
           component={MedicalTest}
           options={({navigation, route}) => ({
             title: 'Apply Medical Test',
-            headerShown: false, 
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -185,7 +196,7 @@ const AuthenticatedNavigator = () => {
           component={ApplyPcc}
           options={({navigation, route}) => ({
             title: 'Apply PCC',
-            headerShown: false, 
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -194,7 +205,7 @@ const AuthenticatedNavigator = () => {
           component={ApplyPcc}
           options={({navigation, route}) => ({
             title: 'Apply Passport',
-            headerShown: false, 
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -218,8 +229,8 @@ const AuthenticatedNavigator = () => {
           name="Contact Us"
           component={Help}
           options={({navigation, route}) => ({
-            title: "",
-            headerShown: false, 
+            title: '',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -303,7 +314,22 @@ const AuthenticatedNavigator = () => {
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
-
+        <Drawer.Screen
+          name="Hra review"
+          component={ReviewForHra}
+          options={({navigation, route}) => ({
+            title: "HRA Reviews",
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Institute review"
+          component={ReviewForInstitute}
+          options={({navigation, route}) => ({
+            title: "Institute Reviews",
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
         {/* Add more screens as needed */}
       </Drawer.Navigator>
     </NavigationContainer>

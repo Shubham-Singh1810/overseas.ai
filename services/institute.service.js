@@ -100,3 +100,34 @@ export const getListOfAppliedCourse = async (access_token) => {
     throw error;
   }
 };
+export const getReviewOFInstitute = async (instituteId, access_token) => {
+  try {
+    const response = await axios.post(
+      BASE_URL + 'get-rate-review-institute',
+      {instituteId},
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+export const addReviewForInstitute = async (formData, access_token) => {
+  try {
+    const response = await axios.post(BASE_URL + 'rate-review-institute', formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error.response.data.msg);
+    throw error;
+  }
+};
