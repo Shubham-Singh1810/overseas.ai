@@ -143,6 +143,7 @@ const ReviewForInstitute = props => {
       );
       setReviewList(response?.data?.allReviews);
       setAverageRating(response?.data?.averageRating);
+      renderAverageStars(response?.data?.averageRating)
     } catch (error) {
       console.log(error);
     }

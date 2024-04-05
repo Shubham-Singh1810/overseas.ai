@@ -95,6 +95,15 @@ const ReviewForHra = props => {
   };
   const handleReviewSubmit = async () => {
     let user = await AsyncStorage.getItem('user');
+    if(userratting==0){
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Please add rating',
+        visibilityTime: 3000,
+      });
+      return
+    }
     try {
       let response = await addReviewForHra(
         {
@@ -139,6 +148,7 @@ const ReviewForHra = props => {
       let response = await getReviewOfHra(cmpId, JSON.parse(user).access_token);
       setReviewList(response?.data?.allReviews);
       setAverageRating(response?.data?.averageRating);
+      renderAverageStars(response?.data?.averageRating)
     } catch (error) {
       console.log(error);
     }
@@ -148,6 +158,7 @@ const ReviewForHra = props => {
       getReviewOFHra(props?.route?.params?.detailedHra?.id);
     }, [props?.route]),
   );
+
   return (
     <View style={styles.main}>
       <View
