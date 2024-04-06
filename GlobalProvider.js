@@ -1240,7 +1240,7 @@ export const GlobalStateProvider = ({children}) => {
           : 'আপনার স্বপ্নের কাজ খুঁজুন!',
       selectOccupation:
         globalState.selectedLanguage == 'english'
-          ? 'Prefered Occupation'
+          ? 'Preferred Occupation'
           : globalState.selectedLanguage == 'hindi'
           ? 'विभाग चुनें'
           : 'পেশা নির্বাচন করুন',
@@ -1319,14 +1319,14 @@ export const GlobalStateProvider = ({children}) => {
 
       presentWorkingDepertment:
         globalState.selectedLanguage == 'english'
-          ? 'Prefered Working Department'
+          ? 'Preferred Working Department'
           : globalState.selectedLanguage == 'hindi'
           ? 'पसंदीदा कार्य विभाग'
           : 'পছন্দের ওয়ার্কিং ডিপার্টমেন্ট',
 
       presentOccupation:
         globalState.selectedLanguage == 'english'
-          ? 'Prefered Occupation'
+          ? 'Preferred Occupation'
           : globalState.selectedLanguage == 'hindi'
           ? 'पसंदीदा व्यवसाय'
           : 'পছন্দের পেশা',
@@ -2414,13 +2414,13 @@ export const GlobalStateProvider = ({children}) => {
                 : 'অবিবাহিত',
                 selectPreferedDepartment:
                 globalState.selectedLanguage == 'english'
-                ? "Select prefered department*"
+                ? "Select preferred department*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा विभाग चुनें*'
                 : 'পছন্দের  কাজের বিভাগ নির্বাচন করুন *',
                 selectPreferedOccupation:
                 globalState.selectedLanguage == 'english'
-                ? "Select prefered occupation*"
+                ? "Select preferred occupation*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा व्यवसाय चुनें*'
                 : 'পছন্দের পেশা নির্বাচন করুন *',
@@ -2546,7 +2546,7 @@ export const GlobalStateProvider = ({children}) => {
                 : 'প্রত্যাশিত মাসিক আয় প্রদান করুন',
                 preferedJobLocation:
                 globalState.selectedLanguage == 'english'
-                ? "Prefered Job Location"
+                ? "Preferred Job Location"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा नौकरी का स्थान'
                 : 'পছন্দের কাজের জায়গা প্রদান করুন ',

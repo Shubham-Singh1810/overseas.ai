@@ -50,7 +50,7 @@ const CandidateVideoGola = ({value, index}) => {
               }}
               onPress={() => setShowVideoPlayer(false)}>
                 <Text style={{fontSize: 16,fontWeight:"500", color: 'black'}}>
-              You are listing to {value?.empName} 
+              You are listening to {value?.empName} 
             </Text>
               <Image source={require('../images/close.png')} />
               

@@ -303,6 +303,7 @@ const ExperienceScreen = (props) => {
       stateName: value.stateId,
       certificateImage: '',
     });
+    getSkillListByOccuId(value.jobProfileId)
   };
   const emptyField = () => {
     setExperienceForm({
@@ -618,7 +619,6 @@ const ExperienceScreen = (props) => {
                       });
                     }}>
                     <Picker.Item
-                      // label="Select Working Department"
                       label={
                         experienceForm?.jobProfile
                           ? experienceForm.jobProfile
@@ -627,7 +627,7 @@ const ExperienceScreen = (props) => {
                       value={editExtraField.jobProfileId}
                       style={{color: 'gray'}}
                     />
-                    {occupations.map((v, i) => {
+                    {occupations?.map((v, i) => {
                       return (
                         <Picker.Item
                           label={v.occupation}
@@ -639,7 +639,6 @@ const ExperienceScreen = (props) => {
                   </Picker>
                 </View>
               )}
-
               {experienceForm.jobProfile != '' && (
                 <View style={styles.picker}>
                   <Picker
@@ -659,7 +658,7 @@ const ExperienceScreen = (props) => {
                       value={editExtraField.jobOccupationId}
                       style={{color: 'gray'}}
                     />
-                    {skills.map((v, i) => {
+                    {skills?.map((v, i) => {
                       return (
                         <Picker.Item
                           label={v?.skill}
