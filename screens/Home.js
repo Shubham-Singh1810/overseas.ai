@@ -22,7 +22,7 @@ import {
   getCountries,
   getCountriesForJobs,
   getHomeData,
-  getNewsFeedData
+  getNewsFeedData,
 } from '../services/info.service';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -109,11 +109,11 @@ const Home = props => {
   const [courseFeed, setCourseFeed] = useState([]);
   const [homeData, setHomeData] = useState(null);
   const [hraFeed, setHraFeed] = useState([]);
-  const[newsData, setNewsData]=useState([])
+  const [newsData, setNewsData] = useState([]);
   const handleGetNews = async () => {
     try {
-      let response = await getNewsFeedData(); 
-      setNewsData(response?.data?.newsData)
+      let response = await getNewsFeedData();
+      setNewsData(response?.data?.newsData);
     } catch (error) {
       console.log(error);
     }
@@ -202,7 +202,7 @@ const Home = props => {
       getCourseListFunc();
       getHomeDataFunc();
       getHraFunc();
-      handleGetNews()
+      handleGetNews();
     }, []),
   );
   useFocusEffect(
@@ -513,6 +513,42 @@ const Home = props => {
                     if (v?.dataType == 'news') {
                       return <NewsFeedComponent value={v} key={i} />;
                     }
+                    if (i == 9) {
+                      return (
+                        <View style={styles.jobsList}>
+                          <Text style={styles.heading}>
+                            {translation.hereFromOther}
+                          </Text>
+                          <ScrollView horizontal={true}>
+                            {loaderCandidate ? (
+                              <View
+                                style={{
+                                  height: 130,
+                                  width: 100,
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                }}>
+                                <ActivityIndicator />
+                              </View>
+                            ) : (
+                              <>
+                                {homeData?.afterDepartureVideos.map((v, i) => {
+                                  return (
+                                    <CandidateVideoGola value={v} index={i} />
+                                  );
+                                })}
+                                {homeData?.beforeDepartureVideo.map((v, i) => {
+                                  return (
+                                    <CandidateVideoGola value={v} index={i} />
+                                  );
+                                })}
+                              </>
+                            )}
+                          </ScrollView>
+                        </View>
+                      );
+                    }
                     if (v?.dataType == 'course') {
                       return (
                         <View>
@@ -544,40 +580,12 @@ const Home = props => {
                       );
                     }
                   })}
+
                   {showPageLoader && (
                     <View style={{marginVertical: 50}}>
                       <ActivityIndicator size="large" />
                     </View>
                   )}
-
-                  <View style={styles.jobsList}>
-                    <Text style={styles.heading}>
-                      {translation.hereFromOther}
-                    </Text>
-                    <ScrollView horizontal={true}>
-                      {loaderCandidate ? (
-                        <View
-                          style={{
-                            height: 130,
-                            width: 100,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}>
-                          <ActivityIndicator />
-                        </View>
-                      ) : (
-                        <>
-                          {homeData?.afterDepartureVideos.map((v, i) => {
-                            return <CandidateVideoGola value={v} index={i} />;
-                          })}
-                          {homeData?.beforeDepartureVideo.map((v, i) => {
-                            return <CandidateVideoGola value={v} index={i} />;
-                          })}
-                        </>
-                      )}
-                    </ScrollView>
-                  </View>
                 </View>
               )}
             </ScrollView>

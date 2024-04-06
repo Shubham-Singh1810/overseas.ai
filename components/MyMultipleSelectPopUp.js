@@ -98,7 +98,7 @@ const MyMultipleSelectPopUp = ({
               <TextInput
                 placeholder="Search"
                 placeholderTextColor="gray"
-                style={{fontSize: 15, padding: 5, color: 'black'}}
+                style={{fontSize: 15, padding: 5, color: 'black', width:"70%"}}
                 onChangeText={text => handleSearch(text)}
                 value={searchKey}
               />
