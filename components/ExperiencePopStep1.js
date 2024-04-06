@@ -84,7 +84,7 @@ const ExperiencePopStep1 = ({
         text1: 'Company name is a required field',
         visibilityTime: 3000,
       });
-      newErrors.experinceCompanyName = 'Company name is a required field';
+      newErrors.experinceCompanyName = 'Company/Organisation name is a required field';
       result = false;
     }
     if (experienceForm.jobProfile === '') {
@@ -153,10 +153,10 @@ const ExperiencePopStep1 = ({
         if (response?.data?.msg == 'Experience Successfully Added.') {
           Toast.show({
             type: 'success',
-            position: 'bottom',
-            text1: 'Experience successfully added.',
-            // text2:" Feel free to enrich your profile by adding more experiences if you desire.",
-            visibilityTime: 3000,
+            position: 'top',
+            text1: 'Experience successfully added, You can add more',
+            // text2:"Feel free to enrich your profile by adding more experiences if you desire.",
+            visibilityTime: 10000,
           });
           setExperienceForm({
             experinceCompanyName: '',
@@ -219,8 +219,8 @@ const ExperiencePopStep1 = ({
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{fontWeight: '500', fontSize: 20}}>
-              Experience Detailes
+            <Text style={{fontWeight: '500', fontSize: 20, color:"gray"}}>
+              Experience Details
             </Text>
             <Pressable
               onPress={() => {
@@ -231,7 +231,7 @@ const ExperiencePopStep1 = ({
           </View>
           <View style={{margin: 20, marginTop: 30}}>
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Enter company name</Text>
+              <Text style={styles.label}>Enter Company/Organisation Name</Text>
               <TextInput
                 style={styles.input}
                 onChangeText={text => {

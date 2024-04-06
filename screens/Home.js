@@ -478,8 +478,7 @@ const Home = props => {
                       {newTranslation?.discoverFreshFeedDelightsNow}
                     </Text>
                   </View>
-
-                  {dynamicFeedArr?.slice(0, pageNo * 10).map((v, i) => {
+                  {dynamicFeedArr?.slice(0, 5).map((v, i) => {
                     if (v?.dataType == 'hra') {
                       return (
                         <View>
@@ -513,8 +512,38 @@ const Home = props => {
                     if (v?.dataType == 'news') {
                       return <NewsFeedComponent value={v} key={i} />;
                     }
-                    if (i == 9) {
+                    if (v?.dataType == 'course') {
                       return (
+                        <View>
+                          <Text
+                            style={{
+                              position: 'relative',
+                              zIndex: 1,
+                              padding: 5,
+                              marginLeft: 8,
+                              top: 40,
+                              backgroundColor: '#28a745',
+                              fontSize: 10,
+                              color: '#fff',
+                              borderRadius: 4,
+                              width: 80,
+                              textAlign: 'center',
+                            }}>
+                            Get Certified
+                          </Text>
+                          <CourseGola value={v} props={props} backTo="Home" />
+                        </View>
+                      );
+                    }
+                    if (v?.dataType == 'institute') {
+                      return (
+                        <View>
+                          <InstituteFeedGola value={v} props={props} />
+                        </View>
+                      );
+                    }
+                    
+                  })}
                         <View style={styles.jobsList}>
                           <Text style={styles.heading}>
                             {translation.hereFromOther}
@@ -547,7 +576,40 @@ const Home = props => {
                             )}
                           </ScrollView>
                         </View>
+                      
+                  {dynamicFeedArr?.slice(5, pageNo * 10).map((v, i) => {
+                    if (v?.dataType == 'hra') {
+                      return (
+                        <View>
+                          <HraGolaFeed value={v} key={i} props={props} />
+                        </View>
                       );
+                    }
+                    if (v?.dataType == 'job') {
+                      return (
+                        <View>
+                          <Text
+                            style={{
+                              position: 'relative',
+                              zIndex: 1,
+                              padding: 5,
+                              marginLeft: 8,
+                              top: 12,
+                              backgroundColor: 'maroon',
+                              fontSize: 10,
+                              color: '#fff',
+                              borderRadius: 4,
+                              width: 60,
+                              textAlign: 'center',
+                            }}>
+                            Job Alert
+                          </Text>
+                          <SearchResult backTo="Home" value={v} props={props} />
+                        </View>
+                      );
+                    }
+                    if (v?.dataType == 'news') {
+                      return <NewsFeedComponent value={v} key={i} />;
                     }
                     if (v?.dataType == 'course') {
                       return (
@@ -579,6 +641,7 @@ const Home = props => {
                         </View>
                       );
                     }
+                    
                   })}
 
                   {showPageLoader && (

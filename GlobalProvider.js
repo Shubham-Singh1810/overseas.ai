@@ -1240,7 +1240,7 @@ export const GlobalStateProvider = ({children}) => {
           : 'আপনার স্বপ্নের কাজ খুঁজুন!',
       selectOccupation:
         globalState.selectedLanguage == 'english'
-          ? 'Preferred Occupation'
+          ? 'Preferred Job Occupation'
           : globalState.selectedLanguage == 'hindi'
           ? 'विभाग चुनें'
           : 'পেশা নির্বাচন করুন',
@@ -1326,7 +1326,7 @@ export const GlobalStateProvider = ({children}) => {
 
       presentOccupation:
         globalState.selectedLanguage == 'english'
-          ? 'Preferred Occupation'
+          ? 'Preferred Working Occupation'
           : globalState.selectedLanguage == 'hindi'
           ? 'पसंदीदा व्यवसाय'
           : 'পছন্দের পেশা',
@@ -2414,13 +2414,13 @@ export const GlobalStateProvider = ({children}) => {
                 : 'অবিবাহিত',
                 selectPreferedDepartment:
                 globalState.selectedLanguage == 'english'
-                ? "Select preferred department*"
+                ? "Select Preferred Working Department*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा विभाग चुनें*'
                 : 'পছন্দের  কাজের বিভাগ নির্বাচন করুন *',
                 selectPreferedOccupation:
                 globalState.selectedLanguage == 'english'
-                ? "Select preferred occupation*"
+                ? "Select Preferred Working Occupation*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा व्यवसाय चुनें*'
                 : 'পছন্দের পেশা নির্বাচন করুন *',
