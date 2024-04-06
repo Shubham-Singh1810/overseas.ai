@@ -589,7 +589,8 @@ const ExperienceScreen = (props) => {
               <TextInput
                 placeholder={newTranslation?.companyName}
                 placeholderTextColor="gray"
-                style={styles.input}
+                // style={styles.input}
+                style={[styles.input, addForm == 'Edit' && {backgroundColor:"rgba(200, 200, 200, 0.4)"}]}
                 value={experienceForm.experinceCompanyName}
                 editable={addForm == 'Edit' ? false : true}
                 onChangeText={text =>
@@ -603,7 +604,7 @@ const ExperienceScreen = (props) => {
                 <TextInput
                   editable={false}
                   placeholderTextColor="gray"
-                  style={styles.input}
+                  style={[styles.input, {backgroundColor:"rgba(200, 200, 200, 0.4)"}]}
                   value={editExtraField.viewJobProfile}></TextInput>
               ) : (
                 <View style={styles.picker}>
@@ -674,7 +675,7 @@ const ExperienceScreen = (props) => {
                 <TextInput
                   editable={false}
                   placeholderTextColor="gray"
-                  style={styles.input}
+                  style={[styles.input ,{backgroundColor:"rgba(200, 200, 200, 0.4)"}]}
                   value={
                     experienceForm.experienceType == 'national'
                       ? 'Inside India'
