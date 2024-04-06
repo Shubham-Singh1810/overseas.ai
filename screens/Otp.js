@@ -149,7 +149,7 @@ const Otp = props => {
   return (
     <View style={styles.main}>
       <View>
-        <Text style={{color:"black",fontWeight:"400", marginBottom:20, textAlign:"center"}}>Otp has been sent to your{"\n"}{tempUser?.empEmail ? tempUser?.empEmail: "Phone Number"}</Text>
+        <Text style={{color:"black",fontWeight:"400", marginBottom:20, textAlign:"center"}}>OTP has been sent to your{"\n"}{tempUser?.empEmail ? tempUser?.empEmail: "Phone Number"}</Text>
         <Text style={styles.heading}>{newTranslation?.enterOTP}</Text>
       </View>
       {loading ? (

@@ -170,7 +170,8 @@ const ReviewForInstitute = props => {
           {renderAverageStars(averageRating)}
         </View>
       </View>
-
+      {reviewList?.length==0 && <Text style={{color:"gray"}}>
+No reviews available. You're welcome to be the first to share your thoughts! Feel free to initiate the conversation with your insights.</Text>}
       <ScrollView>
         {reviewList?.map((v, i) => {
           return (
@@ -186,7 +187,7 @@ const ReviewForInstitute = props => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text>{v?.reviewerName[0]}</Text>
+                  <Text style={{color:"white"}}>{v?.reviewerName[0]}</Text>
                 </View>
                 <Text style={{color: 'black', fontSize: 16, marginLeft: 15}}>
                 {v?.reviewerName}
@@ -208,7 +209,7 @@ const ReviewForInstitute = props => {
       </ScrollView>
       <View style={{marginTop: 20, marginBottom: 10}}>
         <Button
-          title="Rate"
+          title="Rate now"
           color="#035292"
           onPress={() => setShowRattingPop(true)}
         />

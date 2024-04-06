@@ -555,10 +555,10 @@ export const GlobalStateProvider = ({children}) => {
           : 'মোবাইল নম্বর 10 সংখ্যার হতে হবে',
       passwordMustBeAtLeast6Characters:
         globalState.selectedLanguage == 'english'
-          ? 'Password must be at least 6 characters'
+          ? 'Password must be at least 8 characters'
           : globalState.selectedLanguage == 'hindi'
-          ? 'पासवर्ड कम से कम 6 अंकों का होना चाहिए'
-          : 'পাসওয়ার্ড কমপক্ষে 6 অক্ষরের হতে হবে',
+          ? 'पासवर्ड कम से कम 8 अंकों का होना चाहिए'
+          : 'পাসওয়ার্ড কমপক্ষে 8 অক্ষরের হতে হবে',
       invalidCredentials:
         globalState.selectedLanguage == 'english'
           ? 'Invalid credentials'
@@ -2426,7 +2426,7 @@ export const GlobalStateProvider = ({children}) => {
                 : 'পছন্দের পেশা নির্বাচন করুন *',
                 highestEducationQualification:
                 globalState.selectedLanguage == 'english'
-                ? "Highest education qualification*"
+                ? "Highest Education Qualification*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'उच्चतम शैक्षणिक योग्यता*'
                 : 'আপনার সর্বোচ্চ শিক্ষাগত যোগ্যতা প্রদান করুন *',
@@ -2546,7 +2546,7 @@ export const GlobalStateProvider = ({children}) => {
                 : 'প্রত্যাশিত মাসিক আয় প্রদান করুন',
                 preferedJobLocation:
                 globalState.selectedLanguage == 'english'
-                ? "Prefered job location"
+                ? "Prefered Job Location"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'पसंदीदा नौकरी का स्थान'
                 : 'পছন্দের কাজের জায়গা প্রদান করুন ',
@@ -2564,7 +2564,7 @@ export const GlobalStateProvider = ({children}) => {
                 : 'নির্দেশক ব্যাক্তির মোবাইল নম্বর  প্রদান করুন ',
                 referencePersonDistanceFromYou:
                 globalState.selectedLanguage == 'english'
-                ? "Reference person distance from you"
+                ? "Reference Person Distance From You"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ व्यक्ति आपसे दूरी बनाए रखें'
                 : 'নির্দেশক ব্যাক্তির থেকে আপনার দূরত্ব প্রদান করুন  ',

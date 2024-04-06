@@ -385,7 +385,7 @@ const MyProfile = props => {
           </View>
         </ScrollView>
         <Text style={{textAlign: 'center', padding: 10, color: 'gray'}}>
-          Version 2.0.1
+          Version 2.0.3
         </Text>
       </View>
       <Modal transparent={true} visible={showLogOutPopUp} animationType="slide">

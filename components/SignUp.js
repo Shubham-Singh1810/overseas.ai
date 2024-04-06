@@ -102,7 +102,7 @@ const SignUp = props => {
     }
     
     // Validate password
-    if (formData.password.length < 6) {
+    if (formData.password.length < 8) {
       newErrors.password = newTranslation?.passwordMustBeAtLeast6Characters;
       valid = false;
     } else {

@@ -503,7 +503,7 @@ const CustomDrawerContent = props => {
         </View>
         {renderNavItem()}
         {/* Normal text in the drawer */}
-        <Text style={styles.version}>App Version:v1.4.8</Text>
+        <Text style={styles.version}>App Version:v2.0.3</Text>
       </DrawerContentScrollView>
       <Modal transparent={false} visible={showModal} animationType="slide">
         <View

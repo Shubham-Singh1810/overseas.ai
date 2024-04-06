@@ -118,7 +118,7 @@ const GetInstituteById = props => {
           <View style={[styles.flex, {alignItems: 'center', width: 200}]}>
             <Text style={styles.hraName}>{params?.instituteName}</Text>
           </View>
-          <View style={{flexDirection: 'row'}}>{renderStars(3)}</View>
+          {/* <View style={{flexDirection: 'row'}}>{renderStars(3)}</View> */}
           <View style={[styles.flex, {alignItems: 'center'}]}>
             <Text style={styles.countryName}>{params?.phone}</Text>
           </View>

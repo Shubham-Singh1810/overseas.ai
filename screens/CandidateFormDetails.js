@@ -1280,14 +1280,14 @@ export default function CandidateFormDetails() {
             ]}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
-                value=""
+                value="Yes"
                 status={
-                  formData.empInternationMigrationExp === ''
+                  formData.empInternationMigrationExp === 'Yes'
                     ? 'checked'
                     : 'unchecked'
                 }
                 onPress={() => {
-                  setFormData({...formData, empInternationMigrationExp: ''});
+                  setFormData({...formData, empInternationMigrationExp: 'Yes'});
                   setShowExperiencePopUp(true);
                   setExperienceNome('');
                   setFormDataError({
