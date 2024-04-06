@@ -2336,13 +2336,13 @@ export const GlobalStateProvider = ({children}) => {
                 : 'অনুগ্রহ করে স্থানান্তর এর মতামত প্রদান করুন ',
                 pleaseEnterYourDetails:
                 globalState.selectedLanguage == 'english'
-                ? "Please enter your details"
+                ? "Please Enter Your Details"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'कृपया अपना विवरण दर्ज करें'
                 : 'আপনার বিস্তারিত তথ্য প্রদান করুন',
                 enterDateOfBirth:
                 globalState.selectedLanguage == 'english'
-                ? "Enter Date of Birth*"
+                ? "Enter Date Of Birth*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'जन्म तारीख दर्ज करें*'
                 : 'জন্ম তারিখ প্রদান করুন *',
@@ -2390,13 +2390,13 @@ export const GlobalStateProvider = ({children}) => {
                 : 'হোয়াটসআপ নাম্বার প্রদান করুন',
                 enterLanguageKnown:
                 globalState.selectedLanguage == 'english'
-                ? "Enter language known*"
+                ? "Enter Language Known*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'ज्ञात भाषा दर्ज करें*'
                 : 'আপনার জানা ভাষাগুলি নির্বাচন করুন *',
                 selectMaritalStatus:
                 globalState.selectedLanguage == 'english'
-                ? "Select marital status*"
+                ? "Select Marital Status*"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'वैवाहिक स्थिति चुनें*'
                 : 'বৈবাহিক অবস্থা নির্বাচন করুন *',
@@ -2534,13 +2534,13 @@ export const GlobalStateProvider = ({children}) => {
                 : 'পছন্দ মতো কাজ নির্বাচন ',
                 enterPresentMonthlyIncome:
                 globalState.selectedLanguage == 'english'
-                ? "Enter present monthly income"
+                ? "Enter Present Monthly Income"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'वर्तमान मासिक आय दर्ज करें'
                 : 'বর্তমান মাসিক আয় প্রদান করুন ',
                 enterExpectedMonthlyIncome:
                 globalState.selectedLanguage == 'english'
-                ? "Enter expected monthly income"
+                ? "Enter Expected Monthly Income"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'अपेक्षित मासिक आय दर्ज करें'
                 : 'প্রত্যাশিত মাসিক আয় প্রদান করুন',
@@ -2552,13 +2552,13 @@ export const GlobalStateProvider = ({children}) => {
                 : 'পছন্দের কাজের জায়গা প্রদান করুন ',
                 referencePersonName:
                 globalState.selectedLanguage == 'english'
-                ? "Reference person name"
+                ? "Reference Person Name"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ व्यक्ति का नाम'
                 : 'নির্দেশক ব্যাক্তির নাম প্রদান করুন ',
                 referencePersonPhoneNumber:
                 globalState.selectedLanguage == 'english'
-                ? "Reference person phone number"
+                ? "Reference Person Phone Number"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ व्यक्ति फ़ोन नंबर'
                 : 'নির্দেশক ব্যাক্তির মোবাইল নম্বর  প্রদান করুন ',
@@ -2585,7 +2585,7 @@ export const GlobalStateProvider = ({children}) => {
                 : 'পছন্দের দেশের  নাম প্রদান করুন ',
                 referenceDetails:
                 globalState.selectedLanguage == 'english'
-                ? "Reference details"
+                ? "Reference Details"
                 : globalState.selectedLanguage == 'hindi'
                 ? 'संदर्भ विवरण'
                 : 'রেফারেন্স বিবরণ',

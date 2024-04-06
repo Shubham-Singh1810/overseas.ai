@@ -154,9 +154,9 @@ const ExperiencePopStep1 = ({
           Toast.show({
             type: 'success',
             position: 'top',
-            text1: 'Experience successfully added, You can add more',
+            text1: 'Experience added successfully, You can add more',
             // text2:"Feel free to enrich your profile by adding more experiences if you desire.",
-            visibilityTime: 10000,
+            visibilityTime: 3000,
           });
           setExperienceForm({
             experinceCompanyName: '',
@@ -169,7 +169,9 @@ const ExperiencePopStep1 = ({
             stateName: '',
             certificateImage: '',
           });
-          
+          setTimeout(()=>{
+            setShowExperiencePopUp(false);
+          },2000)
         } else {
           Toast.show({
             type: 'error', // 'success', 'error', 'info', or any custom type you define
