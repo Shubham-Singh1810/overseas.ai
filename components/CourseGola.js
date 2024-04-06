@@ -38,7 +38,7 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
       });
     }
   };
-  const {newTranslation} = useGlobalState();
+  const {newTranslation, translation} = useGlobalState();
   return (
     <View style={styles.main}>
       <Text
@@ -48,7 +48,7 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
           fontSize: 12,
           marginVertical: 3,
         }}>
-        {newTranslation?.submitTill} : {value?.submission_date}
+        {newTranslation?.applyBefore} : {value?.submission_date}
       </Text>
       <View
         style={{
@@ -144,7 +144,7 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
                 backTo: backTo,
               })
             }>
-            {newTranslation?.learnMore}
+            {translation?.readDetails}
           </Text>
         </Pressable>
       </View>

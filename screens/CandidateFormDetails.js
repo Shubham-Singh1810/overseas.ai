@@ -251,7 +251,6 @@ export default function CandidateFormDetails() {
         label: item.name,
         value: item.name,
       }));
-      console.log('ewwjh', country);
       setCountryList(country);
     } catch (error) {}
   };
@@ -1045,7 +1044,7 @@ export default function CandidateFormDetails() {
             </Text>
           </Pressable>
           <Text style={styles.errorText}>{formDataError.empState}</Text>
-          <MySingleSelectPopUp
+          {stateList?.length>0 && <MySingleSelectPopUp
             title="Select State"
             toggle={showStatePopUp}
             showSearch={true}
@@ -1056,7 +1055,8 @@ export default function CandidateFormDetails() {
               setFormData({...formData, empState: value});
               getDistrictListFunc(value);
             }}
-          />
+          />}
+          
         </View>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>{newTranslation.District}*</Text>
@@ -1608,8 +1608,8 @@ export default function CandidateFormDetails() {
           formData.empInternationMigrationExp == '' ? true : false
         }
       />
-      <MyMultipleSelectPopUp
-        title="Select relocation state"
+      {stateListforPref?.length>0 && <MyMultipleSelectPopUp
+        title="Select prefered job state"
         toggle={showStatePref}
         showSearch={true}
         setToggle={setShowStatePref}
@@ -1620,9 +1620,10 @@ export default function CandidateFormDetails() {
             empRelocationIntQState: JSON.stringify(value),
           });
         }}
-      />
-      <MyMultipleSelectPopUp
-        title="Select relocation country"
+      />}
+      
+      {countryList?.length>0 && <MyMultipleSelectPopUp
+        title="Select prefered job country"
         toggle={showCountryPref}
         showSearch={true}
         setToggle={setShowCountryPref}
@@ -1633,7 +1634,8 @@ export default function CandidateFormDetails() {
             empRelocationIntQCountry: JSON.stringify(value),
           });
         }}
-      />
+      />}
+      
       <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );

@@ -53,7 +53,7 @@ const CustomDrawerContent = props => {
     {
       title: 'Improve Profile',
       hindiName: 'प्रोफाइल बेहतर करे',
-      banglaName: 'প্রোফাইল উন্নত করুন',
+      banglaName: 'প্রোফাইল আপডেট করুন',
       component: BuildProfile,
       name: 'Improve Profile',
       subMenu: [],
@@ -61,19 +61,19 @@ const CustomDrawerContent = props => {
     {
       title: 'Jobs',
       hindiName: 'नौकरियां',
-      banglaName: 'চাকরি',
+      banglaName: 'কাজের তালিকা',
       subMenu: [
         {
           title: 'Favourite Job',
           hindiName: 'पसंदीदा नौकरियां',
-          banglaName: 'প্রিয় কাজ',
+          banglaName: 'পছন্দের কাজ',
           component: FavrouiteJob,
           name: 'Favourite Job',
         },
         {
           title: 'Saved Job',
           hindiName: 'सेव नौकरियां',
-          banglaName: 'সংরক্ষিত কাজ',
+          banglaName: 'সেভ করা কাজ',
           component: SavedJobs,
           name: 'Saved Jobs',
         },
@@ -113,7 +113,7 @@ const CustomDrawerContent = props => {
     {
       title: 'Apply Medical Test',
       hindiName: 'चिकित्सा परीक्षण करें',
-      banglaName: 'মেডিকেল -এর জন্য আবেদন করুন',
+      banglaName: 'মেডিকেল -এর আবেদন করুন',
       component: MedicalTest,
       name: 'Apply Medical Test',
       subMenu: [],
@@ -121,7 +121,7 @@ const CustomDrawerContent = props => {
     {
       title: 'Apply Passport',
       hindiName: 'पासपोर्ट के लिए आवेदन करें',
-      banglaName: 'পাসপোর্ট জন্য আবেদন করুন',
+      banglaName: 'পাসপোর্ট -এর আবেদন করুন',
       component: PassportApply,
       name: 'Apply Passport',
       subMenu: [],
@@ -129,7 +129,7 @@ const CustomDrawerContent = props => {
     {
       title: 'Apply PCC',
       hindiName: 'पीसीसी के लिए आवेदन करें',
-      banglaName: 'PCC-এর জন্য আবেদন করুন',
+      banglaName: 'PCC-এর আবেদন করুন',
       component: ApplyPcc,
       name: 'Apply PCC',
       subMenu: [],

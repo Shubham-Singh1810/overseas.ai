@@ -472,7 +472,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Apply Before'
           : globalState.selectedLanguage == 'hindi'
           ? 'पहले आवेदन करें'
-          : 'আগে আবেদন করুন',
+          : 'আবেদনের শেষ তারিখ',
       experience:
         globalState.selectedLanguage == 'english'
           ? 'Experience'
@@ -496,7 +496,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Apply Now'
           : globalState.selectedLanguage == 'hindi'
           ? 'अभी अप्लाई करें'
-          : 'এখন আবেদন কর',
+          : 'আবেদন করুন',
       readDetails:
         globalState.selectedLanguage == 'english'
           ? 'Read Details'
@@ -1240,7 +1240,7 @@ export const GlobalStateProvider = ({children}) => {
           : 'আপনার স্বপ্নের কাজ খুঁজুন!',
       selectOccupation:
         globalState.selectedLanguage == 'english'
-          ? 'Select Occupation'
+          ? 'Prefered Occupation'
           : globalState.selectedLanguage == 'hindi'
           ? 'विभाग चुनें'
           : 'পেশা নির্বাচন করুন',
@@ -1319,17 +1319,17 @@ export const GlobalStateProvider = ({children}) => {
 
       presentWorkingDepertment:
         globalState.selectedLanguage == 'english'
-          ? 'Present Working Department'
+          ? 'Prefered Working Department'
           : globalState.selectedLanguage == 'hindi'
-          ? 'वर्तमान कार्य विभाग'
-          : 'বর্তমান কাজের বিভাগ',
+          ? 'पसंदीदा कार्य विभाग'
+          : 'পছন্দের ওয়ার্কিং ডিপার্টমেন্ট',
 
       presentOccupation:
         globalState.selectedLanguage == 'english'
-          ? 'Present Occupation'
+          ? 'Prefered Occupation'
           : globalState.selectedLanguage == 'hindi'
-          ? 'वर्तमान कौशल'
-          : 'বর্তমান পেশা',
+          ? 'पसंदीदा व्यवसाय'
+          : 'পছন্দের পেশা',
 
       pastInternationalMigrationExperience:
         globalState.selectedLanguage == 'english'
@@ -1516,10 +1516,10 @@ export const GlobalStateProvider = ({children}) => {
           : 'সার্টিফিকেট আপলোড করুন',
       companyName:
         globalState.selectedLanguage == 'english'
-          ? 'Company Name'
+          ? 'Company Name/Organisation'
           : globalState.selectedLanguage == 'hindi'
-          ? 'कंपनी का नाम'
-          : 'সংস্থার নাম',
+          ? 'कंपनी का नाम/संगठन'
+          : 'কোম্পানির নাম/সংস্থা',
       joiningDate:
         globalState.selectedLanguage == 'english'
           ? 'Joining Date'
@@ -1613,7 +1613,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Apply Before'
           : globalState.selectedLanguage == 'hindi'
           ? 'पहले आवेदन करें'
-          : 'আগে আবেদন করুন',
+          : 'আবেদনের শেষ তারিখ',
       // job Id translation end
 
       // institute translation start
@@ -1752,7 +1752,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Improve Your Profile'
           : globalState.selectedLanguage == 'hindi'
           ? 'अपने प्रोफाइल को बेहतर बनाएं'
-          : 'আপনার প্রোফাইল উন্নত করুন',
+          : 'প্রোফাইল আপডেট করুন',
           newsFeed:
         globalState.selectedLanguage == 'english'
           ? 'News Feed'
@@ -1764,13 +1764,13 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Favourite Job'
           : globalState.selectedLanguage == 'hindi'
           ? 'पसंदीदा नौकरियां'
-          : 'প্রিয় কাজ',
+          : 'পছন্দের কাজ',
           savedJobs:
         globalState.selectedLanguage == 'english'
           ? 'Saved Jobs'
           : globalState.selectedLanguage == 'hindi'
           ? 'सेव नौकरियां'
-          : 'সংরক্ষিত কাজ',
+          : 'সেভ করা কাজ',
           appliedJobs:
         globalState.selectedLanguage == 'english'
           ? 'Applied Jobs'
@@ -1833,7 +1833,7 @@ export const GlobalStateProvider = ({children}) => {
           ? 'Apply Now'
           : globalState.selectedLanguage == 'hindi'
           ? 'अभी अप्लाई करें'
-          : 'এখন আবেদন করুন',
+          : 'আবেদন করুন',
           jobPostedBy:
         globalState.selectedLanguage == 'english'
           ? 'Job Posted By :'

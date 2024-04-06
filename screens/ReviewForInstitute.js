@@ -239,7 +239,7 @@ const ReviewForInstitute = props => {
                 alignItems: 'center',
               }}>
               <Text style={{fontWeight: '500', fontSize: 20, color: 'black'}}>
-                Rate HRA
+                Rate Institute
               </Text>
               <TouchableOpacity
                 onPress={() => {
