@@ -303,6 +303,7 @@ const MyDocument = props => {
             text1: 'Something went wrong.',
             visibilityTime: 3000, // Duration in milliseconds
           });
+          setShowDlPopUp(false);
         }
       } catch (error) {
         Toast.show({
@@ -311,6 +312,7 @@ const MyDocument = props => {
           text1: 'Internal server error',
           visibilityTime: 3000, // Duration in milliseconds
         });
+        setShowDlPopUp(false);
       }
     } else {
       console.warn('Something went wrong');
