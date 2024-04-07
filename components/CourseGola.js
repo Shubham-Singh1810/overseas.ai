@@ -44,7 +44,7 @@ const CourseGola = ({value, props, isApplied, backTo}) => {
       <Text
         style={{
           textAlign: 'right',
-          color: 'red',
+          color: 'green',
           fontSize: 12,
           marginVertical: 3,
         }}>

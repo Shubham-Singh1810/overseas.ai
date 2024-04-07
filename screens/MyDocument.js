@@ -478,6 +478,7 @@ const MyDocument = props => {
     }
   };
   const editPassport = async () => {
+    
     let user = await AsyncStorage.getItem('user');
     let passportFormData = new FormData();
     passportFormData.append('passportNumber', passportForm.passportNumber);
@@ -502,7 +503,7 @@ const MyDocument = props => {
         name: passportForm.backPage.name,
       });
     }
-
+    console.log(passportFormData)
     try {
       let response = await editPassportApi(
         passportFormData,
@@ -529,12 +530,8 @@ const MyDocument = props => {
           });
         }, 2000);
       } else {
-        Toast.show({
-          type: 'error', // 'success', 'error', 'info', or any custom type you define
-          position: 'top',
-          text1: response.data.error,
-          visibilityTime: 3000, // Duration in milliseconds
-        });
+       console.log( "sekufh", response)
+        
       }
     } catch (error) {
       Toast.show({
@@ -543,6 +540,7 @@ const MyDocument = props => {
         text1: 'Internal server error',
         visibilityTime: 3000, // Duration in milliseconds
       });
+      console.log(error.response)
     }
   };
   const [passportFormType, setPassportFormType] = useState('Add');
@@ -563,7 +561,10 @@ const MyDocument = props => {
           backPage: response?.data.data.backPage,
         });
         setPassportFormType('Edit');
+        setEditPassportFrontPage(false);
+        setEditPassportBackPage(false)
         setShowPassportPopUp(true);
+        
       } else {
         console.warn('Something went wrong');
       }
@@ -659,6 +660,7 @@ const MyDocument = props => {
     });
   };
   const editDl = async () => {
+    
     let user = await AsyncStorage.getItem('user');
     const dlForm = new FormData();
     dlForm.append('id', dlFormData.id);
@@ -1442,7 +1444,7 @@ const MyDocument = props => {
                       <Text style={{color: 'gray'}}>
                         {dlFormType == 'Add'
                           ? dlFormData?.licenceCategory?.map((v, i) => {
-                              return <>{v} , </>;
+                              return <>{v +" "}</>;
                             })
                           : dlFormData?.licenceCategory}
                       </Text>
@@ -1606,7 +1608,7 @@ const MyDocument = props => {
                     color="#035292"
                   />
                   {/* <TouchableOpacity
-                    onPress={() => {
+                    onPress={() => { 
                       setShowDlPopUp(false);
                     }}>
                     <Image source={require('../images/close.png')} />
@@ -1632,21 +1634,14 @@ const MyDocument = props => {
                               flexDirection: 'row',
                               alignItems: 'center',
                             }}>
-                            <Text style={styles.cardText}>Category : </Text>
-                            <Text style={{color: 'black'}}>
-                              {JSON.parse(v?.licenceCategory).map(
-                                (value, index) => {
-                                  if (
-                                    index ===
-                                    JSON.parse(v?.licenceCategory).length - 1
-                                  ) {
-                                    return <Text key={index}>{value}</Text>;
-                                  } else {
-                                    return <Text key={index}>{value} / </Text>;
-                                  }
-                                },
-                              )}
-                            </Text>
+                            {/* <Text style={styles.cardText}>Category : </Text>
+                            <Text style={{color: 'black', paddingRight:20}}>
+                              {JSON.parse(v?.licenceCategory)?.map((v,i)=>{
+                                return (
+                                  v + " "
+                                )
+                              })}
+                            </Text> */}
                           </View>
                           <View
                             style={{
