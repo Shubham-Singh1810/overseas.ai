@@ -131,3 +131,17 @@ export const addReviewForInstitute = async (formData, access_token) => {
     throw error;
   }
 };
+export const editReviewForInstitute = async (formData, access_token) => {
+  try {
+    const response = await axios.post(BASE_URL + 'edit-rate-review-institute', formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error.response.data.msg);
+    throw error;
+  }
+};

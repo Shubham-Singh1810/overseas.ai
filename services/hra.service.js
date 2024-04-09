@@ -97,3 +97,18 @@ export const addReviewForHra = async (formData, access_token) => {
     throw error;
   }
 };
+
+export const editReviewForHra = async (formData, access_token) => {
+  try {
+    const response = await axios.post(BASE_URL + 'edit-rate-review-hra', formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('Error fetching data:', error.response?.data);
+    throw error;
+  }
+};

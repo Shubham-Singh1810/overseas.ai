@@ -13,7 +13,12 @@ import React, {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useFocusEffect} from '@react-navigation/native';
 import {getReviewOfHra} from '../services/hra.service';
-import {getReviewOFInstitute, addReviewForInstitute} from '../services/institute.service';
+import {useGlobalState} from '../GlobalProvider';
+import {
+  getReviewOFInstitute,
+  addReviewForInstitute,
+  editReviewForInstitute
+} from '../services/institute.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import Toast from 'react-native-toast-message';
@@ -25,7 +30,10 @@ const ReviewForInstitute = props => {
     );
     return true;
   });
+  const {translation, newTranslation, globalState, setGlobalState} =
+    useGlobalState();
   const [showRatingPop, setShowRattingPop] = useState(false);
+  const [showEditRatingPop, setShowEditRattingPop] =useState(false)
   const renderStars = numRatings => {
     const stars = [];
     for (let i = 0; i < numRatings; i++) {
@@ -114,7 +122,7 @@ const ReviewForInstitute = props => {
           text1: 'Rating review added successfully.',
           visibilityTime: 3000,
         });
-        getReviewList(props?.route?.params?.institute?.id)
+        getReviewList(props?.route?.params?.institute?.id);
       }
     } catch (error) {
       setShowRattingPop(false);
@@ -127,8 +135,43 @@ const ReviewForInstitute = props => {
       });
     }
   };
+  const handleEditReviewSubmit = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await editReviewForInstitute(
+        {
+          instituteId: props.route.params.institute.id,
+          rating: userratting,
+          review: userReview,
+        },
+        JSON.parse(user).access_token,
+      );
+      if (response?.data) {
+        setShowEditRattingPop(false);
+        setEditReviewId("")
+        setRatting(0);
+        Toast.show({
+          type: 'success',
+          position: 'top',
+          text1: 'Rating review updated successfully.',
+          visibilityTime: 3000,
+        });
+        getReviewList(props?.route?.params?.institute?.id);
+      }
+    } catch (error) {
+      setShowEditRattingPop(false);
+      setRatting(0);
+      Toast.show({
+        type: 'info',
+        position: 'top',
+        text1: error.response.data.msg,
+        visibilityTime: 3000,
+      });
+    }
+  };
   const [userratting, setRatting] = useState(0);
   const [userReview, setUserReview] = useState('');
+  const [editReviewId, setEditReviewId]=useState("")
   const handleRattingSelect = rate => {
     setRatting(rate);
   };
@@ -143,7 +186,7 @@ const ReviewForInstitute = props => {
       );
       setReviewList(response?.data?.allReviews);
       setAverageRating(response?.data?.averageRating);
-      renderAverageStars(response?.data?.averageRating)
+      renderAverageStars(response?.data?.averageRating);
     } catch (error) {
       console.log(error);
     }
@@ -161,21 +204,26 @@ const ReviewForInstitute = props => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Text style={styles.heading}>
-          Ratings & Reviews : {averageRating}
-        </Text>
+        <Text style={styles.heading}>Ratings & Reviews : {averageRating}</Text>
       </View>
       <View style={{flexDirection: 'row', marginLeft: -10, marginBottom: 10}}>
         <View style={{flexDirection: 'row'}}>
           {renderAverageStars(averageRating)}
         </View>
       </View>
-      {reviewList?.length==0 && <Text style={{color:"gray"}}>
-No reviews available. You're welcome to be the first to share your thoughts! Feel free to initiate the conversation with your insights.</Text>}
+      {reviewList?.length == 0 && (
+        <Text style={{color: 'gray'}}>
+          No reviews available. You're welcome to be the first to share your
+          thoughts! Feel free to initiate the conversation with your insights.
+        </Text>
+      )}
       <ScrollView>
         {reviewList?.map((v, i) => {
           return (
-            <View style={{marginVertical: 20}}>
+            <View style={{marginVertical: 20,flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',}}>
+              <View>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View
                   style={{
@@ -187,10 +235,10 @@ No reviews available. You're welcome to be the first to share your thoughts! Fee
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color:"white"}}>{v?.reviewerName[0]}</Text>
+                  <Text style={{color: 'white'}}>{v?.reviewerName[0]}</Text>
                 </View>
                 <Text style={{color: 'black', fontSize: 16, marginLeft: 15}}>
-                {v?.reviewerName}
+                  {v?.reviewerName}
                 </Text>
               </View>
               <View
@@ -199,10 +247,21 @@ No reviews available. You're welcome to be the first to share your thoughts! Fee
                   alignItems: 'center',
                   marginVertical: 5,
                 }}>
-                <View style={{flexDirection: 'row'}}>{renderStars(v?.rating)}</View>
+                <View style={{flexDirection: 'row'}}>
+                  {renderStars(v?.rating)}
+                </View>
                 <Text style={{color: 'gray'}}>{v?.created_at}</Text>
               </View>
               <Text style={{color: 'black'}}>{v?.review}</Text>
+              </View>
+              {JSON.parse(globalState?.user)?.empData?.personId == v?.userId && (
+                <Pressable onPress={()=>{setShowEditRattingPop(true); setUserReview(v?.review);setEditReviewId(v?.id); setRatting(v?.rating)}}>
+                  <Image
+                    source={require('../images/edit.png')}
+                    style={{height: 20, width: 20, resizeMode: 'contain'}}
+                  />
+                </Pressable>
+              )}
             </View>
           );
         })}
@@ -289,6 +348,86 @@ No reviews available. You're welcome to be the first to share your thoughts! Fee
                 }}
               />
               <Button title="Submit" onPress={handleReviewSubmit} />
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal transparent={true} visible={showEditRatingPop} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}>
+          <View
+            style={{
+              width: 330,
+              backgroundColor: 'white',
+              borderRadius: 5,
+              elevation: 1,
+            }}>
+            <View
+              style={{
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1,
+                paddingHorizontal: 20,
+                paddingVertical: 20,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <Text style={{fontWeight: '500', fontSize: 20, color: 'black'}}>
+                Rate Institute
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowEditRattingPop(false);
+                }}>
+                <Image source={require('../images/close.png')} />
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                padding: 5,
+                paddingHorizontal: 25,
+              }}>
+              {[1, 2, 3, 4, 5].map((v, i) => {
+                return (
+                  <Pressable onPress={() => handleRattingSelect(i + 1)}>
+                    <Image
+                      source={
+                        userratting >= i + 1
+                          ? require('../images/starIcon.png')
+                          : require('../images/whiteStar.png')
+                      }
+                      style={{height: 40, width: 40, resizeMode: 'contain'}}
+                    />
+                  </Pressable>
+                );
+              })}
+            </View>
+            <View style={{margin: 10, marginBottom: 25}}>
+              <TextInput
+                placeholder="Write a review"
+                multiline={true}
+                numberOfLines={3}
+                textAlignVertical="top"
+                placeholderTextColor="gray"
+                onChangeText={text => setUserReview(text)}
+                style={{
+                  borderWidth: 1,
+                  paddingLeft: 10,
+                  color: 'black',
+                  marginBottom: 15,
+                  borderColor: 'gray',
+                  borderRadius: 3,
+                }}
+                value={userReview}
+              />
+              <Button title="Update" onPress={handleEditReviewSubmit} />
             </View>
           </View>
         </View>
