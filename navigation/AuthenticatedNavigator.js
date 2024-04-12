@@ -47,6 +47,10 @@ import ExperienceScreen from '../screens/ExperienceScreen';
 import {useFocusEffect} from '@react-navigation/native';
 import ReviewForHra from '../screens/ReviewForHra';
 import ReviewForInstitute from '../screens/ReviewForInstitute';
+import CustomCv from '../screens/CustomCv';
+import Covid from '../screens/Covide';
+import HighestEducation from '../screens/HighestEducatuin';
+import OtherDocPrev from '../screens/OtherDocPrev';
 
 const Drawer = createDrawerNavigator();
 
@@ -327,6 +331,42 @@ const AuthenticatedNavigator = () => {
           component={ReviewForInstitute}
           options={({navigation, route}) => ({
             title: "Institute Reviews",
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Custom CV"
+          component={CustomCv}
+          options={({navigation, route}) => ({
+            title: "Custom CV",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Covid"
+          component={Covid}
+          options={({navigation, route}) => ({
+            title: "Covid",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Highest Education"
+          component={HighestEducation}
+          options={({navigation, route}) => ({
+            title: "Covid",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Other Doc Prev"
+          component={OtherDocPrev}
+          options={({navigation, route}) => ({
+            title: "Other Documents",
+            headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

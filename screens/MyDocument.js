@@ -102,13 +102,9 @@ const MyDocument = props => {
       });
       let response = await addCvApi(formData, JSON.parse(user).access_token);
       if (response.data.msg == 'CV uploaded successfully.') {
-        Toast.show({
-          type: 'success', // 'success', 'error', 'info', or any custom type you define
-          position: 'top',
-          text1: 'CV uploaded successfully.',
-          visibilityTime: 3000, // Duration in milliseconds
+        props.navigation.navigate('Custom CV', {
+          uri: response?.data?.customCVUrl,
         });
-        getAllDocList();
       }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -120,6 +116,7 @@ const MyDocument = props => {
         });
         // User canceled the document picker
       } else {
+        console.log(err?.response);
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           position: 'top',
@@ -150,13 +147,9 @@ const MyDocument = props => {
         response.data.msg ==
         'Highest education certificate uploaded successfully.'
       ) {
-        Toast.show({
-          type: 'success', // 'success', 'error', 'info', or any custom type you define
-          position: 'top',
-          text1: 'Highest education certificate uploaded successfully.',
-          visibilityTime: 3000, // Duration in milliseconds
+        props.navigation.navigate('Highest Education', {
+          uri: response?.data?.eduCertUrl,
         });
-        getAllDocList();
       }
       if (
         response.data.msg == 'Highest education certificate already uploaded.'
@@ -342,7 +335,10 @@ const MyDocument = props => {
           text1: 'Covid certificate uploaded successfully.',
           visibilityTime: 3000, // Duration in milliseconds
         });
-        getAllDocList();
+        props.navigation.navigate('Covid', {
+          uri: response.data?.covidUrl,
+        })
+        
       }
       if (response.data.msg == 'Covid certificate already uploaded.') {
         Toast.show({
@@ -480,7 +476,6 @@ const MyDocument = props => {
     }
   };
   const editPassport = async () => {
-    
     let user = await AsyncStorage.getItem('user');
     let passportFormData = new FormData();
     passportFormData.append('passportNumber', passportForm.passportNumber);
@@ -505,7 +500,6 @@ const MyDocument = props => {
         name: passportForm.backPage.name,
       });
     }
-    console.log(passportFormData)
     try {
       let response = await editPassportApi(
         passportFormData,
@@ -532,8 +526,7 @@ const MyDocument = props => {
           });
         }, 2000);
       } else {
-       console.log( "sekufh", response)
-        
+        console.log('sekufh', response);
       }
     } catch (error) {
       Toast.show({
@@ -542,7 +535,7 @@ const MyDocument = props => {
         text1: 'Internal server error',
         visibilityTime: 3000, // Duration in milliseconds
       });
-      console.log(error.response)
+      console.log(error.response);
     }
   };
   const [passportFormType, setPassportFormType] = useState('Add');
@@ -564,9 +557,8 @@ const MyDocument = props => {
         });
         setPassportFormType('Edit');
         setEditPassportFrontPage(false);
-        setEditPassportBackPage(false)
+        setEditPassportBackPage(false);
         setShowPassportPopUp(true);
-        
       } else {
         console.warn('Something went wrong');
       }
@@ -599,13 +591,10 @@ const MyDocument = props => {
       });
       let response = await addOtherDoc(formData, JSON.parse(user).access_token);
       if (response?.data?.msg == 'Document uploaded successfully.') {
-        Toast.show({
-          type: 'success', // 'success', 'error', 'info', or any custom type you define
-          position: 'top',
-          text1: 'Document Uploaded Successfully',
-          visibilityTime: 3000, // Duration in milliseconds
-        });
-        getAllDocList();
+        props.navigation.navigate('Other Doc Prev', {
+          uri: response.data?.data?.document_image,
+          docType
+        })
       } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
@@ -662,7 +651,6 @@ const MyDocument = props => {
     });
   };
   const editDl = async () => {
-    
     let user = await AsyncStorage.getItem('user');
     const dlForm = new FormData();
     dlForm.append('id', dlFormData.id);
@@ -774,12 +762,11 @@ const MyDocument = props => {
             {allDocListDetail?.cv?.cv !=
             'https://overseas.ai/placeholder/person.jpg' ? (
               <Pressable
-                onPress={uploadCv}
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                }}>
+                onPress={() =>
+                  props.navigation.navigate('Custom CV', {
+                    uri: allDocListDetail?.cv?.cv,
+                  })
+                }>
                 <Pdf
                   trustAllCerts={false}
                   source={{uri: allDocListDetail?.cv?.cv, cache: true}}
@@ -798,12 +785,28 @@ const MyDocument = props => {
                   style={{height: 60, width: 40}}
                 />
                 <Text
-                  style={{color: '#035292', fontWeight: '500', fontSize: 10}}>
-                  {newTranslation?.update}
+                  style={{
+                    color: 'black',
+                    textAlign: 'center',
+                    fontSize: 12,
+                    fontWeight: '500',
+                  }}>
+                  {newTranslation?.view}
                 </Text>
               </Pressable>
             ) : (
-              <Button title={newTranslation?.upload} onPress={uploadCv} />
+              <Pressable
+                onPress={uploadCv}
+                style={{
+                  backgroundColor: '#035292',
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  elevation: 1,
+                }}>
+                <Text style={{color: 'white', fontSize: 16, fontWeight: '500'}}>
+                  {newTranslation?.upload}
+                </Text>
+              </Pressable>
             )}
           </View>
           <View style={styles.buttonBox}>
@@ -840,7 +843,11 @@ const MyDocument = props => {
             {allDocListDetail?.covidCertificate?.covidCertificate !=
             'https://overseas.ai/placeholder/person.jpg' ? (
               <Pressable
-                onPress={uploadCv}
+                onPress={() =>
+                  props.navigation.navigate('Covid', {
+                    uri: allDocListDetail?.covidCertificate?.covidCertificate,
+                  })
+                }
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -868,7 +875,7 @@ const MyDocument = props => {
                 />
                 <Text
                   style={{color: '#035292', fontWeight: '500', fontSize: 10}}>
-                  {newTranslation?.update}
+                  {newTranslation?.view}
                 </Text>
               </Pressable>
             ) : (
@@ -882,7 +889,9 @@ const MyDocument = props => {
             {allDocListDetail?.highEduCertificate?.certificate !=
             'https://overseas.ai/placeholder/person.jpg' ? (
               <Pressable
-                onPress={uploadCv}
+                onPress={()=>props.navigation.navigate('Highest Education', {
+                  uri: allDocListDetail?.highEduCertificate?.certificate,
+                })}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -910,7 +919,7 @@ const MyDocument = props => {
                 />
                 <Text
                   style={{color: '#035292', fontWeight: '500', fontSize: 10}}>
-                  {newTranslation?.update}
+                  {newTranslation?.view}
                 </Text>
               </Pressable>
             ) : (
@@ -939,7 +948,10 @@ const MyDocument = props => {
                   <View style={styles.buttonBox}>
                     <Text style={styles.text}>{v?.document_type}</Text>
                     <Pressable
-                      onPress={() => pickDocumentOtherDoc(v?.document_type)}
+                      onPress={() => props.navigation.navigate('Other Doc Prev', {
+                        uri: v?.document_image,
+                        docType:v?.document_type
+                      })}
                       style={{
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -959,7 +971,7 @@ const MyDocument = props => {
                           fontWeight: '500',
                           fontSize: 10,
                         }}>
-                        {newTranslation?.update}
+                        {newTranslation?.view}
                       </Text>
                     </Pressable>
                   </View>
@@ -1446,7 +1458,7 @@ const MyDocument = props => {
                       <Text style={{color: 'gray'}}>
                         {dlFormType == 'Add'
                           ? dlFormData?.licenceCategory?.map((v, i) => {
-                              return <>{v +" "}</>;
+                              return <>{v + ' '}</>;
                             })
                           : dlFormData?.licenceCategory}
                       </Text>
@@ -1943,6 +1955,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'Nato Sans',
     marginVertical: 20,
+    color: 'black',
   },
   modalMain: {
     paddingHorizontal: 20,

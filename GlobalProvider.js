@@ -2601,6 +2601,12 @@ export const GlobalStateProvider = ({children}) => {
                 : globalState.selectedLanguage == 'hindi'
                 ? 'ईमेल पर ओटीपी प्राप्त करें'
                 : 'ইমেইলে otp পান',
+                download:
+                globalState.selectedLanguage == 'english'
+                ? "Download"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'डाउनलोड'
+                : 'ডাউনলোড',
                 otpSentSuccessfully:
                 globalState.selectedLanguage == 'english'
                 ? "OTP sent successfully!"
