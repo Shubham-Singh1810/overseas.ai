@@ -32,19 +32,19 @@ import {
 } from '../services/info.service';
 
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
-import { useGlobalState } from '../GlobalProvider'
-const ExperienceScreen = (props) => {
+import {useGlobalState} from '../GlobalProvider';
+const ExperienceScreen = props => {
   useAndroidBackHandler(() => {
-    if(props?.route?.params?.backTo){
+    if (props?.route?.params?.backTo) {
       props.navigation.navigate(props?.route?.params.backTo);
       return true;
-    }else{
-      props.navigation.navigate("MyProfile") 
+    } else {
+      props.navigation.navigate('MyProfile');
       return true;
     }
   });
-  const {newTranslation} = useGlobalState()
-  const[loading,setLoading]=useState(false)
+  const {newTranslation} = useGlobalState();
+  const [loading, setLoading] = useState(false);
   const [showJoiningCalender, setJoiningCalender] = useState(false);
   const [showEndingCalender, setEndingCalender] = useState(false);
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
@@ -60,6 +60,69 @@ const ExperienceScreen = (props) => {
     stateName: '',
     certificateImage: '',
   });
+  const formValidation = () => {
+    if (experienceForm.experinceCompanyName == '') {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Company/Organisation name is required field',
+        text2: 'Form validation failed',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (experienceForm.jobProfile == '') {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Job Profile is required field',
+        text2: 'Form validation failed',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (experienceForm.jobOccupation == '') {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Job Occupation is required field',
+        text2: 'Form validation failed',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (experienceForm.experienceType == '') {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Experience type is required field',
+        text2: 'Form validation failed',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (experienceForm.fromDate == '') {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Joining date is required field',
+        text2: 'Form validation failed',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    if (experienceForm.toDate == '') {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Ending date is required field',
+        text2: 'Form validation failed',
+        visibilityTime: 3000,
+      });
+      return false;
+    }
+    return true;
+  };
   const addExperience = async () => {
     let user = await AsyncStorage.getItem('user');
     let experienceFormData = new FormData();
@@ -81,50 +144,52 @@ const ExperienceScreen = (props) => {
         name: experienceForm.certificateImage.name,
       });
     }
-    try {
-      let response = await addExperienceStep2(
-        experienceFormData,
-        JSON.parse(user).access_token,
-      );
-      console.log('res', response);
-      if (response?.data?.msg == 'Experience Successfully Added.') {
-        Toast.show({
-          type: 'success',
-          position: 'top',
-          text1: 'Experience successfully added.',
-          // text2:" Feel free to enrich your profile by adding more experiences if you desire.",
-          visibilityTime: 3000,
-        });
-        setExperienceForm({
-          experinceCompanyName: '',
-          jobProfile: '',
-          jobOccupation: '',
-          experienceType: '',
-          fromDate: '',
-          toDate: '',
-          countryName: '',
-          stateName: '',
-          certificateImage: '',
-        });
-        getExperienceFunc();
-        setTimeout(() => {
-          setShowAddExperienceForm(false);
-        }, 2000);
-      } else {
+    if (formValidation()) {
+      try {
+        let response = await addExperienceStep2(
+          experienceFormData,
+          JSON.parse(user).access_token,
+        );
+        console.log('res', response);
+        if (response?.data?.msg == 'Experience Successfully Added.') {
+          Toast.show({
+            type: 'success',
+            position: 'top',
+            text1: 'Experience successfully added.',
+            // text2:" Feel free to enrich your profile by adding more experiences if you desire.",
+            visibilityTime: 3000,
+          });
+          setExperienceForm({
+            experinceCompanyName: '',
+            jobProfile: '',
+            jobOccupation: '',
+            experienceType: '',
+            fromDate: '',
+            toDate: '',
+            countryName: '',
+            stateName: '',
+            certificateImage: '',
+          });
+          getExperienceFunc();
+          setTimeout(() => {
+            setShowAddExperienceForm(false);
+          }, 2000);
+        } else {
+          Toast.show({
+            type: 'error', // 'success', 'error', 'info', or any custom type you define
+            // position: 'top',
+            text1: 'Something went grong',
+            visibilityTime: 3000, // Duration in milliseconds
+          });
+        }
+      } catch (error) {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           // position: 'top',
-          text1: 'Something went grong',
+          text1: 'Something went wrong',
           visibilityTime: 3000, // Duration in milliseconds
         });
       }
-    } catch (error) {
-      Toast.show({
-        type: 'error', // 'success', 'error', 'info', or any custom type you define
-        // position: 'top',
-        text1: 'Something went wrong',
-        visibilityTime: 3000, // Duration in milliseconds
-      });
     }
   };
   const editExperience = async () => {
@@ -238,33 +303,34 @@ const ExperienceScreen = (props) => {
   };
   const [experienceList, setExperinceList] = useState([]);
   const getExperienceFunc = async () => {
-    setLoading(true)
+    setLoading(true);
     let user = await AsyncStorage.getItem('user');
     try {
       let response = await getAllExperience(JSON.parse(user).access_token);
       if (response?.data?.data) {
         setExperinceList(response?.data?.data);
-        setLoading(false)
+        setLoading(false);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
     }
   };
   useFocusEffect(
     React.useCallback(() => {
       getOccupationList();
-    getStateList();
-    getCountryList();
-    getExperienceFunc();
+      getStateList();
+      getCountryList();
+      getExperienceFunc();
     }, []),
   );
-  
+  const [imgPrev, setImgPrev] = useState('');
   const pickDocument = async () => {
     try {
       const result = await DocumentPicker.pick({
         type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
       setExperienceForm({...experienceForm, certificateImage: result[0]});
+      setImgPrev(result[0].uri);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -292,6 +358,7 @@ const ExperienceScreen = (props) => {
       viewOccupation: value.jobOccupation,
       certificateImagePrev: value.certificateImage,
     });
+    setImgPrev(value.certificateImage)
     setExperienceForm({
       experinceCompanyName: value.experinceCompanyName,
       jobProfile: value.jobProfileId,
@@ -303,7 +370,7 @@ const ExperienceScreen = (props) => {
       stateName: value.stateId,
       certificateImage: '',
     });
-    getSkillListByOccuId(value.jobProfileId)
+    getSkillListByOccuId(value.jobProfileId);
   };
   const emptyField = () => {
     setExperienceForm({
@@ -333,7 +400,6 @@ const ExperienceScreen = (props) => {
         {/* <View style={{marginEnd:10}}>
         <Button title="ADD MORE"  />
         </View> */}
-        
       </View>
       <ScrollView>
         {experienceList?.map((v, i) => {
@@ -477,7 +543,9 @@ const ExperienceScreen = (props) => {
                 <Pressable style={{marginBottom: 15}} onPress={pickDocument}>
                   {experienceForm.certificateImage != '' ? (
                     <Image
-                      source={require('../images/certificatePrev.png')}
+                    source={{
+                      uri: imgPrev,
+                    }}
                       style={{
                         width: '100%',
                         height: 100,
@@ -491,9 +559,7 @@ const ExperienceScreen = (props) => {
                         height: 100,
                         resizeMode: 'contain',
                       }}
-                      source={{
-                        uri: editExtraField.certificateImagePrev,
-                      }}
+                      source={require('../images/certificatePrev.png')}
                     />
                   )}
                   <View>
@@ -513,7 +579,7 @@ const ExperienceScreen = (props) => {
                           flexDirection: 'row',
                           justifyContent: 'center',
                           alignItems: 'center',
-                          marginTop:10
+                          marginTop: 10,
                         }}>
                         <Text
                           style={{
@@ -523,14 +589,20 @@ const ExperienceScreen = (props) => {
                             color: '#035292',
                             marginEnd: 20,
                           }}>
-                          {experienceForm.certificateImage =="" ? newTranslation?.upload: newTranslation?.selected} 
+                          {experienceForm.certificateImage == ''
+                            ? newTranslation?.upload
+                            : newTranslation?.selected}
                         </Text>
                         <Pressable
-                          onPress={() =>
+                          onPress={() =>{
                             setExperienceForm({
                               ...experienceForm,
                               certificateImage: '',
+                              
                             })
+                            setImgPrev("")
+                          }
+                            
                           }>
                           <Image source={require('../images/close.png')} />
                         </Pressable>
@@ -540,48 +612,65 @@ const ExperienceScreen = (props) => {
                 </Pressable>
               ) : (
                 <Pressable style={{marginBottom: 15}} onPress={pickDocument}>
-                  <Image
-                    source={require('../images/certificatePrev.png')}
-                    style={{width: '100%', height: 100, resizeMode: 'contain'}}
-                  />
-
                   <View>
                     {experienceForm.certificateImage == '' ? (
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          fontWeight: '500',
-                          textAlign: 'center',
-                          color: '#035292',
-                        }}>
-                        {newTranslation?.uploadCertificate}
-                      </Text>
-                    ) : (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
+                      <View>
+                        <Image
+                          source={require('../images/certificatePrev.png')}
+                          style={{
+                            width: '100%',
+                            height: 100,
+                            resizeMode: 'contain',
+                          }}
+                        />
                         <Text
                           style={{
                             fontSize: 13,
                             fontWeight: '500',
                             textAlign: 'center',
                             color: '#035292',
-                            marginEnd: 20,
                           }}>
-                          {newTranslation?.selected}
+                          {newTranslation?.uploadCertificate}
                         </Text>
-                        <Pressable
-                          onPress={() =>
-                            setExperienceForm({
-                              ...experienceForm,
-                              certificateImage: '',
-                            })
-                          }>
-                          <Image source={require('../images/close.png')} />
-                        </Pressable>
+                      </View>
+                    ) : (
+                      <View>
+                        <Image
+                          source={{
+                            uri: imgPrev,
+                          }}
+                          style={{
+                            width: '100%',
+                            height: 100,
+                            resizeMode: 'contain',
+                          }}
+                        />
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              fontWeight: '500',
+                              textAlign: 'center',
+                              color: '#035292',
+                              marginEnd: 20,
+                            }}>
+                            {newTranslation?.selected}
+                          </Text>
+                          <Pressable
+                            onPress={() =>
+                              setExperienceForm({
+                                ...experienceForm,
+                                certificateImage: '',
+                              })
+                            }>
+                            <Image source={require('../images/close.png')} />
+                          </Pressable>
+                        </View>
                       </View>
                     )}
                   </View>
@@ -591,7 +680,12 @@ const ExperienceScreen = (props) => {
                 placeholder={newTranslation?.companyName}
                 placeholderTextColor="gray"
                 // style={styles.input}
-                style={[styles.input, addForm == 'Edit' && {backgroundColor:"rgba(200, 200, 200, 0.4)"}]}
+                style={[
+                  styles.input,
+                  addForm == 'Edit' && {
+                    backgroundColor: 'rgba(200, 200, 200, 0.4)',
+                  },
+                ]}
                 value={experienceForm.experinceCompanyName}
                 editable={addForm == 'Edit' ? false : true}
                 onChangeText={text =>
@@ -605,7 +699,10 @@ const ExperienceScreen = (props) => {
                 <TextInput
                   editable={false}
                   placeholderTextColor="gray"
-                  style={[styles.input, {backgroundColor:"rgba(200, 200, 200, 0.4)"}]}
+                  style={[
+                    styles.input,
+                    {backgroundColor: 'rgba(200, 200, 200, 0.4)'},
+                  ]}
                   value={editExtraField.viewJobProfile}></TextInput>
               ) : (
                 <View style={styles.picker}>
@@ -674,7 +771,10 @@ const ExperienceScreen = (props) => {
                 <TextInput
                   editable={false}
                   placeholderTextColor="gray"
-                  style={[styles.input ,{backgroundColor:"rgba(200, 200, 200, 0.4)"}]}
+                  style={[
+                    styles.input,
+                    {backgroundColor: 'rgba(200, 200, 200, 0.4)'},
+                  ]}
                   value={
                     experienceForm.experienceType == 'national'
                       ? 'Inside India'
@@ -714,7 +814,7 @@ const ExperienceScreen = (props) => {
               {experienceForm.experienceType == 'national' && (
                 <View style={styles.picker}>
                   <Picker
-                  style={{color: 'gray'}}
+                    style={{color: 'gray'}}
                     selectedValue={experienceForm.stateName}
                     onValueChange={(itemValue, itemIndex) => {
                       setExperienceForm({
@@ -789,7 +889,7 @@ const ExperienceScreen = (props) => {
                   <TouchableOpacity
                     onPress={() => setJoiningCalender(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                    <Text style={{color:"gray"}}>
+                    <Text style={{color: 'gray'}}>
                       {experienceForm.fromDate != ''
                         ? experienceForm.fromDate
                         : newTranslation?.joiningDate}
@@ -798,7 +898,7 @@ const ExperienceScreen = (props) => {
                   <TouchableOpacity
                     onPress={() => setEndingCalender(true)}
                     style={[styles.input, {marginBottom: 15, padding: 17}]}>
-                    <Text style={{color:"gray"}}>
+                    <Text style={{color: 'gray'}}>
                       {experienceForm.toDate != ''
                         ? experienceForm.toDate
                         : newTranslation?.endingDate}
@@ -808,9 +908,17 @@ const ExperienceScreen = (props) => {
               </View>
             </ScrollView>
             {addForm == 'Edit' ? (
-              <Button title={newTranslation?.edit} color="#035292" onPress={editExperience} />
+              <Button
+                title={newTranslation?.edit}
+                color="#035292"
+                onPress={editExperience}
+              />
             ) : (
-              <Button title={newTranslation?.save} color="#035292" onPress={addExperience} />
+              <Button
+                title={newTranslation?.save}
+                color="#035292"
+                onPress={addExperience}
+              />
             )}
           </View>
         </View>
@@ -935,7 +1043,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 18,
     backgroundColor: 'white',
-    color:"gray"
+    color: 'gray',
   },
   picker: {
     borderWidth: 1,
