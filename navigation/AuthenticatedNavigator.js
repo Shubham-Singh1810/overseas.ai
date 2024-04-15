@@ -51,6 +51,7 @@ import CustomCv from '../screens/CustomCv';
 import Covid from '../screens/Covide';
 import HighestEducation from '../screens/HighestEducatuin';
 import OtherDocPrev from '../screens/OtherDocPrev';
+import Dl_list from '../screens/Dl_list';
 
 const Drawer = createDrawerNavigator();
 
@@ -367,6 +368,15 @@ const AuthenticatedNavigator = () => {
           options={({navigation, route}) => ({
             title: "Other Documents",
             headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Dl_list"
+          component={Dl_list}
+          options={({navigation, route}) => ({
+            title: "Driving License",
+            // headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

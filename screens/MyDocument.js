@@ -841,7 +841,7 @@ const MyDocument = props => {
           </View>
           <View style={styles.buttonBox}>
             <Text style={styles.text}>{newTranslation?.drivingLicense}</Text>
-            <Button title={newTranslation?.view} onPress={uploadDl} />
+            <Button title={newTranslation?.view} onPress={()=>props.navigation.navigate("Dl_list", {list: allDocListDetail?.licenceDetails?.licenceDetails})} />
           </View>
           {/* <View style={styles.buttonBox}>
             <Text style={styles.text}>{translation.jobPermit}</Text>
