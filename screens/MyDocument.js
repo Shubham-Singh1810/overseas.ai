@@ -74,6 +74,8 @@ const MyDocument = props => {
 
   const {translation, newTranslation} = useGlobalState();
   // function to upload passport
+  const [passportFrontPrev, setShowPassportFrontPrev] = useState('');
+  const [passportBackPrev, setShowPassportBackPrev] = useState('');
   const uploadPassport = () => {
     setShowPassportPopUp(true);
     setPassportFormType('Add');
@@ -86,6 +88,8 @@ const MyDocument = props => {
       frontPage: '',
       backPage: '',
     });
+    setShowPassportFrontPrev("");
+    setShowPassportBackPrev("")
   };
   // function to upload cv
   const uploadCv = async () => {
@@ -337,8 +341,7 @@ const MyDocument = props => {
         });
         props.navigation.navigate('Covid', {
           uri: response.data?.covidUrl,
-        })
-        
+        });
       }
       if (response.data.msg == 'Covid certificate already uploaded.') {
         Toast.show({
@@ -390,6 +393,7 @@ const MyDocument = props => {
         type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
       setPassportForm({...passportForm, frontPage: result[0]});
+      setShowPassportFrontPrev(result[0].uri);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -407,6 +411,7 @@ const MyDocument = props => {
         type: [DocumentPicker.types.images], // You can specify the types of documents to pick
       });
       setPassportForm({...passportForm, backPage: result[0]});
+      setShowPassportBackPrev(result[0].uri)
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User canceled the document picker
@@ -449,6 +454,7 @@ const MyDocument = props => {
           visibilityTime: 3000, // Duration in milliseconds
         });
         getAllDocList();
+        setShowPassportPopUp(false)
         setPassportForm({
           passportNumber: '',
           passportCategory: '',
@@ -525,6 +531,7 @@ const MyDocument = props => {
             backPage: '',
           });
         }, 2000);
+        setShowPassportPopUp(false)
       } else {
         console.log('sekufh', response);
       }
@@ -559,6 +566,8 @@ const MyDocument = props => {
         setEditPassportFrontPage(false);
         setEditPassportBackPage(false);
         setShowPassportPopUp(true);
+        setShowPassportFrontPrev(response?.data.data.frontPage);
+        setShowPassportBackPrev(response?.data.data.backPage)
       } else {
         console.warn('Something went wrong');
       }
@@ -593,8 +602,8 @@ const MyDocument = props => {
       if (response?.data?.msg == 'Document uploaded successfully.') {
         props.navigation.navigate('Other Doc Prev', {
           uri: response.data?.data?.document_image,
-          docType
-        })
+          docType,
+        });
       } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
@@ -889,9 +898,11 @@ const MyDocument = props => {
             {allDocListDetail?.highEduCertificate?.certificate !=
             'https://overseas.ai/placeholder/person.jpg' ? (
               <Pressable
-                onPress={()=>props.navigation.navigate('Highest Education', {
-                  uri: allDocListDetail?.highEduCertificate?.certificate,
-                })}
+                onPress={() =>
+                  props.navigation.navigate('Highest Education', {
+                    uri: allDocListDetail?.highEduCertificate?.certificate,
+                  })
+                }
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -948,10 +959,12 @@ const MyDocument = props => {
                   <View style={styles.buttonBox}>
                     <Text style={styles.text}>{v?.document_type}</Text>
                     <Pressable
-                      onPress={() => props.navigation.navigate('Other Doc Prev', {
-                        uri: v?.document_image,
-                        docType:v?.document_type
-                      })}
+                      onPress={() =>
+                        props.navigation.navigate('Other Doc Prev', {
+                          uri: v?.document_image,
+                          docType: v?.document_type,
+                        })
+                      }
                       style={{
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -1082,7 +1095,7 @@ const MyDocument = props => {
                 style={[styles.input, {marginBottom: 15, padding: 17}]}>
                 <Text style={{color: 'gray'}}>
                   {passportForm.passportIssueDate == ''
-                    ? newTranslation?.placeOfIssue
+                    ? 'Passport Issue Date'
                     : passportForm.passportIssueDate}
                 </Text>
               </TouchableOpacity>
@@ -1114,31 +1127,20 @@ const MyDocument = props => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Image
-                    source={require('../images/passportIcon.png')}
-                    style={{height: 120, width: 100}}
-                  />
-                  {passportFormType == 'Add' ? (
-                    <Text
-                      style={{
-                        color: '#035292',
-                        textDecorationLine: 'underline',
-                        fontWeight: '600',
-                      }}>
-                      {passportForm.frontPage != ''
-                        ? 'Selected'
-                        : 'Upload Front Image'}
-                    </Text>
+                  {passportFrontPrev ? (
+                    <Image
+                      source={{
+                        uri: passportFrontPrev,
+                      }}
+                      style={{height: 120, width: 100}}
+                    />
                   ) : (
-                    <Text
-                      style={{
-                        color: '#035292',
-                        textDecorationLine: 'underline',
-                        fontWeight: '600',
-                      }}>
-                      Selected
-                    </Text>
+                    <Image
+                      source={require('../images/passportIcon.png')}
+                      style={{height: 120, width: 100}}
+                    />
                   )}
+                  <Text style={{color:"black"}}>Front image</Text>
                 </Pressable>
                 <Pressable
                   onPress={pickDocumentForBackImage}
@@ -1152,31 +1154,20 @@ const MyDocument = props => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Image
-                    source={require('../images/passportIcon.png')}
-                    style={{height: 120, width: 100}}
-                  />
-                  {passportFormType == 'Add' ? (
-                    <Text
-                      style={{
-                        color: '#035292',
-                        textDecorationLine: 'underline',
-                        fontWeight: '600',
-                      }}>
-                      {passportForm.backPage != ''
-                        ? 'Selected'
-                        : 'Upload Back Image'}
-                    </Text>
+                  {passportBackPrev ? (
+                    <Image
+                      source={{
+                        uri: passportBackPrev,
+                      }}
+                      style={{height: 120, width: 100}}
+                    />
                   ) : (
-                    <Text
-                      style={{
-                        color: '#035292',
-                        textDecorationLine: 'underline',
-                        fontWeight: '600',
-                      }}>
-                      Selected
-                    </Text>
+                    <Image
+                      source={require('../images/passportIcon.png')}
+                      style={{height: 120, width: 100}}
+                    />
                   )}
+                  <Text style={{color:"black"}}>Back image</Text>
                 </Pressable>
               </View>
             </ScrollView>
