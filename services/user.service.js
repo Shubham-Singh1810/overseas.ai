@@ -436,3 +436,19 @@ export const getOtpOnEmail = async (formData) => {
     throw error;
   }
 };
+
+export const storeAppTime = async (formData, access_token) => {
+  try {
+    const response = await axios.post(BASE_URL+"store-app-use-time", formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    } );
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
