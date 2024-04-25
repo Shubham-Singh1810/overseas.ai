@@ -507,7 +507,6 @@ export default function CandidateFormDetails() {
       newErrors.empRelocationIntQ = newTranslation.pleaseEnterRelocationIntrest;
       result = false;
     }
-
     setFormDataError(newErrors);
     return result;
   };

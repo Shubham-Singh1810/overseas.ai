@@ -355,6 +355,19 @@ const MyProfile = props => {
               </Pressable>
               <Pressable
                 onPress={() =>
+                  props.navigation.navigate('Career Graph', {backTo: 'MyProfile'})
+                }>
+                <View style={styles.navItem}>
+                  <Image
+                    source={require('../images/careerGraph.png')}
+                    resizeMode="contain"
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>Career Graph</Text>
+                </View>
+              </Pressable>
+              <Pressable
+                onPress={() =>
                   props.navigation.navigate('Contact Us', {backTo: 'MyProfile'})
                 }>
                 <View style={styles.navItem}>

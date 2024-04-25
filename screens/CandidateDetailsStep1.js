@@ -184,7 +184,7 @@ const CandidateDetailsStep1 = props => {
     empWhatsapp: '',
     empLanguage: '',
     empMS: '',
-    empPassportQ: '',
+    empPassportQ: '', 
     empSkill: '',
     empOccuId: '',
     empInternationMigrationExp: '',

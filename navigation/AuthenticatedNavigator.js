@@ -52,6 +52,8 @@ import Covid from '../screens/Covide';
 import HighestEducation from '../screens/HighestEducatuin';
 import OtherDocPrev from '../screens/OtherDocPrev';
 import Dl_list from '../screens/Dl_list';
+import Career from '../screens/Career';
+import CreateGraph from '../screens/CreateGraph';
 
 const Drawer = createDrawerNavigator();
 
@@ -376,6 +378,24 @@ const AuthenticatedNavigator = () => {
           component={Dl_list}
           options={({navigation, route}) => ({
             title: "Driving License",
+            // headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Career Graph"
+          component={Career}
+          options={({navigation, route}) => ({
+            title: "Career Graph",
+            // headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Create Career"
+          component={CreateGraph}
+          options={({navigation, route}) => ({
+            title: "Create Career",
             // headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}

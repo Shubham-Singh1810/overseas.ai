@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Button,
   RefreshControl,
+  PermissionsAndroid, Platform
 } from 'react-native';
 import React, {useState, useRef} from 'react';
 import JobGola from '../components/JobGola';
@@ -37,7 +38,8 @@ import HraGolaFeed from '../components/HraGolaFeed';
 import CourseGola from '../components/CourseGola';
 import InstituteFeedGola from '../components/InstituteFeedGola';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
-
+import {request, PERMISSIONS} from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
 const Home = props => {
   useAndroidBackHandler(() => {
     if (searchJobKey || searchCounterKey) {
@@ -195,6 +197,30 @@ const Home = props => {
     );
     setDynamicFeedArray(shuffledArr);
   };
+  const requestLocationPermission = async (permission) => {
+    request(permission).then((result) => {
+      console.warn(result)
+      if(result=="granted"){
+        getLocation()
+      }else{
+        useAndroidBackHandler(() => {
+          return true;
+        });
+      }
+    });
+  };
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const { latitude, longitude } = position.coords;
+        console.log('Current Location:', latitude, longitude);
+      },
+      error => {
+        console.error('Error getting location:', error);
+      },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  };
   useFocusEffect(
     React.useCallback(() => {
       getInstituteListFunc();
@@ -203,6 +229,7 @@ const Home = props => {
       getHomeDataFunc();
       getHraFunc();
       handleGetNews();
+      requestLocationPermission(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
     }, []),
   );
   useFocusEffect(
