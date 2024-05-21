@@ -1,8 +1,10 @@
 import {StyleSheet, Text, Image, Pressable, View, Modal} from 'react-native';
 import React, {useState} from 'react';
 import Video from 'react-native-video';
+import WebView from 'react-native-webview';
 const CandidateVideoGola = ({value, index}) => {
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
+  
   return (
     <>
       <Pressable
@@ -69,6 +71,8 @@ const CandidateVideoGola = ({value, index}) => {
                   : value?.afterDepartureVideo,
               }}></Video>
             
+      
+      
           </View>
         </View>
       </Modal>

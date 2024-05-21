@@ -353,6 +353,19 @@ const MyProfile = props => {
                   </Text>
                 </View>
               </Pressable>
+              {/* <Pressable
+                onPress={() =>
+                  props.navigation.navigate('Language Training')
+                }>
+                <View style={styles.navItem}>
+                  <Image
+                    source={require('../images/applicationIcon.png')}
+                    resizeMode="contain"
+                    style={{height: 20, width: 20, marginRight: 10}}
+                  />
+                  <Text style={styles.navText}>Language Training</Text>
+                </View>
+              </Pressable>
               <Pressable
                 onPress={() =>
                   props.navigation.navigate('Career Graph', {backTo: 'MyProfile'})
@@ -365,7 +378,7 @@ const MyProfile = props => {
                   />
                   <Text style={styles.navText}>Career Graph</Text>
                 </View>
-              </Pressable>
+              </Pressable> */}
               <Pressable
                 onPress={() =>
                   props.navigation.navigate('Contact Us', {backTo: 'MyProfile'})

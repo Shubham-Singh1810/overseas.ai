@@ -29,6 +29,7 @@ import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PassportApply from '../screens/PassportApply';
+import LanguageTraining from '../screens/LanguageTraining';
 
 const CustomDrawerContent = props => {
   const {navigation} = props;
@@ -95,11 +96,11 @@ const CustomDrawerContent = props => {
       subMenu: [],
     },
     {
-      title: 'News Feed',
-      hindiName: 'समाचार पढ़े',
-      banglaName: 'খবর পড়ুন',
-      component: NewsFeed,
-      name: 'News Feed',
+      title: 'Language Training',
+      hindiName: 'भाषा प्रशिक्षण',
+      banglaName: 'ভাষা প্রশিক্ষণ',
+      component: LanguageTraining,
+      name: 'Language Training',
       subMenu: [],
     },
     {
@@ -108,6 +109,14 @@ const CustomDrawerContent = props => {
       banglaName: 'সার্টিফিকেট পান',
       component: GetCertificate,
       name: 'Get Certificate',
+      subMenu: [],
+    },
+    {
+      title: 'News Feed',
+      hindiName: 'समाचार पढ़े',
+      banglaName: 'খবর পড়ুন',
+      component: NewsFeed,
+      name: 'News Feed',
       subMenu: [],
     },
     {

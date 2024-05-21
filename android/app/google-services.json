@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "225038228781",
+    "project_id": "overseas-47b37",
+    "storage_bucket": "overseas-47b37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225038228781:android:0db4b5e3b6e22f5dd507a4",
+        "android_client_info": {
+          "package_name": "ai.overseas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_aV1zewFV4ti5EsU1vafx8EoXyifJ5Qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

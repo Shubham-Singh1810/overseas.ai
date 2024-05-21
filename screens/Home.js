@@ -10,15 +10,20 @@ import {
   ActivityIndicator,
   Button,
   RefreshControl,
-  PermissionsAndroid, Platform
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import JobGola from '../components/JobGola';
 import CandidateVideoGola from '../components/CandidateVideoGola';
 import CountryGola from '../components/CountryGola';
 import SearchResult from '../components/SearchResult';
 import {useGlobalState} from '../GlobalProvider';
-import {submitReference, checkServiceCode} from '../services/user.service';
+import {
+  submitReference,
+  storeUserLocation,
+  checkServiceCode,
+} from '../services/user.service';
 import {
   getCountries,
   getCountriesForJobs,
@@ -40,6 +45,7 @@ import InstituteFeedGola from '../components/InstituteFeedGola';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
+import messaging from '@react-native-firebase/messaging';
 const Home = props => {
   useAndroidBackHandler(() => {
     if (searchJobKey || searchCounterKey) {
@@ -104,7 +110,7 @@ const Home = props => {
       getCountryList();
     }, []),
   );
-  // logic to build a dynamic feed start
+  
 
   const [jobFeed, setJobFeed] = useState([]);
   const [instituteFeed, setInstituteFeed] = useState([]);
@@ -197,30 +203,64 @@ const Home = props => {
     );
     setDynamicFeedArray(shuffledArr);
   };
-  const requestLocationPermission = async (permission) => {
-    request(permission).then((result) => {
-      console.warn(result)
-      if(result=="granted"){
-        getLocation()
-      }else{
+  const [storeLocationFcm, setStoreLocationFcm] = useState({
+    latitude: '',
+    longitude: '',
+    fcmToken: '',
+  });
+  
+
+  const getLocation = async () => {
+    try {
+      Geolocation.getCurrentPosition(
+        async position => {
+          // Make the callback function async
+          const {latitude, longitude} = position.coords;
+          setStoreLocationFcm({...storeLocationFcm, latitude:latitude, longitude:longitude})
+        },
+        error => {
+          console.error('Error getting location:', error);
+        },
+        // {enableHighAccuracy: false, timeout: 50000, maximumAge: 1000},
+      );
+    } catch (error) {
+      console.error('Unexpected error:', error);
+    }
+  };
+
+  const requestLocationPermission = async permission => {
+    request(permission).then(result => {
+      if (result == 'granted') {
+        getLocation();
+      } else {
         useAndroidBackHandler(() => {
           return true;
         });
       }
     });
   };
-  const getLocation = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const { latitude, longitude } = position.coords;
-        console.log('Current Location:', latitude, longitude);
-      },
-      error => {
-        console.error('Error getting location:', error);
-      },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
+
+  const storeLocationAndFcm = async () => {
+    let user = await AsyncStorage.getItem('user');
+    let fcmToken = await AsyncStorage.getItem("fcmToken")
+    try {
+      let response = await storeUserLocation(
+        {
+          latitude: storeLocationFcm.latitude ? storeLocationFcm.latitude:"not provided" ,
+          longitude: storeLocationFcm.longitude ? storeLocationFcm.longitude:"not provided",
+          device_id: fcmToken,
+        },
+        JSON.parse(user).access_token,
+      );
+    } catch (error) {
+      console.error('Error storing user location and fcm:', error);
+    }
   };
+  useFocusEffect(
+    React.useCallback(() => {
+        storeLocationAndFcm()
+    }, [storeLocationFcm.latitude, storeLocationFcm.longitude]),
+  );
   useFocusEffect(
     React.useCallback(() => {
       getInstituteListFunc();
@@ -229,9 +269,10 @@ const Home = props => {
       getHomeDataFunc();
       getHraFunc();
       handleGetNews();
-      requestLocationPermission(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+      requestLocationPermission(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
     }, []),
   );
+
   useFocusEffect(
     React.useCallback(() => {
       setTimeout(() => {
@@ -569,41 +610,36 @@ const Home = props => {
                         </View>
                       );
                     }
-                    
                   })}
-                        <View style={styles.jobsList}>
-                          <Text style={styles.heading}>
-                            {translation.hereFromOther}
-                          </Text>
-                          <ScrollView horizontal={true}>
-                            {loaderCandidate ? (
-                              <View
-                                style={{
-                                  height: 130,
-                                  width: 100,
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                }}>
-                                <ActivityIndicator />
-                              </View>
-                            ) : (
-                              <>
-                                {homeData?.afterDepartureVideos.map((v, i) => {
-                                  return (
-                                    <CandidateVideoGola value={v} index={i} />
-                                  );
-                                })}
-                                {homeData?.beforeDepartureVideo.map((v, i) => {
-                                  return (
-                                    <CandidateVideoGola value={v} index={i} />
-                                  );
-                                })}
-                              </>
-                            )}
-                          </ScrollView>
+                  <View style={styles.jobsList}>
+                    <Text style={styles.heading}>
+                      {translation.hereFromOther}
+                    </Text>
+                    <ScrollView horizontal={true}>
+                      {loaderCandidate ? (
+                        <View
+                          style={{
+                            height: 130,
+                            width: 100,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <ActivityIndicator />
                         </View>
-                      
+                      ) : (
+                        <>
+                          {homeData?.afterDepartureVideos.map((v, i) => {
+                            return <CandidateVideoGola value={v} index={i} />;
+                          })}
+                          {homeData?.beforeDepartureVideo.map((v, i) => {
+                            return <CandidateVideoGola value={v} index={i} />;
+                          })}
+                        </>
+                      )}
+                    </ScrollView>
+                  </View>
+
                   {dynamicFeedArr?.slice(5, pageNo * 10).map((v, i) => {
                     if (v?.dataType == 'hra') {
                       return (
@@ -668,7 +704,6 @@ const Home = props => {
                         </View>
                       );
                     }
-                    
                   })}
 
                   {showPageLoader && (

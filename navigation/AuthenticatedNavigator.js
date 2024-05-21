@@ -54,10 +54,13 @@ import OtherDocPrev from '../screens/OtherDocPrev';
 import Dl_list from '../screens/Dl_list';
 import Career from '../screens/Career';
 import CreateGraph from '../screens/CreateGraph';
+import LanguageTraining from '../screens/LanguageTraining';
+import SelectTrainingOccu from '../screens/SelectTrainingOccu';
+import Phase1 from '../screens/Phase1';
 
 const Drawer = createDrawerNavigator();
 
-const AuthenticatedNavigator = () => {
+const AuthenticatedNavigator = ({fcmToken}) => {
   const {translation, newTranslation, globalState, setGlobalState} =
     useGlobalState();
   const getProfileStrengthFunc = async () => {
@@ -397,6 +400,33 @@ const AuthenticatedNavigator = () => {
           options={({navigation, route}) => ({
             title: "Create Career",
             // headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Language Training"
+          component={LanguageTraining}
+          options={({navigation, route}) => ({
+            title: "Language Training",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+         <Drawer.Screen
+          name="Select Training Occu"
+          component={SelectTrainingOccu}
+          options={({navigation, route}) => ({
+            title: "Select Training Occupation",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+<Drawer.Screen
+          name="Phase 1"
+          component={Phase1}
+          options={({navigation, route}) => ({
+            title: "Phase 1",
+            headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

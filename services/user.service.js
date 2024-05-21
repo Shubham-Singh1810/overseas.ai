@@ -452,3 +452,19 @@ export const storeAppTime = async (formData, access_token) => {
     throw error;
   }
 };
+export const storeUserLocation = async (formData, access_token) => {
+  // console.warn(formData)
+  try {
+    const response = await axios.post(BASE_URL+"store-user-location", formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+        Authorization: `Bearer ${access_token}`
+      }
+    } );
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};

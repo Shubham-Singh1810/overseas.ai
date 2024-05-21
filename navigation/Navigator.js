@@ -69,7 +69,7 @@ const Navigator = () => {
   };
   return (
     <View style={styles.main}>
-      {globalState?.user ? <AuthenticatedNavigator /> : <LayoutNavigator />}
+      {globalState?.user ? <AuthenticatedNavigator/> : <LayoutNavigator />}
       <Modal visible={showPopup} transparent={true}>
         <View
           style={{
