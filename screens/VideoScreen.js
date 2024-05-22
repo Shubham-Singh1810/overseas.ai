@@ -11,6 +11,7 @@ import {
   TextInput,
   ActivityIndicator,
   Share,
+  Linking,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
@@ -450,10 +451,13 @@ const VideoScreen = props => {
                       resizeMode="cover"
                     /> */}
                       <Pressable
+                        // onPress={() => Linking.openURL(v?.videoUrl)}
                         onPress={() => {
                           setVideoPlayUrl(v?.videoUrl);
+
                           setShowVideoPlayer(true);
-                        }}>
+                        }}
+                      >
                         <Image
                           style={{
                             height: 100,
@@ -577,6 +581,7 @@ const VideoScreen = props => {
                       paused={true}
                     /> */}
                       <Pressable
+                        // onPress={() => Linking.openURL(v?.videoUrl)}
                         onPress={() => {
                           setVideoPlayUrl(v?.videoUrl);
                           setShowVideoPlayer(true);
@@ -1074,9 +1079,9 @@ const VideoScreen = props => {
             backgroundColor: 'rgba(0,0,0,0.5)',
             alignItems: 'center',
             flex: 1,
-            padding: 18,
+            // padding: 18,
           }}>
-          <View style={{backgroundColor: 'white', padding: 18, width: 350}}>
+          <View style={{backgroundColor: 'white',flex:1, padding: 18, width: "100%"}}>
             <Pressable
               style={{
                 backgroundColor: 'white',
@@ -1086,41 +1091,21 @@ const VideoScreen = props => {
               }}
               onPress={() => setShowVideoPlayer(false)}>
               <Text style={{fontSize: 16, fontWeight: '500', color: 'black'}}>
-                Video Player {console.log(videoPlayUrl)}
+                Video Player
               </Text>
               <Image source={require('../images/close.png')} />
             </Pressable>
-            {isLoading ? (
-              <View
-                style={{
-                  height: 300,
-                  width: '100%',
-                  marginVertical: 15,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <ActivityIndicator
-                  size="large"
-                  color="gray"
-                  style={styles.loader}
-                />
-              </View>
-            ) : (
-              <Video
-                style={{
-                  height: 300,
-                  width: '100%',
-                  marginVertical: 15,
-                }}
-                resizeMode="contain"
-                onLoadStart={() => setIsLoading(true)}
-                onReadyForDisplay={() => setIsLoading(false)}
-                controls={true}
+            <View style={{borderWidth: 1, flex: 1, width:"100%", marginTop:20}}>
+              <WebView
                 source={{
                   uri: videoPlayUrl,
-                }}></Video>
-            )}
+                }}
+                style={{flex:1, width: "100%"}}
+                javaScriptEnabled={true} // Enable JavaScript
+                allowsInlineMediaPlayback={true} // Allow inline media playback
+                mediaPlaybackRequiresUserAction={false} // Automatically play videos without user interaction
+              />
+            </View>
           </View>
         </View>
       </Modal>
