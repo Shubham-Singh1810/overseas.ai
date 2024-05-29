@@ -9,6 +9,7 @@ import {
   Pressable,
   Modal,
   Image,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -20,6 +21,7 @@ import DatePicker from 'react-native-modern-datepicker';
 import {Picker} from '@react-native-picker/picker';
 import MyMultipleSelectPopUp from '../components/MyMultipleSelectPopUp';
 import MySingleSelectPopUp from '../components/MySingleSelectPopUp';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import {countryCodeList} from '../services/countryCodeList';
 import {
   getOccupations,
@@ -35,7 +37,7 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import ExperiencePopStep1 from '../components/ExperiencePopStep1';
 import {registerUserStep1, addExperienceStep2} from '../services/user.service';
-import { newsData } from '../services/migrating_workers (2) (1)';
+import {newsData} from '../services/migrating_workers (2) (1)';
 export default function CandidateFormDetails() {
   const {globalState, newTranslation, setGlobalState} = useGlobalState();
   const [showStatePref, setShowStatePref] = useState(false);
@@ -166,7 +168,7 @@ export default function CandidateFormDetails() {
         value: item.name,
       }));
       setStateList(state);
-      setStateListforPref(statePref)
+      setStateListforPref(statePref);
     } catch (error) {
       console.log(error);
     }
@@ -370,7 +372,8 @@ export default function CandidateFormDetails() {
         text2: 'Form validation failed',
         visibilityTime: 3000,
       });
-      newErrors.empOccuId = newTranslation.presentWorkingDepartmentIsRequiredField;
+      newErrors.empOccuId =
+        newTranslation.presentWorkingDepartmentIsRequiredField;
       result = false;
     }
     if (formData.empSkill == '') {
@@ -381,7 +384,7 @@ export default function CandidateFormDetails() {
         text2: 'Form validation failed',
         visibilityTime: 3000,
       });
-      newErrors.empSkill =newTranslation.presentOccupationIsRequiredField;
+      newErrors.empSkill = newTranslation.presentOccupationIsRequiredField;
       result = false;
     }
     if (formData.empEdu == '') {
@@ -392,7 +395,8 @@ export default function CandidateFormDetails() {
         text2: 'Form validation failed',
         visibilityTime: 3000,
       });
-      newErrors.empEdu = newTranslation.highestEducationQualificationIsRequiredField;
+      newErrors.empEdu =
+        newTranslation.highestEducationQualificationIsRequiredField;
       result = false;
     }
     if (formData.empTechEdu == '') {
@@ -447,7 +451,8 @@ export default function CandidateFormDetails() {
         text2: 'Form validation failed',
         visibilityTime: 3000,
       });
-      newErrors.empPanchayat = newTranslation.pamchayatMunicipalityIsRequiredField;
+      newErrors.empPanchayat =
+        newTranslation.pamchayatMunicipalityIsRequiredField;
       result = false;
     }
     if (formData.empPin.length != 6) {
@@ -470,7 +475,8 @@ export default function CandidateFormDetails() {
         text2: 'Form validation failed',
         visibilityTime: 3000,
       });
-      newErrors.empInternationMigrationExp = newTranslation.pleaseSelectExperienceType;
+      newErrors.empInternationMigrationExp =
+        newTranslation.pleaseSelectExperienceType;
       result = false;
     }
     if (formData.empDailyWage == '') {
@@ -565,7 +571,9 @@ export default function CandidateFormDetails() {
     <>
       <ScrollView style={styles.main}>
         <View>
-          <Text style={styles.heading}>{newTranslation?.pleaseEnterYourDetails}</Text>
+          <Text style={styles.heading}>
+            {newTranslation?.pleaseEnterYourDetails}
+          </Text>
         </View>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>{newTranslation.enterDateOfBirth}</Text>
@@ -593,10 +601,10 @@ export default function CandidateFormDetails() {
                 style={{
                   width: 330,
                   borderRadius: 10,
-                  padding: 20,
+                  // padding: 20,
                   backgroundColor: '#fff',
                 }}>
-                <View
+                {/* <View
                   style={{
                     borderBottomColor: '#ccc',
                     borderBottomWidth: 1,
@@ -613,9 +621,9 @@ export default function CandidateFormDetails() {
                   <Pressable onPress={() => setShowCalender(false)}>
                     <Image source={require('../images/close.png')} />
                   </Pressable>
-                </View>
+                </View> */}
 
-                <DatePicker
+                {/* <DatePicker
                   mode="calender"
                   format="YYYY-MM-DD"
                   onDateChange={date => {
@@ -636,6 +644,33 @@ export default function CandidateFormDetails() {
                       setFormDataError({...formDataError, empDob: ''});
                     }
                   }}
+                /> */}
+                <DateTimePickerModal
+                  isVisible={showCalender}
+                  mode="date"
+                  onConfirm={selecteddate => {
+                    const date = new Date(selecteddate);
+                    const year = date.getFullYear();
+                    if (year < 2010) {
+                      const month = (date.getMonth() + 1)
+                        .toString()
+                        .padStart(2, '0');
+                      const day = date.getDate().toString().padStart(2, '0');
+                      const formattedDate = `${year}-${month}-${day}`;
+                      setFormData({...formData, empDob: formattedDate});
+                      setShowCalender(false);
+                      setFormDataError({...formDataError, empDob: ''});
+                    } else {
+                      setShowCalender(false);
+                      Toast.show({
+                        type: 'error', 
+                        position: 'top',
+                        text1: 'Age must be more than 16 years',
+                        visibilityTime: 3000, 
+                      });
+                    }
+                  }}
+                  onCancel={() => setShowCalender(false)}
                 />
               </View>
             </View>
@@ -797,7 +832,9 @@ export default function CandidateFormDetails() {
           />
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation?.selectMaritalStatus}</Text>
+          <Text style={styles.label}>
+            {newTranslation?.selectMaritalStatus}
+          </Text>
           <View
             style={[
               {
@@ -890,7 +927,9 @@ export default function CandidateFormDetails() {
           <Text style={styles.errorText}>{formDataError.empPassportQ}</Text>
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation.selectPreferedDepartment}</Text>
+          <Text style={styles.label}>
+            {newTranslation.selectPreferedDepartment}
+          </Text>
           <Pressable
             style={[
               styles.input,
@@ -921,7 +960,9 @@ export default function CandidateFormDetails() {
           />
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation.selectPreferedOccupation}</Text>
+          <Text style={styles.label}>
+            {newTranslation.selectPreferedOccupation}
+          </Text>
           <Pressable
             style={[
               styles.input,
@@ -951,7 +992,9 @@ export default function CandidateFormDetails() {
           />
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation.highestEducationQualification}</Text>
+          <Text style={styles.label}>
+            {newTranslation.highestEducationQualification}
+          </Text>
           <Pressable
             style={[
               styles.input,
@@ -1043,19 +1086,20 @@ export default function CandidateFormDetails() {
             </Text>
           </Pressable>
           <Text style={styles.errorText}>{formDataError.empState}</Text>
-          {stateList?.length>0 && <MySingleSelectPopUp
-            title="Select State"
-            toggle={showStatePopUp}
-            showSearch={true}
-            setToggle={setShowStatePopUp}
-            inputOption={stateList}
-            callBackFunck={value => {
-              setFormDataError({...formDataError, empState: ''});
-              setFormData({...formData, empState: value});
-              getDistrictListFunc(value);
-            }}
-          />}
-          
+          {stateList?.length > 0 && (
+            <MySingleSelectPopUp
+              title="Select State"
+              toggle={showStatePopUp}
+              showSearch={true}
+              setToggle={setShowStatePopUp}
+              inputOption={stateList}
+              callBackFunck={value => {
+                setFormDataError({...formDataError, empState: ''});
+                setFormData({...formData, empState: value});
+                getDistrictListFunc(value);
+              }}
+            />
+          )}
         </View>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>{newTranslation.District}*</Text>
@@ -1090,7 +1134,9 @@ export default function CandidateFormDetails() {
         </View>
         {formData.empState == '35' ? (
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>{newTranslation.selectPoliceStation}</Text>
+            <Text style={styles.label}>
+              {newTranslation.selectPoliceStation}
+            </Text>
             <Pressable
               style={[
                 styles.input,
@@ -1114,7 +1160,14 @@ export default function CandidateFormDetails() {
               setToggle={setShowPsPopUp}
               inputOption={psList}
               callBackFunck={value => {
-                setFormData({...formData, empPS: value, empPanchayatID:"", empPanchayat:"", empVillage:"", empVillageID:""});
+                setFormData({
+                  ...formData,
+                  empPS: value,
+                  empPanchayatID: '',
+                  empPanchayat: '',
+                  empVillage: '',
+                  empVillageID: '',
+                });
                 getPanchayatById(value);
                 getVillageList(value);
                 setFormDataError({...formDataError, empPS: ''});
@@ -1123,7 +1176,9 @@ export default function CandidateFormDetails() {
           </View>
         ) : (
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>{newTranslation.enterPoliceStation}</Text>
+            <Text style={styles.label}>
+              {newTranslation.enterPoliceStation}
+            </Text>
             <TextInput
               style={[
                 styles.input,
@@ -1140,7 +1195,9 @@ export default function CandidateFormDetails() {
         )}
         {formData.empState == '35' ? (
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>{newTranslation.selectPanchayatMunicipality}</Text>
+            <Text style={styles.label}>
+              {newTranslation.selectPanchayatMunicipality}
+            </Text>
             <Pressable
               style={[
                 styles.input,
@@ -1171,7 +1228,9 @@ export default function CandidateFormDetails() {
           </View>
         ) : (
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>{newTranslation?.enterPanchayatMunicipality}</Text>
+            <Text style={styles.label}>
+              {newTranslation?.enterPanchayatMunicipality}
+            </Text>
             <TextInput
               style={[
                 styles.input,
@@ -1263,7 +1322,9 @@ export default function CandidateFormDetails() {
           </Text>
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation?.selectExperienceType}</Text>
+          <Text style={styles.label}>
+            {newTranslation?.selectExperienceType}
+          </Text>
           <View
             style={[
               {
@@ -1295,7 +1356,9 @@ export default function CandidateFormDetails() {
                   });
                 }}
               />
-              <Text style={{color: 'black'}}>{newTranslation.International}</Text>
+              <Text style={{color: 'black'}}>
+                {newTranslation.International}
+              </Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
@@ -1359,7 +1422,9 @@ export default function CandidateFormDetails() {
           </Text>
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation?.enterPresentMonthlyIncome}</Text>
+          <Text style={styles.label}>
+            {newTranslation?.enterPresentMonthlyIncome}
+          </Text>
           <TextInput
             style={[
               styles.input,
@@ -1375,7 +1440,9 @@ export default function CandidateFormDetails() {
           <Text style={styles.errorText}>{formDataError.empDailyWage}</Text>
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation?.enterExpectedMonthlyIncome}</Text>
+          <Text style={styles.label}>
+            {newTranslation?.enterExpectedMonthlyIncome}
+          </Text>
           <TextInput
             style={[
               styles.input,
@@ -1398,7 +1465,9 @@ export default function CandidateFormDetails() {
           </Text>
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation?.preferedJobLocation}</Text>
+          <Text style={styles.label}>
+            {newTranslation?.preferedJobLocation}
+          </Text>
           <View
             style={[
               {
@@ -1425,7 +1494,9 @@ export default function CandidateFormDetails() {
                   setFormDataError({...formDataError, empRelocationIntQ: ''});
                 }}
               />
-              <Text style={{color: 'black'}}>{newTranslation.International}</Text>
+              <Text style={{color: 'black'}}>
+                {newTranslation.International}
+              </Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <RadioButton
@@ -1450,7 +1521,7 @@ export default function CandidateFormDetails() {
           <View>
             {formData.empRelocationIntQ == 'No' ? (
               <>
-                <View style={{flexDirection: 'row', marginTop:-20}}>
+                <View style={{flexDirection: 'row', marginTop: -20}}>
                   <Text
                     style={{
                       position: 'relative',
@@ -1476,7 +1547,7 @@ export default function CandidateFormDetails() {
               </>
             ) : (
               <>
-              <View style={{flexDirection: 'row', marginTop:-20}}>
+                <View style={{flexDirection: 'row', marginTop: -20}}>
                   <Text
                     style={{
                       position: 'relative',
@@ -1534,7 +1605,9 @@ export default function CandidateFormDetails() {
           <Text style={styles.errorText}></Text>
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation.referencePersonPhoneNumber}</Text>
+          <Text style={styles.label}>
+            {newTranslation.referencePersonPhoneNumber}
+          </Text>
           <TextInput
             style={styles.input}
             onChangeText={text => setFormData({...formData, empRefPhone: text})}
@@ -1544,7 +1617,9 @@ export default function CandidateFormDetails() {
           <Text style={styles.errorText}></Text>
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>{newTranslation?.referencePersonDistanceFromYou}</Text>
+          <Text style={styles.label}>
+            {newTranslation?.referencePersonDistanceFromYou}
+          </Text>
           <View style={styles.input}>
             <Picker
               selectedValue={formData.empRefDistance}
@@ -1603,38 +1678,40 @@ export default function CandidateFormDetails() {
         setShowExperiencePopUp={setShowExperiencePopUp}
         showExperiencePopUp={showExperiencePopUp}
         localUser={localUser}
-        showCountry={
-          formData.empInternationMigrationExp == '' ? true : false
-        }
+        showCountry={formData.empInternationMigrationExp == '' ? true : false}
       />
-      {stateListforPref?.length>0 && <MyMultipleSelectPopUp
-        title="Select prefered job state"
-        toggle={showStatePref}
-        showSearch={true}
-        setToggle={setShowStatePref}
-        inputOption={stateListforPref}
-        callBackFunck={value => {
-          setFormData({
-            ...formData,
-            empRelocationIntQState: JSON.stringify(value),
-          });
-        }}
-      />}
-      
-      {countryList?.length>0 && <MyMultipleSelectPopUp
-        title="Select prefered job country"
-        toggle={showCountryPref}
-        showSearch={true}
-        setToggle={setShowCountryPref}
-        inputOption={countryList}
-        callBackFunck={value => {
-          setFormData({
-            ...formData,
-            empRelocationIntQCountry: JSON.stringify(value),
-          });
-        }}
-      />}
-      
+      {stateListforPref?.length > 0 && (
+        <MyMultipleSelectPopUp
+          title="Select prefered job state"
+          toggle={showStatePref}
+          showSearch={true}
+          setToggle={setShowStatePref}
+          inputOption={stateListforPref}
+          callBackFunck={value => {
+            setFormData({
+              ...formData,
+              empRelocationIntQState: JSON.stringify(value),
+            });
+          }}
+        />
+      )}
+
+      {countryList?.length > 0 && (
+        <MyMultipleSelectPopUp
+          title="Select prefered job country"
+          toggle={showCountryPref}
+          showSearch={true}
+          setToggle={setShowCountryPref}
+          inputOption={countryList}
+          callBackFunck={value => {
+            setFormData({
+              ...formData,
+              empRelocationIntQCountry: JSON.stringify(value),
+            });
+          }}
+        />
+      )}
+
       <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );

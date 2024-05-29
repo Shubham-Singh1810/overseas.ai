@@ -17,6 +17,7 @@ import {getCountries, getState} from '../services/info.service';
 import {useFocusEffect} from '@react-navigation/native';
 import MyMultipleSelectPopUp from '../components/MyMultipleSelectPopUp';
 import DatePicker from 'react-native-modern-datepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import DocumentPicker from 'react-native-document-picker';
 import Toast from 'react-native-toast-message';
@@ -776,32 +777,15 @@ const Dl_list = props => {
             style={{
               width: 330,
               borderRadius: 10,
-              padding: 20,
+             
               backgroundColor: '#fff',
             }}>
-            <View
-              style={{
-                borderBottomColor: '#ccc',
-                borderBottomWidth: 1,
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
-                Liecence Issue Date
-              </Text>
-              <TouchableOpacity onPress={() => setShowDlIssueCalender(false)}>
-                <Image source={require('../images/close.png')} />
-              </TouchableOpacity>
-            </View>
-
-            <DatePicker
-              mode="calender"
-              format="YYYY-MM-DD"
-              onDateChange={date => {
-                const formattedDate = moment(date, 'YYYY/MM/DD').format(
+            
+            <DateTimePickerModal
+              isVisible={showDlIssueCalender}
+              mode="date"
+              onConfirm={selecteddate => {
+                const formattedDate = moment(selecteddate, 'YYYY/MM/DD').format(
                   'YYYY-MM-DD',
                 );
                 setDlFormData({
@@ -810,6 +794,7 @@ const Dl_list = props => {
                 });
                 setShowDlIssueCalender(false);
               }}
+              onCancel={() => setShowDlIssueCalender(false)}
             />
           </View>
         </View>
@@ -826,32 +811,15 @@ const Dl_list = props => {
             style={{
               width: 330,
               borderRadius: 10,
-              padding: 20,
+              
               backgroundColor: '#fff',
             }}>
-            <View
-              style={{
-                borderBottomColor: '#ccc',
-                borderBottomWidth: 1,
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
-                Liecence Expire Date
-              </Text>
-              <TouchableOpacity onPress={() => setShowDlExpCalender(false)}>
-                <Image source={require('../images/close.png')} />
-              </TouchableOpacity>
-            </View>
-
-            <DatePicker
-              mode="calender"
-              format="YYYY-MM-DD"
-              onDateChange={date => {
-                const formattedDate = moment(date, 'YYYY/MM/DD').format(
+            
+            <DateTimePickerModal
+              isVisible={showDlExpCalender}
+              mode="date"
+              onConfirm={selecteddate => {
+                const formattedDate = moment(selecteddate, 'YYYY/MM/DD').format(
                   'YYYY-MM-DD',
                 );
                 setDlFormData({
@@ -860,6 +828,7 @@ const Dl_list = props => {
                 });
                 setShowDlExpCalender(false);
               }}
+              onCancel={() => setShowDlExpCalender(false)}
             />
           </View>
         </View>

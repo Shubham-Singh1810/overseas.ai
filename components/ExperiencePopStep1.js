@@ -13,6 +13,7 @@ import {
 import React, {useState} from 'react';
 import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {Picker} from '@react-native-picker/picker';
 import {getSkillsByOccuId, getCountries} from '../services/info.service';
 import {useFocusEffect} from '@react-navigation/native';
@@ -63,7 +64,7 @@ const ExperiencePopStep1 = ({
   };
   const [showJoiningCalender, setShowJoiningCalender] = useState(false);
   const [showEndingCalender, setShowEndingCalender] = useState(false);
-const [showAddMorePop, setShowAddMorePop]=useState(false)
+  const [showAddMorePop, setShowAddMorePop] = useState(false);
   const [formDataError, setFormDataError] = useState({
     experinceCompanyName: '',
     jobProfile: '',
@@ -152,7 +153,7 @@ const [showAddMorePop, setShowAddMorePop]=useState(false)
           localUser.access_token,
         );
         if (response?.data?.msg == 'Experience Successfully Added.') {
-          setShowAddMorePop(true)
+          setShowAddMorePop(true);
           setExperienceForm({
             experinceCompanyName: '',
             jobProfile: '',
@@ -164,7 +165,6 @@ const [showAddMorePop, setShowAddMorePop]=useState(false)
             stateName: '',
             certificateImage: '',
           });
-         
         } else {
           Toast.show({
             type: 'error', // 'success', 'error', 'info', or any custom type you define
@@ -428,39 +428,14 @@ const [showAddMorePop, setShowAddMorePop]=useState(false)
                       style={{
                         width: 330,
                         borderRadius: 10,
-                        padding: 20,
                         backgroundColor: '#fff',
                       }}>
-                      <View
-                        style={{
-                          borderBottomColor: '#ccc',
-                          borderBottomWidth: 1,
-                          paddingHorizontal: 20,
-                          paddingVertical: 10,
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            fontWeight: '600',
-                            fontSize: 20,
-                            color: 'gray',
-                          }}>
-                          Joining Date
-                        </Text>
-                        <Pressable
-                          onPress={() => setShowJoiningCalender(false)}>
-                          <Image source={require('../images/close.png')} />
-                        </Pressable>
-                      </View>
-
-                      <DatePicker
-                        mode="calender"
-                        format="YYYY-MM-DD"
-                        onDateChange={date => {
+                      <DateTimePickerModal
+                        isVisible={showJoiningCalender}
+                        mode="date"
+                        onConfirm={selecteddate => {
                           const formattedDate = moment(
-                            date,
+                            selecteddate,
                             'YYYY/MM/DD',
                           ).format('YYYY-MM-DD');
                           setExperienceForm({
@@ -473,6 +448,7 @@ const [showAddMorePop, setShowAddMorePop]=useState(false)
                             fromDate: '',
                           });
                         }}
+                        onCancel={() => setShowJoiningCalender(false)}
                       />
                     </View>
                   </View>
@@ -509,37 +485,15 @@ const [showAddMorePop, setShowAddMorePop]=useState(false)
                       style={{
                         width: 330,
                         borderRadius: 10,
-                        padding: 20,
+
                         backgroundColor: '#fff',
                       }}>
-                      <View
-                        style={{
-                          borderBottomColor: '#ccc',
-                          borderBottomWidth: 1,
-                          paddingHorizontal: 20,
-                          paddingVertical: 10,
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            fontWeight: '600',
-                            fontSize: 20,
-                            color: 'gray',
-                          }}>
-                          Ending Date
-                        </Text>
-                        <Pressable onPress={() => setShowEndingCalender(false)}>
-                          <Image source={require('../images/close.png')} />
-                        </Pressable>
-                      </View>
-                      <DatePicker
-                        mode="calender"
-                        format="YYYY-MM-DD"
-                        onDateChange={date => {
+                      <DateTimePickerModal
+                        isVisible={showEndingCalender}
+                        mode="date"
+                        onConfirm={selecteddate => {
                           const formattedDate = moment(
-                            date,
+                            selecteddate,
                             'YYYY/MM/DD',
                           ).format('YYYY-MM-DD');
                           setExperienceForm({
@@ -552,6 +506,7 @@ const [showAddMorePop, setShowAddMorePop]=useState(false)
                             toDate: '',
                           });
                         }}
+                        onCancel={() => setShowEndingCalender(false)}
                       />
                     </View>
                   </View>
@@ -564,7 +519,13 @@ const [showAddMorePop, setShowAddMorePop]=useState(false)
         <Toast ref={ref => Toast.setRef(ref)} />
       </Modal>
       <Modal transparent={true} visible={showAddMorePop} animationType="slide">
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:"rgba(0,0,0,.3)"}}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,.3)',
+          }}>
           <View
             style={{
               width: 300,
@@ -573,12 +534,29 @@ const [showAddMorePop, setShowAddMorePop]=useState(false)
               borderRadius: 3,
               // borderWidth:1
             }}>
-            <Text style={{color: 'black', fontSize:16, textAlign:"center"}}>
+            <Text style={{color: 'black', fontSize: 16, textAlign: 'center'}}>
               Experience added successfully!
             </Text>
-            <View style={{flexDirection:"row", justifyContent:"space-around", marginTop:40}}>
-              <Button title='Add More' color="#28a745" onPress={()=>{setShowAddMorePop(false)}}/>
-              <Button title='Go Back' color="#dc3545" onPress={()=>{setShowExperiencePopUp(false),setShowAddMorePop(false)}}/>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                marginTop: 40,
+              }}>
+              <Button
+                title="Add More"
+                color="#28a745"
+                onPress={() => {
+                  setShowAddMorePop(false);
+                }}
+              />
+              <Button
+                title="Go Back"
+                color="#dc3545"
+                onPress={() => {
+                  setShowExperiencePopUp(false), setShowAddMorePop(false);
+                }}
+              />
             </View>
           </View>
         </View>

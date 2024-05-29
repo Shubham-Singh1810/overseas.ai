@@ -11,6 +11,7 @@ import {
   Pressable,
 } from 'react-native';
 import React, {useState} from 'react';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {
   addPassportApi,
   getPassportDetails,
@@ -1193,33 +1194,17 @@ const MyDocument = props => {
             style={{
               width: 330,
               borderRadius: 10,
-              padding: 20,
+              
               backgroundColor: '#fff',
             }}>
-            <View
-              style={{
-                borderBottomColor: '#ccc',
-                borderBottomWidth: 1,
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
-                Passport Issue Date
-              </Text>
-              <TouchableOpacity
-                onPress={() => setShowPassportIssueCalender(false)}>
-                <Image source={require('../images/close.png')} />
-              </TouchableOpacity>
-            </View>
+            
 
-            <DatePicker
-              mode="calender"
-              format="YYYY-MM-DD"
-              onDateChange={date => {
-                const formattedDate = moment(date, 'YYYY/MM/DD').format(
+            
+            <DateTimePickerModal
+              isVisible={showPassportIssueCalender}
+              mode="date"
+              onConfirm={selecteddate => {
+                const formattedDate = moment(selecteddate, 'YYYY/MM/DD').format(
                   'YYYY-MM-DD',
                 );
                 setPassportForm({
@@ -1228,6 +1213,7 @@ const MyDocument = props => {
                 });
                 setShowPassportIssueCalender(false);
               }}
+              onCancel={() => setShowPassportIssueCalender(false)}
             />
           </View>
         </View>
@@ -1244,33 +1230,14 @@ const MyDocument = props => {
             style={{
               width: 330,
               borderRadius: 10,
-              padding: 20,
+              
               backgroundColor: '#fff',
             }}>
-            <View
-              style={{
-                borderBottomColor: '#ccc',
-                borderBottomWidth: 1,
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
-                Passport Expire Date
-              </Text>
-              <TouchableOpacity
-                onPress={() => setShowPassportExpCalender(false)}>
-                <Image source={require('../images/close.png')} />
-              </TouchableOpacity>
-            </View>
-
-            <DatePicker
-              mode="calender"
-              format="YYYY-MM-DD"
-              onDateChange={date => {
-                const formattedDate = moment(date, 'YYYY/MM/DD').format(
+            <DateTimePickerModal
+              isVisible={showPassportExpCalender}
+              mode="date"
+              onConfirm={selecteddate => {
+                const formattedDate = moment(selecteddate, 'YYYY/MM/DD').format(
                   'YYYY-MM-DD',
                 );
                 setPassportForm({
@@ -1279,6 +1246,7 @@ const MyDocument = props => {
                 });
                 setShowPassportExpCalender(false);
               }}
+              onCancel={() => setShowPassportExpCalender(false)}
             />
           </View>
         </View>

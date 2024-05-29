@@ -14,6 +14,7 @@ import Toast from 'react-native-toast-message';
 import moment from 'moment';
 import React, {useState} from 'react';
 import DatePicker from 'react-native-modern-datepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import {useFocusEffect} from '@react-navigation/native';
@@ -358,7 +359,7 @@ const ExperienceScreen = props => {
       viewOccupation: value.jobOccupation,
       certificateImagePrev: value.certificateImage,
     });
-    setImgPrev(value.certificateImage)
+    setImgPrev(value.certificateImage);
     setExperienceForm({
       experinceCompanyName: value.experinceCompanyName,
       jobProfile: value.jobProfileId,
@@ -543,9 +544,9 @@ const ExperienceScreen = props => {
                 <Pressable style={{marginBottom: 15}} onPress={pickDocument}>
                   {experienceForm.certificateImage != '' ? (
                     <Image
-                    source={{
-                      uri: imgPrev,
-                    }}
+                      source={{
+                        uri: imgPrev,
+                      }}
                       style={{
                         width: '100%',
                         height: 100,
@@ -594,16 +595,13 @@ const ExperienceScreen = props => {
                             : newTranslation?.selected}
                         </Text>
                         <Pressable
-                          onPress={() =>{
+                          onPress={() => {
                             setExperienceForm({
                               ...experienceForm,
                               certificateImage: '',
-                              
-                            })
-                            setImgPrev("")
-                          }
-                            
-                          }>
+                            });
+                            setImgPrev('');
+                          }}>
                           <Image source={require('../images/close.png')} />
                         </Pressable>
                       </View>
@@ -936,28 +934,9 @@ const ExperienceScreen = props => {
             style={{
               width: 330,
               borderRadius: 10,
-              padding: 20,
               backgroundColor: '#fff',
             }}>
-            <View
-              style={{
-                borderBottomColor: '#ccc',
-                borderBottomWidth: 1,
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
-                Select Date Of Joining
-              </Text>
-              <TouchableOpacity onPress={() => setJoiningCalender(false)}>
-                <Image source={require('../images/close.png')} />
-              </TouchableOpacity>
-            </View>
-
-            <DatePicker
+            {/* <DatePicker
               mode="calender"
               format="YYYY-MM-DD"
               onDateChange={date => {
@@ -969,6 +948,21 @@ const ExperienceScreen = props => {
                 setExperienceForm({...experienceForm, fromDate: formattedDate});
                 setJoiningCalender(false);
               }}
+            /> */}
+            <DateTimePickerModal
+              isVisible={showJoiningCalender}
+              mode="date"
+              onConfirm={selecteddate => {
+                const date = new Date(selecteddate);
+                const year = date.getFullYear();
+
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                const formattedDate = `${year}-${month}-${day}`;
+                setExperienceForm({...experienceForm, fromDate: formattedDate});
+                setJoiningCalender(false);
+              }}
+              onCancel={() => setJoiningCalender(false)}
             />
           </View>
         </View>
@@ -985,38 +979,22 @@ const ExperienceScreen = props => {
             style={{
               width: 330,
               borderRadius: 10,
-              padding: 20,
+
               backgroundColor: '#fff',
             }}>
-            <View
-              style={{
-                borderBottomColor: '#ccc',
-                borderBottomWidth: 1,
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontWeight: '600', fontSize: 20}}>
-                Select Date Of Exit
-              </Text>
-              <TouchableOpacity onPress={() => setEndingCalender(false)}>
-                <Image source={require('../images/close.png')} />
-              </TouchableOpacity>
-            </View>
-
-            <DatePicker
-              mode="calender"
-              format="YYYY-MM-DD"
-              onDateChange={date => {
-                const formattedDate = moment(date, 'YYYY/MM/DD').format(
-                  'YYYY-MM-DD',
-                );
-                console.log(formattedDate);
+            <DateTimePickerModal
+              isVisible={showEndingCalender}
+              mode="date"
+              onConfirm={selecteddate => {
+                const date = new Date(selecteddate);
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                const formattedDate = `${year}-${month}-${day}`;
                 setExperienceForm({...experienceForm, toDate: formattedDate});
                 setEndingCalender(false);
               }}
+              onCancel={() => setEndingCalender(false)}
             />
           </View>
         </View>
