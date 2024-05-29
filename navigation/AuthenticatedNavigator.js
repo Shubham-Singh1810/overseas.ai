@@ -57,6 +57,9 @@ import CreateGraph from '../screens/CreateGraph';
 import LanguageTraining from '../screens/LanguageTraining';
 import SelectTrainingOccu from '../screens/SelectTrainingOccu';
 import Phase1 from '../screens/Phase1';
+// import Assignment1 from '../screens/Assignment1';
+import VoiceToText from '../components/VoiceToText';
+import Phase2 from '../screens/Phase2';
 
 const Drawer = createDrawerNavigator();
 
@@ -421,11 +424,29 @@ const AuthenticatedNavigator = ({fcmToken}) => {
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
-<Drawer.Screen
+        <Drawer.Screen
           name="Phase 1"
           component={Phase1}
           options={({navigation, route}) => ({
             title: "Phase 1",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Phase 2"
+          component={Phase2}
+          options={({navigation, route}) => ({
+            title: "Phase 2",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Assignment 1"
+          component={VoiceToText}
+          options={({navigation, route}) => ({
+            title: "Assignment 1",
             headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}

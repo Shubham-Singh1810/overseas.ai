@@ -3,7 +3,7 @@ import React,{useState, useEffect} from 'react';
 import WebView from 'react-native-webview';
 import VoiceToText from '../components/VoiceToText';
 
-const Phase1 = props => {
+const Phase2 = props => {
   console.log(props?.route?.params?.data)
   const langData = props?.route?.params?.data
   return (
@@ -18,11 +18,11 @@ const Phase1 = props => {
             marginBottom: 20,
           }}>
           <Image source={require('../images/backIcon.png')} />
-          <Text style={{color: '#fff', fontWeight: '500'}}>Learn about basic words</Text>
+          <Text style={{color: '#fff', fontWeight: '500'}}>Learn about making sentences</Text>
         </Pressable>
         <WebView
           source={{
-            uri: langData?.phase1Video[0]?.path,
+            uri: langData?.phase2Video[0]?.path,
           }}
           style={{flex: 1}}
           javaScriptEnabled={true}
@@ -49,7 +49,7 @@ const Phase1 = props => {
   );
 };
 
-export default Phase1;
+export default Phase2;
 
 const styles = StyleSheet.create({
   main: {

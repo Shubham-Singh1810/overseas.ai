@@ -1,9 +1,12 @@
-import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
+import {StyleSheet, Text, View, Image, Pressable, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {getSkillsByOccuId} from '../services/info.service';
 import {useGlobalState} from '../GlobalProvider';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useFocusEffect} from '@react-navigation/native';
 import {set} from 'date-fns';
+import {languageTrainingData} from '../services/languageTraining';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const SelectTrainingOccu = props => {
   const {translation, newTranslation, globalState, setGlobalState} =
     useGlobalState();
@@ -23,6 +26,22 @@ const SelectTrainingOccu = props => {
   useEffect(() => {
     getSkillListByOccuId(JSON.parse(globalState.user).empData.empOccuId);
   }, []);
+  const getTrainingData = async id => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await languageTrainingData(
+        id,
+        JSON.parse(user).access_token,
+      );
+      if (response?.data?.message != 'Language training data not found') {
+        props.navigation.navigate('Phase 1', {data: response?.data});
+      } else {
+        Alert.alert('We are working on it');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={styles.main}>
       <View>
@@ -45,6 +64,9 @@ const SelectTrainingOccu = props => {
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
             <View style={{width: '50%'}}>
               <Pressable
+                onPress={() =>
+                  getTrainingData(JSON.parse(globalState.user).empData.empSkill)
+                }
                 style={[
                   {
                     backgroundColor: 'white',
@@ -80,6 +102,7 @@ const SelectTrainingOccu = props => {
                 return (
                   <View key={i} style={{width: '50%'}}>
                     <Pressable
+                      onPress={() => getTrainingData(v?.id)}
                       style={[
                         {
                           backgroundColor: 'white',
@@ -109,7 +132,9 @@ const SelectTrainingOccu = props => {
         </ScrollView>
 
         <Pressable
-          onPress={() => props.navigation.navigate('Phase 1')}
+          onPress={() =>
+            getTrainingData(JSON.parse(globalState.user).empData.empSkill)
+          }
           style={{
             backgroundColor: 'white',
             marginTop: 40,
@@ -125,7 +150,7 @@ const SelectTrainingOccu = props => {
               fontSize: 20,
               textAlign: 'center',
             }}>
-            Play
+            Next
           </Text>
         </Pressable>
       </View>
