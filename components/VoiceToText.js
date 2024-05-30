@@ -2,8 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Voice from '@react-native-voice/voice';
-
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const VoiceToText = (props) => {
+  useAndroidBackHandler(() => {
+    props.navigation.navigate('Select Training Occu');
+    return true;
+  });
   const imagesData = props?.route?.params?.data?.slideImage || [];
   const [recognized, setRecognized] = useState('');
   const [started, setStarted] = useState('');
@@ -122,7 +126,7 @@ const VoiceToText = (props) => {
   };
 
   const checkResults = (finalScore) => {
-    if (finalScore >= 2) {
+    if (finalScore >= 7) {
       Alert.alert(
         'Success',
         `You passed the assignment with ${finalScore} correct answers!`

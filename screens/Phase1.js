@@ -2,9 +2,12 @@ import {Pressable, StyleSheet, Text, Image, View} from 'react-native';
 import React,{useState, useEffect} from 'react';
 import WebView from 'react-native-webview';
 import VoiceToText from '../components/VoiceToText';
-
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const Phase1 = props => {
-  console.log(props?.route?.params?.data)
+  useAndroidBackHandler(() => {
+    props.navigation.navigate('Select Training Occu');
+    return true;
+  });
   const langData = props?.route?.params?.data
   return (
     <View style={styles.main}>

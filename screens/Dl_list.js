@@ -22,7 +22,11 @@ import moment from 'moment';
 import DocumentPicker from 'react-native-document-picker';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {addDrivingLiecence, getAllDocApi, editDrivingLiecence} from '../services/user.service';
+import {
+  addDrivingLiecence,
+  getAllDocApi,
+  editDrivingLiecence,
+} from '../services/user.service';
 const Dl_list = props => {
   useAndroidBackHandler(() => {
     props.navigation.navigate('My Documents');
@@ -282,49 +286,49 @@ const Dl_list = props => {
         name: dlFormData.licenseImage.name,
       });
     }
-      try {
-        let response = await editDrivingLiecence(
-          dlForm,
-          JSON.parse(user).access_token,
-        );
-        if (response.data.success) {
-          Toast.show({
-            type: 'success', // 'success', 'error', 'info', or any custom type you define
-            position: 'top',
-            text1: 'DL Successfully updated.',
-            visibilityTime: 3000, // Duration in milliseconds
-          });
-          setDlFormData({
-            licenceNumber: '',
-            licenceType: '',
-            licenceCategory: '',
-            fromDate: '',
-            toDate: '',
-            licenseImage: '',
-            licenceBackImage: '',
-            stateName: '',
-            countryName: '',
-          });
-          getAllDocList();
-          setShowAddPopUp(false)
-        } else {
-          Toast.show({
-            type: 'error', // 'success', 'error', 'info', or any custom type you define
-            position: 'top',
-            text1: 'Something went wrong.',
-            visibilityTime: 3000, // Duration in milliseconds
-          });
-          setShowAddPopUp(false)
-        }
-      } catch (error) {
+    try {
+      let response = await editDrivingLiecence(
+        dlForm,
+        JSON.parse(user).access_token,
+      );
+      if (response.data.success) {
+        Toast.show({
+          type: 'success', // 'success', 'error', 'info', or any custom type you define
+          position: 'top',
+          text1: 'DL Successfully updated.',
+          visibilityTime: 3000, // Duration in milliseconds
+        });
+        setDlFormData({
+          licenceNumber: '',
+          licenceType: '',
+          licenceCategory: '',
+          fromDate: '',
+          toDate: '',
+          licenseImage: '',
+          licenceBackImage: '',
+          stateName: '',
+          countryName: '',
+        });
+        getAllDocList();
+        setShowAddPopUp(false);
+      } else {
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           position: 'top',
-          text1: 'Internal server error',
+          text1: 'Something went wrong.',
           visibilityTime: 3000, // Duration in milliseconds
         });
-        setShowAddPopUp(false)
+        setShowAddPopUp(false);
       }
+    } catch (error) {
+      Toast.show({
+        type: 'error', // 'success', 'error', 'info', or any custom type you define
+        position: 'top',
+        text1: 'Internal server error',
+        visibilityTime: 3000, // Duration in milliseconds
+      });
+      setShowAddPopUp(false);
+    }
   };
   return (
     <View style={styles.main}>
@@ -374,7 +378,7 @@ const Dl_list = props => {
                 <Text style={styles.cardText}>Expire Date : </Text>
                 <Text style={{color: 'black'}}>{v?.toDate}</Text>
               </View>
-              
+
               <View
                 style={{
                   marginVertical: 10,
@@ -622,13 +626,16 @@ const Dl_list = props => {
                   <Text style={{color: 'gray'}}>Select Licence Category</Text>
                 ) : (
                   <Text style={{color: 'gray'}}>
-                    {formType=="Add" 
+                    {formType == 'Add'
                       ? dlFormData?.licenceCategory?.map((v, i) => {
                           return <>{v + '  '}</>;
                         })
-                      : formType=="Edit" && typeof dlFormData?.licenceCategory =="object" ? dlFormData?.licenceCategory?.map((v, i) => {
-                        return <>{v + '  '}</>;
-                      }): dlFormData?.licenceCategory}
+                      : formType == 'Edit' &&
+                        typeof dlFormData?.licenceCategory == 'object'
+                      ? dlFormData?.licenceCategory?.map((v, i) => {
+                          return <>{v + '  '}</>;
+                        })
+                      : dlFormData?.licenceCategory}
                   </Text>
                 )}
               </Pressable>
@@ -734,7 +741,11 @@ const Dl_list = props => {
               {errorText}
             </Text>
             <View style={{marginTop: 20}}>
-              <Button title={formType=="Add"? "Submit": "Update"} color="#035292" onPress={formType=="Add"? addDl: editDl} />
+              <Button
+                title={formType == 'Add' ? 'Submit' : 'Update'}
+                color="#035292"
+                onPress={formType == 'Add' ? addDl : editDl}
+              />
             </View>
           </View>
         </View>
@@ -765,74 +776,37 @@ const Dl_list = props => {
           setDlFormData({...dlFormData, licenceCategory: value})
         }
       />
-      <Modal transparent={true} visible={showDlIssueCalender}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              width: 330,
-              borderRadius: 10,
-             
-              backgroundColor: '#fff',
-            }}>
-            
-            <DateTimePickerModal
-              isVisible={showDlIssueCalender}
-              mode="date"
-              onConfirm={selecteddate => {
-                const formattedDate = moment(selecteddate, 'YYYY/MM/DD').format(
-                  'YYYY-MM-DD',
-                );
-                setDlFormData({
-                  ...dlFormData,
-                  fromDate: formattedDate,
-                });
-                setShowDlIssueCalender(false);
-              }}
-              onCancel={() => setShowDlIssueCalender(false)}
-            />
-          </View>
-        </View>
-      </Modal>
-      <Modal transparent={true} visible={showDlExpCalender}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              width: 330,
-              borderRadius: 10,
-              
-              backgroundColor: '#fff',
-            }}>
-            
-            <DateTimePickerModal
-              isVisible={showDlExpCalender}
-              mode="date"
-              onConfirm={selecteddate => {
-                const formattedDate = moment(selecteddate, 'YYYY/MM/DD').format(
-                  'YYYY-MM-DD',
-                );
-                setDlFormData({
-                  ...dlFormData,
-                  toDate: formattedDate,
-                });
-                setShowDlExpCalender(false);
-              }}
-              onCancel={() => setShowDlExpCalender(false)}
-            />
-          </View>
-        </View>
-      </Modal>
+      <DateTimePickerModal
+        isVisible={showDlIssueCalender}
+        mode="date"
+        onConfirm={selecteddate => {
+          const formattedDate = moment(selecteddate, 'YYYY/MM/DD').format(
+            'YYYY-MM-DD',
+          );
+          setDlFormData({
+            ...dlFormData,
+            fromDate: formattedDate,
+          });
+          setShowDlIssueCalender(false);
+        }}
+        onCancel={() => setShowDlIssueCalender(false)}
+      />
+      <DateTimePickerModal
+        isVisible={showDlExpCalender}
+        mode="date"
+        onConfirm={selecteddate => {
+          const formattedDate = moment(selecteddate, 'YYYY/MM/DD').format(
+            'YYYY-MM-DD',
+          );
+          setDlFormData({
+            ...dlFormData,
+            toDate: formattedDate,
+          });
+          setShowDlExpCalender(false);
+        }}
+        onCancel={() => setShowDlExpCalender(false)}
+      />
+
       {/* add dl popup end */}
       <Toast ref={ref => Toast.setRef(ref)} />
     </View>

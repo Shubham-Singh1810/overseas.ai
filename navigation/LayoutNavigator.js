@@ -18,11 +18,7 @@ const LayoutNavigator = () => {
     <NavigationContainer>
       <SafeAreaView style={styles.main}>
         <Stack.Navigator>
-        <Stack.Screen
-            name="CandidateDetails1"
-            component={CandidateFormDetails}
-            options={{headerShown: false}}
-          />
+        
           <Stack.Screen name="Select Language" options={{headerShown: false}} component={LanguageSelect} />
           <Stack.Screen
             name="Login"
@@ -31,10 +27,12 @@ const LayoutNavigator = () => {
             })}
             component={Auth}
           />
-          
-          <Stack.Screen name="Verify Otp" options={{title: newTranslation?.verifyOTP}} component={Otp} />
-          
-          
+          <Stack.Screen
+            name="CandidateDetails1"
+            component={CandidateFormDetails}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen name="Verify Otp" options={{title: newTranslation?.verifyOTP}} component={Otp} />  
           <Stack.Screen
             name="CandidateDetails2"
             component={CandidateDetails2}

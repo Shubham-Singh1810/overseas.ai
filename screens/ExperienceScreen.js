@@ -922,83 +922,36 @@ const ExperienceScreen = props => {
         </View>
         <Toast ref={ref => Toast.setRef(ref)} />
       </Modal>
-      <Modal transparent={true} visible={showJoiningCalender}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              width: 330,
-              borderRadius: 10,
-              backgroundColor: '#fff',
-            }}>
-            {/* <DatePicker
-              mode="calender"
-              format="YYYY-MM-DD"
-              onDateChange={date => {
-                const formattedDate = moment(date, 'YYYY/MM/DD').format(
-                  'YYYY-MM-DD',
-                );
-                console.log(formattedDate);
+      <DateTimePickerModal
+        isVisible={showJoiningCalender}
+        mode="date"
+        onConfirm={selecteddate => {
+          const date = new Date(selecteddate);
+          const year = date.getFullYear();
 
-                setExperienceForm({...experienceForm, fromDate: formattedDate});
-                setJoiningCalender(false);
-              }}
-            /> */}
-            <DateTimePickerModal
-              isVisible={showJoiningCalender}
-              mode="date"
-              onConfirm={selecteddate => {
-                const date = new Date(selecteddate);
-                const year = date.getFullYear();
+          const month = (date.getMonth() + 1).toString().padStart(2, '0');
+          const day = date.getDate().toString().padStart(2, '0');
+          const formattedDate = `${year}-${month}-${day}`;
+          setExperienceForm({...experienceForm, fromDate: formattedDate});
+          setJoiningCalender(false);
+        }}
+        onCancel={() => setJoiningCalender(false)}
+      />
+      <DateTimePickerModal
+        isVisible={showEndingCalender}
+        mode="date"
+        onConfirm={selecteddate => {
+          const date = new Date(selecteddate);
+          const year = date.getFullYear();
+          const month = (date.getMonth() + 1).toString().padStart(2, '0');
+          const day = date.getDate().toString().padStart(2, '0');
+          const formattedDate = `${year}-${month}-${day}`;
+          setExperienceForm({...experienceForm, toDate: formattedDate});
+          setEndingCalender(false);
+        }}
+        onCancel={() => setEndingCalender(false)}
+      />
 
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const day = date.getDate().toString().padStart(2, '0');
-                const formattedDate = `${year}-${month}-${day}`;
-                setExperienceForm({...experienceForm, fromDate: formattedDate});
-                setJoiningCalender(false);
-              }}
-              onCancel={() => setJoiningCalender(false)}
-            />
-          </View>
-        </View>
-      </Modal>
-      <Modal transparent={true} visible={showEndingCalender}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              width: 330,
-              borderRadius: 10,
-
-              backgroundColor: '#fff',
-            }}>
-            <DateTimePickerModal
-              isVisible={showEndingCalender}
-              mode="date"
-              onConfirm={selecteddate => {
-                const date = new Date(selecteddate);
-                const year = date.getFullYear();
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const day = date.getDate().toString().padStart(2, '0');
-                const formattedDate = `${year}-${month}-${day}`;
-                setExperienceForm({...experienceForm, toDate: formattedDate});
-                setEndingCalender(false);
-              }}
-              onCancel={() => setEndingCalender(false)}
-            />
-          </View>
-        </View>
-      </Modal>
       <Modal transparent={true} visible={loading} animationType="slide">
         <View style={{backgroundColor: 'rgba(0,0,0,0.1)', flex: 1}}></View>
       </Modal>

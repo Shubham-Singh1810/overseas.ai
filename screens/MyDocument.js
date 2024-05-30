@@ -1182,25 +1182,7 @@ const MyDocument = props => {
         </View>
         <Toast ref={ref => Toast.setRef(ref)} />
       </Modal>
-      <Modal transparent={true} visible={showPassportIssueCalender}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              width: 330,
-              borderRadius: 10,
-              
-              backgroundColor: '#fff',
-            }}>
-            
-
-            
-            <DateTimePickerModal
+      <DateTimePickerModal
               isVisible={showPassportIssueCalender}
               mode="date"
               onConfirm={selecteddate => {
@@ -1215,25 +1197,7 @@ const MyDocument = props => {
               }}
               onCancel={() => setShowPassportIssueCalender(false)}
             />
-          </View>
-        </View>
-      </Modal>
-      <Modal transparent={true} visible={showPassportExpCalender}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0, 0, 0.5)',
-          }}>
-          <View
-            style={{
-              width: 330,
-              borderRadius: 10,
-              
-              backgroundColor: '#fff',
-            }}>
-            <DateTimePickerModal
+      <DateTimePickerModal
               isVisible={showPassportExpCalender}
               mode="date"
               onConfirm={selecteddate => {
@@ -1248,9 +1212,6 @@ const MyDocument = props => {
               }}
               onCancel={() => setShowPassportExpCalender(false)}
             />
-          </View>
-        </View>
-      </Modal>
       {/* DL UPLOAD */}
       <Modal transparent={true} visible={showDlPopUp} animationType="slide">
         <View

@@ -7,9 +7,15 @@ import {useFocusEffect} from '@react-navigation/native';
 import {set} from 'date-fns';
 import {languageTrainingData} from '../services/languageTraining';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const SelectTrainingOccu = props => {
   const {translation, newTranslation, globalState, setGlobalState} =
     useGlobalState();
+    useAndroidBackHandler(() => {
+      props.navigation.navigate('Language Training');
+      return true;
+    });
+    
   const [skills, setSkills] = useState([]);
   const getSkillListByOccuId = async id => {
     try {
