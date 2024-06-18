@@ -146,7 +146,7 @@ const GetInstituteById = props => {
                 {justifyContent: 'space-between'},
               ]}>
               <Text style={[styles.tableText]}>{newTranslation?.address}</Text>
-              <Text style={[styles.tableText, {width: 200}]}>
+              <Text style={[styles.tableText, {width: 200,textAlign:"right"}]}>
                 {params?.insAddress}
               </Text>
             </View>

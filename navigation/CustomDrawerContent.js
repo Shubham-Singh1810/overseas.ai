@@ -112,6 +112,14 @@ const CustomDrawerContent = props => {
       subMenu: [],
     },
     {
+      title: 'Trade Testing',
+      hindiName: 'व्यापार परीक्षण',
+      banglaName: 'ট্রেড টেস্টিং',
+      component: YourHra,
+      name: 'Trade Institute',
+      subMenu: [],
+    },
+    {
       title: 'News Feed',
       hindiName: 'समाचार पढ़े',
       banglaName: 'খবর পড়ুন',

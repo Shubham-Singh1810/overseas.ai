@@ -26,7 +26,7 @@ const AppliedCourseList = props => {
     try {
       let response = await getListOfAppliedCourse(JSON.parse(user).access_token);
       if(response.msg=="Applied courses list retrieved successfully!"){
-        setAppliedCourse(response.applied_courses);
+        setAppliedCourse(response?.applied_courses);
         setLoading(false)
       }
     } catch (error) {}

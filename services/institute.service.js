@@ -17,10 +17,40 @@ export const getInstituteList = async access_token => {
     throw error;
   }
 };
+export const getTradeList = async access_token => { 
+  try {
+    const response = await axios.get(BASE_URL + 'list-trade-center', {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
 export const getCourseByInstitute = async params => {
   try {
     const response = await axios.post(
       BASE_URL + 'courses-by-institute',
+      {instId: params.instId},
+      {
+        headers: {
+          Authorization: `Bearer ${params.access_token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+export const getTestByInstitute = async params => {
+  try {
+    const response = await axios.post(
+      BASE_URL + 'tests-by-institute',
       {instId: params.instId},
       {
         headers: {
@@ -50,9 +80,40 @@ export const getCourseList = async access_token => {
     throw error;
   }
 };
-
+export const getTestList = async access_token => {
+  try {
+    const response = await axios.get(
+      BASE_URL + 'list-all-trade-test',
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
 
 export const searchForCourse = async (params) => {
+  try {
+    const response = await axios.post(
+      BASE_URL + 'filter-courses', {instId:params.id},
+      {
+        headers: {
+          Authorization: `Bearer ${params?.access_token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+export const searchForTest = async (params) => {
   try {
     const response = await axios.post(
       BASE_URL + 'filter-courses', {instId:params.id},

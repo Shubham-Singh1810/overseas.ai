@@ -16,6 +16,22 @@ export const loginUsingPassword = async (formData) => {
   }
 };
 
+// Function to make a GET request
+export const getSummarizedVideo = async (access_token) => {
+  try {
+    const response = await axios.get(BASE_URL+"get-summarized-video" , {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
 export const loginUsingOtp = async (formData) => {
   try {
     const response = await axios.post(BASE_URL+"otp-request" , formData);

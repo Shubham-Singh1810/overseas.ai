@@ -15,11 +15,15 @@ import React, {useEffect, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getProfileStrength, getNotification} from '../services/user.service';
-
+import {
+  getProfileStrength,
+  getNotification,
+  getSummarizedVideo,
+} from '../services/user.service';
+import WebView from 'react-native-webview';
 const MyProfile = props => {
   const {translation, newTranslation, globalState, setGlobalState} =
-    useGlobalState(); 
+    useGlobalState();
   const handleLogOut = async () => {
     let user = await AsyncStorage.getItem('user');
     try {
@@ -106,149 +110,195 @@ const MyProfile = props => {
       console.error('Error fetching user data:', error);
     }
   };
+  const [videoUrl, setVideoUrl] = useState('');
+  const getSummarizedVideoFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getSummarizedVideo(JSON.parse(user).access_token);
+      if (response?.data?.message == 'No summarized video found') {
+        setShowResumeVideo(false);
+      } else {
+        setVideoUrl(response?.data?.summarizedVideo);
+        setShowResumeVideo(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const [showResumeVideo, setShowResumeVideo] = useState(false);
   useFocusEffect(
     React.useCallback(() => {
-    fetchUserData();
+      fetchUserData();
     }, [globalState.selectedLanguage]),
   );
+  useFocusEffect(
+    React.useCallback(() => {
+      getSummarizedVideoFunc();
+    }, [globalState.selectedLanguage]),
+  );
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   return (
     <>
-      <View style={styles.main}>
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginBottom: 15,
-              alignItems: 'center',
-            }}>
-            <View>
-              <View>
-                {JSON.parse(globalState?.user)?.empData?.empPhoto == null ? (
-                  <Image
-                    source={require('../images/dummyUserProfile.jpg')}
-                    style={styles.myPic}
-                  />
-                ) : (
-                  <Image
-                    source={{
-                      uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
-                    }}
-                    style={styles.myPic}
-                  />
-                )}
-              </View>
-              <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate('Edit Profile', {
-                    backTo: 'MyProfile',
-                  })
-                }>
-                <Text
-                  style={{
-                    textDecorationLine: 'underline',
-                    color: '#035292',
-                    textAlign: 'center',
-                    marginTop: 8,
-                  }}>
-                  {newTranslation?.edit}
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={{marginLeft: 15}}>
-              <Text style={styles.name}>
-                {JSON.parse(globalState?.user)?.empData?.empName}
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: -6,
-                  marginBottom: 3,
-                }}>
-                {renderStar()}
-              </View>
-
-              <Text style={[styles.welderText]}>
-                {
-                  JSON.parse(globalState?.user)?.empData?.empOccupationModel
-                    ?.occupation
-                }
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  //  marginTop:-10
-                }}>
-                <Image
-                  source={require('../images/greenPhoneIcon.png')}
-                  style={{marginRight: 5}}
-                />
-                <Text style={styles.welderText}>
-                  {JSON.parse(globalState?.user)?.empData?.empPhone}
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={{marginBottom: 5}}>
+      {!showVideoPlayer ? (
+        <View style={styles.main}>
+          <View>
             <View
               style={{
-                width: globalState?.profileStrength?.profileStrength + '%',
                 flexDirection: 'row',
-                marginBottom: 2,
-                justifyContent: 'flex-end',
+                marginBottom: 15,
+                alignItems: 'center',
               }}>
+              <View>
+                <View>
+                  {JSON.parse(globalState?.user)?.empData?.empPhoto == null ? (
+                    <Image
+                      source={require('../images/dummyUserProfile.jpg')}
+                      style={styles.myPic}
+                    />
+                  ) : (
+                    <Image
+                      source={{
+                        uri: JSON.parse(globalState?.user)?.empData?.empPhoto,
+                      }}
+                      style={styles.myPic}
+                    />
+                  )}
+                </View>
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate('Edit Profile', {
+                      backTo: 'MyProfile',
+                    })
+                  }>
+                  <Text
+                    style={{
+                      textDecorationLine: 'underline',
+                      color: '#035292',
+                      textAlign: 'center',
+                      marginTop: 8,
+                    }}>
+                    {newTranslation?.edit}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={{marginLeft: 15}}>
+                <Text style={styles.name}>
+                  {JSON.parse(globalState?.user)?.empData?.empName}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: -6,
+                    marginBottom: 3,
+                  }}>
+                  {renderStar()}
+                </View>
+
+                <Text style={[styles.welderText]}>
+                  {
+                    JSON.parse(globalState?.user)?.empData?.empOccupationModel
+                      ?.occupation
+                  }
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    //  marginTop:-10
+                  }}>
+                  <Image
+                    source={require('../images/greenPhoneIcon.png')}
+                    style={{marginRight: 5}}
+                  />
+                  <Text style={styles.welderText}>
+                    {JSON.parse(globalState?.user)?.empData?.empPhone}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={{marginBottom: 5}}>
+              <View
+                style={{
+                  width: globalState?.profileStrength?.profileStrength + '%',
+                  flexDirection: 'row',
+                  marginBottom: 2,
+                  justifyContent: 'flex-end',
+                }}>
+                <Text
+                  style={[
+                    styles.nameText,
+                    {
+                      color:
+                        globalState?.profileStrength?.profileStrength < 30
+                          ? '#dc3545'
+                          : globalState?.profileStrength?.profileStrength > 70
+                          ? '#079E3F'
+                          : '#007BFF',
+                      fontSize: 12,
+                    },
+                  ]}>
+                  {globalState?.profileStrength?.profileStrength}%
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: '100%',
+                  backgroundColor: '#fff',
+                  borderWidth: 0.3,
+                  height: 5,
+                }}></View>
+              <View
+                style={{
+                  backgroundColor:
+                    globalState?.profileStrength?.profileStrength < 30
+                      ? '#dc3545'
+                      : globalState?.profileStrength?.profileStrength > 70
+                      ? '#079E3F'
+                      : '#007BFF',
+                  borderRadius: 3,
+                  height: 5,
+                  width: globalState?.profileStrength?.profileStrength + '%',
+                  position: 'relative',
+                  bottom: 5,
+                }}></View>
               <Text
                 style={[
                   styles.nameText,
-                  {
-                    color:
-                      globalState?.profileStrength?.profileStrength < 30
-                        ? '#dc3545'
-                        : globalState?.profileStrength?.profileStrength > 70
-                        ? '#079E3F'
-                        : '#007BFF',
-                    fontSize: 12,
-                  },
+                  styles.fontWeight500,
+                  {marginTop: 5, marginBottom: -5, fontSize: 12},
                 ]}>
-                {globalState?.profileStrength?.profileStrength}%
+                {newTranslation?.profileStrength}
               </Text>
             </View>
-            <View
-              style={{
-                width: '100%',
-                backgroundColor: '#fff',
-                borderWidth: 0.3,
-                height: 5,
-              }}></View>
-            <View
-              style={{
-                backgroundColor:
-                  globalState?.profileStrength?.profileStrength < 30
-                    ? '#dc3545'
-                    : globalState?.profileStrength?.profileStrength > 70
-                    ? '#079E3F'
-                    : '#007BFF',
-                borderRadius: 3,
-                height: 5,
-                width: globalState?.profileStrength?.profileStrength + '%',
-                position: 'relative',
-                bottom: 5,
-              }}></View>
-            <Text
-              style={[
-                styles.nameText,
-                styles.fontWeight500,
-                {marginTop: 5, marginBottom: -5, fontSize: 12},
-              ]}>
-              {newTranslation?.profileStrength}
-            </Text>
+            {showResumeVideo && (
+              <Pressable
+                onPress={() => setShowVideoPlayer(true)}
+                style={{
+                  borderWidth: 1.5,
+                  borderRadius: 6,
+                  borderColor: '#194b81',
+                  marginTop: 15,
+                }}>
+                <Text
+                  style={{
+                    color: '#194b81',
+                    textAlign: 'center',
+                    fontSize: 15,
+                    paddingVertical: 10,
+                    elevation: 10,
+                  }}>
+                  Play Summarized Video
+                </Text>
+              </Pressable>
+            )}
+
+            {/* <Button title="" color=""/> */}
           </View>
-        </View>
-        <ScrollView style={{marginTop: 20}}>
-          <View>
+          <ScrollView style={{marginTop: 20}}>
             <View>
-              {/* <View style={styles.navItem}>
+              <View>
+                {/* <View style={styles.navItem}>
                 <Image
                   resizeMode="contain"
                   source={require('../images/careerGraph.png')}
@@ -257,103 +307,107 @@ const MyProfile = props => {
                 <Text style={styles.navText}>{translation.myCareerGraph}</Text>
               </View> */}
 
-              <Pressable
-                onPress={() =>
-                  props.navigation.navigate('Applied Courses', {
-                    backTo: 'MyProfile',
-                  })
-                }>
-                <View style={styles.navItem}>
-                  <Image
-                    resizeMode="contain"
-                    source={require('../images/capIcon.png')}
-                    style={{height: 20, width: 20, marginRight: 10}}
-                  />
-                  <Text style={styles.navText}>
-                    {translation.coursesApplied}
-                  </Text>
-                </View>
-              </Pressable>
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate('Applied Courses', {
+                      backTo: 'MyProfile',
+                    })
+                  }>
+                  <View style={styles.navItem}>
+                    <Image
+                      resizeMode="contain"
+                      source={require('../images/capIcon.png')}
+                      style={{height: 20, width: 20, marginRight: 10}}
+                    />
+                    <Text style={styles.navText}>
+                      {translation.coursesApplied}
+                    </Text>
+                  </View>
+                </Pressable>
 
-              <Pressable
-                onPress={() =>
-                  props.navigation.navigate('Applied Job', {
-                    backTo: 'MyProfile',
-                  })
-                }>
-                <View style={styles.navItem}>
-                  <Image
-                    resizeMode="contain"
-                    source={require('../images/jobApplied2.png')}
-                    style={{height: 20, width: 20, marginRight: 10}}
-                  />
-                  <Text style={styles.navText}>{translation.jobApplied}</Text>
-                </View>
-              </Pressable>
-              <Pressable
-                onPress={() =>
-                  props.navigation.navigate('My Documents', {
-                    backTo: 'MyProfile',
-                  })
-                }>
-                <View style={styles.navItem}>
-                  <Image
-                    resizeMode="contain"
-                    source={require('../images/documentIcon.png')}
-                    style={{height: 20, width: 20, marginRight: 10}}
-                  />
-                  <Text style={styles.navText}>{translation.myDocuments}</Text>
-                </View>
-              </Pressable>
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate('Applied Job', {
+                      backTo: 'MyProfile',
+                    })
+                  }>
+                  <View style={styles.navItem}>
+                    <Image
+                      resizeMode="contain"
+                      source={require('../images/jobApplied2.png')}
+                      style={{height: 20, width: 20, marginRight: 10}}
+                    />
+                    <Text style={styles.navText}>{translation.jobApplied}</Text>
+                  </View>
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate('My Documents', {
+                      backTo: 'MyProfile',
+                    })
+                  }>
+                  <View style={styles.navItem}>
+                    <Image
+                      resizeMode="contain"
+                      source={require('../images/documentIcon.png')}
+                      style={{height: 20, width: 20, marginRight: 10}}
+                    />
+                    <Text style={styles.navText}>
+                      {translation.myDocuments}
+                    </Text>
+                  </View>
+                </Pressable>
 
-              <Pressable
-                onPress={() =>
-                  props.navigation.navigate('Saved Jobs', {backTo: 'MyProfile'})
-                }>
-                <View style={styles.navItem}>
-                  <Image
-                    resizeMode="contain"
-                    source={require('../images/savedJobs.png')}
-                    style={{height: 20, width: 20, marginRight: 10}}
-                  />
-                  <Text style={styles.navText}>{translation.savedJobs}</Text>
-                </View>
-              </Pressable>
-              <Pressable
-                onPress={() =>
-                  props.navigation.navigate('Notifications', {
-                    backTo: 'MyProfile',
-                  })
-                }>
-                <View style={styles.navItem}>
-                  <Image
-                    resizeMode="contain"
-                    source={require('../images/notificationIcon.png')}
-                    style={{height: 20, width: 20, marginRight: 10}}
-                  />
-                  <Text style={styles.navText}>
-                    {translation.notifications}
-                  </Text>
-                </View>
-              </Pressable>
-              <Pressable
-                onPress={() =>
-                  props.navigation.navigate('My Experience', {
-                    backTo: 'MyProfile',
-                  })
-                }>
-                <View style={styles.navItem}>
-                  <Image
-                    source={require('../images/jobIcon.png')}
-                    resizeMode="contain"
-                    style={{height: 20, width: 20, marginRight: 10}}
-                  />
-                  <Text style={styles.navText}>
-                    {newTranslation.experience}
-                  </Text>
-                </View>
-              </Pressable>
-              {/* <Pressable
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate('Saved Jobs', {
+                      backTo: 'MyProfile',
+                    })
+                  }>
+                  <View style={styles.navItem}>
+                    <Image
+                      resizeMode="contain"
+                      source={require('../images/savedJobs.png')}
+                      style={{height: 20, width: 20, marginRight: 10}}
+                    />
+                    <Text style={styles.navText}>{translation.savedJobs}</Text>
+                  </View>
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate('Notifications', {
+                      backTo: 'MyProfile',
+                    })
+                  }>
+                  <View style={styles.navItem}>
+                    <Image
+                      resizeMode="contain"
+                      source={require('../images/notificationIcon.png')}
+                      style={{height: 20, width: 20, marginRight: 10}}
+                    />
+                    <Text style={styles.navText}>
+                      {translation.notifications}
+                    </Text>
+                  </View>
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate('My Experience', {
+                      backTo: 'MyProfile',
+                    })
+                  }>
+                  <View style={styles.navItem}>
+                    <Image
+                      source={require('../images/jobIcon.png')}
+                      resizeMode="contain"
+                      style={{height: 20, width: 20, marginRight: 10}}
+                    />
+                    <Text style={styles.navText}>
+                      {newTranslation.experience}
+                    </Text>
+                  </View>
+                </Pressable>
+                {/* <Pressable
                 onPress={() =>
                   props.navigation.navigate('Language Training')
                 }>
@@ -379,41 +433,64 @@ const MyProfile = props => {
                   <Text style={styles.navText}>Career Graph</Text>
                 </View>
               </Pressable> */}
-              <Pressable
-                onPress={() =>
-                  props.navigation.navigate('Contact Us', {backTo: 'MyProfile'})
-                }>
-                <View style={styles.navItem}>
-                  <Image
-                    source={require('../images/helpIcon.png')}
-                    resizeMode="contain"
-                    style={{height: 20, width: 20, marginRight: 10}}
-                  />
-                  <Text style={styles.navText}>{translation.needHelp}</Text>
-                </View>
-              </Pressable>
-              <Pressable onPress={() => setShowLogOutPopUp(true)}>
-                <View style={styles.navItem}>
-                  <Image
-                    source={require('../images/logoutIcon.png')}
-                    style={{
-                      height: 25,
-                      width: 25,
-                      position: 'relative',
-                      right: 3,
-                      marginRight: 10,
-                    }}
-                  />
-                  <Text style={styles.logout}>{translation.logOut}</Text>
-                </View>
-              </Pressable>
+                <Pressable
+                  onPress={() =>
+                    props.navigation.navigate('Contact Us', {
+                      backTo: 'MyProfile',
+                    })
+                  }>
+                  <View style={styles.navItem}>
+                    <Image
+                      source={require('../images/helpIcon.png')}
+                      resizeMode="contain"
+                      style={{height: 20, width: 20, marginRight: 10}}
+                    />
+                    <Text style={styles.navText}>{translation.needHelp}</Text>
+                  </View>
+                </Pressable>
+                <Pressable onPress={() => setShowLogOutPopUp(true)}>
+                  <View style={styles.navItem}>
+                    <Image
+                      source={require('../images/logoutIcon.png')}
+                      style={{
+                        height: 25,
+                        width: 25,
+                        position: 'relative',
+                        right: 3,
+                        marginRight: 10,
+                      }}
+                    />
+                    <Text style={styles.logout}>{translation.logOut}</Text>
+                  </View>
+                </Pressable>
+              </View>
             </View>
+          </ScrollView>
+
+          <Text style={{textAlign: 'center', padding: 10, color: 'gray'}}>
+            Version 2.1.0
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.main}>
+          <View style={{flexDirection:"row", alignItems:"center", marginVertical:10}}>
+            <Pressable onPress={()=>setShowVideoPlayer(false)}>
+            <Image source={require("../images/backIcon.png")}/>
+            </Pressable>
+            <Text style={{color:"black"}}>My Video Profile</Text>
           </View>
-        </ScrollView>
-        <Text style={{textAlign: 'center', padding: 10, color: 'gray'}}>
-          Version 2.1.0
-        </Text>
-      </View>
+          <WebView
+            source={{
+              uri: videoUrl,
+            }}
+            style={{flex: 1}}
+            javaScriptEnabled={true}
+            allowsInlineMediaPlayback={true}
+            mediaPlaybackRequiresUserAction={false}
+          />
+        </View>
+      )}
+
       <Modal transparent={true} visible={showLogOutPopUp} animationType="slide">
         <View
           style={{
@@ -563,6 +640,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nato Sans',
     color: 'maroon',
   },
+
   modalMain: {
     paddingHorizontal: 20,
     paddingVertical: 40,

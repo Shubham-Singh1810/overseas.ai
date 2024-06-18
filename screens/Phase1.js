@@ -21,7 +21,7 @@ const Phase1 = props => {
             marginBottom: 20,
           }}>
           <Image source={require('../images/backIcon.png')} />
-          <Text style={{color: '#fff', fontWeight: '500'}}>Learn about basic words</Text>
+          <Text style={{color: '#fff', fontWeight: '500'}}>Greetings And Introductions</Text>
         </Pressable>
         <WebView
           source={{
@@ -33,7 +33,7 @@ const Phase1 = props => {
           mediaPlaybackRequiresUserAction={false}
         />
         <Pressable
-          onPress={() => props.navigation.navigate('Assignment 1', {data: props?.route?.params?.data})}
+          onPress={() => props.navigation.navigate('Phase 2', {data: props?.route?.params?.data})}
           style={{
             backgroundColor: '#fff',
             flexDirection: 'row',
@@ -43,8 +43,7 @@ const Phase1 = props => {
             justifyContent:"center",
             borderRadius:6
           }}>
-          
-          <Text style={{color: '#19487C', fontWeight: '500'}}>Take Assignment</Text>
+          <Text style={{color: '#19487C', fontWeight: '500'}}>Next</Text>
         </Pressable>
         {/* <VoiceToText/> */}
       </View>

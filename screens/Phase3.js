@@ -3,7 +3,7 @@ import React,{useState, useEffect} from 'react';
 import WebView from 'react-native-webview';
 import VoiceToText from '../components/VoiceToText';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
-const Phase2 = props => {
+const Phase3 = props => {
   useAndroidBackHandler(() => {
     props.navigation.navigate('Select Training Occu');
     return true;
@@ -21,11 +21,11 @@ const Phase2 = props => {
             marginBottom: 20,
           }}>
           <Image source={require('../images/backIcon.png')} />
-          <Text style={{color: '#fff', fontWeight: '500'}}>Common Expression</Text>
+          <Text style={{color: '#fff', fontWeight: '500'}}>Numbers, Money</Text>
         </Pressable>
         <WebView
           source={{
-            uri: langData?.phase2Video[0]?.path,
+            uri: langData?.phase3Video[0]?.path,
           }}
           style={{flex: 1}}
           javaScriptEnabled={true}
@@ -33,7 +33,7 @@ const Phase2 = props => {
           mediaPlaybackRequiresUserAction={false}
         />
         <Pressable
-          onPress={() => props.navigation.navigate('Phase 3', {data: props?.route?.params?.data})}
+          onPress={() => props.navigation.navigate('Select Training Occu')}
           style={{
             backgroundColor: '#fff',
             flexDirection: 'row',
@@ -44,7 +44,7 @@ const Phase2 = props => {
             borderRadius:6
           }}>
           
-          <Text style={{color: '#19487C', fontWeight: '500'}}>Next</Text>
+          <Text style={{color: '#19487C', fontWeight: '500'}}>Start Again</Text>
         </Pressable>
         {/* <VoiceToText/> */}
       </View>
@@ -52,7 +52,7 @@ const Phase2 = props => {
   );
 };
 
-export default Phase2;
+export default Phase3;
 
 const styles = StyleSheet.create({
   main: {

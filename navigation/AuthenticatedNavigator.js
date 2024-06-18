@@ -60,6 +60,11 @@ import Phase1 from '../screens/Phase1';
 // import Assignment1 from '../screens/Assignment1';
 import VoiceToText from '../components/VoiceToText';
 import Phase2 from '../screens/Phase2';
+import Assignment2 from '../screens/Assignment2';
+import TradeInstituteList from '../screens/TradeInstituteList';
+import TradeCenterDetail from '../screens/TradeCenterDetail';
+import TestById from '../screens/TestById';
+import Phase3 from '../screens/Phase3';
 
 const Drawer = createDrawerNavigator();
 
@@ -443,11 +448,56 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           })}
         />
         <Drawer.Screen
+          name="Phase 3"
+          component={Phase3}
+          options={({navigation, route}) => ({
+            title: "Phase 3",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
           name="Assignment 1"
           component={VoiceToText}
           options={({navigation, route}) => ({
             title: "Assignment 1",
             headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Assignment 2"
+          component={Assignment2}
+          options={({navigation, route}) => ({
+            title: "Assignment 2",
+            headerShown:false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Trade Institute"
+          component={TradeInstituteList}
+          options={({navigation, route}) => ({
+            title: "Trade Testing",
+            headerShown:true,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Trade Institute Detail"
+          component={TradeCenterDetail}
+          options={({navigation, route}) => ({
+            title: "Trade Center",
+            headerShown:true,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Trade Test Details"
+          component={TestById}
+          options={({navigation, route}) => ({
+            title: "Trade Test Details",
+            headerShown:true,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

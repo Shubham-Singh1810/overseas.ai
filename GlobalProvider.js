@@ -2619,7 +2619,12 @@ export const GlobalStateProvider = ({children}) => {
                 : globalState.selectedLanguage == 'hindi'
                 ? 'प्ले स्टोर पर ऐप का एक नया संस्करण उपलब्ध है, कृपया ऐप को अपडेट करें और पुनः आरंभ करें'
                 : 'প্লে স্টোরে অ্যাপটির একটি নতুন সংস্করণ উপলব্ধ রয়েছে, অনুগ্রহ করে অ্যাপটি আপডেট করুন এবং পুনরায় চালু করুন',
-                
+                topTradeTest:
+                globalState.selectedLanguage == 'english'
+                ? "Top Trade Test"
+                : globalState.selectedLanguage == 'hindi'
+                ? 'Top Trade Test'
+                : 'Top Trade Test',
                 
     });
   };

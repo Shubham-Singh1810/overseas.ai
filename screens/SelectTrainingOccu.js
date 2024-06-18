@@ -44,6 +44,7 @@ const SelectTrainingOccu = props => {
       } else {
         Alert.alert('We are working on it');
       }
+      // props.navigation.navigate('Assignment 2', {data: response?.data});
     } catch (error) {
       console.log(error);
     }

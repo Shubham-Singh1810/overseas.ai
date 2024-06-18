@@ -589,92 +589,32 @@ export default function CandidateFormDetails() {
             </Text>
           </Pressable>
           <Text style={styles.errorText}>{formDataError.empDob}</Text>
-          <Modal transparent={true} visible={showCalender}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0, 0, 0.5)',
-              }}>
-              <View
-                style={{
-                  width: 330,
-                  borderRadius: 10,
-                  // padding: 20,
-                  backgroundColor: '#fff',
-                }}>
-                {/* <View
-                  style={{
-                    borderBottomColor: '#ccc',
-                    borderBottomWidth: 1,
-                    paddingHorizontal: 20,
-                    paddingVertical: 10,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{fontWeight: '600', fontSize: 20, color: 'gray'}}>
-                    Date of Birth
-                  </Text>
-                  <Pressable onPress={() => setShowCalender(false)}>
-                    <Image source={require('../images/close.png')} />
-                  </Pressable>
-                </View> */}
 
-                {/* <DatePicker
-                  mode="calender"
-                  format="YYYY-MM-DD"
-                  onDateChange={date => {
-                    const curreentDate = new Date();
-                    const currentYear = curreentDate.getFullYear();
-                    const birthYear = date.split('/')[0];
-                    const agg = currentYear - birthYear;
-                    if (agg < 16) {
-                      Toast.show({
-                        type: 'error', // 'success', 'error', 'info', or any custom type you define
-                        // position: 'top',
-                        text1: 'Age must be more than 16 years',
-                        visibilityTime: 3000, // Duration in milliseconds
-                      });
-                    } else {
-                      setFormData({...formData, empDob: date});
-                      setShowCalender(false);
-                      setFormDataError({...formDataError, empDob: ''});
-                    }
-                  }}
-                /> */}
-                <DateTimePickerModal
-                  isVisible={showCalender}
-                  mode="date"
-                  onConfirm={selecteddate => {
-                    const date = new Date(selecteddate);
-                    const year = date.getFullYear();
-                    if (year < 2010) {
-                      const month = (date.getMonth() + 1)
-                        .toString()
-                        .padStart(2, '0');
-                      const day = date.getDate().toString().padStart(2, '0');
-                      const formattedDate = `${year}-${month}-${day}`;
-                      setFormData({...formData, empDob: formattedDate});
-                      setShowCalender(false);
-                      setFormDataError({...formDataError, empDob: ''});
-                    } else {
-                      setShowCalender(false);
-                      Toast.show({
-                        type: 'error', 
-                        position: 'top',
-                        text1: 'Age must be more than 16 years',
-                        visibilityTime: 3000, 
-                      });
-                    }
-                  }}
-                  onCancel={() => setShowCalender(false)}
-                />
-              </View>
-            </View>
-          </Modal>
+          <DateTimePickerModal
+            isVisible={showCalender}
+            mode="date"
+            onConfirm={selecteddate => {
+              const date = new Date(selecteddate);
+              const year = date.getFullYear();
+              if (year < 2010) {
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                const formattedDate = `${year}-${month}-${day}`;
+                setFormData({...formData, empDob: formattedDate});
+                setShowCalender(false);
+                setFormDataError({...formDataError, empDob: ''});
+              } else {
+                setShowCalender(false);
+                Toast.show({
+                  type: 'error',
+                  position: 'top',
+                  text1: 'Age must be more than 16 years',
+                  visibilityTime: 3000,
+                });
+              }
+            }}
+            onCancel={() => setShowCalender(false)}
+          />
         </View>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>{newTranslation.selectGender}</Text>
