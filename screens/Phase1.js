@@ -20,9 +20,12 @@ const Phase1 = props => {
             alignItems: 'center',
             marginBottom: 20,
           }}>
-          <Image source={require('../images/backIcon.png')} />
+          <View style={{backgroundColor:"white", borderRadius:10, marginRight:10}}>
+            <Image source={require("../images/backIcon.png")} style={{height:20, width:20, resizeMode:"contain"}}/>
+            </View>
           <Text style={{color: '#fff', fontWeight: '500'}}>Greetings And Introductions</Text>
         </Pressable>
+        
         <WebView
           source={{
             uri: langData?.phase1Video[0]?.path,

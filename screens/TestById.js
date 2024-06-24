@@ -150,7 +150,8 @@ const TestById = props => {
               ]}>
               <Text style={[styles.tableText]}>{newTranslation?.eligibility}</Text>
               <Text style={[styles.tableText]}>
-                {courseDetails?.eligibility}
+                {courseDetails?.eligibility?.substring(0, 30)}
+                {courseDetails?.eligibility?.length>30 && "..."}
               </Text>
             </View>
             <View

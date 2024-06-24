@@ -48,7 +48,7 @@ const TestGola = ({value, props, isApplied, backTo}) => {
           fontSize: 12,
           marginVertical: 3,
         }}>
-        {newTranslation?.applyBefore} : {value?.submission_date}
+        {/* {newTranslation?.applyBefore} : {value?.submission_date} */}
       </Text>
       <View
         style={{
@@ -89,10 +89,10 @@ const TestGola = ({value, props, isApplied, backTo}) => {
             {newTranslation?.duration} : {value?.course_duration}
           </Text>
           <Text style={[styles.listText]}>
-            {newTranslation?.examMode} : {value?.assessment_type}
+            Total Seats : {value?.total_seats}
           </Text>
           <Text style={[styles.listText]}>
-            {newTranslation.courseType} : {value?.course_type}
+           Test Fees : {value?.course_fee}
           </Text>
         </View>
       </View>

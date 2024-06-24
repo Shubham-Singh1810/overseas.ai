@@ -47,7 +47,7 @@ const VoiceToText = (props) => {
     console.log('onSpeechRecognized:', e);
     setRecognized('√');
   };
-
+const[isCorrect, setIsCorrect]=useState(false)
   const onSpeechResults = (e) => {
     console.log('onSpeechResults:', e);
   
@@ -59,6 +59,7 @@ const VoiceToText = (props) => {
         console.warn(spokenWord, currentImageName, prevIndex);
         if (spokenWord === currentImageName) {
           setResults(`Correct! This is a ${spokenWord}.`);
+          setIsCorrect(true)
           setScore((prevScore) => {
             const newScore = prevScore + 1;
             if (prevIndex + 1 >= imagesData.length) {
@@ -69,6 +70,7 @@ const VoiceToText = (props) => {
           });
         } else {
           setResults(`Incorrect. This is not a ${spokenWord}.`);
+          setIsCorrect(false)
           if (prevIndex + 1 >= imagesData.length) {
             
             setScore((prevScore) => {
@@ -131,15 +133,17 @@ const VoiceToText = (props) => {
         'Success',
         `You passed the assignment with ${finalScore} correct answers!`
       );
-      setTimeout(() => {
-        props.navigation.navigate("Phase 2", {data:props?.route?.params?.data});
-      }, 2000);
+      
     } else {
       Alert.alert(
         'Failure',
         `You failed the assignment with only ${finalScore} correct answers.`
       );
     }
+    setTimeout(() => {
+      // props.navigation.navigate("Select Training Occu", {data:props?.route?.params?.data});
+      props.navigation.navigate('Phase 1', {data: props?.route?.params?.data});
+    }, 2000);
   };
 
   return (
@@ -148,7 +152,9 @@ const VoiceToText = (props) => {
         onPress={() => props.navigation.navigate('Select Training Occu')}
         style={styles.goBackButton}
       >
-        <Image source={require('../images/backIcon.png')} />
+        <View style={{backgroundColor:"white", borderRadius:10, marginRight:10}}>
+            <Image source={require("../images/backIcon.png")} style={{height:20, width:20, resizeMode:"contain"}}/>
+            </View>
         <Text style={styles.goBackText}>Go Back</Text>
       </Pressable>
       <Text style={styles.headerText}>Identify The Objects</Text>
@@ -162,7 +168,9 @@ const VoiceToText = (props) => {
         <Image source={require('../images/blueMic.png')} />
       </Pressable>
       <Text style={styles.stat}>{`Tap to speak: ${started}`}</Text>
-      <Text style={styles.stat}>{results}</Text>
+      <Text style={[styles.stat, {color: isCorrect ? "green" : "red"}]}>
+  {results}
+</Text>
       <Pressable onPress={stopRecognizing} style={styles.stopButton}>
         <Text style={styles.stopButtonText}>Stop Listening</Text>
       </Pressable>

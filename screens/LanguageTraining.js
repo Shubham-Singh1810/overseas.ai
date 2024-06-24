@@ -13,7 +13,13 @@ const LanguageTraining = props => {
         </View>
         {/* <Text style={[styles.title, {backgroundColor:"white", color:"#19487C", paddingHorizontal:10, borderRadius:15}]}>overseas.ai</Text> */}
         </View>
-        <Text style={{color:"#F8F8F8", textAlign:"center", marginTop:5}}>A video based job portal.</Text>
+        <View style={{flexDirection:"row", alignItems:"center",justifyContent:"center", marginTop:5 }}>
+        <Pressable style={{backgroundColor:"white", borderRadius:10, marginRight:10}} onPress={() => props.navigation.navigate('Home')}>
+            <Image source={require("../images/backIcon.png")} style={{height:20, width:20, resizeMode:"contain"}}/>
+            </Pressable>
+        <Text style={{color:"#F8F8F8", textAlign:"center"}}>A video based job portal.</Text>
+        </View>
+        
         
         <View style={{marginVertical:30, flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
         <Text style={styles.subTitle}>Easy Spoken English</Text>

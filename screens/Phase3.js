@@ -20,8 +20,10 @@ const Phase3 = props => {
             alignItems: 'center',
             marginBottom: 20,
           }}>
-          <Image source={require('../images/backIcon.png')} />
-          <Text style={{color: '#fff', fontWeight: '500'}}>Numbers, Money</Text>
+          <View style={{backgroundColor:"white", borderRadius:10, marginRight:10}}>
+            <Image source={require("../images/backIcon.png")} style={{height:20, width:20, resizeMode:"contain"}}/>
+            </View>
+          <Text style={{color: '#fff', fontWeight: '500'}}>Basic Conversation</Text>
         </Pressable>
         <WebView
           source={{
@@ -33,7 +35,7 @@ const Phase3 = props => {
           mediaPlaybackRequiresUserAction={false}
         />
         <Pressable
-          onPress={() => props.navigation.navigate('Select Training Occu')}
+          onPress={() => props.navigation.navigate('Assignment 1', {data: props?.route?.params?.data})}
           style={{
             backgroundColor: '#fff',
             flexDirection: 'row',
@@ -44,7 +46,7 @@ const Phase3 = props => {
             borderRadius:6
           }}>
           
-          <Text style={{color: '#19487C', fontWeight: '500'}}>Start Again</Text>
+          <Text style={{color: '#19487C', fontWeight: '500'}}>Take Assignment</Text>
         </Pressable>
         {/* <VoiceToText/> */}
       </View>

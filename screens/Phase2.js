@@ -20,7 +20,9 @@ const Phase2 = props => {
             alignItems: 'center',
             marginBottom: 20,
           }}>
-          <Image source={require('../images/backIcon.png')} />
+          <View style={{backgroundColor:"white", borderRadius:10, marginRight:10}}>
+            <Image source={require("../images/backIcon.png")} style={{height:20, width:20, resizeMode:"contain"}}/>
+            </View>
           <Text style={{color: '#fff', fontWeight: '500'}}>Common Expression</Text>
         </Pressable>
         <WebView

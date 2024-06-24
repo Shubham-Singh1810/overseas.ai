@@ -41,6 +41,7 @@ const SelectTrainingOccu = props => {
       );
       if (response?.data?.message != 'Language training data not found') {
         props.navigation.navigate('Phase 1', {data: response?.data});
+        // props.navigation.navigate('Assignment 1', {data: response?.data});
       } else {
         Alert.alert('We are working on it');
       }
@@ -52,8 +53,8 @@ const SelectTrainingOccu = props => {
   return (
     <View style={styles.main}>
       <View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={styles.title}>Lets start your learning</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:"center"}}>
+          <Text style={[styles.title]}>Lets start your learning</Text>
 
           {/* <Text style={[styles.title, {backgroundColor:"white", color:"#19487C", paddingHorizontal:10, borderRadius:15}]}>overseas.ai</Text> */}
         </View>
@@ -61,10 +62,13 @@ const SelectTrainingOccu = props => {
         <View
           style={{
             marginVertical: 30,
-            flexDirection: 'column',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
+            <Pressable style={{backgroundColor:"white", borderRadius:10, marginRight:10}} onPress={() => props.navigation.navigate('Language Training')}>
+            <Image source={require("../images/backIcon.png")} style={{height:20, width:20, resizeMode:"contain"}}/>
+            </Pressable>
           <Text style={styles.subTitle}>Choose your occupation</Text>
         </View>
         <ScrollView>

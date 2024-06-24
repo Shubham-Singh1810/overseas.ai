@@ -16,3 +16,8 @@ export const languageTrainingData = async (id,access_token) => {
     throw error;
   }
 };
+
+
+
+
+
