@@ -139,7 +139,7 @@ const SearchResult = ({value,countryId,countryName,hraId,hraDetails, getListOfSa
               }}>
               <Image
                 source={{
-                  uri: `https://overseas.ai/storage/uploads/countryFlag/${value?.jobLocationCountry?.countryFlag}`,
+                  uri: `https://backend.overseas.ai/storage/uploads/countryFlag/${value?.jobLocationCountry?.countryFlag}`,
                 }}
                 style={{height: 20, width: 20}}
               />

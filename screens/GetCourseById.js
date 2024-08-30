@@ -70,7 +70,7 @@ const GetCourseById = props => {
         </Text>
         <View style={{marginVertical: 15}}>
           {courseDetails?.course_image !=
-          'https://overseas.ai/placeholder/course.jpg' ? (
+          'https://backend.overseas.ai/placeholder/course.jpg' ? (
             <Image
               source={{
                 uri: courseDetails?.course_image,

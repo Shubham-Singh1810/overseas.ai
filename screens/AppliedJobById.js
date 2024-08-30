@@ -304,7 +304,7 @@ const AppliedJobById = props => {
               }}>
               <Image
                 source={{
-                  uri: `https://overseas.ai/storage/uploads/countryFlag/${appliedJobDetails?.countryFlag}`,
+                  uri: `https://backend.overseas.ai/storage/uploads/countryFlag/${appliedJobDetails?.countryFlag}`,
                 }}
                 style={{
                   marginRight: 8,

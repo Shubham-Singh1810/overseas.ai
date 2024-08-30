@@ -54,7 +54,7 @@ const FavJobComponent = ({props, value}) => {
               }}>
               <Image
                 source={{
-                  uri: `https://overseas.ai/storage/uploads/countryFlag/${value?.countryFlag}`,
+                  uri: `https://backend.overseas.ai/storage/uploads/countryFlag/${value?.countryFlag}`,
                 }}
                 style={{
                   marginRight: 8,

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Define your API base URL
-const BASE_URL = "https://overseas.ai/api/";
+const BASE_URL = "https://backend.overseas.ai/api/";
 // const BASE_URL = "https://test.overseas.ai/api/"; // test api
 
 // Function to make a GET request
@@ -20,6 +20,21 @@ export const loginUsingPassword = async (formData) => {
 export const getSummarizedVideo = async (access_token) => {
   try {
     const response = await axios.get(BASE_URL+"get-summarized-video" , {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+    return (response);
+  } catch (error) {
+    // Handle error (e.g., log or throw an error)
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+export const requestSummarizedRequest = async (access_token) => {
+  try {
+    const response = await axios.post(BASE_URL+"store-summarization-request" ,{}, {
       headers: {
         Authorization: `Bearer ${access_token}`
       }

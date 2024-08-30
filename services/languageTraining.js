@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Define your API base URL
-const BASE_URL = 'https://overseas.ai/api/';
+const BASE_URL = "https://backend.overseas.ai/api/";
 // const BASE_URL = "https://test.overseas.ai/api/"; // test api
 export const languageTrainingData = async (id,access_token) => {
   try {

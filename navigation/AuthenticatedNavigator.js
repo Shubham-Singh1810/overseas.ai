@@ -65,6 +65,7 @@ import TradeInstituteList from '../screens/TradeInstituteList';
 import TradeCenterDetail from '../screens/TradeCenterDetail';
 import TestById from '../screens/TestById';
 import Phase3 from '../screens/Phase3';
+import SelectBaseAccentLanguage from '../screens/SelectBaseAccentLanguage';
 
 const Drawer = createDrawerNavigator();
 
@@ -498,6 +499,15 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           options={({navigation, route}) => ({
             title: "Trade Test Details",
             headerShown:true,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Select Base Accent Language"
+          component={SelectBaseAccentLanguage}
+          options={({navigation, route}) => ({
+            title: "Select Base Accent Language",
+            headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

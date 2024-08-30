@@ -20,7 +20,7 @@ const SelectTrainingOccu = props => {
   const getSkillListByOccuId = async id => {
     try {
       let response = await getSkillsByOccuId(id);
-      setSkills(response?.skills);
+      setSkills(response?.skills)
       setCurrentOcc(
         response?.skills?.filter((v, i) => {
           return v?.id == JSON.parse(globalState.user).empData.empSkill;
@@ -40,7 +40,7 @@ const SelectTrainingOccu = props => {
         JSON.parse(user).access_token,
       );
       if (response?.data?.message != 'Language training data not found') {
-        props.navigation.navigate('Phase 1', {data: response?.data});
+        props.navigation.navigate('Select Base Accent Language', {data: response?.data});
         // props.navigation.navigate('Assignment 1', {data: response?.data});
       } else {
         Alert.alert('We are working on it');

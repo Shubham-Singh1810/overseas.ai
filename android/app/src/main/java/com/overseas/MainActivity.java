@@ -1,5 +1,6 @@
 package ai.overseas;
 
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
@@ -14,6 +15,14 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "overseas";
+  }
+
+  /**
+   * Prevent fragment restoration by passing null to super.onCreate.
+   */
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null); // Pass null to prevent fragment restoration
   }
 
   /**

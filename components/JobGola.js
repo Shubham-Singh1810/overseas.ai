@@ -9,7 +9,7 @@ const JobGola = ({value, props}) => {
       <View style={styles.imgGola}>
         <Image
           source={{
-            uri: `https://overseas.ai/storage/uploads/occupationImage/${value?.id}/${value?.occuIcon}`,
+            uri: `https://backend.overseas.ai/storage/uploads/occupationImage/${value?.id}/${value?.occuIcon}`,
           }}
           style={styles.img}
         />

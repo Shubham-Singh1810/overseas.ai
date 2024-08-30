@@ -351,7 +351,6 @@ const Home = props => {
       }, 1000);
     }
   };
-
   return (
     <>
       <View style={{backgroundColor: '#fff', flex: 1}}>

@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: '#fff',
     flex: 1,
-    
   },
   input: {
     borderColor: '#CCC',

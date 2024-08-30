@@ -11,7 +11,6 @@ import {getVersionCode} from '../services/info.service';
 
 const Navigator = () => {
   const {translation, globalState, setGlobalState} = useGlobalState();
-
   const setUserData = async () => {
     try {
       let user = await AsyncStorage.getItem('user');
@@ -25,30 +24,6 @@ const Navigator = () => {
     checkAppVersion();
     setUserData();
   }, []);
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     checkAppVersion();
-  //     setUserData();
-  //   }, []),
-  // );
-  // const showUpdateAlert = () => {
-  //   Alert.alert(
-  //     'Update Required',
-  //     'A new version of the app is available. Please update to continue.',
-  //     [
-  //       {
-  //         text: 'Update Now',
-  //         onPress: () => {
-  //           // Redirect to App Store/Play Store for update
-  //           Linking.openURL(
-  //             'https://play.google.com/store/apps/details?id=ai.overseas',
-  //           );
-  //         },
-  //       },
-  //     ],
-  //     {cancelable: false},
-  //   );
-  // };
   const getVersion = async () => {
     try {
       let response = await getVersionCode();
@@ -67,6 +42,7 @@ const Navigator = () => {
       console.error('Error checking app version:', error);
     }
   };
+  
   return (
     <View style={styles.main}>
       {globalState?.user ? <AuthenticatedNavigator/> : <LayoutNavigator />}

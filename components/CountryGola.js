@@ -14,7 +14,7 @@ const CountryGola = ({value, props}) => {
         <View style={{borderWidth:.5,borderColor:"gray", borderRadius: 40, }}>
         <Image
           source={{
-            uri: `https://overseas.ai/storage/uploads/countryFlag/${value?.countryFlag}`,
+            uri: `https://backend.overseas.ai/storage/uploads/countryFlag/${value?.countryFlag}`,
           }}
           style={{height: 80, width: 80, borderRadius: 40}}
         />

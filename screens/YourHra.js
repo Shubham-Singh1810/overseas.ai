@@ -199,7 +199,7 @@ const YourHra = props => {
                     ratingSort(ratingOrd == 'asc' ? 'desc' : 'asc');
                     setRatingOrd(ratingOrd == 'asc' ? 'desc' : 'asc');
                   }}>
-                  <Text style={{fontWeight: '500'}}>
+                  <Text style={{fontWeight: '500', color:"black"}}>
                     {newTranslation?.rating} :{' '}
                     {ratingOrd == 'asc' ? newTranslation?.highToLow : newTranslation?.lowToHigh}
                   </Text>
@@ -222,7 +222,7 @@ const YourHra = props => {
                     sinceSort(sinceOrd == 'asc' ? 'desc' : 'asc');
                     setSinceOrd(sinceOrd == 'asc' ? 'desc' : 'asc');
                   }}>
-                  <Text style={{fontWeight: '500'}}>
+                  <Text style={{fontWeight: '500', color:"black"}}>
                     {newTranslation?.since} :{' '}
                     {sinceOrd == 'asc'
                       ? newTranslation?.newestToOldest
@@ -247,7 +247,7 @@ const YourHra = props => {
                     alphaSort(nameOrd == 'asc' ? 'desc' : 'asc');
                     setNameOrd(nameOrd == 'asc' ? 'desc' : 'asc');
                   }}>
-                  <Text style={{fontWeight: '500'}}>
+                  <Text style={{fontWeight: '500', color:"black"}}>
                     {newTranslation?.name} : {nameOrd == 'asc' ? 'Z To A' : 'A To Z'}
                   </Text>
                 </TouchableOpacity>

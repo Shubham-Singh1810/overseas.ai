@@ -179,7 +179,7 @@ const JobDetailedScreen = params => {
           }}>
           <Image
             source={{
-              uri: `https://overseas.ai/storage/uploads/countryFlag/${details?.jobLocationCountry?.countryFlag}`,
+              uri: `https://backend.overseas.ai/storage/uploads/countryFlag/${details?.jobLocationCountry?.countryFlag}`,
             }}
             style={{height: 20, width: 20}}
           />

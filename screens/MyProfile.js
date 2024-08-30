@@ -9,16 +9,19 @@ import {
   TouchableOpacity,
   Modal,
   Button,
+  Alert,
 } from 'react-native';
 import {loginOut} from '../services/user.service';
 import React, {useEffect, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useGlobalState} from '../GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 import {
   getProfileStrength,
   getNotification,
   getSummarizedVideo,
+  requestSummarizedRequest
 } from '../services/user.service';
 import WebView from 'react-native-webview';
 const MyProfile = props => {
@@ -137,6 +140,33 @@ const MyProfile = props => {
     }, [globalState.selectedLanguage]),
   );
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
+  const requestSummarizedVideo = async () => {
+    let user = await AsyncStorage.getItem('user');
+    
+    try {
+      let response = await requestSummarizedRequest(JSON.parse(user).access_token);
+      if (response?.data?.message == 'Summarization request sent successfully, please wait 30 minutes.') {
+        Toast.show({
+          type: 'success',
+          text1: 'Summarization request sent successfully,',
+          text2: ' please wait 30 minutes.',
+          visibilityTime: 3000,
+        });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Something went wrong',
+          visibilityTime: 3000,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Internal Server Error',
+        visibilityTime: 3000,
+      });
+    }
+  };
   return (
     <>
       {!showVideoPlayer ? (
@@ -271,7 +301,7 @@ const MyProfile = props => {
                 {newTranslation?.profileStrength}
               </Text>
             </View>
-            {showResumeVideo && (
+            {showResumeVideo ? (
               <Pressable
                 onPress={() => setShowVideoPlayer(true)}
                 style={{
@@ -291,7 +321,25 @@ const MyProfile = props => {
                   Play Summarized Video
                 </Text>
               </Pressable>
-            )}
+            ): <Pressable
+            onPress={() => requestSummarizedVideo()}
+            style={{
+              borderWidth: 1.5,
+              borderRadius: 6,
+              borderColor: 'brown',
+              marginTop: 15,
+            }}>
+            <Text
+              style={{
+                color: 'brown',
+                textAlign: 'center',
+                fontSize: 15,
+                paddingVertical: 10,
+                elevation: 10,
+              }}>
+              Request for Video Summarization 
+            </Text>
+          </Pressable>}
 
             {/* <Button title="" color=""/> */}
           </View>
@@ -535,6 +583,7 @@ const MyProfile = props => {
           </View>
         </View>
       </Modal>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </>
   );
 };
