@@ -107,7 +107,6 @@ const CandidateDetailsStep1 = props => {
   const getSkillListByOccuId = async id => {
     try {
       let response = await getSkillsByOccuId(id);
-      console.log('res', response.skills);
       setSkills(response?.skills);
     } catch (error) {}
   };
@@ -391,7 +390,6 @@ const CandidateDetailsStep1 = props => {
           ...formData,
           empLanguage: JSON.stringify(formData.empLanguage),
         };
-        console.log('formdata', finalPayload);
         let response = await registerUserStep1(
           finalPayload,
           localUser.access_token,
@@ -454,7 +452,6 @@ const CandidateDetailsStep1 = props => {
         experienceForm,
         localUser.access_token,
       );
-      console.log('res', response);
       if (response?.data?.msg == 'Experience Successfully Added.') {
         Toast.show({
           type: 'success',
@@ -1729,7 +1726,7 @@ const CandidateDetailsStep1 = props => {
                 const formattedDate = moment(date, 'YYYY/MM/DD').format(
                   'YYYY-MM-DD',
                 );
-                console.log(formattedDate);
+                
 
                 setExperienceForm({...experienceForm, fromDate: formattedDate});
                 setJoiningCalender(false);
@@ -1778,7 +1775,7 @@ const CandidateDetailsStep1 = props => {
                 const formattedDate = moment(date, 'YYYY/MM/DD').format(
                   'YYYY-MM-DD',
                 );
-                console.log(formattedDate);
+            
                 setExperienceForm({...experienceForm, toDate: formattedDate});
                 setEndingCalender(false);
               }}

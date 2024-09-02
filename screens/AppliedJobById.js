@@ -51,7 +51,6 @@ const AppliedJobById = props => {
     try {
       let response = await getInterviewById(id, JSON.parse(user).access_token);
       setInterviewJobDetails(response.data);
-      console.log(response?.data);
       showLoading(false)
     } catch (error) {
       console.log(error);

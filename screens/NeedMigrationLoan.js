@@ -75,7 +75,7 @@ const NeedMigrationLoan = (props) => {
                 visibilityTime: 3000, // Duration in milliseconds
               });
             }
-            console.log(response);
+            
           } catch (error) {
             Toast.show({
               type: 'error', // 'success', 'error', 'info', or any custom type you define

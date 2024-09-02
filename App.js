@@ -59,16 +59,18 @@ const App = () => {
     }
   }, [timeSpent]);
   const getFCMToken = async () => {
-    try {
-      await messaging().registerDeviceForRemoteMessages();
-      const token = await messaging().getToken();
-      await AsyncStorage.setItem("fcmToken", token)
-      console.warn(token)
-    } catch (error) {
-      console.log(error);
+    let user = await AsyncStorage.getItem('user');
+    user = JSON.parse(user); 
+    if(!user.baseUrlUpdated){
+      try {
+        await messaging().registerDeviceForRemoteMessages();
+        const token = await messaging().getToken();
+        await AsyncStorage.setItem("fcmToken", token)
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
-
   const getNotificationPermission = async () => {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,

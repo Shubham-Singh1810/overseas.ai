@@ -129,7 +129,7 @@ const SignUp = props => {
           countryCode: formData.countryCode,
           empEmail: formData.empEmail,
         });
-        console.log(response.data)
+        
         if (response.data.msg == 'Otp Sent Successfully.') {
           props.navigation.navigate('Verify Otp', {tempUser: formData});
         } else {

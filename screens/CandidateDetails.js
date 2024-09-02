@@ -37,7 +37,6 @@ const CandidateDetails = props => {
   const getDistrictList = async state_id => {
     try {
       let response = await getDistrict({state_id});
-      console.log('city', response.districts);
       setDistrictList(response.districts);
     } catch (error) {
       console.log(error);

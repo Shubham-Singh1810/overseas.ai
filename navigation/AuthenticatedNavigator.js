@@ -337,7 +337,7 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Hra review"
           component={ReviewForHra}
           options={({navigation, route}) => ({
-            title: "HRA Reviews",
+            title: 'HRA Reviews',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -345,7 +345,7 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Institute review"
           component={ReviewForInstitute}
           options={({navigation, route}) => ({
-            title: "Institute Reviews",
+            title: 'Institute Reviews',
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -353,8 +353,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Custom CV"
           component={CustomCv}
           options={({navigation, route}) => ({
-            title: "Custom CV",
-            headerShown:false,
+            title: 'Custom CV',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -362,8 +362,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Covid"
           component={Covid}
           options={({navigation, route}) => ({
-            title: "Covid",
-            headerShown:false,
+            title: 'Covid',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -371,8 +371,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Highest Education"
           component={HighestEducation}
           options={({navigation, route}) => ({
-            title: "Covid",
-            headerShown:false,
+            title: 'Covid',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -380,8 +380,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Other Doc Prev"
           component={OtherDocPrev}
           options={({navigation, route}) => ({
-            title: "Other Documents",
-            headerShown:false,
+            title: 'Other Documents',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -389,7 +389,7 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Dl_list"
           component={Dl_list}
           options={({navigation, route}) => ({
-            title: "Driving License",
+            title: 'Driving License',
             // headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
@@ -398,7 +398,7 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Career Graph"
           component={Career}
           options={({navigation, route}) => ({
-            title: "Career Graph",
+            title: 'Career Graph',
             // headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
@@ -407,7 +407,7 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Create Career"
           component={CreateGraph}
           options={({navigation, route}) => ({
-            title: "Create Career",
+            title: 'Create Career',
             // headerShown:false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
@@ -416,17 +416,17 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Language Training"
           component={LanguageTraining}
           options={({navigation, route}) => ({
-            title: "Language Training",
-            headerShown:false,
+            title: 'Language Training',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
-         <Drawer.Screen
+        <Drawer.Screen
           name="Select Training Occu"
           component={SelectTrainingOccu}
           options={({navigation, route}) => ({
-            title: "Select Training Occupation",
-            headerShown:false,
+            title: 'Select Training Occupation',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -434,8 +434,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Phase 1"
           component={Phase1}
           options={({navigation, route}) => ({
-            title: "Phase 1",
-            headerShown:false,
+            title: 'Phase 1',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -443,8 +443,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Phase 2"
           component={Phase2}
           options={({navigation, route}) => ({
-            title: "Phase 2",
-            headerShown:false,
+            title: 'Phase 2',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -452,8 +452,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Phase 3"
           component={Phase3}
           options={({navigation, route}) => ({
-            title: "Phase 3",
-            headerShown:false,
+            title: 'Phase 3',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -461,8 +461,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Assignment 1"
           component={VoiceToText}
           options={({navigation, route}) => ({
-            title: "Assignment 1",
-            headerShown:false,
+            title: 'Assignment 1',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -470,8 +470,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Assignment 2"
           component={Assignment2}
           options={({navigation, route}) => ({
-            title: "Assignment 2",
-            headerShown:false,
+            title: 'Assignment 2',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -479,8 +479,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Trade Institute"
           component={TradeInstituteList}
           options={({navigation, route}) => ({
-            title: "Trade Testing",
-            headerShown:true,
+            title: 'Trade Testing',
+            headerShown: true,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -488,8 +488,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Trade Institute Detail"
           component={TradeCenterDetail}
           options={({navigation, route}) => ({
-            title: "Trade Center",
-            headerShown:true,
+            title: 'Trade Center',
+            headerShown: true,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -497,8 +497,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Trade Test Details"
           component={TestById}
           options={({navigation, route}) => ({
-            title: "Trade Test Details",
-            headerShown:true,
+            title: 'Trade Test Details',
+            headerShown: true,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
@@ -506,8 +506,8 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           name="Select Base Accent Language"
           component={SelectBaseAccentLanguage}
           options={({navigation, route}) => ({
-            title: "Select Base Accent Language",
-            headerShown:false,
+            title: 'Select Base Accent Language',
+            headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />

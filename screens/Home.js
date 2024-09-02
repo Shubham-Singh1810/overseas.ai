@@ -239,22 +239,24 @@ const Home = props => {
       }
     });
   };
-
   const storeLocationAndFcm = async () => {
     let user = await AsyncStorage.getItem('user');
     let fcmToken = await AsyncStorage.getItem("fcmToken")
-    try {
-      let response = await storeUserLocation(
-        {
-          latitude: storeLocationFcm.latitude ? storeLocationFcm.latitude:"not provided" ,
-          longitude: storeLocationFcm.longitude ? storeLocationFcm.longitude:"not provided",
-          device_id: fcmToken,
-        },
-        JSON.parse(user).access_token,
-      );
-    } catch (error) {
-      console.error('Error storing user location and fcm:', error);
+    if(fcmToken){
+      try {
+        let response = await storeUserLocation(
+          {
+            latitude: storeLocationFcm.latitude ? storeLocationFcm.latitude:"not provided" ,
+            longitude: storeLocationFcm.longitude ? storeLocationFcm.longitude:"not provided",
+            device_id: fcmToken,
+          },
+          JSON.parse(user).access_token,
+        );
+      } catch (error) {
+        console.error('Error storing user location and fcm:', error);
+      }
     }
+    
   };
   useFocusEffect(
     React.useCallback(() => {

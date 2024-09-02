@@ -42,7 +42,6 @@ const ExperiencePopStep1 = ({
   const getSkillList = async id => {
     try {
       let response = await getSkillsByOccuId(id);
-      console.warn(response);
       let skills = response?.skills?.map(item => ({
         label: item.skill,
         value: item.id,
@@ -58,7 +57,6 @@ const ExperiencePopStep1 = ({
         label: item.name,
         value: item.id,
       }));
-      console.log(country);
       setCountryList(country);
     } catch (error) {}
   };

@@ -349,7 +349,6 @@ const ExperienceScreen = props => {
     certificateImagePrev: '',
   });
   const setInputField = value => {
-    console.warn(value.id);
     setAddForm('Edit');
     setEditId(value.id);
     setEditExtraField({

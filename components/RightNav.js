@@ -17,11 +17,8 @@ const RightNav = props => {
     try {
       let response = await getNotification(JSON.parse(user).access_token);
       if (response.status == 200) {
-        console.log(response.data);
         setNotificationistList(response.data);
-      } else {
-        console.warn('sdkfj');
-      }
+      } 
     } catch (error) {}
   };
   const {globalState, setGlobalState} = useGlobalState();

@@ -115,7 +115,7 @@ const EditProfile = props => {
         type: result[0].type,
         name: result[0].name,
       });
-      console.log(imageformData);
+   
       let response = await editProfile(
         imageformData,
         JSON.parse(user).access_token,
@@ -168,7 +168,7 @@ const EditProfile = props => {
       let label = response?.skills?.filter((v, i) => {
         return v.id == 154;
       });
-      console.log(label);
+   
     } catch (error) {}
   };
   const getProfileStrengthFunc = async () => {
@@ -273,7 +273,7 @@ const EditProfile = props => {
   const [defSelectedCountry, setDefSelectedCountry] = useState(null);
   useFocusEffect(
     React.useCallback(() => {
-      console.warn(formData?.empSkill);
+      
       getCountryList();
       getOccupationList();
       getListOfCountryCode();

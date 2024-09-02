@@ -53,7 +53,6 @@ const CandidateDetails2 = ({route}) => {
         imageformData,
         route.params.step1user.access_token,
       );
-      console.log(response);
       setFormData({...formData, empPhoto: response.empData.empPhoto});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -163,7 +162,7 @@ const CandidateDetails2 = ({route}) => {
           setUserData();
         } else {
           console.warn('something went wrong');
-          console.log(response);
+          
         }
       } catch (error) {
         console.warn(error, 'Enternal server error');

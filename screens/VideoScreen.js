@@ -87,7 +87,7 @@ const VideoScreen = props => {
         type: [DocumentPicker.types.video],
       });
       // Set the selected media URI
-      console.log(result[0]);
+
       setFormData({...formData, video: result[0]});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {

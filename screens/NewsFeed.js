@@ -30,7 +30,6 @@ const NewsFeed = props => {
       let response = await getNewsFeedData();
       setNewsData(response?.data?.newsData);
       setLoader(false);
-      console.log(response?.data?.newsData.length);
     } catch (error) {
       console.log(error);
     }

@@ -121,7 +121,7 @@ const MyDocument = props => {
         });
         // User canceled the document picker
       } else {
-        console.log(err?.response);
+        
         Toast.show({
           type: 'error', // 'success', 'error', 'info', or any custom type you define
           position: 'top',
@@ -534,7 +534,7 @@ const MyDocument = props => {
         }, 2000);
         setShowPassportPopUp(false)
       } else {
-        console.log('sekufh', response);
+      
       }
     } catch (error) {
       Toast.show({
@@ -640,7 +640,7 @@ const MyDocument = props => {
     }, []),
   );
   const setEditInputForDl = value => {
-    console.warn(value);
+  
     setShowDlForm(true);
     setDlFormType('Edit');
     setDlFormData({

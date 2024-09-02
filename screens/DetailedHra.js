@@ -49,7 +49,7 @@ const DetailedHra = props => {
   const [showLoader, setShowLoader] = useState(false);
   const getFollowCountFunc = async () => {
     let user = await AsyncStorage.getItem('user');
-    console.log(JSON.parse(user).access_token);
+  
     try {
       let response = await getFollowerCount({
         access_token: JSON.parse(user).access_token,

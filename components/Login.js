@@ -167,7 +167,6 @@ const Login = props => {
       if ((reponse.data.msg == 'Otp Sent Successfully.')) {
         setShowOtpInp(true);
       }
-      console.log(reponse.data)
     } catch (error) {
       if(error.response.status==422){
         Toast.show({
@@ -193,7 +192,7 @@ const Login = props => {
         empEmail: empEmail,
         otp: otp,
       });
-      console.log(response.data)
+      
       if (response.data.access_token) {
         if (response.data.user.second_step == '0') {
           await AsyncStorage.setItem(
