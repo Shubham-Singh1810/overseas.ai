@@ -34,7 +34,7 @@ const Navigator = () => {
           text1: "Token Updated Successfully",
           visibilityTime: 1000, // Duration in milliseconds
         });
-        
+        setUserData()
       } catch (error) {
         console.log(error)
       }
