@@ -5,19 +5,14 @@ import JobApplied from '../screens/JobApplied';
 import MyDocument from '../screens/MyDocument';
 import Notifications from '../screens/Notifications';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RightNav from '../components/RightNav';
 import SavedJobs from '../screens/SavedJobs';
-import SavedVideo from '../screens/SavedVideo';
 import Help from '../screens/Help';
 import {useGlobalState} from '../GlobalProvider';
 import JobsByCategory from '../screens/JobsByCategory';
 import JobsByCountry from '../screens/JobsByCountry';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import NewsFeed from '../screens/NewsFeed';
-import FooterNav from '../components/FooterNav';
-import JobSubMenu from '../components/JobSubMenu';
-import VideoInput from '../components/VideoInput';
 import BuildProfile from '../screens/BuildProfile';
 import YourHra from '../screens/YourHra';
 import GetCertificate from '../screens/GetCertificate';
@@ -25,8 +20,6 @@ import NeedMigrationLoan from '../screens/NeedMigrationLoan';
 import CustomDrawerContent from './CustomDrawerContent';
 import VideoScreen from '../screens/VideoScreen';
 import FavrouiteJob from '../screens/FavrouiteJob';
-import AppliedJob from '../components/AppliedJob';
-
 import DetailedHra from '../screens/DetailedHra';
 import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
@@ -34,7 +27,6 @@ import Support from '../screens/Support';
 import CandidateDetails2 from '../screens/CandidateDetails2';
 import AppliedJobById from '../screens/AppliedJobById';
 import EditProfile from '../screens/EditProfile';
-// import JobById from '../screens/JobById';
 import GetInstituteById from '../screens/GetInstituteById';
 import GetCourseById from '../screens/GetCourseById';
 import AppliedCourseList from '../screens/AppliedCourseList';
@@ -54,18 +46,15 @@ import OtherDocPrev from '../screens/OtherDocPrev';
 import Dl_list from '../screens/Dl_list';
 import Career from '../screens/Career';
 import CreateGraph from '../screens/CreateGraph';
-import LanguageTraining from '../screens/LanguageTraining';
-import SelectTrainingOccu from '../screens/SelectTrainingOccu';
-import Phase1 from '../screens/Phase1';
-// import Assignment1 from '../screens/Assignment1';
-import VoiceToText from '../components/VoiceToText';
-import Phase2 from '../screens/Phase2';
-import Assignment2 from '../screens/Assignment2';
 import TradeInstituteList from '../screens/TradeInstituteList';
 import TradeCenterDetail from '../screens/TradeCenterDetail';
 import TestById from '../screens/TestById';
-import Phase3 from '../screens/Phase3';
-import SelectBaseAccentLanguage from '../screens/SelectBaseAccentLanguage';
+import LanguageSplash from '../screens/LanguageTraining/LanguageSplash';
+import SelectLanguageTrainingOccu from '../screens/LanguageTraining/SelectLanguageTrainingOccu';
+import Phase1 from '../screens/LanguageTraining/Phase1';
+import VoiceToText from '../screens/LanguageTraining/VoiceToText';
+import Phase2 from '../screens/LanguageTraining/Phase2';
+import Phase3 from '../screens/LanguageTraining/Phase3';
 
 const Drawer = createDrawerNavigator();
 
@@ -413,69 +402,6 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           })}
         />
         <Drawer.Screen
-          name="Language Training"
-          component={LanguageTraining}
-          options={({navigation, route}) => ({
-            title: 'Language Training',
-            headerShown: false,
-            headerRight: () => <RightNav navigation={navigation} />,
-          })}
-        />
-        <Drawer.Screen
-          name="Select Training Occu"
-          component={SelectTrainingOccu}
-          options={({navigation, route}) => ({
-            title: 'Select Training Occupation',
-            headerShown: false,
-            headerRight: () => <RightNav navigation={navigation} />,
-          })}
-        />
-        <Drawer.Screen
-          name="Phase 1"
-          component={Phase1}
-          options={({navigation, route}) => ({
-            title: 'Phase 1',
-            headerShown: false,
-            headerRight: () => <RightNav navigation={navigation} />,
-          })}
-        />
-        <Drawer.Screen
-          name="Phase 2"
-          component={Phase2}
-          options={({navigation, route}) => ({
-            title: 'Phase 2',
-            headerShown: false,
-            headerRight: () => <RightNav navigation={navigation} />,
-          })}
-        />
-        <Drawer.Screen
-          name="Phase 3"
-          component={Phase3}
-          options={({navigation, route}) => ({
-            title: 'Phase 3',
-            headerShown: false,
-            headerRight: () => <RightNav navigation={navigation} />,
-          })}
-        />
-        <Drawer.Screen
-          name="Assignment 1"
-          component={VoiceToText}
-          options={({navigation, route}) => ({
-            title: 'Assignment 1',
-            headerShown: false,
-            headerRight: () => <RightNav navigation={navigation} />,
-          })}
-        />
-        <Drawer.Screen
-          name="Assignment 2"
-          component={Assignment2}
-          options={({navigation, route}) => ({
-            title: 'Assignment 2',
-            headerShown: false,
-            headerRight: () => <RightNav navigation={navigation} />,
-          })}
-        />
-        <Drawer.Screen
           name="Trade Institute"
           component={TradeInstituteList}
           options={({navigation, route}) => ({
@@ -503,6 +429,73 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           })}
         />
         <Drawer.Screen
+          name="Language Splash"
+          component={LanguageSplash}
+          options={({navigation, route}) => ({
+            title: 'Language Splash',
+            headerShown: false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Select Language Training Occu"
+          component={SelectLanguageTrainingOccu}
+          options={({navigation, route}) => ({
+            title: 'Select Language Training Occupation',
+            headerShown: false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Phase 1"
+          component={Phase1}
+          options={({navigation, route}) => ({
+            title: 'Phase 1',
+            headerShown: false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Assignment 1"
+          component={VoiceToText}
+          options={({navigation, route}) => ({
+            title: 'Assignment 1',
+            headerShown: false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Phase 2"
+          component={Phase2}
+          options={({navigation, route}) => ({
+            title: 'Phase 2',
+            headerShown: false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        <Drawer.Screen
+          name="Phase 3"
+          component={Phase3}
+          options={({navigation, route}) => ({
+            title: 'Phase 3',
+            headerShown: false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        {/* 
+        
+        
+        <Drawer.Screen
+          name="Assignment 2"
+          component={Assignment2}
+          options={({navigation, route}) => ({
+            title: 'Assignment 2',
+            headerShown: false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
+        
+        <Drawer.Screen
           name="Select Base Accent Language"
           component={SelectBaseAccentLanguage}
           options={({navigation, route}) => ({
@@ -510,7 +503,7 @@ const AuthenticatedNavigator = ({fcmToken}) => {
             headerShown: false,
             headerRight: () => <RightNav navigation={navigation} />,
           })}
-        />
+        /> */}
         {/* Add more screens as needed */}
       </Drawer.Navigator>
     </NavigationContainer>

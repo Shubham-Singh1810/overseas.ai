@@ -1,15 +1,15 @@
 import {StyleSheet, Text, View, Image, Pressable, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {getSkillsByOccuId} from '../services/info.service';
-import {useGlobalState} from '../GlobalProvider';
+import {useGlobalState} from '../../GlobalProvider';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useFocusEffect} from '@react-navigation/native';
 import {set} from 'date-fns';
-import {languageTrainingData} from '../services/languageTraining';
+import {languageTrainingData} from '../../services/languageTraining';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const SelectTrainingOccu = props => {
-  const {translation, newTranslation, globalState, setGlobalState} =
+  const {globalState} =
     useGlobalState();
     useAndroidBackHandler(() => {
       props.navigation.navigate('Language Training');
@@ -50,15 +50,13 @@ const SelectTrainingOccu = props => {
       console.log(error);
     }
   };
+  
   return (
     <View style={styles.main}>
       <View>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:"center"}}>
-          <Text style={[styles.title]}>Lets start your learning</Text>
-
-          {/* <Text style={[styles.title, {backgroundColor:"white", color:"#19487C", paddingHorizontal:10, borderRadius:15}]}>overseas.ai</Text> */}
+          <Text style={styles.title}>Lets start your learning</Text>
         </View>
-
         <View
           style={{
             marginVertical: 30,
@@ -67,7 +65,7 @@ const SelectTrainingOccu = props => {
             alignItems: 'center',
           }}>
             <Pressable style={{backgroundColor:"white", borderRadius:10, marginRight:10}} onPress={() => props.navigation.navigate('Language Training')}>
-            <Image source={require("../images/backIcon.png")} style={{height:20, width:20, resizeMode:"contain"}}/>
+            <Image source={require("../../images/backIcon.png")} style={{height:20, width:20, resizeMode:"contain"}}/>
             </Pressable>
           <Text style={styles.subTitle}>Choose your occupation</Text>
         </View>

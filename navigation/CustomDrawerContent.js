@@ -29,7 +29,7 @@ import MedicalTest from '../screens/MedicalTest';
 import ApplyPcc from '../screens/ApplyPcc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PassportApply from '../screens/PassportApply';
-import LanguageTraining from '../screens/LanguageTraining';
+import LanguageSplash from '../screens/LanguageTraining/LanguageSplash';
 
 const CustomDrawerContent = props => {
   const {navigation} = props;
@@ -99,8 +99,8 @@ const CustomDrawerContent = props => {
       title: 'Language Training',
       hindiName: 'भाषा प्रशिक्षण',
       banglaName: 'ভাষা প্রশিক্ষণ',
-      component: LanguageTraining,
-      name: 'Language Training',
+      component: LanguageSplash,
+      name: 'Language Splash', 
       subMenu: [],
     },
     {
