@@ -30,7 +30,7 @@ import ApplyPcc from '../screens/ApplyPcc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PassportApply from '../screens/PassportApply';
 import LanguageSplash from '../screens/LanguageTraining/LanguageSplash';
-
+import {storeAppTime} from '../services/user.service';
 const CustomDrawerContent = props => {
   const {navigation} = props;
   const {globalState, newTranslation, setGlobalState} = useGlobalState();
@@ -458,6 +458,42 @@ const CustomDrawerContent = props => {
       );
     }, [props.navigation.getState()]),
   );
+//  store current time start 
+
+const [timeSpent, setTimeSpent] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeSpent(prevTimeSpent => prevTimeSpent + 1);
+    }, 1000);
+
+    // Cleanup the interval when the component unmounts or the effect re-runs
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+  const setTimeSpentByUser = async timeSpent => {
+    let user = await AsyncStorage.getItem('user');
+    if (user) {
+      try {
+        let response = await storeAppTime(
+          {screenType: selectedScreen, timeSpent},
+          JSON.parse(user).access_token,
+        );
+        if (
+          response?.data?.msg == 'Time updated successfully' ||
+          response?.data?.msg == 'Time stored successfully'
+        ) {
+          setTimeSpent(0);
+        }
+      } catch (error) {}
+    }
+  };
+  useEffect(() => {
+    if (timeSpent >= 10) {
+      setTimeSpentByUser(timeSpent);
+    }
+  }, [timeSpent]);
   return (
     <>
       <DrawerContentScrollView>
