@@ -208,6 +208,30 @@ const Home = props => {
     longitude: '',
     fcmToken: '',
   });
+  const getFCMToken = async () => {
+    let user = await AsyncStorage.getItem('user');
+    user = JSON.parse(user); 
+    
+      try {
+        await messaging().registerDeviceForRemoteMessages();
+        const token = await messaging().getToken();
+        await AsyncStorage.setItem("fcmToken", token)
+        storeLocationAndFcm()
+      } catch (error) {
+        console.log(error);
+      }
+    
+  };
+  const getNotificationPermission = async () => {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+    if (granted === 'granted') {
+      getFCMToken();
+    } else {
+      console.log('permission denied');
+    }
+  };
   
 
   const getLocation = async () => {
@@ -255,6 +279,9 @@ const Home = props => {
       } catch (error) {
         console.error('Error storing user location and fcm:', error);
       }
+    }
+    else{
+      getNotificationPermission()
     }
     
   };

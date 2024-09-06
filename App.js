@@ -50,6 +50,9 @@ const App = () => {
   useEffect(()=>{
     getNotificationPermission();
   }, []);
+
+
+  
   return (
     <GlobalStateProvider>
       {showWelcome ? <WelcomeScreen /> : <Navigator/>}
