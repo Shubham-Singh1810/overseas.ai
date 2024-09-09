@@ -19,7 +19,7 @@ import Video from 'react-native-video';
 import {getOccupations} from '../services/info.service';
 import DocumentPicker from 'react-native-document-picker';
 import {useGlobalState} from '../GlobalProvider';
-import {uploadWorkVideo} from '../services/user.service';
+import {uploadWorkVideo, requestSummarizedRequest, getSummarizedVideo} from '../services/user.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
 import Toast from 'react-native-toast-message';
@@ -334,12 +334,28 @@ const VideoScreen = props => {
   };
   const [showInroAction, setShowIntroAction] = useState(false);
   const [showWorkAction, setShowWorkAction] = useState(false);
+  const [summarizedVideoUrl, setSummarizedVideoUrl] = useState('');
+  const getSummarizedVideoFunc = async () => {
+    let user = await AsyncStorage.getItem('user');
+    try {
+      let response = await getSummarizedVideo(JSON.parse(user).access_token);
+      if (response?.data?.message == 'No summarized video found') {
+        setSummarizedVideoUrl(false)
+      } else {
+        setSummarizedVideoUrl(response?.data?.summarizedVideo);
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useFocusEffect(
     React.useCallback(() => {
       getUserWorkVideoList();
       getOccList();
       setLanguageKnownFunc();
       getUserIntroVideoList();
+      getSummarizedVideoFunc();
     }, []),
   );
   const onShare = async link => {
@@ -361,6 +377,34 @@ const VideoScreen = props => {
     }
   };
   const [videoPlayUrl, setVideoPlayUrl] = useState('');
+  const requestSummarizedVideo = async () => {
+    let user = await AsyncStorage.getItem('user');
+    
+    try {
+      let response = await requestSummarizedRequest(JSON.parse(user).access_token);
+      if (response?.data?.message == 'Summarization request sent successfully, please wait 30 minutes.') {
+        Toast.show({
+          type: 'success',
+          text1: 'Summarization request sent successfully,',
+          text2: ' please wait 30 minutes.',
+          visibilityTime: 3000,
+        });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Something went wrong',
+          visibilityTime: 3000,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Internal Server Error',
+        visibilityTime: 3000,
+      });
+    }
+  };
+  const [showSummariesedVideoPlayer, setShowSummariesedVideoPlayer]=useState(false)
   return (
     <>
       <View style={styles.main}>
@@ -456,8 +500,7 @@ const VideoScreen = props => {
                           setVideoPlayUrl(v?.videoUrl);
 
                           setShowVideoPlayer(true);
-                        }}
-                      >
+                        }}>
                         <Image
                           style={{
                             height: 100,
@@ -518,37 +561,6 @@ const VideoScreen = props => {
           </View>
 
           <View>
-            {/* <TouchableOpacity onPress={() => setWorkVideoPopUp(true)}>
-              <View style={{}}>
-                <Image
-                  source={require('../images/rectangle.png')}
-                  style={{
-                    height: 100,
-                    width: 160,
-                    borderRadius: 5,
-                    marginRight: 10,
-                  }}
-                />
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 40,
-                    left: 70,
-                    padding: 6,
-                    backgroundColor: 'white',
-                    borderRadius: 11,
-                  }}>
-                  <Image
-                    source={require('../images/playVideoIcon.png')}
-                    style={{height: 10, width: 10}}
-                  />
-                </View>
-                <Text
-                  style={{marginVertical: 5, width: 160, textAlign: 'center'}}>
-                  Upload Work
-                </Text>
-              </View>
-            </TouchableOpacity> */}
             <ScrollView style={{marginTop: 10, marginBottom: 250}}>
               {showLoadingForWorkLoading ? (
                 <View
@@ -565,21 +577,6 @@ const VideoScreen = props => {
                 workVideoList?.map((v, i) => {
                   return (
                     <View style={{width: '100%', marginBottom: 15}}>
-                      {/* <Video
-                      source={{
-                        uri: v?.videoUrl,
-                      }}
-                      style={{
-                        height: 200,
-                        width: '100%',
-                        borderRadius: 5,
-                        marginRight: 10,
-                        borderWidth: 1,
-                      }}
-                      controls={true}
-                      resizeMode="cover"
-                      paused={true}
-                    /> */}
                       <Pressable
                         // onPress={() => Linking.openURL(v?.videoUrl)}
                         onPress={() => {
@@ -637,6 +634,7 @@ const VideoScreen = props => {
             </ScrollView>
           </View>
         </View>
+
         <Modal transparent={true} visible={showModal} animationType="slide">
           <View
             style={{
@@ -670,6 +668,47 @@ const VideoScreen = props => {
           </View>
         </Modal>
       </View>
+      {summarizedVideoUrl ? (
+        <Pressable
+          onPress={() => setShowSummariesedVideoPlayer(true)}
+          style={{
+            borderWidth: 1.5,
+            borderRadius: 6,
+            borderColor: '#194b81',
+            margin:15
+          }}>
+          <Text
+            style={{
+              color: '#194b81',
+              textAlign: 'center',
+              fontSize: 15,
+              paddingVertical: 10,
+              elevation: 10,
+            }}>
+            Play Summarized Video
+          </Text>
+        </Pressable>
+      ) : (
+        <Pressable
+          onPress={() => requestSummarizedVideo()}
+          style={{
+            borderWidth: 1.5,
+            borderRadius: 6,
+            borderColor: 'brown',
+            margin:15
+          }}>
+          <Text
+            style={{
+              color: 'brown',
+              textAlign: 'center',
+              fontSize: 15,
+              paddingVertical: 10,
+              elevation: 10,
+            }}>
+            Request for Video Summarization
+          </Text>
+        </Pressable>
+      )}
       <Modal transparent={true} visible={workVideoPopUp} animationType="slide">
         <View
           style={{
@@ -1081,7 +1120,13 @@ const VideoScreen = props => {
             flex: 1,
             // padding: 18,
           }}>
-          <View style={{backgroundColor: 'white',flex:1, padding: 18, width: "100%"}}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              flex: 1,
+              padding: 18,
+              width: '100%',
+            }}>
             <Pressable
               style={{
                 backgroundColor: 'white',
@@ -1095,12 +1140,58 @@ const VideoScreen = props => {
               </Text>
               <Image source={require('../images/close.png')} />
             </Pressable>
-            <View style={{borderWidth: 1, flex: 1, width:"100%", marginTop:20}}>
+            <View
+              style={{borderWidth: 1, flex: 1, width: '100%', marginTop: 20}}>
               <WebView
                 source={{
                   uri: videoPlayUrl,
                 }}
-                style={{flex:1, width: "100%"}}
+                style={{flex: 1, width: '100%'}}
+                javaScriptEnabled={true} // Enable JavaScript
+                allowsInlineMediaPlayback={true} // Allow inline media playback
+                mediaPlaybackRequiresUserAction={false} // Automatically play videos without user interaction
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+      
+      <Modal transparent={true} visible={showSummariesedVideoPlayer}>
+        <View
+          style={{
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            alignItems: 'center',
+            flex: 1,
+            // padding: 18,
+          }}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              flex: 1,
+              padding: 18,
+              width: '100%',
+            }}>
+            <Pressable
+              style={{
+                backgroundColor: 'white',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              onPress={() => setShowSummariesedVideoPlayer(false)}>
+              <Text style={{fontSize: 16, fontWeight: '500', color: 'black'}}>
+                Video Player
+              </Text>
+              <Image source={require('../images/close.png')} />
+            </Pressable>
+            <View
+              style={{borderWidth: 1, flex: 1, width: '100%', marginTop: 20}}>
+              <WebView
+                source={{
+                  uri: summarizedVideoUrl,
+                }}
+                style={{flex: 1, width: '100%'}}
                 javaScriptEnabled={true} // Enable JavaScript
                 allowsInlineMediaPlayback={true} // Allow inline media playback
                 mediaPlaybackRequiresUserAction={false} // Automatically play videos without user interaction

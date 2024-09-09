@@ -21,7 +21,6 @@ import {
   getProfileStrength,
   getNotification,
   getSummarizedVideo,
-  requestSummarizedRequest
 } from '../services/user.service';
 import WebView from 'react-native-webview';
 const MyProfile = props => {
@@ -250,7 +249,7 @@ const MyProfile = props => {
             <View style={{marginBottom: 5}}>
               <View
                 style={{
-                  width: globalState?.profileStrength?.profileStrength + '%',
+                  width: globalState?.profileStrength?.profileStrength ? globalState?.profileStrength?.profileStrength + '%' : 0,
                   flexDirection: 'row',
                   marginBottom: 2,
                   justifyContent: 'flex-end',
