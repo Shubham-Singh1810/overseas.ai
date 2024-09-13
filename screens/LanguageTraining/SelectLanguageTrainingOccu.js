@@ -25,7 +25,6 @@ const SelectLanguageTrainingOccu = props => {
         props.navigation.navigate('Select Base Accent Language', {
           data: response?.data,
         });
-        props.navigation.navigate('Phase 1', {data: response?.data});
       } else {
         Alert.alert('We are working on it');
       }

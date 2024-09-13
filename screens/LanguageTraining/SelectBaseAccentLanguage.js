@@ -1,12 +1,8 @@
 import {StyleSheet, Text, View, Image, Pressable, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {getSkillsByOccuId} from '../services/info.service';
-import {useGlobalState} from '../GlobalProvider';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useFocusEffect} from '@react-navigation/native';
-import {set} from 'date-fns';
-import {languageTrainingData} from '../services/languageTraining';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getSkillsByOccuId} from '../../services/info.service';
+import {useGlobalState} from '../../GlobalProvider';
+
 import {useAndroidBackHandler} from 'react-navigation-backhandler';
 const SelectBaseAccentLanguage = props => {
   const {translation, newTranslation, globalState, setGlobalState} =
@@ -49,7 +45,7 @@ const SelectBaseAccentLanguage = props => {
     // } catch (error) {
     //   console.log(error);
     // }
-    Alert.alert('We are working on it');
+    props.navigation.navigate('Phase 1');
   };
   const [selectedBaseLang, setSelectedBaseLang]=useState("");
   const [selectedPrefAccent, setSelectedPrefAccent]=useState("");
@@ -82,7 +78,7 @@ const SelectBaseAccentLanguage = props => {
             }}
             onPress={() => props.navigation.navigate('Language Training')}>
             <Image
-              source={require('../images/backIcon.png')}
+              source={require('../../images/backIcon.png')}
               style={{height: 20, width: 20, resizeMode: 'contain'}}
             />
           </Pressable>

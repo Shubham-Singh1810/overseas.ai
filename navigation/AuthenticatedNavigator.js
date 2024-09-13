@@ -55,6 +55,7 @@ import Phase1 from '../screens/LanguageTraining/Phase1';
 import VoiceToText from '../screens/LanguageTraining/VoiceToText';
 import Phase2 from '../screens/LanguageTraining/Phase2';
 import Phase3 from '../screens/LanguageTraining/Phase3';
+import SelectBaseAccentLanguage from '../screens/LanguageTraining/SelectBaseAccentLanguage';
 
 const Drawer = createDrawerNavigator();
 
@@ -482,6 +483,15 @@ const AuthenticatedNavigator = ({fcmToken}) => {
             headerRight: () => <RightNav navigation={navigation} />,
           })}
         />
+        <Drawer.Screen
+          name="Select Base Accent Language"
+          component={SelectBaseAccentLanguage}
+          options={({navigation, route}) => ({
+            title: 'Select Base Accent Language',
+            headerShown: false,
+            headerRight: () => <RightNav navigation={navigation} />,
+          })}
+        />
         {/* 
         
         
@@ -495,15 +505,7 @@ const AuthenticatedNavigator = ({fcmToken}) => {
           })}
         />
         
-        <Drawer.Screen
-          name="Select Base Accent Language"
-          component={SelectBaseAccentLanguage}
-          options={({navigation, route}) => ({
-            title: 'Select Base Accent Language',
-            headerShown: false,
-            headerRight: () => <RightNav navigation={navigation} />,
-          })}
-        /> */}
+         */}
         {/* Add more screens as needed */}
       </Drawer.Navigator>
     </NavigationContainer>
