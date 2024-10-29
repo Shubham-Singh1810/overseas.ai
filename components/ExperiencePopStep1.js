@@ -414,43 +414,26 @@ const ExperiencePopStep1 = ({
                 </Pressable>
                 <Text style={styles.errorText}>{formDataError.fromDate}</Text>
                 {/* <Text style={styles.errorText}>{formDataError.empDob}</Text> */}
-                <Modal transparent={true} visible={showJoiningCalender}>
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'rgba(0,0, 0, 0.5)',
-                    }}>
-                    <View
-                      style={{
-                        width: 330,
-                        borderRadius: 10,
-                        backgroundColor: '#fff',
-                      }}>
-                      <DateTimePickerModal
-                        isVisible={showJoiningCalender}
-                        mode="date"
-                        onConfirm={selecteddate => {
-                          const formattedDate = moment(
-                            selecteddate,
-                            'YYYY/MM/DD',
-                          ).format('YYYY-MM-DD');
-                          setExperienceForm({
-                            ...experienceForm,
-                            fromDate: formattedDate,
-                          });
-                          setShowJoiningCalender(false);
-                          setFormDataError({
-                            ...formDataError,
-                            fromDate: '',
-                          });
-                        }}
-                        onCancel={() => setShowJoiningCalender(false)}
-                      />
-                    </View>
-                  </View>
-                </Modal>
+                <DateTimePickerModal
+                  isVisible={showJoiningCalender}
+                  mode="date"
+                  onConfirm={selecteddate => {
+                    const formattedDate = moment(
+                      selecteddate,
+                      'YYYY/MM/DD',
+                    ).format('YYYY-MM-DD');
+                    setExperienceForm({
+                      ...experienceForm,
+                      fromDate: formattedDate,
+                    });
+                    setShowJoiningCalender(false);
+                    setFormDataError({
+                      ...formDataError,
+                      fromDate: '',
+                    });
+                  }}
+                  onCancel={() => setShowJoiningCalender(false)}
+                />
               </View>
               <View style={styles.inputGroup}>
                 <View>
@@ -471,44 +454,26 @@ const ExperiencePopStep1 = ({
                 </View>
 
                 {/* <Text style={styles.errorText}>{formDataError.empDob}</Text> */}
-                <Modal transparent={true} visible={showEndingCalender}>
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'rgba(0,0, 0, 0.5)',
-                    }}>
-                    <View
-                      style={{
-                        width: 330,
-                        borderRadius: 10,
-
-                        backgroundColor: '#fff',
-                      }}>
-                      <DateTimePickerModal
-                        isVisible={showEndingCalender}
-                        mode="date"
-                        onConfirm={selecteddate => {
-                          const formattedDate = moment(
-                            selecteddate,
-                            'YYYY/MM/DD',
-                          ).format('YYYY-MM-DD');
-                          setExperienceForm({
-                            ...experienceForm,
-                            toDate: formattedDate,
-                          });
-                          setShowEndingCalender(false);
-                          setFormDataError({
-                            ...formDataError,
-                            toDate: '',
-                          });
-                        }}
-                        onCancel={() => setShowEndingCalender(false)}
-                      />
-                    </View>
-                  </View>
-                </Modal>
+                <DateTimePickerModal
+                  isVisible={showEndingCalender}
+                  mode="date"
+                  onConfirm={selecteddate => {
+                    const formattedDate = moment(
+                      selecteddate,
+                      'YYYY/MM/DD',
+                    ).format('YYYY-MM-DD');
+                    setExperienceForm({
+                      ...experienceForm,
+                      toDate: formattedDate,
+                    });
+                    setShowEndingCalender(false);
+                    setFormDataError({
+                      ...formDataError,
+                      toDate: '',
+                    });
+                  }}
+                  onCancel={() => setShowEndingCalender(false)}
+                />
               </View>
               <Button title="Save" onPress={handleExperienceSubmit} />
             </View>

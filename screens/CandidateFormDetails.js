@@ -17,12 +17,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RadioButton} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import {useGlobalState} from '../GlobalProvider';
-import DatePicker from 'react-native-modern-datepicker';
 import {Picker} from '@react-native-picker/picker';
 import MyMultipleSelectPopUp from '../components/MyMultipleSelectPopUp';
 import MySingleSelectPopUp from '../components/MySingleSelectPopUp';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-// import {countryCodeList} from '../services/countryCodeList';
 import {
   getOccupations,
   getSkillsByOccuId,
