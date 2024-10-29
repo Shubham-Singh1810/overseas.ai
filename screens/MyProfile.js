@@ -515,7 +515,7 @@ const MyProfile = props => {
           </ScrollView>
 
           <Text style={{textAlign: 'center', padding: 10, color: 'gray'}}>
-            Version 2.1.0
+            Version 2.2.2
           </Text>
         </View>
       ) : (

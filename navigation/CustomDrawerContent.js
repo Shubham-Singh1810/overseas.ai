@@ -556,7 +556,7 @@ const [timeSpent, setTimeSpent] = useState(0);
         </View>
         {renderNavItem()}
         {/* Normal text in the drawer */}
-        <Text style={styles.version}>App Version:v2.2.1</Text>
+        <Text style={styles.version}>App Version:v2.2.2</Text>
       </DrawerContentScrollView>
       <Modal transparent={false} visible={showModal} animationType="slide">
         <View
